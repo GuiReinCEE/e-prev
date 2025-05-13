@@ -1,0 +1,220 @@
+.texto {font-family: "Courier New", Courier, mono}
+.style1 {font-family: "Courier New", Courier, mono; font-weight: bold; }
+.labelMedio {font-family: "Courier New", Courier, mono; font-size: 12px; }
+.dadosVisiveis {
+	font-family: "Courier New", Courier, mono;
+	font-size: 13px;
+	visibility:visible;
+}
+.dados {
+	font-family: "Courier New", Courier, mono;
+	font-size: 13px;
+}
+.labelPequeno {font-family: "Courier New", Courier, mono; font-size: 10px; }
+.style5 {font-family: "Courier New", Courier, mono; font-weight: bold; font-size: 16px; }
+.style6 {font-family: "Courier New", Courier, mono; font-weight: bold; font-size: 24px; }
+#Layer1 {
+	position:absolute;
+	left:11px;
+	top:18px;
+	width:730px;
+	height:1060px;
+	z-index:1;
+}
+.tabBorda {
+	border: 1px solid #000000;
+}
+.dadosDemonstr {
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+}
+
+.tabParcelas {
+   border: thin solid #999999;
+   width: 100%;
+}
+
+.tabParcelas .tabHeader {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   padding: 1px;
+   font-style: normal;
+   line-height: normal;
+   font-weight: bold;
+   font-variant: normal;
+   text-transform: none;
+   color: #000000;
+	text-align: center;
+   background-color: #C8C8C8;
+}
+
+.tabParcelas .tabDetalhe {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   line-height: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   color: #000000;
+	cursor: pointer;
+   background-color: #F4F4F4;
+}
+
+.tabParcelas .tabDetHighlight {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   line-height: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   color: #000000;
+	cursor: pointer;
+   background-color: #66CC99;
+}
+
+.bordaParcelas {
+   border: thin solid #999999;
+}
+
+.highlightOn {
+   background-color: #66CC99;
+}
+
+.highlightOff {
+}
+
+.botao {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   line-height: normal;
+   font-variant: normal;
+   text-transform: none;
+}
+
+.tabDetalhes {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	background-color: #FFFFE5;
+	border: thin solid #FF0000;
+}
+
+.tabDetalhes .tr {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	background-color: #FFFFCC;
+	border: thin solid #FF0000;
+}
+.label {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.popUp {
+	border: thin solid #FF0000;
+	overflow: auto;
+	position: absolute;
+	visibility: inherit;
+	z-index: 201;
+	height: auto;
+	width: auto;
+	background-color: #FFFFCC;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+	left: 1px;
+	top: 789px;
+}
+.style1 {
+	width: 100%;
+	font-size: 16px;
+	font-weight: bold;
+}
+.style2 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 12px;
+}
+.style3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; }
+#divDecomposicaoPopEmp {
+	position:absolute;
+	left:503px;
+	top:748px;
+	width:406px;
+	height:237px;
+}
+.style9 {font-size: 12px; }
+
+
+.relatorio {
+	top:20px;
+	left:10px;
+	width:730px;
+}
+.pagina {
+	position:relative;
+	width:730px;
+	height:1000px;
+}
+.popDebitos {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color:#000000;}
+.pageBreak {page-break-before: always}
+.dadosVisiveis16bold {
+	font-family: "Courier New", Courier, mono;
+	font-size: 16px;
+	visibility:visible;
+	font-weight: bold;
+}
+.dados16bold {
+	font-family: "Courier New", Courier, mono;
+	font-size: 16px;
+	visibility:visible;
+	font-weight: bold;
+}
+.bordaTabela {
+	border: thin solid #006633;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+}
+.bordaCallCenter {
+	border: thin solid #990000;
+}
+.textoCallCenter {
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.tabTitulo {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.tabTexto {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}

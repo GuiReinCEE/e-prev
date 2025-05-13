@@ -1,0 +1,146 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: SENGE Relat. Acompanhamento ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+		<style>
+			.obCadastro  {
+				padding-top: 10px;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-bottom: 5px;
+				width: 300px;
+			}
+
+			.obCadastro label {
+				display: block;
+				width: 100px;
+				float: left;
+				color: #000;
+				font-weight: normal;
+				font-size: 10pt;
+				font-family: Arial,'MS Sans Serif';	
+				line-height: 20px;
+			}			
+		</style>
+		<script>
+			function ver()
+			{
+				document.getElementById('fl_gera_pdf').value = "N";
+				var ob_form = document.getElementById('formRelatorio');
+					ob_form.action = "senge_rel_acompanhamento.php";
+					ob_form.type   = "get";
+					ob_form.target = "_blank";
+					ob_form.submit();
+			}
+
+			function gerar()
+			{
+				if(confirm("Deseja gerar relatório?"))
+				{
+					document.getElementById('fl_gera_pdf').value = "S";
+					var ob_form = document.getElementById('formRelatorio');
+						ob_form.action = "senge_rel_acompanhamento_libera_db.php";
+						ob_form.type   = "get";
+						ob_form.target = "";
+						ob_form.submit();
+				}
+			}			
+			
+			function setOpcao(cd_rel_acompanhamento_plano,fl_acao)
+			{
+				if(confirm("Confirma ?"))
+				{
+					document.getElementById('cd_rel_acompanhamento_plano').value = cd_rel_acompanhamento_plano;
+					document.getElementById('fl_acao').value = fl_acao;
+					var ob_form = document.getElementById('formRelatorio');
+						ob_form.action = "senge_rel_acompanhamento_libera_exec.php";
+						ob_form.type   = "get";
+						ob_form.target = "";
+						ob_form.submit();
+				}				
+			}
+		</script>
+		<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+		<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+		<BR>
+		<div style="padding-left:50px;padding-right:50px; text-align:center;">
+			<fieldset class="obCadastro">
+				<form id="formRelatorio" action="" type="get" target="">
+					<label>Ano:</label>
+						<select name="ano" style="width:100px;">
+							<!-- START BLOCK : lista_ano-->
+							<option value="{nr_ano}">{nr_ano}</option>
+							<!-- END BLOCK : lista_ano -->
+						</select>
+					<BR>				
+					<label>Mês:</label>
+						<select name="mes" style="width:100px;">
+							<option value="01">Janeiro</option>
+							<option value="02">Fevereiro</option>
+							<option value="03">Março</option>
+							<option value="04">Abril</option>
+							<option value="05">Maio</option>
+							<option value="06">Junho</option>
+							<option value="07">Julho</option>
+							<option value="08">Agosto</option>
+							<option value="09">Setembro</option>
+							<option value="10">Outubro</option>
+							<option value="11">Novembro</option>
+							<option value="12">Dezembro</option>
+						</select>
+					<BR>
+					<input type="hidden" name="fl_gera_pdf" id="fl_gera_pdf" value="N">
+					<input type="hidden" name="cd_rel_acompanhamento_plano" id="cd_rel_acompanhamento_plano" value="0">
+					<input type="hidden" name="fl_acao" id="fl_acao" value="">
+					<div style="clear:both; padding-top:15px; width:90%; text-align:center;">
+						<input type="button" value="Visualizar"  onclick="ver();" class="botao" style="width:100px;">
+						<input type="button" value="Gerar"  onclick="gerar();" class="botao" style="width:100px;">
+					</div>				
+				
+				</form>
+			</fieldset>
+		
+			<BR>
+			<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>Ano/Mês</td>					
+					<td>Data Liberação</td>
+					<td>Usuário Liberação</td>					
+					<td>Data Bloqueio</td>
+					<td>Usuário Bloqueio</td>
+					<td></td>
+					<td></td>
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td align="center"><a href="../upload/senge_relatorios/rel_acompanhamento_{dt_mes}.pdf" target="_blank">{dt_mes}</a></td>					
+					<td align="center">{dt_libera}</td>					
+					<td align="center">{ds_libera}</td>				
+					<td align="center">{dt_bloqueia}</td>					
+					<td align="center">{ds_bloqueia}</td>	
+					<td align="center"><input type="button" value="{ds_acao}" onclick="setOpcao('{cd_rel_acompanhamento_plano}','{fl_acao}');" class="botao" style="width:80px;"></td>					
+					<td align="center"><input type="button" value="Excluir" onclick="setOpcao('{cd_rel_acompanhamento_plano}','E');" class="botao" style="width:80px;"></td>					
+				</tr>
+				<!-- END BLOCK : lista -->
+				</tbody>	
+			</table>	
+		</div>
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["CaseInsensitiveString","DateTimeBR", "CaseInsensitiveString", "DateTimeBR", "CaseInsensitiveString"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(0, true);				
+		</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

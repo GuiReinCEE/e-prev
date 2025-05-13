@@ -1,0 +1,30 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Relatório de atendimentos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2">		
+            <table align="center" cellpadding="1" cellspacing="1" border="0">
+              <form name="form2" method="post" action="rel_atendimentos.php" target="_blank">
+                <tr> 
+                  <td class = "texto1" align="center"><p>Selecione o período abaixo e clique 
+                      em "Gerar Relatório":</p>
+                    <p> 
+                      <input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" size="10" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+                      a 
+                      <input name="dt_final" type="text" id="dt_final" value="{dt_final}" size="10" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+                      (datas no formato dd/mm/aaaa)</p>
+                    <p>
+                      <input type="submit" name="Submit" value="Gerar Relatório">
+                    </p></td>
+                </tr>
+              </form>
+            </table>
+</td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

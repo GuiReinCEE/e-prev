@@ -1,0 +1,44 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Certificados de Participantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+  
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2">
+		<br>
+		<table align="center" cellpadding="7" cellspacing="3" border="0">
+		<form name="form2" method="post" action="cert_participantes_lotes.php">
+		<tr> 
+			<td align="center">
+				<p><font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Frente de Certificados </font></p>
+				<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/img_divisoria1.gif" height="1" width="80%"></font></p>
+				<br />
+				<p>
+					<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Ser&atilde;o 
+					impresssos {total} certificados de participantes da empresa 
+					{patrocinadora}, plano {plano}, com data de ingresso entre 
+					{dt_inicial} e {dt_final}, divididos em {num_lotes} lotes 
+					de 10 certificados.<br>
+					<input name="dt_inicial" type="hidden" id="dt_inicial" value="{dt_inicial}">
+					<input name="dt_final" type="hidden" value="{dt_final}">
+					</font>
+				</p>
+				<br />
+				<ul>
+				<!-- START BLOCK : lote -->
+				<li> 
+				<div align="left"><a href="monta_lotes_certificados.php?dt_inicial={dt_inicial}&dt_final={dt_final}&cd_plano={cd_plano}&cd_empresa={cd_empresa}&lote={num_lote}" target="_blank" class="links2">Imprimir lote {num_lote}</a></div>
+				</li>
+				<!-- END BLOCK : lote -->
+				</ul>
+			</td>
+		</tr>
+		</form>
+		</table>
+</td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

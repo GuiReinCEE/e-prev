@@ -1,0 +1,81 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Acompanhamento';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+
+  <!-- START BLOCK : mensagem -->
+  <table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <tr> 
+    <td colspan="2">
+      <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+  </tr>
+  </table>
+  <!-- END BLOCK : mensagem -->
+
+  <!-- START BLOCK : cadastro -->
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li id="abaMovimento" onclick="location.href='lst_nao_conf.php'">
+				<span>LISTA</span>
+			</li>
+			<li id="abaMovimento" onclick="location.href='cad_nao_conformidade.php?c={cod_nao_conf}&tr=U'">
+				<span>NÃO CONFORMIDADE</span>
+			</li>			
+			<li id="abaMovimento" class="abaSelecionada">
+				<span>ACOMPANHAMENTO</span>
+			</li>			
+		</ul>
+	</div>   
+	<div class="aba_conteudo">  
+
+			<form name="form1" method="post" action="grava_acompanhamento.php">
+              <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr> 
+                  <td> 
+                    <div align="left"><font size="1" face="Verdana">Data 
+                </font><strong></div></td>
+                  
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"><strong> 
+                    <input name="data" type="text" id="data" size="15" maxlength="10" value="{data}" readonly onBlur="verifica_data(this)" onKeyPress="mascara_data(this)" >
+              </strong> </font> </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Situa&ccedil;&atilde;o</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="situacao" cols="94" rows="6" id="situacao" style="width: 100%;">{situacao}</textarea>
+              </font> </td>
+          </tr>
+                <tr> 
+                <td>
+					<font size="1" face="Verdana, Arial, Helvetica, sans-serif"><nobr>Registrado por</nobr></font>
+				</td>
+                <td>
+					<input type="hidden" name="auditor"  id="auditor" value="{auditor}">
+					<input type="text" name="nome_auditor"  id="nome_auditor" value="{nome_auditor}" readonly style="width:100%">
+				</td>
+          </tr>
+                <tr > 
+                  <td colspan="2"> 
+                    <div align="center"> 
+                <input type="button" value="Voltar" class="botao_disabled" style="width:100px;" onclick="location.href='cad_nao_conformidade.php?c={cod_nao_conf}&tr=U'">
+                <input type="submit" value="Gravar Acompanhamento" class="botao">
+              </div></td>
+          </tr>
+        </table>
+              <!-- START BLOCK : codigo -->
+                <input name="cod_processo" type="hidden" id="insere2" value="{cod_processo}">
+				<input name="insere" type="hidden" id="insere" value="{insere}">
+				<input name="cod_acompanhamento" type="hidden" id="cod_acompanhamento" value="{cod_acompanhamento}">
+                <input name="cod_nao_conf" type="hidden" id="cod_processo2" value="{cod_nao_conf}">
+		      <!-- END BLOCK : codigo -->
+		</form>
+
+	</div>
+</div>  
+  <!-- END BLOCK : cadastro -->
+
+
+<!-- INCLUDE BLOCK : footer.html -->

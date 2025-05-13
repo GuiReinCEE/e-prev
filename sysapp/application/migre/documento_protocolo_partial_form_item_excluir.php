@@ -1,0 +1,76 @@
+<? header("Content-Type: text/html; charset=iso-8859-1"); ?>
+<?
+    include_once('inc/sessao.php');
+    include_once('inc/conexao.php');
+
+    include_once('inc/ePrev.Util.String.php');
+    include_once('inc/ePrev.Entity.php');
+    include_once('inc/ePrev.Service.Projetos.php');
+    include_once('inc/ePrev.ADO.Projetos.documento_protocolo.php');
+
+    class documento_protocolo_partial_item_excluir
+    {
+        private $db;
+        private $entidade;
+        private $_hasError;
+
+        function documento_protocolo_partial_item_excluir( $_db )
+        {
+            $this->db = $_db;
+            $this->entidade = new entity_projetos_documento_protocolo_item();
+            $this->requestParams();
+        }
+
+        function __destruct()
+        {
+            $this->db = null;
+        }
+
+        function requestParams()
+        {
+            $this->entidade->set_cd_documento_protocolo_item( $_POST["cd_documento_protocolo_item_selected"] );
+            $this->entidade->set_cd_usuario_exclusao( $_POST["cd_usuario_logado_text"] );
+        }
+
+        public function cancel()
+        {
+            $service = new service_projetos($this->db);
+            $bRet = $service->documento_protocolo_item_Delete( $this->entidade );
+            $this->_hasError = !$bRet;
+            return $bRet;
+        }
+
+        public function hasError()
+        {
+            return $this->_hasError;
+        }
+
+    }
+
+    $thisPage = new documento_protocolo_partial_item_excluir($db);
+    $bRet = $thisPage->cancel();
+
+    /** 
+     * Mensagens de retorno para página que requisitou
+     * String de de retorno no formato:   ID|MSG
+     * ID : Código de mensagem 
+     * MSG: Mensagem
+     * --------------------------------------------------------- 
+     * ID                                     MSG
+     * 0   (operação finalizada sem falhas) | - 
+     * 1   (Atualizado no banco de dados)   | "Excluído com sucesso"
+     * 100 (falha)                          | [Mensagem de erro]
+     */
+    if ($thisPage->hasError()==true)
+    {
+        echo( "100" );  // ID
+        echo( "|" );    // SEPARADOR
+        echo( "" );     // MSG
+    }
+    else
+    {
+        echo( "1" );                     // ID
+        echo( "|" );                     // SEPARADOR
+        echo( "Cancelado com sucesso" ); // MSG
+    }
+?>

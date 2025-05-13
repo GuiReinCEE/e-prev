@@ -1,0 +1,118 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa - Capa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script src="inc/prototype-1.4.0.js"></script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	var ncampos_marc = 0;
+	var i = 0;
+	var l = (f.limt.value + 20);
+	var campos = Form.getElements(f);
+	for (i=1; i<campos.length; i++)
+	{
+		if (campos[i].checked)
+		{
+			ncampos_marc = ncampos_marc + 1
+		}
+	}
+	if (ncampos_marc != f.limt.value)
+	{
+		alert("Por favor, responda a todas as perguntas.");
+		return false;
+	}
+	else 
+	{
+		return true;
+	}
+}
+//-->
+</script>
+<script>
+	function mostreLinksLocais(paragrafo){
+		paragrafo = $(paragrafo);
+		var links = $A(paragrafo.getElementsByTagName('a'));
+		//vamos achar os links que têm rel="local"
+		var linksLocais = links.findAll( function(link){
+			var rel = link.getAttribute("rel");
+			return rel =='local';
+		});
+		//agora vamos extrair o texto de cada link
+		var textos = linksLocais.pluck('innerHTML');
+		//vamos colocar os textos em uma única string
+		var resultado = textos.inspect();
+		alert(resultado);
+	}
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2" align="center"> 
+		<!-- START BLOCK : mensagem -->
+		<table width="80%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr> 
+				<td align="center" class="titulo_vermelho">{mensagem}</td>                      
+			</tr>
+			<tr> 
+				<td align="center" class="titulo_vermelho" height="20"><img src="img/img_divisoria1.gif" height="1" width="90%"></td>                      
+			</tr>
+		</table>
+		<!-- END BLOCK : mensagem -->
+			<form action="grava_enquete_resultado.php" method="post" onSubmit="return valida_form(this);" >
+            <!-- START BLOCK : cadastro -->
+            <table width="80%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                  <td align="center"><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#0046AD" size="5" face="Arial, Helvetica, sans-serif"><br>
+                    {titulo}:<br>
+                    <input name="cd_enquete" type="hidden" value="{eq}">
+                    </font></font></td>
+              </tr>
+                    <tr> 
+                      
+					<td align="center" height="20">
+					<img src="img/img_divisoria1.gif" height="1" width="80%">
+					<BR>
+					<BR>
+	                    <p class="texto1" style="font-family: arial; font-size: 10pt;">
+							<b>{descricao}</b>
+							
+	                    </p>
+					</td>                      
+                    </tr>
+                  </table>
+				  <br><br>
+              <table width="80%">
+                <tr> 
+                  <td align="center">
+				
+						<input type="button" value="Iniciar" class="botao" style="width: 150px; height: 30px;" onclick="document.location.href='resp_enquetes.php?c={eq}'">
+					
+					
+					
+				  </td>
+                </tr>
+              </table>
+            </form>
+		<!-- END BLOCK : cadastro -->
+		<!-- START BLOCK : periodo -->
+		<table width="80%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr> 
+				<td align="center" class="titulo_bege">{periodo}</td>                      
+			</tr>
+		</table>
+		<!-- END BLOCK : periodo -->
+<!--            <a href="resp_enquetes.php?c={eq}&agrup=1" class="links2">grupo 1</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=2" class="links2">grupo 2</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=3" class="links2">grupo 3</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=4" class="links2">grupo 4</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=5" class="links2">grupo 5</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=6" class="links2">grupo 6</a> -->
+</td>  </tr>
+  
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

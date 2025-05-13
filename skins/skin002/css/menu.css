@@ -1,0 +1,62 @@
+/****************************************
+| Theme Name: Codefor
+| Theme URI: http://wordpress.org/
+| Description: The WordPress theme created by Adam Foster and for use by Codefor Only.
+| Author: Adam Foster
+| Author URI: http://www.codefor.com
+| Tags: CSS, custom header, fixed width, three column, two column
+| Date Created: 10-09-2008
+| Copyright 2008 Adam Foster
+|
+****************************************/
+
+/** CSS RESET **/
+
+* {	margin: 0px; padding: 0px; text-indent: 0px; }
+img { border: none; padding: 0px; }
+ol, ul { list-style: none; }
+
+/** GLOBAL STYLES **/
+
+a, a:visited { text-decoration: none; color: #74aa30; }
+a:hover { color: #FFFFFF; background-color: #74aa30; }
+a:active { border: none!important; outline: none; }
+.left { float: left!important}
+.right { float: right!important}
+.clear { clear: both!important}
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+.last { margin-bottom: 0px!important; }
+.end { margin-right: 0px!important; }
+.blank { background: none!important; }
+
+h1 { font-size: 18px; line-height: 22px; color: #333333; font-weight:normal; }
+h2 { font-size: 18px; line-height: 22px; color: #333333; font-weight:normal; }
+h3 { font-size: 12px; color: #74AA30; }
+
+.full { width: 920px; }
+.width860 { width: 860px; }
+.width646 { width: 646px; }
+.width416 { width: 416px; }
+.width446 { width: 446px; }
+.width201 { width: 201px; position: relative; }
+.width168 { width: 168px; }
+.width238 { width: 238px; }
+
+/** header **/
+
+.nav-work,  .nav-services, .nav-about, .nav-contact { position:relative; top: 0; left: 0; background-color: #FFF; background-repeat: no-repeat; height: 107px; width: 141px; float: left; margin-right: 15px; }
+.nav-work > a:first-child, .nav-services > a:first-child, .nav-about > a:first-child, .nav-contact > a:first-child { cursor: default; display: block; position: absolute; left: 0px; bottom: 0px; text-indent: -3000px; overflow: hidden; width: 141px; height: 30px; }
+.nav-work > a:first-child:hover, .nav-services > a:first-child:hover, .nav-about > a:first-child:hover, .nav-contact > a:first-child:hover { background: none; }
+.nav-work { background-position: 0 78px; }
+.nav-work:hover, .nav-work.page_par, .nav-work.page-an, .nav-work.page-selected { background-position: 0 48px; }
+.nav-services { background-position: 0 18px; }
+.nav-services:hover, .nav-services.page_par, .nav-services.page-selected { background-position: 0 -12px; }
+.nav-about { background-position: 0 -42px; }
+.nav-about:hover, .nav-about.page_par, .nav-about.page-selected { background-position: 0 -72px; }
+.nav-contact { background-position: 0 -102px; }
+.nav-contact:hover, .nav-contact.page_par, .nav-contact.page-selected { background-position: 0 -132px; }
+#navigation li ul { background-color: #FFF; height: 66px; width: 128px; padding: 12px 0 0 13px; }
+#navigation li ul li { line-height: 13px; }
+#navigation li ul li a, #navigation li ul li a:visited { text-transform:uppercase; font-weight: bold; display: inline; padding: 0 1px 0 2px; }
+#navigation li ul li.page-selected a, #navigation li ul li.page-selected a:visited, #navigation li ul li.page_par a, #navigation li ul li.page_par a:visited { color: #FFFFFF; background-color: #74aa30; }

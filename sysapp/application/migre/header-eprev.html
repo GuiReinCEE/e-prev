@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>e-prev {header_title}</title>
+
+<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+<link href="main.css" rel="stylesheet" type="text/css">
+
+<script language="JavaScript" type="text/JavaScript" src="inc/menu_principal.js"></script>
+
+<!-- SORT TABLE -->
+<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>
+<!-- SORT TABLE -->
+
+</head>
+
+<body 
+	text="{text}" 
+	link="{link}" 
+	vlink="{vlink}" 
+	alink="{alink}" 
+	leftmargin="0" 
+	topmargin="0" 
+	marginwidth="0" 
+	marginheight="0" 
+	onLoad="chama_fnc_onload();" 
+	onbeforeunload='saida_direta(); return confirma_saida();'
+	>
+
+<!-- INCLUDE BLOCK : inc/menu_geral2.tpl -->
+
+<!-- INCLUDE BLOCK : inc/menu_geral3.tpl -->
+
+<!-- INCLUDE BLOCK : inc/menu_geral4_camadas_sobrepostas.tpl -->
+
+<!-- INCLUDE BLOCK : inc/menu_geral5_menu_principal.tpl -->
+
+<div id="mensagem_tela" style="position:absolute; width:{larg_msgt}px; height:{alt_msgt}px; z-index:1; left: {pos_msgt}px; top: {top_msgt}px;">
+	{mensagem_tela}
+</div>  
+
+<!-- Versão e usuário atual -->
+<div id="versao" style="position:absolute; width:277px; height:28px; z-index:1; left: {pos_usuario}px; top: {top_usuario}px; visibility: {visibilidade_usuario};"><span class="{classe_usuario}">Versão 2006.7 - </span><a href="cad_recurso_workspace.php" class="{classe_usuario}" title="{dt_login}{dt_scanner}">{usuario} - {divsao}</a><br></div>  
+
+<table border="0" cellpadding="0" cellspacing="0" width="{largura_tela}">
+  <tr> 
+    <td background="{c_menu}{img_fundo_sup}" bgcolor="{cor_sup_banner}" height="{altura_sup_banner}"><a href="index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image01','','{c_menu}logo_swap.gif',1)"><img src="{c_menu}logo.gif" alt="Página inicial" name="Image01" border="0" hspace="{espaco_superior}" vspace="{espaco_vertical}" {largura_banner}{altura_banner}></a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="{cor_fundo_banner}" background="{c_menu}img_fundo_banner.jpg" height="{altura_banner}" class="{classe_banner}">Workspace</td>
+  </tr>
+  <tr> 
+    <td height="{altura_inf_banner}" colspan="2" bgcolor="{cor_inf_banner}" background="{c_menu}{img_fundo_menu}"><img src="{c_menu}img_inicial_menu.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+  </tr>
+  <tr> 
+    <td height="{alt_menu_principal}" valign="top" background="{c_menu}img_fundo_menu3.jpg" bgcolor="{cor_inf_banner}"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" {largura_banner}{altura_banner}>
+        <tr> 
+          <td {largura_banner}{altura_banner}><img src="{c_menu}img_paragrafo_skin.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+        </tr>
+      </table>
+	  </td>
+  </tr>
+  <tr> 
+    <td height="38" colspan="2" ></td>
+  </tr>
+</table>

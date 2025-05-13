@@ -1,0 +1,96 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Intranet - {div}';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<style>
+	.menu_intranet_gerencia {
+		width: 220px;
+		border-collapse: collapse; 
+		border: 0px Solid #0046AD;
+	}
+
+	.menu_intranet_gerencia th {
+		background: #0046AD;
+		padding: 10px;
+	}
+	
+	.menu_intranet_gerencia td{
+		background: #E7F1FA;
+	}
+
+	.menu_intranet_gerencia td p{
+		padding: 5px;
+	}
+	
+	.intranet_gerencia_titulo {
+		margin: 0px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		color: #0046AD;
+		font-family: calibri, arial;
+		font-size: 18pt;
+	}	
+</style>
+	<BR>
+      <table width="98%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td valign="top"> 
+            <!-- START BLOCK : titulo_pagina -->
+            <h2 class="intranet_gerencia_titulo">{titulo}</h2>
+            <!-- END BLOCK : titulo_pagina -->
+
+            <!-- START BLOCK : titulo_pagina_interna -->
+				<a href="cad_intranet_div.php?div={div}&c={cd_item}" class="links2" style="margin-left: 30px; font-size: 10pt; font-family: calibri, arial;"><img src="img/work_seta.png" border="0"> {titulo}</a>
+				<BR>
+            <!-- END BLOCK : titulo_pagina_interna -->
+			
+            <!-- START BLOCK : cadastro -->
+            <div class="texto1" style="padding-right: 15px; padding-bottom: 3px; font-family: Calibri, Arial;">
+				{imagem}
+				<BR>
+				{conteudo}
+			</div>
+			<BR>
+			<p align="center"><img src="img/img_divisoria1.gif" width="80%" height="1"></p>
+				<!-- START BLOCK : documentos -->
+				<BR>
+				<table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
+					<!-- START BLOCK : doc_associado -->
+					<tr> 
+						<td style="border-top: 1px solid #F4F4F4; padding:4px; {background}">
+							<a href="{link}" class="links2" target="_blank">{texto}</a>
+						</td>
+					</tr>
+					<!-- END BLOCK : doc_associado -->
+				</table>
+				<!-- END BLOCK : documentos -->
+            <!-- END BLOCK : cadastro -->
+          </td>
+          <td valign="top" >
+			<table  border="0" align="right" class="menu_intranet_gerencia" >
+
+				<tr> 
+					<td style="padding-top: 40px; padding-left: 10px; background: url(img/work_intranet.png) no-repeat;"> 
+						<!-- START BLOCK : tit_link -->
+						<h1 style="font-size: 20pt; font-family: calibri, arial; padding-left: 50px; padding-bottom: 5px; color:#0046AD;">{div}</h1>
+						<!-- END BLOCK : tit_link -->
+						<!-- START BLOCK : item_menu -->
+						<p>
+							<a href="cad_intranet_div.php?div={div}&c={cd_item}" class="links2" style="font-size: 10pt; font-family: calibri, arial;"><img src="img/work_seta.png" border="0"> {titulo}</a>
+							<!-- START BLOCK : item_submenux -->
+							<BR>
+							<a style="margin-left: 10px;" href="cad_intranet_div.php?div={div}&c={cd_item}" class="links2">- {titulo}</a>
+							<!-- END BLOCK : item_submenux -->						
+						</p>
+						<!-- END BLOCK : item_menu -->
+					</td>
+				</tr>
+            </table>
+			
+			
+			</td>
+        </tr>
+      </table>
+<!-- INCLUDE BLOCK : footer.html -->

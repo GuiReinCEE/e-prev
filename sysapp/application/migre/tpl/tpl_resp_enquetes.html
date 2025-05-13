@@ -1,0 +1,313 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa - Responder';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+function valida_form(f) {
+	var erros = "";
+	var ncampos_marc = 0;
+	var i = 0;
+	var l = (f.limt.value + 20);
+	var campos = Form.getElements(f);
+	for (i=1; i<campos.length; i++) 
+	{
+		
+		if (campos[i].checked) 
+		{
+			ncampos_marc = ncampos_marc + 1
+		}
+	}
+
+	if (ncampos_marc != f.limt.value) 
+	{
+		if(f.cd_enquete.value == 158) //--> GAMBIARRA PARA DANI (GRI) 05/08/2009
+		{
+			alert("Por favor, marque somente "+ f.limt.value +" resposta.");
+			for (i=1; i<campos.length; i++) 
+			{
+				if (campos[i].checked) 
+				{
+					campos[i].checked = false;
+				}
+			}
+		}
+		else
+		{
+			alert("Por favor, responda a todas as perguntas.");
+		}
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+
+function checaComplemento(cd_pergunta,id,fl_checa)
+{
+	for(i=1; i<13; i++)
+	{
+		var id_campo = "CR_" + cd_pergunta + "_complemento_" + i;
+		var obj = document.getElementById(id_campo);
+		
+		if ((obj != undefined) && (obj != null))
+		{		
+			obj.style.display = 'none';
+		}
+	}
+	
+	if (fl_checa == 'S')
+	{
+		document.getElementById(id).style.display = '';
+		document.getElementById(id).focus();
+	}
+}
+
+function valida_form_NOVO(f) { // FOI USADO NA ELEICOES DA FUNDACAO SOLIDÁRIA
+	var erros = "";
+	var ncampos_marc = 0;
+	var i = 0;
+	if (f.obrigatorio.value == 'S') {
+		var l = (f.limt.value + 20);
+		var campos = Form.getElements(f);
+		for (i=1; i<campos.length; i++) {
+			if (campos[i].checked) {
+				ncampos_marc = ncampos_marc + 1
+			}
+		}
+		if (ncampos_marc != f.limt.value) {
+			alert("Por favor, responda a todas as perguntas.");
+			return false;
+		}
+		else {
+			return true;
+		}
+	} else {
+		if (f.obrigatorio.value == 'P') {
+			var l = (f.limt.value + 20);
+			var campos = Form.getElements(f);
+			for (i=1; i<campos.length; i++) {
+				if (campos[i].checked) {
+					ncampos_marc = ncampos_marc + 1
+				}
+			}
+			if (ncampos_marc == 0) {
+				var confirma = confirm("Você não selecionou nehuma entidade. Confirma seu voto em branco?");
+				if (confirma == true) {
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+}
+</script>
+<script>
+	function mostreLinksLocais(paragrafo){
+		paragrafo = $(paragrafo);
+		var links = $A(paragrafo.getElementsByTagName('a'));
+		//vamos achar os links que têm rel="local"
+		var linksLocais = links.findAll( function(link){
+			var rel = link.getAttribute("rel");
+			return rel =='local';
+		});
+		//agora vamos extrair o texto de cada link
+		var textos = linksLocais.pluck('innerHTML');
+		//vamos colocar os textos em uma única string
+		var resultado = textos.inspect();
+		alert(resultado);
+	}
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2" align="center"> 
+		<!-- START BLOCK : mensagem -->
+		<table width="80%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr> 
+				<td align="center">
+				<BR><BR>
+					<font color="#0046AD" size="5" face="Arial, Helvetica, sans-serif">{mensagem}</font>
+				</td>                      
+			</tr>
+		</table>
+		
+		<!-- END BLOCK : mensagem -->
+			<br>
+			<form action="grava_enquete_resultado.php" method="post" onSubmit="return valida_form(this);" >
+            <!-- START BLOCK : cadastro -->
+            <table width="80%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td align="center" class="texto1"><b>{titulo}: </b>
+                    <input name="cd_enquete" id="cd_enquete" type="hidden" value="{eq}">
+					<input name="proxima_ordem" type="hidden" value="{proxima_ordem}">
+                    <br>
+                    <img src="img/img_divisoria1.gif" width="100%" height="1"> 
+					</td>
+              </tr>
+                    <tr> 
+                      <td align="center"><br><font color="#0046AD" size="5" face="Arial, Helvetica, sans-serif">{grupo}</font>
+					  <input name="cd_agrupamento" type="hidden" value="{cd_agrupamento}">
+					  <input name="ultima_tela" type="hidden" value="{ultima_tela}">
+					  </td>                      
+                    </tr>
+                  </table>
+				  <style>
+					.tab_pergunta {
+						border-collapse:collapse;
+						border: 1px solid #0046AD;
+					}
+					.tab_pergunta td{
+						padding-left: 5px;
+						padding-right: 5px;
+						padding-top: 4px;
+						padding-bottom: 4px;
+					}
+				  </style>
+            <table width="95%" align="center" cellspacing="2" cellpadding="2" bgcolor="#FFFFFF" class="tab_pergunta">
+              <!-- START BLOCK : escala -->
+              <tr bgcolor="#0046AD"> 
+                <td bgcolor="{cor_fundo}"> 
+					<b style="font-family:arial; color:#FFFFFF">{grupo}</b>
+				</td>
+				<!-- START BLOCK : grau -->
+                <td class="linkusu" align="center" style="font-family: arial; font-size: 10pt;"><B>{grau}</B></td>
+				<!-- END BLOCK : grau -->
+				<!-- START BLOCK : colunas_vazias -->
+                <td colspan="{ncols_vazias}"></td>
+				<!-- END BLOCK : colunas_vazias -->
+              </tr>			  
+              <!-- END BLOCK : escala -->
+              <!-- START BLOCK : pergunta -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td height="18" class="links2">{titulo}<strong>{grupo}</strong></td>
+				<td><table width="100%" height="100%" cellspacing="1" border="0" bgcolor="#FFFFFF"><tr bgcolor="{cor_fundo}">
+				<!-- START BLOCK : resposta -->
+                <td align="center" class="texto4"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1} {JS_RADIO}>
+                    {rotulo}
+					<br>
+					{complemento}					
+				</td>
+				<!-- END BLOCK : resposta -->
+				</tr></table></td>
+				<!-- START BLOCK : justificativa -->
+                  <td align="center" class="texto4">{rotulo_justificativa} <textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea></td>
+				<!-- END BLOCK : justificativa -->
+				<!-- START BLOCK : resposta_dissertativa -->
+                <td align="center" class="texto4" colspan="{ncolsamp_diss}"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                    {rotulo_dissertativa}
+                    <input type="{type_dissert}" name="R_diss_{cd_pergunta}"></td>
+				<!-- END BLOCK : resposta_dissertativa -->
+              </tr>
+              <!-- END BLOCK : pergunta -->			  
+              <!-- START BLOCK : pergunta_linha -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td height="18" class="links2" style="font-family: arial; font-size: 9pt; text-align: justify;">
+					{titulo}<strong>{grupo}</strong>
+				</td>
+				
+				<!-- START BLOCK : resposta_linha -->
+                <td align="center" class="texto4">
+					<input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1} {JS_RADIO}>
+                    {rotulo}
+					<br>
+					{complemento}
+				</td>
+				<!-- END BLOCK : resposta_linha -->
+				
+				<!-- START BLOCK : justificativa_linha -->
+                  <td align="center" class="texto4">{rotulo_justificativa} <textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea></td>
+				<!-- END BLOCK : justificativa_linha -->
+				<!-- START BLOCK : resposta_dissertativa_linha -->
+                <td align="center" class="texto4" colspan="{ncolsamp_diss}"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                    {rotulo_dissertativa}
+                    <input type="{type_dissert}" name="R_diss_{cd_pergunta}"></td>
+				<!-- END BLOCK : resposta_dissertativa_linha -->
+              </tr>
+              <!-- END BLOCK : pergunta_linha -->			  			  
+              <!-- START BLOCK : pergunta_vertical -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td height="18" class="links2">{titulo}<strong>{grupo}</strong></td>
+				</tr>				
+				<!-- START BLOCK : resposta_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                <td align="left" class="texto4"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1} {JS_RADIO}>
+                    {rotulo}
+					<br>
+					{complemento}					
+					</td>
+				</tr>
+				<!-- END BLOCK : resposta_vertical -->
+				
+				<!-- START BLOCK : justificativa_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                  <td align="center" class="texto4">{rotulo_justificativa} <textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea></td>
+				 </tr>
+				<!-- END BLOCK : justificativa_vertical -->
+				<!-- START BLOCK : resposta_dissertativa_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                <td align="center" class="texto4" colspan="{ncolsamp_diss}"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                    {rotulo_dissertativa}
+                    <input type="{type_dissert}" name="R_diss_{cd_pergunta}"></td>
+				</tr>
+				<!-- END BLOCK : resposta_dissertativa_vertical -->
+              
+              <!-- END BLOCK : pergunta_vertical -->			  
+			  
+			  
+            </table>
+				<!-- START BLOCK : resposta_texto -->
+				<table width="80%">
+				<tr>
+                  <td align="center" class="texto1">{rotulo_dissertativa}
+                    <textarea name="resp_texto" cols="77" rows="5"></textarea></td>
+				</tr>
+				</table>
+				<!-- END BLOCK : resposta_texto -->
+				<BR>
+			  <table width="80%">
+                <tr> 
+                  <td align="center">
+				  <!-- START BLOCK : bola_voltar -->
+						<input type="button" value="Voltar" class="botao_disabled" style="width: 150px; height: 30px;" onclick="javascript:history.back();">
+				  <!-- END BLOCK : bola_voltar -->
+                  </td>
+                  <td align="center" >
+					{fl_nova}
+				  
+				  
+					<input type="submit" value="Continuar" class="botao" style="width: 150px; height: 30px; {fl_nova_exibe}" >
+				  
+				  </td>
+				  
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center" class="texto1"> 
+                    <!-- START BLOCK : nota_rodape -->
+					{nota_rodape} 
+                    <!-- END BLOCK : nota_rodape -->
+                  </td>
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center"> 
+                    <!-- START BLOCK : informacoes -->
+                    <input name="limt" id="limt" type="hidden" value="{limt}"> <font color="#0046AD" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Nesta tela, voc&ecirc; dever&aacute; responder {limt} pergunta{s}.</font> 
+                    <!-- END BLOCK : informacoes -->
+                  </td>
+                </tr>
+              </table>
+            </form>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

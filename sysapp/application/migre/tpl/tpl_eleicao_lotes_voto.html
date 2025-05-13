@@ -1,0 +1,188 @@
+<html>
+	<title>..:: e-prev :: Eleições Lotes Votos ::..</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="main.css" />
+	<script src="inc/mascara.js"></script>
+
+		<style>
+			.tb_resumo {
+				border-collapse: collapse;
+				width:650px;
+				background:#FFFFFF;	
+				border: 1px solid #0046AD;
+			}
+
+			.tb_resumo *{
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}			
+			
+			.tb_resumo caption {
+				padding-left: 5px;
+				padding-top: 3px;
+				padding-bottom: 3px;
+				color: white;
+				font-size: 10pt;
+				font-weight: bold;				
+				background:#0046AD;
+				border-top: 1px solid #0066CC;
+				border-left: 1px solid #0066CC;
+				border-right: 1px solid #0066CC;
+			}
+			
+			.tb_resumo th {
+				border: 0px;
+				padding-top: 3px;
+				padding-bottom:3px;
+				padding-left:5px;
+				padding-right:5px;
+				text-align:center;	
+				font-weight: bold;
+				color:#000000;
+				background: #0066CC;
+				color: white;
+			}			
+			
+			.tb_resumo td {
+				border: 0px;
+				padding-left:5px;
+				padding-right:5px;
+				padding-top: 3px;
+				padding-bottom:3px;	
+				font-weight: bold;				
+			}	
+
+			.tr_total * {
+				font-weight: bold;
+			}
+
+			.campo {
+				font-size: 8pt;
+				width: 80px;
+				text-align:right;
+			}
+		</style>
+		<script>
+			var ar_campo = Array();
+			function validaForm()
+			{
+				var ob_form = document.formulario;
+				var qt_total_voto = 0;
+				for(i=0; i < ar_campo.length; i++)
+				{
+					qt_total_voto += parseInt(document.getElementById(ar_campo[i]).value);
+				}
+				
+				if(confirm("Total de voto para lançar é de "+qt_total_voto+".\n\nPara confirmar clique em Ok."))
+				{
+					if(parseInt(ob_form.qt_total_recebido.value) < (parseInt(ob_form.qt_total_apurado.value) + parseInt(qt_total_voto))) 
+					{
+						alert('Número total de votos é maior que o total de votos recebido.');
+						return false;
+					}
+					else if(parseInt(qt_total_voto) < 1)
+					{
+						alert('Não existe votos para lançar.');
+						return false;
+					}
+					else
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			
+			function validaFormCad()
+			{
+				if(parseInt(document.getElementById('qt_recebido').value) > 0)
+				{
+					if(confirm("Para confirmar os "+document.getElementById('qt_recebido').value+" votos recebido, clique em Ok."))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					alert('A quantidade deve ser maior que zero.')
+					return false;
+				}
+			}
+			
+			function cancelaLote(cd_lote)
+			{
+				if(confirm('Para cancelar o lote '+cd_lote+', clique em Ok.'))
+				{
+					document.location.href = 'eleicao_lotes_voto_cancela.php?cd_lote='+cd_lote;
+				}
+			}
+		</script>
+</head>
+<body>
+			<table border="0" align="center">
+				<tr>
+					<td>
+						<input type="button" value="Voltar para apuração" class="botao" style="font-weight: bold;" onclick="document.location.href='eleicao_lanca_voto.php';">
+					</td>
+				</tr>
+			</table>
+			<!-- START BLOCK : lote -->
+			<BR>
+			<table border="0" align="center"  class="tb_resumo">
+				<caption>LOTE Nº {cd_lote}</caption>
+				<tr>
+					<th width="200px">
+						Cargo
+					</td>
+					<th width="200px">
+						Candidato
+					</th>
+					<th width="100px">
+						Total de votos
+					</th>
+				</tr>
+				<!-- START BLOCK : lista_lote -->
+				<tr style="background-color: {bg_color};">
+					<td style="white-space:nowrap;">
+						{ds_cargo}
+					</td>
+					<td style="white-space:nowrap;">
+						{ds_candidato}
+					</td>
+					<td align="right">
+						{qt_total_candidato}
+					</td>					
+				</tr>				
+				<!-- END BLOCK : lista_lote -->	
+				<!-- START BLOCK : lista_lote_total -->
+				<tr >
+					<td style="white-space:nowrap;font-weight: bold;" colspan="2">
+						Total de votos do lote
+					</td>
+					<td align="right" style="font-weight: bold;">
+						{qt_total}
+					</td>					
+				</tr>				
+				<!-- END BLOCK : lista_lote_total -->	
+				<tr style=" background-color:#F2F8FC;">
+					<td align="left" colspan="3">
+						<input type="button" value="Cancelar Lote" class="botao_vermelho" style="font-weight: bold; {fl_exibe_botao}" onclick="cancelaLote({cd_lote});" {fl_disabled}>
+						{dt_cancela}
+					</td>					
+				</tr>				
+			</table>
+			<!-- START BLOCK : lote -->
+
+			<br>
+			<br>
+
+</body>
+</html>

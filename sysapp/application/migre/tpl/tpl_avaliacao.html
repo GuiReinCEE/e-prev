@@ -1,0 +1,347 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Avaliação de Desempenho';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style>
+#myDialogId .myButtonClass 
+{
+	padding:3px;
+	font-size:20px;
+	width:100px;
+}
+#myDialogId .ok_button 
+{
+	color:#2F2;
+}
+#myDialogId .cancel_button 
+{
+	color:#F88;
+}
+
+#confirm_cancel
+{
+	margin-top: -50px;
+	margin-left: -50px;
+	left: 50%;
+	top: 50%;
+	position: fixed;
+}
+@media screen
+{
+	div#confirm_cancel
+	{
+		position: fixed;
+	}
+	* html
+	{
+		overflow-y: hidden;
+	}
+	* html body
+	{
+		overflow-y: auto;
+		height: 100%;
+	}
+	* html div#confirm_cancel
+	{
+		position: absolute;
+	}
+}
+input.normal, textarea.normal {
+	border: 1px solid #000000;
+}
+input.required, textarea.required {
+	border: 1px solid #CCCCCC;
+}
+input.failed, textarea.failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.failed_custom, textarea.failed_custom {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.passed, textarea.passed {
+	border: 1px solid #000000;
+	color : #000;
+}
+
+.error
+{
+	color: #FFFFFF;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	font-weight:bold;
+}
+
+.resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado th {
+    font-weight: bold;  
+    text-align:center;
+    border: 1px #dae9f7 solid;
+    background:#dae9f7;
+}
+.tb_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px #dae9f7 solid;
+}       
+
+.tb_resultado_selecionado {
+    background:#E6E8B6;
+    border:1px #FAD163 solid;
+}
+
+.tb_lista_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_lista_resultado * {
+    font-size: 10pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_lista_resultado th {
+    font-size: 10pt;
+    font-weight: bold;  
+    text-align:center;
+    color:#FFFFFF;
+    background:#0046ad;
+}
+
+.tb_lista_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.td_border
+{
+    border: 1px solid #CCCCCC;
+}
+
+.tb_cadastro_saida {
+	border-collapse: collapse;
+	width: 60%;
+	background:#F4F4F4;
+}
+
+.tb_cadastro_saida * {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Arial,'MS Sans Serif';			
+}
+
+.tb_cadastro_saida th {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;
+	background:#dae9f7;
+}
+
+.tb_cadastro_saida td {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;	
+}	
+
+.exibeRevisao {
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}	
+.exibeRevisao th{
+	background:#FAD163;
+	border:1px #FAD163 solid;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;	
+	
+}
+.exibeRevisao td{
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}			
+
+.font_table_title
+{
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Arial, 'MS Sans Serif';
+    color: white;
+}
+</style>
+
+<script language="JavaScript" type="text/JavaScript" src="avaliacao.js"></script>
+
+<script type="text/javascript" src="inc/windows_js_1.3/javascripts/window.js"></script>
+<script type="text/javascript" src="inc/windows_js_1.3/javascripts/window_effects.js"></script>
+
+<link href="inc/windows_js_1.3/themes/default.css" rel="stylesheet" type="text/css"></link>
+<link href="inc/windows_js_1.3/themes/alphacube.css" rel="stylesheet" type="text/css"></link>
+
+
+<link href="https://www.e-prev.com.br/cieprev/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<script language="JavaScript">
+
+function mascara(o,f)
+{
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+
+function execmascara()
+{
+    v_obj.value=v_fun(v_obj.value)
+}
+
+function soNumeros(v)
+{
+    return v.replace(/\D/g,"")
+}
+</script>
+
+	<form name="onlyForm" id="only_form" method="post">
+
+	<!--
+	  -- BEGIN
+	  -- CAMPOS DE APOIO 
+	  -->
+
+	<!-- tipo_promocao_hidden indica constante com Tipo da Promoção que por padrão é HORIZONTAL, será vertical quando o gerente iniciar uma vertical com seu acesso privilegiado -->
+	<input id="tipo_promocao_hidden" name="tipo_promocao_hidden" type="hidden" value="{tipo_promocao_hidden}" />
+
+	<!-- load_by_url_tipo_hidden indica qual aba deve ser aberta diretamente por comandos vindos de querystring -->
+	<input id="load_by_url_tipo_hidden" name="load_by_url_tipo_hidden" type="hidden" value="{load_by_url_tipo}" />
+
+	<!-- load_by_url_cd_capa_hidden código da capa da avaliação para abertura direta, vindo de querystring -->
+	<input id="load_by_url_cd_capa_hidden" name="load_by_url_cd_capa_hidden" type="hidden" value="{load_by_url_cd_capa}" />
+
+	<!-- cd_avaliacao_selected_hidden contem o código da capa da avaliação selecionada (cd_avaliacao_capa) -->
+	<input id="cd_avaliacao_selected_hidden" name="cd_avaliacao_selected_hidden" type="hidden" value="" />
+
+	<!-- ajax_command_hidden contem o comando para procedimentos em ajax, comandos recuperados nas páginas requisitadas -->
+	<input id="ajax_command_hidden" name="ajax_command_hidden" type="hidden" value="" />
+
+	<!-- status_selected_hidden indica o status da avaliação selecionada -->
+	<input id="status_selected_hidden" name="status_selected_hidden" type="hidden" value="" />
+
+	<!-- usuario_logado_is_comite_hidden flag S ou N que indica que o usuário logado é integrante do comite da avaliação selecionada -->
+	<input id="usuario_logado_is_comite_hidden" name="usuario_logado_is_comite_hidden" type="hidden" value="" />
+
+	<!-- usuario_logado_is_avaliado_hidden flag S ou N que indica que o usuário logado é o usuário avaliado na avaliação selecionada -->
+	<input id="usuario_logado_is_avaliado_hidden" name="usuario_logado_is_avaliado_hidden" type="hidden" value="" />
+
+	<!-- avaliacao_publicada_hidden indica que a avaliação selecionada já foi publicada pelo integrante do comite responsável -->
+	<input id="avaliacao_publicada_hidden" name="avaliacao_publicada_hidden" type="hidden" value="" />
+
+	<!-- tem_avaliacao_hidden indica que a o usuário logado já realizou a avaliação -->
+	<input id="tem_avaliacao_hidden" name="tem_avaliacao_hidden" type="hidden" value="" />
+
+	<!--
+	  -- CAMPOS DE APOIO 
+	  -- END
+	  -->
+
+	<div class="aba_definicao">
+		<div id="aba">
+			<ul>
+				<li onclick="thisPage.aba_movimento_Click(this);" 
+					id="aba_movimento" 
+					class="abaSelecionada"
+					contentPartial="div_content"
+					>
+					<span>Lista</span>
+				</li>
+				<!-- onclick="thisPage.aba_identificacao_Click(this);" -->
+					<li id="aba_identificacao" 
+						class=""
+						style="display:none"
+						>
+					<span>Identificação</span>
+				</li>
+				<li onclick="thisPage.aba_quadro_resumo_Click(this);" 
+						id="aba_quadro_resumo" 
+						class=""
+						style="display:none"
+						>
+					<span>Avaliação - Avaliado</span>
+				</li>
+				<li onclick="thisPage.aba_avaliacao_superior_Click(this);" 
+						id="aba_avaliacao_superior" 
+						class=""
+						style="display:none"
+						>
+					<span>Avaliação - Superior</span>
+				</li>
+				<li onclick="thisPage.aba_avaliacao_comite_Click(this);" 
+						id="aba_avaliacao_comite" 
+						class=""
+						style="display:none"
+						>
+					<span>Avaliação - Comitê</span>
+				</li>
+				<li onclick="thisPage.aba_avaliacao_resultado_Click(this);" 
+						id="aba_avaliacao_resultado" 
+						class=""
+						style="display:none"
+						>
+					<span>Resultado</span>
+				</li>
+			</ul>
+		</div>
+
+		<div id='div_filtro' style='text-align:center;'>
+			<br><br>
+			Ano: <input id='filtro_ano' name='filtro_ano' value='{ano_atual}' />
+			<input type='button' id='filtrar_btn' name='filtrar_btn' value='Filtrar' onclick='filtrar();' class='botao' />
+		</div>
+
+		<div class="div_aba_content">
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div
+				id="div_content" 
+				urlInitial="avaliacao_partial_lista.php"
+				args="page=1"><CENTER><h1 style="font-family: calibri, arial; font-size: 18pt;">Carregando...</h1></CENTER></div>
+		</div>
+	</div>
+
+	</form>
+
+<script>
+<!--
+	thisPage.initialize();
+-->
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,268 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Mailing ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script>
+	function fnc_inclui_evento(cd_mailing, cor_fundo1, cor_fundo2)
+	{
+		var ds_url    = "lst_eventos_pessoa_ajax.php";
+		var lt_param  = "cd_evento="+ document.getElementById('lst_eventos').value+"&cd_mailing="+cd_mailing+"&cor_fundo1="+cor_fundo1+"&cor_fundo2="+cor_fundo2;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_eventos')", '.innerHTML=', 'POST');		
+	}
+	function fnc_atualiza_evento(cd_mailing, cd_evento, valor, campo, cor_fundo1, cor_fundo2)
+	{
+		var ds_url    = "lst_atualiza_evento_pessoa_ajax.php";
+		var lt_param  = "cd_evento="+cd_evento+"&cd_mailing="+cd_mailing+"&cd_valor="+valor.checked+"&cd_campo="+campo+"&cor_fundo1="+cor_fundo1+"&cor_fundo2="+cor_fundo2;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_eventos')", '.innerHTML=', 'POST');		
+	}
+	function fnc_exclui_evento(cd_mailing, cd_evento, cd_seq, cor_fundo1, cor_fundo2)
+	{
+		var ds_url    = "lst_exclui_evento_pessoa_ajax.php";
+		var lt_param  = "cd_evento="+cd_evento+"&cd_mailing="+cd_mailing+"&cd_seq="+cd_seq+"&cor_fundo1="+cor_fundo1+"&cor_fundo2="+cor_fundo2;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_eventos')", '.innerHTML=', 'POST');		
+	}
+	function fnc_inclui_comunidade(cd_mailing, cor_fundo3, cor_fundo4)
+	{
+		var ds_url    = "lst_comunidades_pessoa_ajax.php";
+		var lt_param  = "cd_comunidade="+ document.getElementById('lst_comunidades').value+"&cd_mailing="+cd_mailing+"&cor_fundo3="+cor_fundo3+"&cor_fundo4="+cor_fundo4;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_comunidades')", '.innerHTML=', 'POST');		
+	}
+	function fnc_exclui_comunidade(cd_mailing, cd_comunidade, cd_seq, cor_fundo3, cor_fundo4)
+	{
+		var ds_url    = "lst_exclui_comunidade_pessoa_ajax.php";
+		var lt_param  = "cd_comunidade="+cd_comunidade+"&cd_mailing="+cd_mailing+"&cd_seq="+cd_seq+"&cor_fundo3="+cor_fundo3+"&cor_fundo4="+cor_fundo4;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_comunidades')", '.innerHTML=', 'POST');		
+	}
+</script>
+<script language="JavaScript">
+<!--
+function win_empresa(r,h)
+{
+	w = window.open("mailing_empresa.php?r="+r+"&h="+h, "wemp", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+}
+function win_cargo(r,h)
+{
+	w = window.open("mailing_cargo.php?r="+r+"&h="+h, "wcar", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+}
+-->
+</script>
+<script Language="JavaScript">
+<!--
+function valida_caracteres(txt, caracteres) 
+{ 
+	saida = true;
+	for (i = 0; i < txt.length; i++) 
+	{
+		achei = true;
+		if (caracteres.indexOf(txt.charAt(i)) < 0) 
+		{  
+			achei = false; 
+		}
+		saida = saida && achei;
+	}
+	return saida;
+}
+
+function valida_form(f)
+{ 
+	if ((f.nome_empresa.value == "") && (f.nome.value == "")) 
+	{
+		alert("Você não preencheu os campos Nome e Empresa.");
+		return false;
+	}
+	else
+	{
+		if (valida_caracteres(f.cnpj.value,"0123456789") && valida_caracteres(f.telefone.value,"0123456789") && valida_caracteres(f.celular.value,"0123456789") && valida_caracteres(f.fax.value,"0123456789"))
+		{
+			return true;
+		}
+		else
+		{
+			alert("Preencha os campos CNPJ, Telefone, Celular e Fax apenas com números. Letras e símbolos não são aceitos");
+			return false;
+		}
+	}
+}
+-->
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+	<!-- START BLOCK : mensagem -->
+	<tr> 
+	  <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+	</tr>
+	<!-- END BLOCK : mensagem -->
+	<!-- START BLOCK : cadastro -->
+	<tr valign="top">
+	  <td colspan="2"><table width="777" border="0"  cellspacing="0" cellpadding="0" align="center">
+			<tr> 
+			  <td background="img/img_fundo_atividade.jpg" valign="top">
+			  <img src="img/img_menu_pessoas_relacionamento.jpg" border="0" usemap="#Map"> 
+				<map name="Map">
+				  <area shape="rect" coords="2,0,232,37" href="cad_mailing.php?c={codigo}&tr={tr}&cac={cac}">
+				  <area shape="rect" coords="233,0,455,37" href="cad_mailing_relacionamento.php?c={codigo}&tr={tr}&cac={cac}">
+				</map> </td>
+			  <td width="430" background="img/img_fundo_ativ_sup.jpg"></td>
+			  <td><img src="img/img_canto_sup_dir_ativ.jpg"></td>
+			</tr>
+			<tr> 
+			  
+			<td colspan="2" background="img/img_fundo_atividade.jpg" align="center"><form name="form1" method="post" action="grava_mailing.php" onsubmit="return valida_form(this)">
+				<table border="0" align="center" cellpadding="1" cellspacing="1">
+				  <tr> 
+					<td valign="top" class="titulo_verde">{nome} 
+					  <input name="insere" type="hidden" id="insere" value="{insere}"> 
+					  <input name="codigo" type="hidden" id="codigo" value="{codigo}"> 
+					</td>
+					<td class="texto1" align="right"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a> 
+					</td>
+				  </tr>
+				  <tr> 
+					<td colspan="2" align="center"><img src="img/img_divisoria.gif" width="90%" height="1"></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2"> <div id="tab_eventos"> 
+						<table width="100%" border="0" cellspacing="1" cellpadding="0">
+						  <tr class="texto1"> 
+							<td colspan="4"><span class="titulo_verde">Eventos 
+							  institucionais</span></td>
+							<td colspan="3" align="center"><select name="lst_eventos" id="lst_eventos">
+								<!-- START BLOCK : sel_evento -->
+								<option value="{cd_evento}" style="font-size:12;">{nome_evento}</option>
+								<!-- END BLOCK : sel_evento -->
+							  </select></td>
+							<td align="right"><img src="img/btn_evento.jpg" border="0" onClick="fnc_inclui_evento({codigo},'{cor_fundo1}','{cor_fundo2}');" title="Selecione o evento e clique aqui para inclui-lo."></td>
+						  </tr>
+						</table>
+						<div id="lista_eventos"> 
+						  <table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+							<tr class="cabecalho" bgcolor="#006633"> 
+							  <td rowspan="2">Evento</td>
+							  <td rowspan="2">Confir-<br>
+								mado</td>
+							  <td colspan="2">Convite</td>
+							  <td rowspan="2">Paga-<br>
+								mento</td>
+							  <td rowspan="2">Certificado</td>
+							  <td rowspan="2">Esteve<br>
+								presente</td>
+							  <td rowspan="2">Data<br>
+								Atualiza&ccedil;&atilde;o</td>
+							  <td rowspan="2">Excl.</td>
+							</tr>
+							<tr class="cabecalho" bgcolor="#006633"> 
+							  <td>Mala<br>
+								direta</td>
+							  <td>Email</td>
+							</tr>
+							<!-- START BLOCK : evento -->
+							<tr class="texto1" bgcolor="{cor_fundo}"> 
+							  <td>{evento}</td>
+							  <td align="center"><input type="checkbox" name="opt_confirmado_{cd_evento}" id="opt_confirmado_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'presenca_confirmada','{cor_fundo1}','{cor_fundo2}')" {chk_confirmado}></td>
+							  <td align="center"><input type="checkbox" name="opt_mala_{cd_evento}" id="opt_mala_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'mala_direta_enviada','{cor_fundo1}','{cor_fundo2}')" {chk_mala}></td>
+							  <td align="center"><input type="checkbox" name="opt_email_{cd_evento}" id="opt_email_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'email_enviado','{cor_fundo1}','{cor_fundo2}')" {chk_email}></td>
+							  <td align="center"><input type="checkbox" name="opt_pagamento_{cd_evento}" id="opt_pagamento_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'pagamento_efetuado','{cor_fundo1}','{cor_fundo2}')" {chk_pagamento}></td>
+							  <td align="center"><input type="checkbox" name="opt_certificado_{cd_evento}" id="opt_certificado_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'certificado_impresso','{cor_fundo1}','{cor_fundo2}')" {chk_certificado}></td>
+							  <td align="center"><input type="checkbox" name="opt_presenca_{cd_evento}" id="opt_presenca_{cd_evento}" value="S" onClick="fnc_atualiza_evento({cd_mailing},{cd_evento},this,'presente_no_evento','{cor_fundo1}','{cor_fundo2}')" {chk_presenca}></td>
+							  <td align="center">{dt_atualizacao} </td>
+							  <td align="center"><img src='img/btn_linha_lixeira.jpg' onClick="fnc_exclui_evento({cd_mailing},{cd_evento}, {seq},'{cor_fundo1}','{cor_fundo2}')" style="cursor:pointer;"></td>
+							</tr>
+							<!-- END BLOCK : evento -->
+						  </table>
+						</div>
+					  </div></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2" align="center"><img src="img/img_divisoria.gif" width="90%" height="1"></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2"> <div id="tab_comunidades"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
+						<tr class="titulo_bege"> 
+						  <td colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+							  <tr class="texto1"> 
+								<td><span class="titulo_bege">Comunidades</span></td>
+								<td align="center"><select name="lst_comunidades" id="lst_comunidades">
+									<!-- START BLOCK : sel_comunidade -->
+									<option value="{cd_comunidade}" style="font-size:12;">{nome_comunidade}</option>
+									<!-- END BLOCK : sel_comunidade -->
+								  </select></td>
+								<td align="right"><img src="img/btn_contatos.jpg" border="0"  onClick="fnc_inclui_comunidade({codigo},'{cor_fundo3}','{cor_fundo4}');" title="Selecione a comunidade e clique aqui para incluí-la."></td>
+							  </tr>
+							</table></td>
+						</tr>
+					  </table>
+					  <div id="lista_comunidades"> 
+						<table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+						  <tr class="cabecalho" bgcolor="#BFA260"> 
+							<td height="33">Nome</td>
+							<td>Data Entrada</td>
+							<td>Exclus&atilde;o</td>
+						  </tr>
+						  <!-- START BLOCK : comun -->
+						  <tr class="texto1" bgcolor="{cor_fundo}"> 
+							<td>{comunidade}</td>
+							<td>{dt_entrada}</td>
+							<td align='center'><img src="img/btn_linha_lixeira.jpg" onClick="fnc_exclui_comunidade({cd_mailing},'{cd_comunidade}',{seq},'{cor_fundo3}','{cor_fundo4}');" style='cursor:pointer;'></td>
+						  </tr>
+						  <!-- END BLOCK : comun -->
+						</table>
+					  </div></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2" align="center"><img src="img/img_divisoria.gif" width="90%" height="1"></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2"> <div id="tab_emails"> 
+						<table width="100%" border="0" cellspacing="1" cellpadding="0">
+						  <tr class="titulo_azul"> 
+							<td>Emails Enviados</td>
+							<td class="links2azul">{email}</td>
+						  </tr>	
+						</table>
+						  <table width="100%" border="0" cellspacing="1" cellpadding="0" bgcolor="#FFFFFF">
+						  <tr class="cabecalho" bgcolor="#006699"> 
+							<td height="33">Assunto</td>
+							<td>Data Envio</td>
+							<td>Ver email</td>
+						  </tr>
+						  <!-- START BLOCK : email -->
+						  <tr class="texto1" bgcolor="{cor_fundo}"> 
+							<td>{assunto}</td>
+							<td>{dt_envio}</td>
+							<td align="center"><a href="cad_envia_emails.php?op=A&c={cd_email}"><img src="img/btn_manut.jpg" border="0"></a></td>
+						  </tr>
+						  <!-- END BLOCK : email -->
+						</table>
+					  </div></td>
+				  </tr>
+				  <tr> 
+					<td colspan="2" align="center"> 
+					  <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;"> 
+					</td>
+				  </tr>
+				</table>
+		</form>
+			</td>
+			  <td background="img/img_fundo_dir.jpg">&nbsp;</td>
+			</tr>
+			<tr> 
+			  <td colspan="2" background="img/img_fundo_atividade.jpg"><div align="center"><font size="1" face="Verdana">
+				
+				</font></div></td>
+			  <td background="img/img_fundo_dir.jpg">&nbsp;</td>
+			</tr>
+			<tr> 
+			  <td colspan="2" background="img/img_fundo_ativ_cel5.jpg"><img src="img/img_canto_inf_esq.jpg"></td>
+			  <td background="img/img_fundo_dir.jpg"><img src="img/img_canto_inf_dir.jpg"></td>
+			</tr>
+		  </table></td>
+	</tr>
+	<tr valign="top">
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

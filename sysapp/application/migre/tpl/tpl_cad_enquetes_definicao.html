@@ -1,0 +1,399 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function win_graf(e,p) {
+	w = window.open("graf_pizza_resp_enquete.php?cd_enquete=" + e + "&cd_questao=" + p, "wg1", "menubar=no,location=no,scrollbars=no,resizable=no,width=580,height=300");
+}
+function win_coment(e,p) {
+	w = window.open("comentario_resp_enquete.php?cd_enquete=" + e + "&cd_questao=" + p, "wg1", "menubar=no,location=no,scrollbars=yes,resizable=yes,width=500,height=330");
+}
+function fnc_confirma_exclusao(f) 
+{
+	var confirma = confirm("ATENÇÃO\nEsta ação é IRREVERSÍVEL.\n\nConfirma a exclusão das respostas?");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_agenda(f) {
+	var confirma = confirm("Confirma a marcação desta pesquisa na agenda do Outlook de toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_envio_emails(f) {
+	var confirma = confirm("Confirma o envio dos emails para toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+//-->
+</SCRIPT>
+
+            <!-- START BLOCK : mensagem -->
+            <div class="titulo_vermelho">{msg}</div>
+            <!-- END BLOCK : mensagem -->
+
+            <!-- START BLOCK : cadastro -->
+
+				<div class="aba_definicao"><!-- #aba_definicao -->
+
+					<div id="aba"><!-- #aba -->
+						<ul>
+							<li onclick="location.href='lst_enquetes.php'">
+								<span>LISTA</span>
+							</li>						
+							<li id="abaMovimento" class="abaSelecionada">
+								<span>DEFINIÇÃO</span>
+							</li>
+							<li onclick="location.href='cad_enquetes_estrutura.php?c={codigo}'" id="abaMovimento" style="{style_abas}">
+								<span>ESTRUTURA</span>
+							</li>
+							<li onclick="location.href='cad_enquetes_resultados.php?c={codigo}'" id="abaMovimento" style="{style_abas}">
+								<span>RESULTADOS</span>
+							</li>
+						</ul>
+					</div><!-- #aba -->
+
+					<div class="div_aba_content"><!-- #div_aba_content -->
+						<br><br>
+						<div id="div_content"><!-- #div_content -->
+
+							<table width="100%" border="0" cellpadding="1" cellspacing="1">
+	        					<tr valign="top"> 
+	          						<td class="titulo_vermelho" align="center">
+	          						
+							            <form name="form1" method="post" action="grava_enquete.php">
+		              						<input name="codigo" type="hidden" id="codigo" value="{codigo}">
+		                    				<table border="0" align="center" cellpadding="1" cellspacing="1">
+		                      					<tr> 
+		                        					<td align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+		                          						Enquete:</font>
+		                      						</td>
+		                        					<td align="center">
+														<h2 style="color: #0046AD;">{codigo}</h2>
+													</td>
+		                        					<td colspan="2">
+		                        						<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+		                          						<input name="titulo" type="text" id="titulo2" value="{titulo}" size="55" {ro_responsavel}>
+		                          						</font>
+		                      						</td>
+		                        					<td align="center" nowrap>
+														<!--
+		                        						<a href="envia_email_pesquisa.php?num_pesquisa={codigo}" 
+		                        							onClick="return fnc_confirma_envio_emails(this)"
+		                        							><img src="img/btn_encaminhar_grupo.jpg" border="0"
+		                    							></a>
+														-->
+														
+		                          						<a href="resp_enquetes_capa.php?c={codigo}" target="_blank"
+														title="Visualizar formulário da pesquisa"
+		                          							><img src="img/btn_view.jpg" border="0"
+		                          						></a>
+														<a href="cad_email_marketing.php?op=I&pesq={codigo}"
+														title="Criar divulgação para a pesquisa"
+		                    								><img src="img/btn_outlook.jpg" border="0"
+		                								></a>
+		                          						
+
+		                      							<a href="exclui_enquete.php?c={codigo}" title="Excluir pesquisa"
+		                      								><img src="img/btn_exclusao.jpg" 
+		                      								border="0"
+		                  								></a>
+
+		              								</td>
+		                  						</tr>
+		                      					<tr>
+		                        					<td align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Site:</font></td>
+		                        					<td rowspan="4" align="center" valign="middle" class="texto1">} ou {</td>
+		                        					<td>
+		                        						<select size="1" name="site" {dis_responsavel}>
+								                            <!-- START BLOCK : site -->
+								                            <option value="{cd_site}" {chk_site}>{nome_site}</option>
+								                            <!-- END BLOCK : site -->
+		                          						</select>
+		                      						</td>
+		                        					<td colspan="2" align="right" valign="top" class="texto1">
+		                    						</td>
+		                  						</tr>
+		                      					<tr>
+		                        					<td align="right" class="texto1">Evento:</td>
+		                        					<td>
+		                        						<select size="1" name="evento" {dis_responsavel}>
+								                            <!-- START BLOCK : evento -->
+								                            <option value="{cd_evento}" {chk_evento}>{nome_evento}</option>
+								                            <!-- END BLOCK : evento -->
+		                          						</select>
+		                      						</td>
+		                        					<td colspan="2" align="right" valign="top" class="texto1">
+		                    						</td>
+		                  						</tr>
+		                      					<tr>
+		                        					<td align="right" class="texto1">Publica&ccedil;&atilde;o:</td>
+		                        					<td>
+		                        						<select size="1" name="publicacao" {dis_responsavel}>
+								                            <!-- START BLOCK : publicacao -->
+								                            <option value="{cd_publicacao}" {chk_publicacao}>{nome_publicacao}</option>
+								                            <!-- END BLOCK : publicacao -->
+							                          	</select>
+						                          	</td>
+		                        					<td colspan="2" align="right" valign="top" class="texto1">
+		                        					</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td align="right" class="texto1">Servi&ccedil;o:</td>
+		                        					<td>
+			                    						<select size="1" name="servico" {dis_responsavel}>
+						                            		<!-- START BLOCK : servico -->
+						                            		<option value="{cd_servico}" {chk_servico}>{nome_servico}</option>
+						                            		<!-- END BLOCK : servico -->
+			                          					</select>
+		                          					</td>
+		                        					<td colspan="2" align="right" valign="top" class="texto1">
+		                    						</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right" class="texto1">Controle de preenchimento:</td>
+		                        					<td class="texto1">
+		                        						<input name="opc_preenchimento" type="radio" value="I" {chk_ip}  {dis_responsavel}>Por computador (IP)<br> 
+														<input name="opc_preenchimento" type="radio" value="U" {chk_usuario} {dis_responsavel}>Por usu&aacute;rio de rede<br> 
+														<input name="opc_preenchimento" type="radio" value="F" {chk_formulario} {dis_responsavel}>Por formul&aacute;rio<br> 
+														<input name="opc_preenchimento" type="radio" value="P" {chk_participante} {dis_responsavel}>Por participante<BR>
+														<input name="opc_preenchimento" type="radio" value="R" {chk_re} {dis_responsavel}>Por RE
+													</td>
+		                        					<td rowspan="6" align="right" valign="top" class="texto1">Banner:</td>
+		                        					<td rowspan="6" align="right" valign="top" class="texto1">{imagem}</td>
+		                  						</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right">
+														<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Início (Data - Hora):</font>
+													</td>
+		                        					<td>
+		                        						<input name="dt_inicio" 
+		                        							type="text" 
+		                        							id="dt_inicio"
+		                        							value="{dt_inicio}"
+		                        							{ro_responsavel}
+		                        							onfocus="this.select();" 
+		                        							OnKeyDown="mascaraData(this,event);" 
+		                        							maxlength="10" size="10"> - 
+														<input name="hr_inicio" 
+															type="text" 
+															id="hr_inicio" 
+															value="{hr_inicio}" 
+															{ro_responsavel} 
+															onfocus="this.select();" 
+															OnBlur="verificaHora(this);" 
+															maxlength="5" 
+															size="5"
+															>
+													</td>
+		                      					</tr>
+		                  						<tr>
+		                        					<td colspan="2" align="right">
+														<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Fim (Data - Hora):</font>
+													</td>
+		                        					<td>
+														<input name="dt_fim" 
+															type="text" 
+															id="dt_fim" 
+															value="{dt_fim}" 
+															{ro_responsavel} 
+															onfocus="this.select();" 
+															OnKeyDown="mascaraData(this,event);" 
+															maxlength="10" 
+															size="10"
+															> - 
+														<input name="hr_fim" 
+															type="text" 
+															id="hr_fim" 
+															value="{hr_fim}" 
+															{ro_responsavel} 
+															onfocus="this.select();" 
+															OnBlur="verificaHora(this);" 
+															maxlength="5" 
+															size="5"
+															>							
+													</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Área Respons&aacute;vel:</font></td>
+		                        					<td>
+														<select size="1" name="cd_divisao_responsavel" {dis_responsavel}>
+															<!-- START BLOCK : divisao_responsavel -->
+															<option value="{cd_divisao_responsavel}" {fl_divisao_responsavel}>{ds_divisao_responsavel}</option>
+															<!-- END BLOCK : divisao_responsavel -->
+														</select> 
+													</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right">
+		                        						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+		                    							Respons&aacute;vel:
+		                    							</font>
+		                							</td>
+		                    						<td>
+			                    						<select size="1" name="cbo_responsavel" {dis_responsavel}>
+				                            				<!-- START BLOCK : responsavel -->
+									                        <option value="{cd_responsavel}" {chk_responsavel}>{nome_responsavel}</option>
+									                        <!-- END BLOCK : responsavel -->
+							                          	</select>
+					                          		</td>
+		                      					</tr>
+		                      					<tr>
+							                        <td colspan="2" align="right">
+														<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+															Público total: 
+														</font>
+													</td>
+							                        <td>
+														<input name="nr_publico_total" type="text" id="nr_publico_total"  value="{nr_publico_total}" onblur="if(trimValue(this.value)==''){ this.value = 0; }" size="18" maxlength="18" {ro_responsavel}>
+													</td>
+		                      					</tr>					  
+		                      					<tr>
+							                        <td colspan="2" align="right" class="texto1">Lay-out a ser utilizado:</td>
+							                        <td>
+							                        	<select size="1" name="sel_layout" {dis_responsavel}>
+								                            <!-- START BLOCK : layout -->
+								                            <option value="{cd_tipo_layout}" {chk_tipo_layout}>{nome_tipo_layout}</option>
+								                            <!-- END BLOCK : layout -->
+							                          	</select> 
+													  	<a href="#" target="_self" class="links2verde" onmouseover="MM_showHideLayers('div_layout','','show')" onmouseout="MM_showHideLayers('div_layout','','hide')">Saiba mais &raquo;</a>
+													</td>
+												</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right" class="texto1">Tipo da enquete:</td>
+		                        					<td>
+		                        						<select size="1" name="sel_tipo_enquete" {dis_responsavel}>
+								                            <!-- START BLOCK : tipo_enquete -->
+								                            <option value="{cd_tipo_enquete}" {chk_tipo_enquete}>{nome_tipo_enquete}</option>
+								                            <!-- END BLOCK : tipo_enquete -->
+								                        </select>
+								                        <a href="#" target="_self" class="links2verde" onmouseover="MM_showHideLayers('div_saiba_mais','','show')" onmouseout="MM_showHideLayers('div_saiba_mais','','hide')">Saiba mais &raquo;</a>
+						                          	</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Texto inicial:</font></td>
+		                        					<td colspan="3">
+		                        						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+		                          						<textarea name="abertura" cols="50" rows="3" id="abertura" {ro_responsavel}>{abertura}</textarea>
+		                          						</font>
+		                      						</td>
+		                      					</tr>
+		                      					<tr>
+		                        					<td colspan="2" align="right" valign="top" class="texto1">Texto de encerramento:</td>
+		                        					<td colspan="3">
+		                        						<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+		                      							<textarea name="encerramento" cols="50" rows="3" id="encerramento" {ro_responsavel}>{encerramento}</textarea>
+		                          						</font>
+		                      						</td>
+		                      					</tr>
+		                    				</table>
+	            						
+										<table width="80%">
+											<tr>
+												<td align="center" valign="middle" height="50">
+												
+													<input type="button" value="Voltar" class="botao_disabled" onclick="document.location.href='lst_enquetes.php';" title="Voltar para lista">
+													<input type="submit" value="Salvar" class="botao" title="Salvar a pesquisa" {dis_responsavel}>
+										</form>			
+													<BR>
+													<BR>
+													<form action="excluir_respostas_pesquisa.php" 
+														method="post" 
+														name="form_exclui_respostas" 
+														id="form_exclui_respostas" 
+														onSubmit="return fnc_confirma_exclusao(this)">
+
+														<input name="cd_enquete" 
+															type="hidden" 
+															value="{codigo}">
+														<input name="excluir_respostas" 
+															type="submit" 
+															value="Excluir todas as respostas" 
+															{dis_responsavel}
+															class="botao_vermelho"
+															style="width: 200px;"
+															>
+
+													</form>
+												
+												</td>
+											</tr>
+										</table>
+	                				</td>
+	          						<td>&nbsp;</td>
+	        					</tr>
+	      					</table>
+
+						</div><!-- #div_content -->
+					</div><!-- #div_aba_content -->
+				</div><!-- #aba_definicao -->
+
+			<!-- END BLOCK : cadastro -->
+
+
+<div id="div_layout" style="position:absolute; width:350px; height:180px; z-index:2; left: 400px; background-color:C7C7C7; top: 230px; visibility: hidden;" onmouseover="MM_showHideLayers('div_layout','','show')" onMouseOut="MM_showHideLayers('div_layout','','hide')" class="links2grafite"> 
+	<img src="img/img_saiba_mais.jpg" alt="&nbsp;&raquo;&nbsp;Saiba Mais">	
+	<div id="div_layout_int" style="position:absolute; width:346px; height:150px; z-index:1; background-color:F5F5F5; left: 2px; top: 28px;" > 
+		LAYOUT:<br>
+		Se for em um site, provavelmente seguirá o layout 
+		deste site.<br>
+		Caso não seja específico para um site, provavelmente 
+		seguirá o layout do e-prev. </div>
+	</div>
+	<div id="div_saiba_mais" style="position:absolute; width:350px; height:190px; z-index:2; left: 400px; background-color:C7C7C7; top: 250px; visibility: hidden;" onmouseover="MM_showHideLayers('div_saiba_mais','','show')" onMouseOut="MM_showHideLayers('div_saiba_mais','','hide')" class="links2grafite"> 
+		<img src="img/img_saiba_mais.jpg" alt="&nbsp;&raquo;&nbsp;Saiba Mais">	
+		<div id="div_saiba_mais_int" style="position:absolute; width:346px; height:160px; z-index:1; background-color:F5F5F5; left: 2px; top: 28px;" > 
+			TIPO DA ENQUETE<BR>
+			<i>Enquete:</i> Poucas perguntas, respondidas de forma 
+			rápida como em uma tela de um site na Internet;<br>
+			<i>Pesquisa:</i> Respostas mais completas realizadas 
+			mediante alguma reflexão, permitindo explanação detalhada 
+			de opiniões;<br>
+			<i>Eleições:</i> As respostas indicadas apontam para 
+			a escolha de uma dentre as diversas opiniões disponíveis. 
+		</div>
+	</div>
+</div>
+              
+<script>
+	MaskInput(document.getElementById('nr_publico_total'), "999999999");
+	MaskInput(document.getElementById('dt_inicio'),        "99/99/9999");
+	MaskInput(document.getElementById('hr_inicio'),        "99:99");
+	MaskInput(document.getElementById('dt_fim'),           "99/99/9999");
+	MaskInput(document.getElementById('hr_fim'),           "99:99");
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

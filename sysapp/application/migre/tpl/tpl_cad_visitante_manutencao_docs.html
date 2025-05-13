@@ -1,0 +1,287 @@
+<html><!-- InstanceBegin template="/Templates/menu_projetos.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>..:: e-prev :: Divulga&ccedil;&otilde;es ::..</title>
+<script src="inc/pck_funcoes.js"></script>
+<link href="inc/abas.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+
+	#aba
+	{
+		width:100%;
+	}
+	.aba_definicao 
+	{
+		width:98%;
+	}
+	.aba_conteudo
+	{
+		width:98%;
+	}
+
+</style>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+	function changePage( value )
+	{
+		document.form1.pageIndex.value = value;
+		document.form1.action = 'cad_visitante_manutencao_nome.php';
+		document.form1.submit();
+	}
+	function changeField( index, objChanged )
+	{
+		if ( 
+		
+			document.getElementById('ds_nome_'+index+'').defaultValue!=document.getElementById('ds_nome_'+index+'').value
+		 || document.getElementById('nr_rg_'+index+'').defaultValue!=document.getElementById('nr_rg_'+index+'').value
+		 || document.getElementById('nr_cpf_'+index+'').defaultValue!=document.getElementById('nr_cpf_'+index+'').value
+		
+		) {
+			
+			objChanged.value = "s";
+			
+		}
+		else{
+		
+			objChanged.value = "";
+			
+		}
+	}
+	
+	function valida_form(f) {
+	
+		var erros = "";
+		/*if (f.assunto.value == '') { 
+			erros = erros + "- O campo 'Assunto do Email' deve estar preenchido.\n"; 
+		}
+		if (erros != "") {
+			alert("Erros:\n\n"+erros);
+		}*/
+		/*else 
+		{*/
+			f.action = "grava_visitante_nome.php";
+			f.submit();
+		//}
+	}
+	
+	function executeFilter() {
+		f = document.form1;
+		f.pageIndex.value = 0;
+		f.action = 'cad_visitante_manutencao_nome.php';
+		f.submit();
+	}
+	
+	function fnc_onload() 
+	{
+		// do nothing 
+	}
+//-->
+</script>
+
+<!-- InstanceEndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Fireworks MX Dreamweaver MX target.  Created Mon Apr 21 18:21:40 GMT-0300 (Hora padrão leste da Am. Sul) 2003-->
+<!-- ==================== Galeria de estilos ========================================== --> 
+<link href="main.css" rel="stylesheet" type="text/css">
+<!-- ==================== Scripts Java ================================================ --> 
+<script language="JavaScript" type="text/JavaScript" src="inc/menu_principal.js"></script>
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+function pre_carga_imagens() {
+	<!-- INCLUDE BLOCK : inc/menu_geral1.tpl -->
+}
+</script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<!-- ==================== Corpo da Tela ==================================================== -->
+<body bgcolor="{bgcolor}" 
+	  background="{c_skin}{img_fundo_pagina}" 
+	  text="{text}" 
+	  link="{link}" 
+	  vlink="{vlink}" 
+	  alink="{alink}" 
+	  leftmargin="0" 
+	  topmargin="0" 
+	  marginwidth="0" 
+	  marginheight="0" 
+	  onLoad="pre_carga_imagens(); chama_fnc_onload();" 
+	  onbeforeunload='saida_direta(); return confirma_saida();'
+	  >
+<!-- ==================== Menus de primeiro nível ========================================================== --> 
+<!-- INCLUDE BLOCK : inc/menu_geral2.tpl -->
+<!-- ==================== Área livre ======================================================================= --> 
+<!-- INCLUDE BLOCK : inc/menu_geral3.tpl -->
+<!-- ==================== Camadas sobrepostas ============================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral4_camadas_sobrepostas.tpl -->
+<!-- ==================== Menu Principal =================================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral5_menu_principal.tpl -->
+<!-- -------------------- Mensagem individual por tela ----------------------------------------------------- -->
+<div id="mensagem_tela" style="position:absolute; width:{larg_msgt}px; height:{alt_msgt}px; z-index:1; left: {pos_msgt}px; top: {top_msgt}px;">
+	<!-- InstanceBeginEditable name="mensagem_tela" -->{mensagem_tela}<!-- InstanceEndEditable -->
+</div>  
+<!-- -------------------- Versão e usuário atual ----------------------------------------------------------- -->
+<div id="versao" style="position:absolute; width:277px; height:28px; z-index:1; left: {pos_usuario}px; top: {top_usuario}px; visibility: {visibilidade_usuario};"><span class="{classe_usuario}">Versão 2006.7 - </span><a href="cad_recurso_workspace.php" class="{classe_usuario}" title="{dt_login}{dt_scanner}"><!-- InstanceBeginEditable name="usuario" -->{usuario} - {divsao}<!-- InstanceEndEditable --></a><br>
+</div>
+<!-- ==================== Área principal da tela =========================================================== -->	
+<table border="0" cellpadding="0" cellspacing="0" width="{largura_tela}">
+  <!--DWLayoutTable-->
+  <!-- fwtable fwsrc="layout abertura_compacta.png" fwbase="default.jpg" fwstyle="Dreamweaver" fwdocid = "742308039" fwnested="0" -->
+  <tr>
+    <td background="{c_menu}{img_fundo_sup}" bgcolor="{cor_sup_banner}" height="{altura_sup_banner}"><a href="http://www.e-prev.com.br/controle_projetos/index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image01','','{c_menu}logo_swap.gif',1)"><img src="{c_menu}logo.gif" alt="Página inicial" name="Image01" border="0" hspace="{espaco_superior}" vspace="{espaco_vertical}" {largura_banner}{altura_banner}></a></td>
+  </tr>
+  <tr>
+    <td bgcolor="{cor_fundo_banner}" background="{c_menu}img_fundo_banner.jpg" height="{altura_banner}" class="{classe_banner}"><!-- InstanceBeginEditable name="imagem" --><img src="{c_banner}banner_emkt.jpg" {titulo_tela}{largura_banner}{altura_banner}><!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="{altura_inf_banner}" colspan="2" bgcolor="{cor_inf_banner}" background="{c_menu}{img_fundo_menu}"><img src="{c_menu}img_inicial_menu.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+  </tr>
+  <tr> 
+    <td height="{alt_menu_principal}" valign="top" background="{c_menu}img_fundo_menu3.jpg" bgcolor="{cor_inf_banner}"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" {largura_banner}{altura_banner}>
+        <tr> 
+          <td {largura_banner}{altura_banner}><img src="{c_menu}img_paragrafo_skin.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="38" colspan="2" width="100%">
+
+		<!-- InstanceBeginEditable name="conteudo" -->
+
+
+		    <!-- CADASTRO -->
+		    <table width="100%" border="0" cellpadding="0" cellspacing="1">
+
+			<!-- START BLOCK : cadastro -->
+			<tr valign="top">
+			<td>
+
+			  	<form name="form1" id="form1" method="post">
+			  	<input name="pageIndex" id="pageIndex" type="hidden" value="{pageIndex}" />
+				<br>
+
+				<table align="center">
+					<tr bgcolor="{cor_fundo2}">
+						<td><b>Filtro:</b></td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr>
+								<td class="texto1"><b>Nome:</b></td>
+								<td><input type="text" name="filtro_ds_nome" id="filtro_ds_nome" value="{filtro_ds_nome}" /></td>
+								<td><input type="button" name="filtrar" id="filtrar" value="OK" onclick="executeFilter()" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table width="630" align="center">
+					<tr>
+					<td>
+					<hr style="width:630px"><center>
+					{paginacao}
+					</center><hr style="width:630px">
+					</td>
+					</tr>
+				</table>
+				<table border="0" align="center" cellpadding="0" cellspacing="1">
+
+					<center>
+					<tr bgcolor="{cor_fundo2}">
+						<td></td>
+						<td></td>
+						<td><span><b>Nome:</b></span></td>
+						<td><span><b>CPF:</b></span></td>
+						<td><span><b>RG:</b></span></td>
+						<td></td>
+						<td></td>
+					</tr>
+					</center>
+		
+					<!-- START BLOCK : nomes -->
+					<tr>
+
+			  			<td class="texto1"><b>{ordem}.</b></td>
+			  			
+						<td>
+									  		<input name="cd_visitante[]"
+									  			id="cd_visitante_{index}"
+									  			type="hidden"
+									  			value="{cd_visitante}"
+									  			/></td>
+						<td>
+									  		<input name="ds_nome[]"
+										  		id="ds_nome_{index}" 
+										  		type="text"
+										  		value="{ds_nome}"
+										  		style="width:300px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+				  		<td>
+									  		<input name="nr_rg[]"
+										  		id="nr_rg_{index}" 
+										  		type="text"
+										  		value="{nr_rg}"
+										  		style="width:100px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+				  		<td>
+									  		<input name="nr_cpf[]"
+										  		id="nr_cpf_{index}" 
+										  		type="text"
+										  		value="{nr_cpf}"
+										  		style="width:100px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+						<td>
+									  		<input name="changed[]"
+									  			id="changed_{index}"
+									  			type="hidden"
+									  			value=""
+									  			/></td>
+				  		<td class="texto1"> {ocorrencias}</td>
+
+					</tr>
+					<!-- END BLOCK : nomes -->
+
+				</table>
+				
+				
+				<center>
+					<table width="630">
+						<tr>
+						<td>
+						<hr style="width:630px"><center>
+						{paginacao}
+						</center><hr style="width:630px">
+						</td>
+						</tr>
+					</table>
+				</center>
+				
+
+				<center><input type="button" name="Submit" value="Salvar" onclick="valida_form( document.form1 )" style="width:200px;" /></center>
+
+				</form>
+
+			</td>
+			</tr>
+			<!-- END BLOCK : cadastro -->
+
+		    </table>
+		    <!-- FIM DE: CADASTRO -->
+
+    	<!-- InstanceEndEditable --> 
+
+    </td>
+  </tr>
+</table>
+
+<!-- ==================== Fim da área principal da tela =========================================================== -->
+</body>
+<!-- InstanceEnd -->
+</html>

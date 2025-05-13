@@ -1,0 +1,38 @@
+@media print {
+  #dwf{ display: none; }
+  #div_nossos_sites{ display: none; }
+  #div_ferramentas{ display: none; }
+  #div_workspace{ display: none; }
+  #div_dashboard{ display: none; }
+  #div_frequentes{ display: none; }
+  #menu_contextual{ display: none; }
+  #mensagem_principal{ display: none; }
+  #menu_horizontal{ display: none; }
+  #aba{ display: none; }
+  #plus{ display: none; }
+  #div_enquete{ display: none; }
+  #versao{ display: none; }
+  #menu_geral{ display: none; }
+  #menu1{ display: none; }
+  #menu2{ display: none; }
+  #menu3{ display: none; }
+  #menu4{ display: none; }
+  #menu5{ display: none; }
+  #menu6{ display: none; }
+  #menu7{ display: none; }
+  #menu8{ display: none; }
+  #menu9{ display: none; }
+  #menu10{ display: none; }
+  #menu11{ display: none; }
+  #menu12{ display: none; }
+  #menu13{ display: none; }
+  #menu14{ display: none; }
+  #menu15{ display: none; }
+  #menu16{ display: none; }
+  #menu17{ display: none; }
+  #menu18{ display: none; }
+  #menu19{ display: none; }
+  #menu20{ display: none; }
+  .nao_imprimir { display: none; }
+  .header_fundo{ display:none; }
+}

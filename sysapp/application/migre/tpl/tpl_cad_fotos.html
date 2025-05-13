@@ -1,0 +1,87 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Vídeos Institucionais ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+		<script src="inc/pck_funcoes.js"></script>
+		<script src="inc/mascara.js"></script>		
+		<script>
+			function validaForm()
+			{
+				var ds_msg_erro = "";
+				
+				if(trimValue(document.getElementById("ds_titulo").value) == "")
+				{
+					ds_msg_erro += "\n- Informe o Título";
+				}
+
+				if(trimValue(document.getElementById("dt_data").value) == "")
+				{
+					ds_msg_erro += "\n- Informe a Data do Evento";
+				}
+
+				if(trimValue(document.getElementById("ds_caminho").value) == "")
+				{
+					ds_msg_erro += "\n- Informe o Diretório";
+				}	
+
+				if(trimValue(ds_msg_erro) != "")
+				{
+					alert("Os seguinte itens são necessários:\n" + ds_msg_erro)
+					return false;
+				}
+				else
+				{		
+					return true;
+				}			
+			}
+		</script>
+		<form name="form1" method="post" action="grava_fotos.php" onSubmit="return validaForm();">
+			<input name="cd_fotos" type="hidden" id="cd_fotos" value="{cd_fotos}">
+             <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr align="right" bgcolor="#F4F4F4"> 
+                  <td colspan="3" bgcolor="#F4F4F4">
+                    <input name="image" type="image" src="img/btn_salvar.jpg" border="0">
+					<img src="img/btn_retorna.jpg" onclick="history.back();" style="cursor: pointer;" title="Retornar para listagem" border="0">
+                  </td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td bgcolor="#dae9f7"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">T&iacute;tulo 
+                    do evento:</font></td>
+                  <td colspan="2"> <input name="ds_titulo" type="text" id="ds_titulo" value="{ds_titulo}" size="100" maxlength="100"></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    do evento:</font></td>
+                  <td colspan="2"><font size="1" face="Verdana"> 
+                    <input type="text" name="dt_data" id="dt_data" value="{dt_data}" OnKeyDown="mascaraData(this,event);" maxlength="10">
+                    dd/mm/aaaa</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Diret&oacute;rio:</font></td>
+                  <td colspan="2"> <input name="ds_caminho" type="text" id="ds_caminho" value="{ds_caminho}" size="100"></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td bgcolor="#F4F4F4">
+				  <font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
+				  </td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

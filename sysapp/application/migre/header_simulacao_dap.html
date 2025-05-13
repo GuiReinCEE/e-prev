@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>e-prev [{titulo_pagina}]</title>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" >
+</head>
+<body style='background:#ffffff none repeat scroll 0 0;'>
+
+	<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css" />
+    <script type="text/javascript" src="extjs/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="extjs/ext-all.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="extjs/lib/menu/menus.css" />
+
+	<script type='text/javascript' src='{cieprev_url}js/default.js'></script>
+
+	<!-- SORT TABLE -->
+	<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+	<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>
+	<!-- SORT TABLE -->
+
+	<link rel="stylesheet" type="text/css" media="all" href="{cieprev_url}js/jscalendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+	<script type="text/javascript" src="{cieprev_url}js/jscalendar/calendar.js"></script>
+	<script type="text/javascript" src="{cieprev_url}js/jscalendar/lang/calendar-br.js"></script>
+	<script type="text/javascript" src="{cieprev_url}js/jscalendar/calendar-setup.js"></script>
+
+	<script src="inc/menu_principal.js"></script>
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+
+	<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="main.css" />
+	<link href="inc/print.css" rel="stylesheet" type="text/css">
+
+	<script>
+		Ext.onReady(function() {
+
+			var atividade = new Ext.menu.Menu({ 
+				id: 'atividade', items: {menu_extjs_start_8} 
+			});
+			var cadastro = new Ext.menu.Menu({ 
+				id: 'cadastro', items: {menu_extjs_start_40} 
+			});
+			var ecrm = new Ext.menu.Menu({ 
+				id: 'ecrm', items: {menu_extjs_start_4} 
+			});
+			var gestao = new Ext.menu.Menu({ 
+				id: 'gestao', items: {menu_extjs_start_29} 
+			});
+			var intranet = new Ext.menu.Menu({ 
+				id: 'intranet', items: {menu_extjs_start_281} 
+			});
+			var planos = new Ext.menu.Menu({ 
+				id: 'planos', items: {menu_extjs_start_16} 
+			});
+			var servicos = new Ext.menu.Menu({ 
+				id: 'servicos', items: {menu_extjs_start_31} 
+			});
+
+			var toolBar = new Ext.Toolbar({
+				id:'toolBar'
+				, renderTo: 'MenuDiv'
+				, items:[
+					new Ext.Button( { 
+						text:'Início',handler:function(){ location.href='{eprev_url}workspace.php' } 
+						} )
+					, new Ext.Button({
+						text:'Atividades',menu:atividade
+						})
+					, new Ext.Button({
+						text:'Cadastros',menu:cadastro
+						})
+					, new Ext.Button({
+						text:'e-CRM',menu:ecrm
+						})
+					, new Ext.Button({
+						text:'Gestão',menu:gestao
+						})
+					, new Ext.Button({
+						text:'Intranet',menu:intranet})
+					, new Ext.Button({
+						text:'Planos',menu:planos
+						})
+					, new Ext.Button({
+						text:'Serviços',menu:servicos
+						})
+				]
+			});
+
+		});
+    </script>
+
+    <script type="text/javascript">    
+    function realizar_login()
+  	{
+  		var f = document.forms[0];
+  		f.action = document.getElementById('base_url').value + 'login/entrar';
+  		f.submit();
+  	}
+  	function buscar()
+  	{
+  		var f = document.form_busca_header;
+  		f.action = '{cieprev_url}index.php/geral/buscar';
+  		f.submit();
+  	}
+  	function enterBuscar(e)
+  	{
+  		if(e.keyCode==13)
+  		{
+  			buscar();
+	  		return false;
+  		}
+  		else
+  		{
+  			return true;
+  		}
+  	}
+    </script>
+
+	<style>
+		.header_fundo
+		{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 80px;
+			background: url('{cieprev_url}skins/skin002/img/header/fundo.png');
+			border-bottom: 1px solid #A9BFD3;
+		}
+
+		.header_logo
+		{
+			float:left;
+			margin-top: 5px;
+			margin-left: 13px;
+		}
+
+		.header_tabela
+		{
+			float:left;
+			border-collapse: collapse;
+			margin-left: 20px;
+			height: 80px;
+		}
+
+		.header_titulo
+		{
+			font-family: Arial, Verdana;
+			font-size: 18pt;
+			line-height:65px
+			width: 50%;
+		}	
+
+		.header_usuario
+		{
+			font-family: Arial, Verdana;
+			font-size: 8pt;
+			line-height:65px
+			width: 50%;
+		}	
+
+		.header_menu_canto1
+		{
+			width: 10px;
+			height: 30px;
+			background: url('{cieprev_url}skins/skin002/img/header/menu_canto1.png');
+		}
+
+		.header_menu_canto2
+		{
+			width: 10px;
+			height: 30px;
+			background: url('{cieprev_url}skins/skin002/img/header/menu_canto2.png');
+		}	
+
+		.header_menu_meio 
+		{
+			height: 30px;
+			background: url('{cieprev_url}skins/skin002/img/header/menu_meio.png');
+		}	
+		
+		.header_menu 
+		{
+			height: 30px;
+		}
+
+		.x-toolbar 
+		{
+			background: none;
+			border: 0px;
+		}
+
+		#header_pesquisa 
+		{
+			width: 130px;
+			font-family: Arial, Verdana;
+			font-size: 10pt;
+			border-top: 1px solid #A9BFD3;
+			border-left: 1px solid #A9BFD3;
+			border-bottom: 1px solid #A9BFD3;
+			border-right: 1px solid #A9BFD3;
+		}
+		
+		.botao_busca_topo 
+		{
+			border: 1px solid #75AAD6;
+			font-family: Arial, Verdana;
+			font-size: 8pt;
+			color: #00287A;
+			background: url('{cieprev_url}skins/skin002/img/header/bgBtnBlue.gif') #ecf1f4;
+			font-weight: bold;
+			vertical-align: middle;
+		}
+	</style>
+
+	<div class="header_fundo" style='{mostra_topo}'>
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td>
+			<div class="header_logo">
+				<img src="{cieprev_url}skins/skin002/img/header/logo_eprev.png">
+			</div>
+		</td>
+		<td>
+			<table border="0" class="header_tabela" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						<table width="100%" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td id="titulo_pagina" class="header_titulo">{titulo_pagina}</td>
+								<td align="right" class="header_usuario">
+									<a href="cad_recurso_workspace.php">{usuario} - {divsao}</a> <a href="{eprev_url}"> [sair]</a>
+								</td>						
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="header_menu">
+						<table border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="header_menu_canto1">
+								</td>
+								<td class="header_menu_meio" >
+									<div id="MenuDiv"></div>
+								</td>
+								<td class="header_menu_meio" >
+									<form method="post" name="form_busca_header">
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td style="padding-left: 5px;">
+												<input type="text" name="keyword" id="keyword" title="Procure no e-prev" style="width:112px;">
+											</td>
+											<td style="padding-left: 3px; padding-right: 5px;">
+												<input type="button" value="Ok" class="botao_busca_topo" style="width: 25px;" onclick="buscar();">
+											</td>
+										</tr>
+									</table>
+									</form>
+								</td>							
+								<td class="header_menu_canto2">
+								</td>	
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+		</tr>
+		</table>
+	</div>
+
+	<input id="root" name="root" type="hidden" value="{cieprev_url}" />
+  	<input id="base_url" name="base_url" type="hidden" value="{cieprev_url}index.php/" />
+	<input type="hidden" name="current_page" id="current_page" value="0" />
+
+<!-- CONTROLE DE ACESSO EXTERNO AO CIEPREV -->
+<div style="display:;">
+<form name="cieprev_access" method="post">
+	<input type="hidden" id="cieprev_passport" name="cieprev_passport" value="{cieprev_passport}" />
+	<input type="hidden" id="cieprev_location" name="cieprev_location" value="" />
+</form>
+</div>
+
+<script>
+<!--
+	function cieprev_acesso( destino )
+	{
+		document.getElementById("cieprev_location").value=destino;
+		document.cieprev_access.action = "{cieprev_url}index.php/login/aduana/";
+		document.cieprev_access.submit();
+	}
+-->
+</script>
+<!-- CONTROLE DE ACESSO EXTERNO AO CIEPREV -->
+
+<div id="conteudo"><!-- DIV CONTEUDO -->

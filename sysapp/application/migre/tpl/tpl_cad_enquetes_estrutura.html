@@ -1,0 +1,329 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function win_graf(e,p) {
+	w = window.open("graf_pizza_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=no,resizable=no,width=580,height=300");
+}
+function win_coment(e,p) {
+	w = window.open("comentario_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=yes,resizable=yes,width=500,height=330");
+}
+function fnc_confirma_exclusao(f) {
+	var confirma = confirm("Confirma a exclusão deste grupo de respostas?? ATENÇÃO: Esta ação é irreversível !!!!");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_agenda(f) {
+	var confirma = confirm("Confirma a marcação desta pesquisa na agenda do Outlook de toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_envio_emails(f) {
+	var confirma = confirm("Confirma o envio dos emails para toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function validaForm()
+{
+	if(trimValue(document.getElementById('agrup_diss').value) == "")
+	{
+		alert('Informe o Agrupamento da Questão dissertativa.');
+		document.getElementById('agrup_diss').focus();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+//-->
+</SCRIPT>
+<!-- START BLOCK : mensagem -->
+<div class="titulo_vermelho">{msg}</div>
+<!-- END BLOCK : mensagem --> 
+<!-- START BLOCK : cadastro -->
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li onclick="location.href='lst_enquetes.php'">
+				<span>LISTA</span>
+			</li>						
+		
+			<li onclick="location.href='cad_enquetes_definicao.php?c={codigo}'" >
+				<span>DEFINIÇÃO</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_estrutura.php?c={codigo}'"  class="abaSelecionada">
+				<span>ESTRUTURA</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_resultados.php?c={codigo}'" >
+				<span>RESULTADOS</span>
+			</li>
+		</ul>
+	</div>
+	<div class="aba_conteudo">
+	
+	
+	<form name="form1" method="post" action="grava_enquete_estrutura.php" onsubmit="return validaForm();">
+		<input name="codigo" type="hidden" id="codigo" value="{codigo}">
+		
+		<table border="0" align="center" width="100%" cellspacing="1" cellpadding="1">
+			<tr> 
+				<td colspan="2" height="30" valign="middle" align="center" bgcolor="#0066CC">
+					<h2 style="color:#FFFFFF;">{codigo} - {titulo}</h2>
+				</td>
+			</tr>
+			<tr> 
+				<td width="25%" align="right" valign="top" style="font-family: arial; font-size: 10pt;">
+						Quest&atilde;o dissertativa:
+				</td>
+				<td>
+					<textarea name="pergunta_texto" cols="50" rows="3" id="pergunta_texto" {ro_responsavel} style="width:100%">{pergunta_texto}</textarea>
+				</td>
+			</tr>
+			<tr> 
+				<td align="right" valign="top" style="font-family: arial; font-size: 10pt;">
+						Agrupamento da Quest&atilde;o dissertativa:
+				</td>
+				<td style="font-family: arial; font-size: 10pt;">
+					<select name="agrup_diss" id="agrup_diss" {dis_responsavel} style="width:100%">
+						<!-- START BLOCK : agrup_diss -->
+						<option value="{cd_agrup_diss}" {sel_agrup_diss}>{nome_agrup_diss}</option>
+						<!-- END BLOCK : agrup_diss -->
+					</select>
+					(obrigatório, se existir questão dissertativa)
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<BR>
+					<input type="submit" value="Salvar" class="botao" style="width: 100px;" {dis_responsavel}>
+				</td>
+			</tr>							  
+			<tr>
+				<td colspan="2" align="center">
+					<img src="img/img_divisoria1.gif" width="100%" height="1">
+					<BR>
+				</td>
+			</tr>							  
+			<tr> 
+				<td colspan="2" align="center">
+					<a href="#ancora_questionamentos" class="links2">Questionamentos</a>
+					<span class="links2"> | </span>
+					<a href="#ancora_agrupamentos" class="links2">Agrupamentos</a>
+					<span class="links2"> | </span>
+					<a href="#ancora_escala" class="links2">Escala</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<BR>				
+					
+
+					
+	<!-- START BLOCK : componentes_pesquisa -->
+	
+	<style>
+		.tab_agrupa {
+			border-collapse:collapse;
+			border: 1px solid #DBC699;
+		}
+		
+		.tab_agrupa th {
+			padding: 3px;
+			font-family:Arial;
+			font-size:10pt; 
+			color:#FFFFFF;
+			text-align:center;
+			background: #DBC699;
+			border: 1px solid #FFFFFF;
+		}
+		
+		.tab_agrupa td {
+			padding: 2px;
+			font-family:Arial;
+			font-size:8pt; 			
+		}				
+	</style>	
+			
+	<table class="tab_agrupa" border="0" width="100%" align="center">
+		<tr> 
+			<td>
+				<a name="ancora_agrupamentos"></a>
+				<font color="#BFA260" size="5" face="Arial, Helvetica, sans-serif">
+					Agrupamentos:
+				</font>
+			</td>
+			<td align="right">
+				<input type="button" value="Novo agrupamento" class="botao" {dis_responsavel} onclick="document.location.href='cad_enquetes_agrupamentos.php?a=I&eq={codigo}'">
+			</td>
+		</tr>	
+		<tr> 
+			<th colspan="2" style="height:10px">
+			</th>
+		</tr>
+		<!-- START BLOCK : agrupamento -->
+		<tr> 
+			<td colspan="2" bgcolor="{cor_fundo}">
+				<a href="cad_enquetes_agrupamentos.php?c={cd_agrupamento}&eq={codigo}" class="links2">{nome}</a>
+			</td>
+	    </tr>
+		<!-- END BLOCK : agrupamento -->
+	</table>	
+	<BR>
+	<style>
+		.tab_questao {
+			border-collapse:collapse;
+			border: 1px solid #0066CC;
+		}
+		
+		.tab_questao th {
+			padding: 3px;
+			font-family:Arial;
+			font-size:10pt; 
+			color:#FFFFFF;
+			text-align:center;
+			background: #0066CC;
+			border: 1px solid #FFFFFF;
+		}
+		
+		.tab_questao td {
+			padding: 2px;
+			font-family:Arial;
+			font-size:8pt; 			
+		}				
+	</style>	
+	<table class="tab_questao" border="0" width="100%" align="center">
+		<tr> 
+			<td>
+				<a name="ancora_questionamentos"></a>
+				<font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif">
+					Questionamentos:
+				</font>
+			</td>
+			<td colspan="12" align="right">
+				<input type="button" value="Nova questão" class="botao" {dis_responsavel} onclick="document.location.href='cad_enquetes_perguntas.php?a=I&eq={codigo}'">
+			</td>
+		</tr>			
+		<tr> 
+			<th rowspan="2" bgcolor="#0066CC" style="font-family:Arial; font-size:10pt; color:#FFFFFF;"><B>Perguntas<B></td>
+			<th colspan="12" align="center" bgcolor="#0066CC" style="font-family:Arial; font-size:10pt; color:#FFFFFF;"><B>Respostas poss&iacute;veis:</B></td>
+		</tr>
+		<tr> 
+			<th><B>1</B></th>
+			<th><B>2</B></th>
+			<th><B>3</B></th>
+			<th><B>4</B></th>
+			<th><B>5</B></th>
+			<th><B>6</B></th>
+			<th><B>7</B></th>
+			<th><B>8</B></th>
+			<th><B>9</B></th>
+			<th><B>10</B></th>
+			<th><B>11</B></th>
+			<th><B>12</B></th>
+		</tr>
+	  <!-- START BLOCK : grupo -->
+	  <!-- END BLOCK : grupo -->
+	  <!-- START BLOCK : pergunta -->
+	  <tr> 
+		<td height="18" bgcolor="{cor_fundo}">
+			<a href="cad_enquetes_perguntas.php?c={cd_pergunta}&eq={codigo}" class="links2">{titulo}</a>
+			<font size="2" face="Arial, Helvetica, sans-serif"><B>{grupo}</B></font>
+		</td>
+		<td bgcolor="{cor_fundo}" align="center">{R1}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R2}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R3}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R4}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R5}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R6}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R7}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R8}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R9}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R10}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R11}</td>
+		<td bgcolor="{cor_fundo}" align="center">{R12}</td>
+	  </tr>
+	  <!-- END BLOCK : pergunta -->
+	</table>
+
+	<br>		
+			
+
+	<style>
+		.tab_valores {
+			border-collapse:collapse;
+			border: 1px solid #0066CC;
+		}
+		
+		.tab_valores th {
+			padding: 3px;
+			font-family:Arial;
+			font-size:10pt; 
+			color:#FFFFFF;
+			text-align:center;
+			background: #0066CC;
+			border: 1px solid #FFFFFF;
+		}
+		
+		.tab_valores td {
+			padding: 2px;
+			font-family:Arial;
+			font-size:8pt; 			
+		}				
+	</style>	
+			
+	<table class="tab_valores" border="0" width="100%" align="center">	
+		<tr> 
+			<td>
+				<a name="ancora_escala"></a>
+				<font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif">
+					Escala e graduação:
+				</font>
+			</td>
+			<td align="right">
+				<input type="button" value="Nova resposta" class="botao" {dis_responsavel} onclick="document.location.href='cad_enquetes_respostas.php?a=I&eq={codigo}'">
+			</td>
+		</tr>	
+		<tr> 
+			<th><B>Respostas poss&iacute;veis:</B></th>
+			<th><B>Ordem</B></th>
+		</tr>
+		<!-- START BLOCK : resposta -->
+		<tr> 
+			<td bgcolor="{cor_fundo}">
+				<a href="cad_enquetes_respostas.php?c={cd_resposta}&eq={codigo}" class="links2">{resposta}</a>
+			</td>
+			<td bgcolor="{cor_fundo}" align="center">
+				{ordem}
+			</td>
+		</tr>
+		 <!-- END BLOCK : resposta -->
+	</table>
+	
+	<!-- END BLOCK : componentes_pesquisa -->
+	</div>
+</div>
+<!-- END BLOCK : cadastro -->
+
+<!-- INCLUDE BLOCK : footer.html -->

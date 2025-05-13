@@ -1,0 +1,155 @@
+@CHARSET "ISO-8859-1";
+.filter-bar
+{
+	padding-top:10px;
+	padding-bottom:10px;
+	border-top: dashed 1px #6FAE6F;
+	text-align:center;
+	background:#EEEEEE;
+}
+
+.command-bar
+{
+	text-align:left;
+	background:white;
+	margin-left:10px;
+}
+
+body
+{
+	font-family: Arial, Verdana;
+	font-size: 10pt;
+}
+
+#data_inicial, #data_final, #titulo
+{
+	font-size:22px;
+	width:130px;
+}
+
+#titulo
+{
+	font-size:22px;
+	width:200px;
+}
+
+.divulgar
+{
+	color:blue;
+	text-decoration: underline;
+	font-weight: bold;
+}
+.divulgado
+{
+	color:green;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.link-comando
+{
+	color:blue;
+	text-decoration: underline;
+	font-weight: bold;
+	font-size:12px;
+}
+
+#rodape-table
+{
+	margin-left:10px;
+	margin-top:10px;
+}
+
+.box
+{
+	border:1px solid black;
+	margin:10 10 10 10;
+}
+
+.title
+{
+	background:#eeeeee;
+	padding:10 10 10 10;
+	font-weight: bold;
+}
+
+.content
+{
+	background:white;
+	padding:10 10 10 10;
+	font-weight: normal;
+}
+
+.message
+{
+	background:white;
+	padding:10 10 10 10;
+	font-weight: normal;
+}
+
+.savecancel
+{
+	text-align: right;
+}
+
+.savecancel .save, .cancel
+{
+	font-weight: bold;
+	text-decoration: none;
+	margin: 10 10 10 10;
+	font-size:16px;
+}
+
+.text
+{
+	border:1px solid black;
+	font-size:22px;
+}
+
+#mensagem_operacao
+{
+	font-family: Arial, Verdana;
+	font-size:12px;
+	border:1px solid #A8A800;
+	width:100%;
+	background:#FFFFCB;
+	margin:10 10 10 10;
+	padding: 10 10 10 10;
+}
+
+#mensagem_operacao a
+{
+	font-family: Arial, Verdana;
+	font-size:12px;
+	font-weight: normal;
+}
+
+#mensagem_operacao a:hover
+{
+	font-family: Arial, Verdana;
+	font-size:12px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.select
+{
+	font-size:22px;
+}
+
+.lista-colunas
+{
+	/*white-space:nowrap;*/
+	list-style-type:none;
+}
+.lista-colunas li
+{
+	display:inline;
+}
+
+.content-text
+{
+	font-size:16px;
+	font-weight:bold;
+	margin-left:10px;
+}

@@ -1,0 +1,577 @@
+<!-- INCLUDE BLOCK : header_simulacao_dap.html -->
+<script>
+	document.title = '..:: e-prev :: Empréstimo (Confirmação) ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="javascript" src="JAjax.js"></script>
+<script language="JavaScript">
+<!--
+   function setFocus(obj) {
+      globalvar = obj;
+      setTimeout("globalvar.focus()",100);
+   }
+
+   function getEl(elID) {
+	   var ret = null;
+	   if (document.getElementById) {
+		   ret = document.getElementById(elID);
+		} else {
+		   if (document.all) {
+			   ret = document.all(elID);
+			}
+		}
+		return ret;
+	}
+
+   function validaForm() {
+      var erro = '';
+	
+      if (getEl('cd_instituicao').value == '') { erro = erro + '   - O campo BANCO deve ser preenchido\n'; }
+      if (getEl('cd_agencia').value == '')     { erro = erro + '   - O campo AGENCIA deve ser preenchido\n'; }
+      if (getEl('conta_folha').value == '')    { erro = erro + '   - O campo CONTA deve ser preenchido\n'; }
+      if (getEl('usuario').value == '')        { erro = erro + '   - O campo USUARIO deve ser preenchido\n'; }
+      
+	  if((document.getElementById('tp_autenticar_participante').checked) && (getEl('senha_participante').value == '')) { erro = erro + '   - O campo SENHA DO PARTICIPANTE deve ser preenchido\n'; }
+	  
+	  if((document.getElementById('tp_autenticar_atendente').checked) && (getEl('senha').value == '')){ erro = erro + '   - O campo SENHA deve ser preenchido\n'; }
+	  
+	  if (erro != '') {
+	     erro = 'Os seguintes erros foram encontratos: \n\n' + erro;
+		 erro = erro + '\n Corrija estas pendências e tente novamente';
+		 alert(erro);
+		 return false;
+      } else {
+	     return true;
+	  }
+   }
+	
+	function voltar() {
+	   var url = "simulacao_dap.php?e="+getEl('cd_empresa').value+"&r="+getEl('cd_registro_empregado').value+"&s="+getEl('seq_dependencia').value+"&MOSTRAR_BANNER="+getEl('MOSTRAR_BANNER').value;
+	   window.location = url;
+	}
+	
+	function alteraInfDeposito() {
+	   if (getEl('origem').value == 'C') {
+			var nomeBanco = getEl('cd_instituicao').options[getEl('cd_instituicao').selectedIndex].text;
+	//		txt  = "No "+getEl('tmpNomeBanco').value+", "
+			txt =  "- Na ag&ecirc;ncia "+getEl('cd_agencia').value+", ";
+			txt += "no banco "+nomeBanco+", ";
+			txt += "e o n&uacute;mero da conta &eacute; "+getEl('conta_folha').value;
+	/*
+			txt  = "No "+nomeBanco+", "
+			txt += "ag&ecirc;ncia "+getEl('cd_agencia').value+", ";
+			txt += "conta "+getEl('conta_folha').value+", ";
+			txt += "os dados est&atilde;o corretos ?";
+	*/
+			getEl('divTextoConta').innerHTML = txt;
+		}
+	}
+	
+	function callbackBuscaNomeInstituicao(ret) {
+		var xml = new xmlProcess(ret.responseXML);
+		var erro = xml.getFieldValueXML('ERR');
+		if (erro == 'NULL') {
+			getEl('tmpNomeBanco').value = xml.getFieldValueXML('nome');
+			alteraInfDeposito();
+		} else {
+			getEl('cd_instituicao').focus();
+		}
+	}
+	
+	function buscaNomeInstituicao() {
+		x = new Jajax();
+      x.setInteractiveLayer('divAndamento');
+		x.setCallback('callbackBuscaNomeInstituicao');
+		x.sendFormGET('proxyEmprestimo.php', null, null, 'call=fnc_busca_nome_instituicao'+'&cd_instituicao='+getEl('cd_instituicao').value);
+	}
+	
+	function atualizaAgencias() {
+	   getEl('tmpNomeBanco').value = getEl('cd_instituicao').value
+	   x = new Jajax();
+		x.setInteractiveLayer('divAndamento');
+//		x.popList('proxyEmprestimo.php', 'cd_agencia', 'call=fnc_combo_agencias&cd_instituicao='+getEl('cd_instituicao').value+'&cd_agencia='+getEl('cd_agencia_default').value);
+		x.popList('proxyEmprestimo.php?call=fnc_combo_agencias&cd_instituicao='+getEl('cd_instituicao').value+'&cd_agencia='+getEl('cd_agencia_default').value, 'cd_agencia', 'alteraInfDeposito()');
+//		alteraInfDeposito();
+	}
+	
+	
+   function updateFormaPgtoFceee() {
+      // Atualiza o campo Origem no BD, evitando a necessidade de 
+      // um recálculo das prestações apenas pelo fato de alterar este campo
+      var param = '';
+      param  = "&sessao="+getEl("session_id").value;
+      param += "&cd_empresa="+getEl('cd_empresa').value;
+      param += "&cd_registro_empregado="+getEl('cd_registro_empregado').value;
+      param += "&seq_dependencia="+getEl('seq_dependencia').value;		 
+      param += "&f="+getEl('pagamento').value;
+      xOrigem = new Jajax();
+      xOrigem.setInteractiveLayer('divAndamento');
+      xOrigem.setCallback('callbackUpdateFormaPgtoFceee');
+      xOrigem.sendFormGET('proxyEmprestimo.php', null, null, 'call=fnc_atualiza_pgto_fceee'+param);
+   }
+
+   function callbackUpdateFormaPgtoFceee(ret) {
+      var x = new xmlProcess(ret.responseXML);
+      ret = x.getFieldValueXML('sucesso');
+      if (ret == 'FALSE') {
+         alert("Ocorreu um erro ao tentar alterar a forma de pagamento");
+      }
+   }  
+
+    var titulo_pagina = "";
+	function setTituloPagina()
+	{
+		if(titulo_pagina == "")
+		{
+			titulo_pagina = document.title;
+		}
+		
+		document.title = titulo_pagina + " EMP_002 ---- " + getEl('cd_empresa').value + "/" + getEl('cd_registro_empregado').value + "/" + getEl('seq_dependencia').value;
+	}
+	addEvent(window, 'load', setTituloPagina);
+
+	function addEvent(obj, evType, fn)
+	{
+		if (obj.addEventListener)
+		{
+			obj.addEventListener(evType, fn, true);
+			return true;
+		} 
+		else if (obj.attachEvent)
+		{
+			var r = obj.attachEvent("on"+evType, fn);
+			return r;
+		} 
+		else 
+		{
+			elm['on' + evType] = fn;
+		}
+	}
+
+-->
+</script>
+<style type="text/css">
+	<!--
+	.bordaTabela {
+		border: thin solid #006633;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 16px;
+		font-style: normal;
+		line-height: normal;
+		font-weight: bold;
+		font-variant: normal;
+		text-transform: none;
+		color: #FFFFFF;
+	}
+	.bordaCallCenter {
+		border: thin solid #990000;
+	}
+	.style1 {
+		border: thin solid #006633;
+		color: #FFFFFF;
+		font-weight: bold;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-size: 12px;
+	}
+	.style2 {
+		font-size: 12px;
+		font-family: Verdana, Arial, Helvetica, sans-serif;
+	}
+	.textboxFlat {
+		border: 1px solid #CCCCCC;
+		padding: 0px;
+		margin: 0px;
+	}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.style4 {
+	font-size: 12px;
+	font-weight: bold;
+}
+.style5 {font-size: 14px}
+	-->
+</style>
+
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+function pre_carga_imagens() {
+<!-- INCLUDE BLOCK : inc/menu_geral1.tpl -->
+}
+</script>
+<script>
+	function setAutenticar(tp_autenticar)
+	{
+		if((tp_autenticar == "P") && (!document.getElementById('tp_autenticar_participante').disabled))
+		{
+			document.getElementById('ob_autenticar_participante').style.display = "";
+			document.getElementById('ob_autenticar_atendente').style.display = "none";
+			document.getElementById('senha_participante').focus();
+		}
+		else
+		{
+			document.getElementById('ob_autenticar_participante').style.display = "none";
+			document.getElementById('ob_autenticar_atendente').style.display = "";
+			document.getElementById('senha').focus();
+		}
+	}
+
+</script>
+
+<div id="divAndamento" style="position:absolute; left:590px; top:4px; width:160px; height:20px; z-index:1; color: #FFFFFF; background-color: #FF0000; border: 0px none #000000; visibility: hidden;"></div>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="1" class="bordaTabela">
+   <tr>
+      <td colspan="3" bgcolor="#006633"><div align="center"><strong><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">CONFIRME
+      A CONCESS&Atilde;O DO EMPR&Eacute;STIMO</font></strong></div></td>
+   </tr>
+   <tr>
+      <td valign="top"><table border="0" cellspacing="0" cellpadding="0">
+         <tr valign="top">
+            <td><table width="440" border="0" cellpadding="1" cellspacing="1">
+                  <tr>
+                     <td height="20" colspan="2" bgcolor="#006633" class="style1">Participante</td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Emp</font></strong></td>
+                     <td><input name="empresa" type="text" class="textboxFlat" id="empresa" value="{cd_empresa} - {nome_empresa}" size="40" maxlength="60" readonly>                     </td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">RE</font></strong></td>
+                     <td><table border="0" cellspacing="0" cellpadding="0">
+                           <tr>
+                              <td><input name="re" type="text" class="textboxFlat" id="re" value="{cd_registro_empregado}" size="6" maxlength="6" readonly></td>
+                              <td width="30">&nbsp;</td>
+                              <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Seq&nbsp;</font></strong></td>
+                              <td><input name="sequencia" type="text" class="textboxFlat" id="sequencia" value="{seq_dependencia}" size="2" maxlength="2" readonly></td>
+                           </tr>
+                     </table></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome</font></strong></td>
+                     <td><input name="nome" type="text" class="textboxFlat" id="nome" value="{nome}" size="40" maxlength="60" readonly></td>
+                  </tr>
+                  <tr bgcolor="#006633">
+                     <td height="20" colspan="2" bgcolor="#006633"><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif" class="style1">Endereço</font></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Logradouro</font></strong></td>
+                     <td><input name="logradouro" type="text" class="textboxFlat" id="logradouro" value="{logradouro}" size="40" maxlength="40" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bairro</font></strong></td>
+                     <td><input name="bairro" type="text" class="textboxFlat" id="bairro" value="{bairro}" size="25" maxlength="25" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cidade</font></strong></td>
+                     <td><input name="cidade" type="text" class="textboxFlat" id="cidade" value="{cidade}" size="30" maxlength="30" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Estado</font></strong></td>
+                     <td><table border="0" cellspacing="0" cellpadding="0">
+                           <tr>
+                              <td><input name="unidade_federativa" type="text" class="textboxFlat" id="unidade_federativa" value="{unidade_federativa}" size="2" maxlength="2" readonly></td>
+                              <td width="30">&nbsp;</td>
+                              <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">CEP&nbsp;</font></strong></td>
+                              <td><input name="cep" type="text" class="textboxFlat" id="cep" value="{cep}" size="6" maxlength="5" readonly>
+                                    <input name="complemento_cep" type="text" class="textboxFlat" id="complemento_cep" value="{complemento_cep}" size="4" maxlength="3" readonly></td>
+                           </tr>
+                     </table></td>
+                  </tr>
+            </table></td>
+         </tr>
+         <tr>
+            <td>
+				<!-- START BLOCK : blk_msg_normal -->
+				<BR>
+				<table width="440" border="0" cellpadding="0" cellspacing="1" class="bordaCallCenter">
+					<tr>
+						<td height="20" bgcolor="#990000">
+							<div align="center" class="style4 style5">
+								<font color="#FFFFFF" face="Tahoma, Verdana, Arial">Opção Emprestimo</font>
+							</div>
+						</td>
+					</tr>
+					<tr>
+                     <td bgcolor="#Fafafa">
+						<table align="center" width="100%" border="0" cellpadding="1" cellspacing="0">
+						<tr>
+							<td class="style2" style="text-align:center;">
+								<BR><b>{tipo_emprestimo}</b><BR><BR>
+							</td>
+						</tr>
+						</table>
+					</td>
+					</tr>
+				</table>		
+				<!-- END BLOCK : blk_msg_normal -->
+				<!-- START BLOCK : blk_msg_callcenter_prefixado -->
+				<table width="440" border="0" cellpadding="0" cellspacing="1" class="bordaCallCenter">
+					<tr>
+						<td height="20" bgcolor="#990000">
+							<div align="center" class="style4 style5">
+								<font color="#FFFFFF" face="Tahoma, Verdana, Arial">Mensagem Call-Center</font>
+							</div>
+						</td>
+					</tr>
+					<tr>
+                     <td bgcolor="#Fafafa"><table width="100%" border="0" cellpadding="1" cellspacing="0">
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- A sua empresa &eacute; {nome_empresa},
+                                 o seu re.d &eacute; {cd_registro_empregado} </span></td>
+                        </tr>
+						<tr>
+							<td>
+								<span class="style2">- Você optou pelo empréstimo <b>{tipo_emprestimo}</b></span>
+							</td>
+						</tr>						
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- O montante concedido &eacute;
+                                 de R$ {montante_concedido}</span></td>
+                        </tr>
+                        <tr>
+                           <td><span class="style2">- O Valor do dep&oacute;sito
+                                 ser&aacute; de R$ {vlr_deposito} </span></td>
+                        </tr>
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- A data do dep&oacute;sito
+                                 ser&aacute; no dia {dt_deposito} </span></td>
+                        </tr>
+                        <tr>
+                           <td><span class="style2"><span id="divTextoConta" class="style2">-
+                                    Na ag&ecirc;ncia {cd_agencia},
+                                 no banco {nome_banco}, e o n&uacute;mero da conta &eacute;
+                                 {conta_folha}</span></span></td>
+                        </tr>
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- O n&uacute;mero de parcelas
+                                 contratas &eacute; de {nro_prestacoes}, no valor
+                                 de R$ {vlr_prestacao}</span></td>
+                        </tr>
+                        <tr>
+                           <td><div align="center"><span class="style2">&quot;E
+                              o demonstrativo do empr&eacute;stimo, contendo as
+                              taxas aplicadas no m&ecirc;s, será enviado
+                              para a sua resid&ecirc;ncia&quot;</span></div></td>
+                        </tr>
+                     </table>                     </td>
+                  </tr>
+            </table>
+			   <!-- END BLOCK : blk_msg_callcenter_prefixado -->
+			   
+				<!-- START BLOCK : blk_msg_callcenter_posfixado -->
+				<table width="440" border="0" cellpadding="0" cellspacing="1" class="bordaCallCenter">
+                  <tr>
+                     <td height="20" bgcolor="#990000"><div align="center" class="style4 style5"><font color="#FFFFFF" face="Tahoma, Verdana, Arial">Mensagem
+                                 Call-Center</font></div></td>
+                  </tr>
+                  <tr>
+                     <td bgcolor="#Fafafa"><table width="100%" border="0" cellpadding="1" cellspacing="0">
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- A sua empresa &eacute; {nome_empresa},
+                                 o seu re.d &eacute; {cd_registro_empregado} </span></td>
+                        </tr>
+						<tr>
+							<td>
+								<span class="style2">- Você optou pelo empréstimo <b>{tipo_emprestimo}</b></span>
+							</td>
+						</tr>						
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- O montante concedido &eacute;
+                                 de R$ {montante_concedido}</span></td>
+                        </tr>
+                        <tr>
+                           <td><span class="style2">- O Valor do dep&oacute;sito
+                                 ser&aacute; de R$ {vlr_deposito} </span></td>
+                        </tr>
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- A data do dep&oacute;sito
+                                 ser&aacute; no dia {dt_deposito} </span></td>
+                        </tr>
+                        <tr>
+                           <td><span class="style2"><span id="divTextoConta" class="style2">-
+                                    Na ag&ecirc;ncia {cd_agencia},
+                                 no banco {nome_banco}, e o n&uacute;mero da conta &eacute;
+                                 {conta_folha}</span></span></td>
+                        </tr>
+                        <tr>
+                           <td bgcolor="#DDDDDD"><span class="style2">- O n&uacute;mero de parcelas
+                                 contratas &eacute; de {nro_prestacoes}.</span></td>
+                        </tr>
+                        <tr>
+                           <td bgcolor="#DDDDDD">
+						   <span class="style2">
+								- O Valor da 1ª prestação projetada é de R$ {vlr_prestacao}.
+								A prestação será ajustada pela variação do INPC-IBGE divulgada no mês anterior ao vencimento.						   
+							</span></td>
+                        </tr>						
+                        <tr>
+                           <td><div align="center"><span class="style2">&quot;E
+                              o demonstrativo do empr&eacute;stimo, contendo as
+                              taxas aplicadas no m&ecirc;s, será enviado
+                              para a sua resid&ecirc;ncia&quot;</span></div></td>
+                        </tr>
+                     </table>                     </td>
+                  </tr>
+            </table>
+			   <!-- END BLOCK : blk_msg_callcenter_posfixado -->			   
+				</td>
+         </tr>
+      </table></td>
+      <td width="10">&nbsp;</td>
+      <td valign="top"><table border="0" cellspacing="0" cellpadding="0">
+         <tr>
+            <td><table width="250" border="0" cellpadding="1" cellspacing="1">
+                  <tr bgcolor="#006633">
+                     <td height="20" colspan="2" class="bordaTabela"><font color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif" class="style1">Empr&eacute;stimo</font></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data
+                              Dep&oacute;sito</font></strong></td>
+                     <td><input name="dt_deposito" type="text" class="textboxFlat" id="dt_deposito" value="{dt_deposito}" size="12" maxlength="10" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Valor
+                              Dep&oacute;sito</font></strong></td>
+                     <td><input name="vlr_deposito" type="text" class="textboxFlat" id="vlr_deposito" value="{vlr_deposito}" size="12" maxlength="15" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Num
+                              Presta&ccedil;&otilde;es</font></strong></td>
+                     <td><input name="numero_prestacoes" type="text" class="textboxFlat" id="numero_prestacoes" value="{nro_prestacoes}" size="2" maxlength="2" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{label_prestacao}</font></strong></td>
+                     <td><input name="vlr_prestacao" type="text" class="textboxFlat" id="vlr_prestacao" value="{vlr_prestacao}" size="12" maxlength="15" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong>
+					 <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Primeira Prest.
+                              </font></strong></td>
+                     <td><input name="dt_primeira_prestacao" type="text" class="textboxFlat" id="dt_primeira_prestacao" value="{dt_primeira_prestacao}" size="12" maxlength="10" readonly></td>
+                  </tr>
+                  <tr>
+                     <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&Uacute;ltima
+                              Prest.</font></strong></td>
+                     <td><input name="dt_ultima_prestacao" type="text" class="textboxFlat" id="dt_ultima_prestacao" value="{dt_ultima_prestacao}" size="12" maxlength="10" readonly></td>
+                  </tr>
+            </table></td>
+         </tr>
+         <tr>
+            <td><form action="concede_emprestimo_dap.php" method="post" onSubmit="return validaForm()">
+					
+                  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#F0F0F0">
+                     <tr bgcolor="#006633">
+                        <td height="20" colspan="2"><strong class="style1"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Informa&ccedil;&otilde;es
+                                 Banc&aacute;rias</font></strong></td>
+                     </tr>
+                     <tr>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Banco</strong> </font></td>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+                           <select name="cd_instituicao" id="cd_instituicao" onChange="atualizaAgencias();" style="width:160px">
+									  <!-- START BLOCK : blk_bancos -->
+									  <option value="{cd_instituicao}"{selBanco}>{nome_instituicao}</option>
+									  <!-- END BLOCK : blk_bancos -->
+                           </select>
+                           <!-- <input name="cd_instituicao" type="text" id="cd_instituicao" value="{cd_instituicao}" size="4" maxlength="3" onBlur="buscaNomeInstituicao();"> -->
+						   <input type="hidden" name="usuario_emp" value="{usuario_emp}">
+                           <input name="session_id" type="hidden" id="session_id" value="{session_id}">
+                           <input name="MOSTRAR_BANNER" type="hidden" id="MOSTRAR_BANNER" value="{MOSTRAR_BANNER}">
+                           <input name="nro_prestacoes" type="hidden" id="nro_prestacoes" value="{nro_prestacoes}">
+                           <input name="cd_empresa" type="hidden" id="cd_empresa" value="{cd_empresa}">
+                           <input name="cd_registro_empregado" type="hidden" id="cd_registro_empregado" value="{cd_registro_empregado}">
+                           <input name="seq_dependencia" type="hidden" id="seq_dependencia" value="{seq_dependencia}">
+                           <input name="origem" type="hidden" id="origem" value="{origem}">
+                        </font></td>
+                     </tr>
+                     <tr>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ag&ecirc;ncia</strong> </font></td>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+<!--                           <input name="cd_agencia" type="text" id="cd_agencia" value="{cd_agencia}" size="5" maxlength="4" onBlur="alteraInfDeposito();"> -->
+                           <select name="cd_agencia" id="cd_agencia" onChange="alteraInfDeposito();">
+									  <!-- START BLOCK : blk_agencias -->
+									  <option value="{cd_agencia}"{selAgencia}>{cd_agencia}</option>
+									  <!-- END BLOCK : blk_agencias -->
+                           </select>
+                           <input name="tmpNomeBanco" type="hidden" id="tmpNomeBanco">
+                           <input name="cd_agencia_default" type="hidden" id="cd_agencia_default" value="{cd_agencia_default}">
+                        </font></td>
+                     </tr>
+                     <tr>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Conta</strong></font></td>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+                           <input name="conta_folha" type="text" id="conta_folha" value="{conta_folha}" size="10" maxlength="10" onBlur="alteraInfDeposito();">
+                        </font></td>
+                     </tr>
+                     <tr>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Pagamento</strong></font></td>
+                        <td bgcolor="#f0f0f0"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+                           <select name="pagamento" id="pagamento" onChange="updateFormaPgtoFceee();">
+                              <option value="BCO" {fl_frm_pg_BCO}>Banco</option>
+                              <option value="CXA" {fl_frm_pg_CXA}>Caixa</option>
+                           </select>
+                        </font></td>
+                     </tr>
+                     <tr height="20" bgcolor="#006633">
+                        <td colspan="2"><strong class="style1"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Confirmação</font></strong></td>
+                     </tr>
+                     <tr>
+                        <td colspan="2">
+							<nobr>
+								<input type="radio" name="tp_autenticar" id="tp_autenticar_atendente" value="A" {fl_autenticar_atendente}    onclick="setAutenticar('A');"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Atendente</strong></font>
+								<input type="radio" name="tp_autenticar" id="tp_autenticar_participante" value="P" {fl_autenticar_participante} onclick="setAutenticar('P');"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Participante</strong></font>
+							</nobr>
+						</td>
+                     </tr>	
+                     <tr>
+                        <td colspan="2">
+							<table border="0" id="ob_autenticar_atendente" style="{ver_autenticar_atendente}">
+								 <tr>
+									<td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Usu&aacute;rio</strong></font></td>
+									<td><input name="usuario" type="text" id="usuario" value="{usuario}"></td>
+								 </tr>
+								 <tr>
+									<td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Senha</strong></font></td>
+									<td><input name="senha" type="password" id="senha"></td>
+								 </tr>
+							</table>
+						
+							<table border="0" id="ob_autenticar_participante" style="{ver_autenticar_participante}">
+								 <tr>
+									<td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Senha</strong></font></td>
+									<td><input type="password" name="senha_participante" id="senha_participante"></td>
+								 </tr>
+							</table>						
+						</td>
+                     </tr>		
+					 <tr>
+						<td colspan="2"><div align="center">
+							<input name="btnVoltar" type="button"  value="Voltar" onClick="voltar();" class="botao_disabled" style="width: 100px;" id="btnVoltar">
+							&nbsp;
+							<input type="submit" name="Submit" value="Confirmar" class="botao" style="width: 100px;">
+						</div>
+						</td>
+					 </tr>					 
+
+                  </table>
+            </form></td>
+         </tr>
+      </table></td>
+   </tr>
+</table>
+<script>
+
+	if(!document.getElementById('tp_autenticar_participante').disabled)
+	{
+		document.getElementById('senha_participante').focus();
+	}
+	else
+	{
+		document.getElementById('senha').focus();
+	}
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

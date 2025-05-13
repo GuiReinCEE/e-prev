@@ -1,0 +1,81 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lotes de votação ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+              <div align="right"> </div>
+      </blockquote>
+            <table align="center" cellpadding="1" cellspacing="1">
+              <!-- START BLOCK : cab_valido -->
+              <tr> 
+                <td colspan="3"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Lotes 
+                  v&aacute;lidos</font></td>
+                <td colspan="2" align="right"><a href="lst_lotes_votos.php?canc=S" class="links2">Ver 
+                  lotes cancelados</a></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Lotes</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                  Lan&ccedil;amento &agrave;s</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Usu&aacute;rio 
+                  </font></strong></td>
+                <td bgcolor="#0046ad"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>C&eacute;dulas</strong></font></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Votos</font></strong></td>
+              </tr>
+              <!-- END BLOCK : cab_valido -->
+              <!-- START BLOCK : cab_cancelados -->
+              <tr> 
+                <td colspan="3"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Lotes 
+                  cancelados</font></td>
+                <td colspan="2" align="right"><a href="lst_lotes_votos.php?canc=N" class="links2">Ver 
+                  lotes v&aacute;lidos</a></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#BFA260"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Lotes</font></strong></td>
+                <td bgcolor="#BFA260"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                  Lan&ccedil;amento </font></strong></td>
+                <td bgcolor="#BFA260"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Cancelamento</font></strong></td>
+                <td bgcolor="#BFA260"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>C&eacute;dulas</strong></font></td>
+                <td bgcolor="#BFA260"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Votos</font></strong></td>
+              </tr>
+              <!-- END BLOCK : cab_cancelados -->
+              <!-- START BLOCK : lote_valido -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_lote.php?op=A&c={cd_lote}">{cd_lote}</a></font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_hora_lancamento}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{usuario}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cedulas}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{votos}</font></td>
+              </tr>
+              <!-- END BLOCK : lote_valido -->
+              <!-- START BLOCK : lote_cancelado -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_lote.php?op=A&c={cd_lote}">{cd_lote}</a></font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_hora_lancamento} 
+                  - {usuario}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_hora_cancelamento} 
+                  - {usu_can}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cedulas}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{votos}</font></td>
+              </tr>
+              <!-- END BLOCK : lote_cancelado -->
+              <tr> 
+                <td colspan="5" bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*OBS. 
+                  Cada c&eacute;dula possui 4 votos: 2 para Conselheiro Deliberativo, 
+                  1 para Conselheiro Fiscal e 1 para Diretor</font></td>
+              </tr>
+              <tr> 
+                <td colspan="2" align="center" bgcolor="{cor_fundo}">&nbsp;</td>
+                <td colspan="3" align="center" bgcolor="{cor_fundo}">&nbsp;</td>
+              </tr>
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,234 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Não conformidades';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script>
+	function selectDivisao()
+	{
+		var ds_url    = "lst_nao_conf_ajax.php";
+		var lt_param  = "cd_diretoria="+ document.getElementById('cbo_diretoria').value;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('cb_divisao')", '.innerHTML=', 'POST');		
+	}
+
+	function configurar_grid()
+	{
+		var ob_resul = new SortableTable(document.getElementById("table-1"),[
+												"CaseInsensitiveString"
+												, "CaseInsensitiveString"
+												, "CaseInsensitiveString"
+												, "CaseInsensitiveString"
+												, "DateBR"
+												, "DateBR"
+												, "DateBR"
+												, "DateBR"
+												]);
+		ob_resul.onsort = function ()
+		{
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++)
+			{
+				removeClassName( rows[i], i % 2 ? "sort-par" : "sort-impar" );
+				addClassName( rows[i], i % 2 ? "sort-impar" : "sort-par" );
+			}
+		};
+
+		ob_resul.sort(0, true);
+	}
+</script>
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li id="abaMovimento" class="abaSelecionada">
+				<span>LISTA</span>
+			</li>
+		</ul>
+	</div>   
+	<div class="aba_conteudo">
+
+		<form method="post" id="formNConformidade" action="lst_nao_conf.php">
+
+		<table  width="90%" align="center" cellpadding="1" cellspacing="1">
+			<tr class="texto_tabela">
+				<td>
+					<table cellpadding="1" cellspacing="1" class="texto_tabela">
+					<tr>
+						<td>
+							Diretoria:
+						</td>
+						<td>
+							<select size="1" name="cbo_diretoria" id="cbo_diretoria" style="font-family: Verdana; width:100px;" onChange="selectDivisao();">
+							  <option value="-1">Todos</option>
+							  <!-- START BLOCK : cbo_diretoria -->
+							  <option value="{cd_diretoria}" {chk_diretoria}>{ds_diretoria}</option>
+							  <!-- END BLOCK : cbo_diretoria -->
+							</select>				
+						</td>
+						<td>
+							Status:
+						</td>				
+						<td>								
+							<select size="1" name="cbo_status" id="cbo_status" style="font-family: Verdana; width:120px;">
+							  <option value="-1">Todos</option>
+							  <!-- START BLOCK : cbo_status -->
+							  <option value="{cd_status}" {chk_status}>{ds_status}</option>
+							  <!-- END BLOCK : cbo_status -->
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Gerência:
+						</td>
+						<td>
+							<div id='cb_divisao'>
+							<select name='cbo_divisao' id='cbo_divisao' style='font-family: Verdana; width:230px;'>
+								<option value='-1'>Todos</option>
+								  <!-- START BLOCK : cbo_divisao -->
+								  <option value="{cd_divisao}" {chk_divisao}>{ds_divisao}</option>
+								  <!-- END BLOCK : cbo_divisao -->
+							</select>
+							</div>	
+						</td>					
+						<td>
+							Implementada:
+						</td>				
+						<td>								
+							<select size="1" name="cbo_implementada" id="cbo_implementada" style="font-family: Verdana; width:120px;">
+							  <option value="-1">Todos</option>
+							  <!-- START BLOCK : cbo_implementada -->
+							  <option value="{cd_implementada}" {chk_implementada}>{ds_implementada}</option>
+							  <!-- END BLOCK : cbo_implementada -->
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Processo:
+						</td>
+						<td>				
+							<select name='cd_processo' id='cd_processo' style='width:230px;'>
+								<option value='-1'>Todos</option>
+								  <!-- START BLOCK : cbo_processo -->
+								  <option value="{cd_processo}" {chk_processo}>{ds_processo}</option>
+								  <!-- END BLOCK : cbo_processo -->
+							</select>					
+						</td>					
+						<td>						
+							Prorrogada:
+						</td>				
+						<td>								
+							<select size="1" name="cbo_prorrogada" id="cbo_prorrogada" style="font-family: Verdana; width:120px;">
+							  <option value="-1">Todos</option>
+							  <!-- START BLOCK : cbo_prorrogada -->
+							  <option value="{cd_prorrogada}" {chk_prorrogada}>{ds_prorrogada}</option>
+							  <!-- END BLOCK : cbo_prorrogada -->
+							</select></td>
+					</tr>
+					<tr>
+						<td>
+							Data Limite Apres AC:
+						</td>
+						<td>
+							<input id="dt_limite_apres_inicio"
+								name="dt_limite_apres_inicio" 
+								style="width:100px;" 
+								value="{dt_limite_apres_inicio}" 
+								/> até
+							<input id="dt_limite_apres_fim" 
+								name="dt_limite_apres_fim"
+								style="width:100px;" 
+								value="{dt_limite_apres_fim}" 
+								/>
+						</td>	
+						<td>
+							Data proposta/prorrogação:
+						</td>
+						<td>
+							<input 
+								id="dt_proposta_inicio"
+								name="dt_proposta_inicio"
+								style="width:100px;" 
+								value="{dt_proposta_inicio}" /> até
+							<input
+								id="dt_proposta_fim"
+								name="dt_proposta_fim"
+								style="width:100px;" 
+								value="{dt_proposta_fim}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="center">
+							<nobr>
+								<input type="submit" value="Filtrar" class="botao">
+								<input type="button" value="Imprimir" class="botao" onclick="javaScript:window.print();">
+								<input type="button" value="Nova não conformidade" onclick="document.location.href='cad_nao_conformidade.php?tr=I';" class="botao">
+							</nobr>							
+						</td>
+					</tr>
+					</table>
+
+					<script>
+						MaskInput( document.getElementById('dt_proposta_inicio'), "99/99/9999" );
+						MaskInput( document.getElementById('dt_proposta_fim'), "99/99/9999" );
+						MaskInput( document.getElementById('dt_limite_apres_inicio'), "99/99/9999" );
+						MaskInput( document.getElementById('dt_limite_apres_fim'), "99/99/9999" );
+					</script>
+				
+
+				</td>
+			</tr>
+		</table>
+		
+
+		</form>
+
+		<table class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+
+		   	<thead>
+			<tr>
+				<td>Número</td>
+				<td>Descrição</td>
+				<td>Processo</td>
+				<td>Cadastrado por / Responsável</td>
+				<td>Data<BR><nobr>Limite/Apres AC</nobr></td>
+				<td>Data Proposta</td>
+				<td>Data Prorrogação</td>
+				<td>Data Implementação</td>
+				<td>Data Encerramento</td>
+			</tr>
+		   	</thead>
+
+			<tbody>
+				<!-- START BLOCK : nao_conf-->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+					<td align="center">{numero_cad_nc}</td>
+					<td align="left">
+						<div style="width:350px;">
+							<a href="cad_nao_conformidade.php?c={codigo}&tr=U&msg=0" >{descricao}</a>
+						</div>
+					</td>
+					<td align="center">{procedimento}</td>
+					<td align="center">
+						<nobr>{aberto_por}</nobr>
+						<br>
+						<nobr><i><b>{responsavel}</b></i></nobr>
+					</td>
+					<td align="center">{dt_limite_apres}</td>
+					<td align="center">{dt_prop_imp}</td>
+					<td align="center">{dt_prorrogada}</td>					
+					<td align="center">{dt_efe_imp}</td>
+					<td align="center">{dt_encerramento}</td>
+				</tr>
+				<!-- END BLOCK : nao_conf -->
+			</tbody>
+
+		</table>
+	</div>
+</div>
+<script>
+	configurar_grid();
+</script>
+<!-- INCLUDE BLOCK : footer.html -->

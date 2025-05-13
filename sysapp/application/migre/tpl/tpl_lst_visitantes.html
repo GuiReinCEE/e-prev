@@ -1,0 +1,214 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lista controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>	
+	<script>
+		var ob_window = "";
+	
+		function setOrdem(ds_ordem)
+		{
+			document.getElementById('ds_ordem').value = ds_ordem;
+			document.getElementById('formulario').submit();
+		}
+		
+		function editarEntrada(cd_visitante)
+		{
+			if(ob_window != "")
+			{
+				ob_window.close();
+			}
+
+			var ds_url = "edt_visitantes.php";
+				ds_url += "?cd_visitante=" + cd_visitante;
+			
+			var nr_width  = 450;
+			var nr_height = 260;
+			var nr_left = ((screen.width - 10) - nr_width) / 2;
+			var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+			ob_window = window.open(ds_url, "wEdtVisitante", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 					
+		}			
+	</script>
+	<style>
+		.tb_cadastro_saida{
+			border-collapse: collapse;
+			width: 60%;
+			background:#F4F4F4;
+		}
+		
+		.tb_cadastro_saida *{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_cadastro_saida th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			font-weight: bold;
+			color:#000000;
+			background:#dae9f7;
+		}
+		
+		.tb_cadastro_saida td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+		}
+	
+		.tb_lista_resultado {
+			border-collapse: collapse;
+			width: 90%;		
+		}
+		
+		.tb_lista_resultado * {
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_lista_resultado th {
+			font-size: 10pt;
+			font-weight: bold;	
+			text-align:center;
+			border: 1px solid #CCCCCC;
+			color:#FFFFFF;
+			background:#0046ad;
+		}
+		.tb_lista_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}		
+		
+		.tb_resultado_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+			cursor:pointer;
+		}
+	</style>
+	<BR>
+	<form name="formulario" id="formulario" method="post" action="">	
+		<table class="tb_cadastro_saida" align="center">
+			<tr>
+				<th colspan="3">
+					LISTA MOVIMENTO DIÁRIO
+				</th>
+			</tr>			
+			<tr>
+				<th>
+					Período
+				</th>
+				<td>
+					<input type="text"   name="dt_entrada"  id="dt_entrada" value="{dt_entrada}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+					<input type="text"   name="dt_fim"  id="dt_fim" value="{dt_fim}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+					<input type="hidden" name="ds_ordem"    id="ds_ordem"   value="{ds_ordem}">
+				</td>
+				<td align="center">
+					<!-- <input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar"> -->
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Procedência
+				</th>
+				<td>
+					<select name="sel_procedencia" id="sel_procedencia">
+						<!-- START BLOCK : sel_procedencia -->
+						<option value="{sel_procedencia_value}" {sel_procedencia_selected}>{sel_procedencia_text}</option>
+						<!-- END BLOCK : sel_procedencia -->
+					</select>
+				</td>
+				<td align="center">
+					<!-- <input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar"> -->
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Destino
+				</th>
+				<td>
+					<select name="sel_destino" id="sel_destino">
+						<!-- START BLOCK : sel_destino -->
+						<option value="{sel_destino_value}" {sel_destino_selected}>{sel_destino_text}</option>
+						<!-- END BLOCK : sel_destino -->
+					</select>
+				</td>
+				<td align="center">
+					<input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar">
+				</td>
+			</tr>
+		</table>
+	</form>		
+	
+	<table class="tb_lista_resultado" align="center">
+		<tr style="cursor:pointer;">
+			<th onclick="setOrdem('nr_cracha');" title="Clique para ordenar">
+				Crachá
+			</th>
+			<th onclick="setOrdem('cd_registro_empregado');" title="Clique para ordenar">
+				RE
+			</th>						
+			<th onclick="setOrdem('ds_nome');" title="Clique para ordenar">
+				Nome
+			</th>		
+			<th onclick="setOrdem('dt_entrada');" title="Clique para ordenar">
+				Entrada
+			</th>
+			<th onclick="setOrdem('hr_tempo');" title="Clique para ordenar">
+				Permanência
+			</th>
+			<th onclick="setOrdem('cd_tipo_visita, ds_origem');" title="Clique para ordenar">
+				Procedência
+			</th>						
+			<th onclick="setOrdem('ds_destino');" title="Clique para ordenar">
+				Destino
+			</th>						
+			<th>
+				Editar
+			</th>						
+		</tr>
+		<!-- START BLOCK : lst_movimento -->
+		<tr bgcolor="{bg_color}" onmouseover="this.className='tb_resultado_selecionado';" onmouseout="this.className='';">
+			<td style="white-space:nowrap;text-align:center;">
+				{nr_cracha}
+			</td>
+			<td style="white-space:nowrap;text-align:center;">
+				{cd_registro_empregado}
+			</td>						
+			<td style="white-space:nowrap;">
+				{ds_nome}
+			</td>						
+			<td style="white-space:nowrap;text-align:center;">
+				{dt_entra}
+			</td>								
+			<td style="white-space:nowrap;text-align:center;">
+				{hr_tempo}
+			</td>								
+			<td style="white-space:nowrap;">
+				{ds_origem}
+			</td>						
+			<td style="white-space:nowrap;">
+				{ds_destino}
+			</td>						
+			<td style="white-space:nowrap;text-align:center;" onclick="editarEntrada('{cd_visitante}');" title="Clique para editar">
+				<img src="img/visitante_edt.png" border="0" >
+			</td>						
+		</tr>
+		<!-- END BLOCK : lst_movimento -->
+	</table>
+	<BR>
+	<BR>
+	<script>
+		// DEFINIÇÃO DE MASCARAS PARA OS CAMPOS //
+		MaskInput(document.getElementById('dt_entrada'), "99/99/9999");
+		MaskInput(document.getElementById('dt_fim'), "99/99/9999");
+	</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

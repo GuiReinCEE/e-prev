@@ -1,0 +1,41 @@
+<?php
+$body=array();
+$head = array( 
+	'Cód.',  
+	'Nome', 
+	'CPF',
+    'Empresa',
+	'Sócio',
+	'Dt Cadastro',
+	'Dt Validação'
+);
+
+foreach($collection as $item)
+{
+    switch ($item['fl_socio']){
+        case 'S' :
+            $fonte_socio = 'green';
+            break;
+        case 'N' :
+            $fonte_socio = 'red';
+            break;
+        default :
+            $fonte_socio = 'blue';
+            break;
+    }
+	$body[] = array(
+	    anchor("ecrm/socio_instituidor/cadastro/".$item["cd_socio_instituidor"], $item["cd_socio_instituidor"]),
+	    array(anchor("ecrm/socio_instituidor/cadastro/" . $item["cd_socio_instituidor"], $item["nome"]),'text-align:left;'),
+	    $item["cpf"],
+	    array($item["ds_empresa"], 'text-align:left;'),
+        array($item['ds_socio'], 'color:'.$fonte_socio . '; font-weight: bold;'),
+        $item['dt_inclusao'],
+        $item['dt_validacao']
+	);
+}
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

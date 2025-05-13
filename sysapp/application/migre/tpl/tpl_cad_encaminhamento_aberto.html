@@ -1,0 +1,146 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Encaminhamentos suporte ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+	function executarComando(v,ca,ce)
+	{
+		bConfirm = true;
+		if(v=="cancelar")
+		{
+			bConfirm = confirm("Atenção:\n\nClique em OK para confirmar o cancelamento?");
+		}
+		if( bConfirm )
+		{
+			f = document.frmOnly;
+			f.cd_atendimento.value = ca;
+			f.cd_encaminhamento.value = ce;
+			f.tipo_operacao.value = v;
+			f.submit();
+		}
+	}
+</script>
+
+<table width="777" border="0" cellpadding="1" cellspacing="1" align="center">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+		<!-- START BLOCK : cadastro -->
+			<table border="0" align="center" cellpadding="1" cellspacing="1" width="777">
+                <tr bgcolor="#0046ad"> 
+					<td height="22" colspan="2" class="cabecalho" valign="middle">
+					<div style="float:left; width:90%; text-align:center;">
+						ATENDIMENTO Nº {cd_atendimento} / {tp_atendimento} 
+					</div>
+					<div style="float:left; width:10%; text-align:right;">
+						<a href="javaScript:window.print();"><img src="img/btn_impressora.jpg" border="0"></a>
+						<a href="lst_encaminhamentos_abertos.php"><img src="img/btn_retorna.jpg" border="0"></a>
+					</div>
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1" height="22">Data atendimento:</td>
+					<td colspan="2" class="texto1">{dt_atendimento}</td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Emp/re/seq</td>
+					<td colspan="2" class="texto1">{emp} / {re} / {seq}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1" height="22">Nome participante:</td>
+					<td colspan="2" class="texto1">{nome_participante}</td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Atendente:</td>
+					<td colspan="2" class="texto1">{atendente}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1" height="22" valign="top">Observações:</td>
+					<td colspan="2" class="texto1">
+						<!-- START BLOCK : observacoes -->
+							{obs}
+							<br>
+						<!-- END BLOCK : observacoes -->
+					</td>
+                </tr>
+			</table>
+			<BR>		
+			<table border="0" align="center" cellpadding="1" cellspacing="1" width="777">
+                <tr bgcolor="{cor_fundo2}"> 
+					<td colspan="3" class="cabecalho" height="33" bgcolor="#0046ad">ENCAMINHAMENTOS</td>
+                </tr>
+				<form name="frmOnly" method="post" action="recebe_atendimento.php" style="padding-bottom:0px; margin-bottom:0px;">
+				<input type="hidden" name="tipo_operacao" id="tipo_operacao" value="" style="width:2px;" />
+				<input type="hidden" name="cd_atendimento" id="cd_atendimento" value="{cd_atendimento}" style="width:2px;" />
+				<input type="hidden" name="cd_encaminhamento" id="cd_encaminhamento" value="{cd_encaminhamento}" style="width:2px;" />
+				</form>
+				<!-- START BLOCK : encaminhamentos -->
+                <tr bgcolor="{cor_fundo2}"> 
+					<td colspan="3" class="cabecalho" height="33" bgcolor="#0046ad">Encaminhamento nº {cd_encaminhamento}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Situação:</td>
+					<td class="texto1"><b>{situacao}</b></td>
+					<td align="center" valign="middle" bgcolor="{cor_fundo2}" >
+						<input class='botao' type="button" value="Encerrar este atendimento" onclick="executarComando('encerrar', {cd_atendimento}, {cd_encaminhamento})" /> 
+						<input class='botao' type="button" value="Cancelar este atendimento" onclick="executarComando('cancelar', {cd_atendimento}, {cd_encaminhamento})" /> 
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1" height="22">Solicitado por:</td>
+					<td class="texto1">{solicitante}</td>
+					<td class="texto1" rowspan="4" valign="top" > 
+						{texto_encaminhamento}
+					</td>					
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Data solicitação:</td>
+					<td class="texto1">{dt_solicitacao}</td>
+                </tr>				
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1" height="22">Encaminhado por:</td>
+					<td class="texto1"><b>{atendente}</b></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Data encaminhamento:</td>
+					<td class="texto1"><b>{dt_encaminhamento}</b></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" height="22">Data cancelamento:</td>
+					<td class="texto1"><b>{dt_cancelado}</b></td>
+                </tr>
+				<!-- END BLOCK : encaminhamentos -->
+
+			</table>
+			<BR>		
+			<table border="0" align="center" cellpadding="1" cellspacing="1" width="777">	
+                <tr bgcolor="#BFA260"> 
+					<td colspan="3"  class="cabecalho" height="33">Informações do atendimento</td>
+                </tr>
+				<tr bgcolor="#BFA260"> 
+					<td class="cabecalho" height="22">Nome Tela</td>
+					<td class="cabecalho">Hora acesso</td>
+					<td class="cabecalho">Programa</td>
+				</tr>
+				<!-- START BLOCK : tela_capturada -->
+				<tr bgcolor="{cor_fundo}"> 
+					<td class="texto1" height="22">{tela}</td>
+					<td class="texto1">{hora}</td>
+					<td class="texto1">{programa}</td>
+				</tr>
+				<!-- END BLOCK : tela_capturada -->				
+			</table>
+		
+		<BR><BR>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

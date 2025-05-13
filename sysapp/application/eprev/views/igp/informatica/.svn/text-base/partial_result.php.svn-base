@@ -1,0 +1,127 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Mês', 'Expediente', 'Banco<br>Fora', '% Tempo <br>Indisp', 'Meta', 'Minutos<br>Exped', 'Minutos<br>Bco Fora', '% Bco<br>Indisp', 'Peso', 'Result /<br>Meta', 'RF Mês', 'Meta <br>% acum', '', 'Média<br>Movel (%)', 'Média<br>Móvel', ''
+);
+
+$acumular_ate=12;
+
+$contador=sizeof($collection);
+
+foreach( $collection as $item )
+{
+	$link=anchor("igp/informatica/detalhe/" . $item["cd_informatica"], "editar");
+
+	$expediente = $item['nr_expediente'];
+	$bco_fora = $item["nr_bco_fora"];
+	$tempo_perc = $item["nr_tempo_perc"];
+	$meta = $item["nr_meta"];
+	
+	// MNUTOS EXPED: ultimos 12 meses
+	$a_minutos_exped[]=intval($expediente);
+	$minutos_exped=0;
+	$j=1;
+	for( $i=sizeof($a_minutos_exped);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$minutos_exped+=intval($a_minutos_exped[$i-1]);
+			$j++;
+		}
+	}
+
+	// MNUTOS BCO FORA: ultimos 12 meses
+	$a_minutos_bco_fora[]=intval($bco_fora);
+	$minutos_bco_fora=0;
+	$j=1;
+	for( $i=sizeof($a_minutos_bco_fora);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$minutos_bco_fora+=intval($a_minutos_bco_fora[$i-1]);
+			$j++;
+		}
+	}
+
+	// =(G179/F179)
+	$perc_bco_indisp = (intval($minutos_bco_fora) / intval($minutos_exped))*100;
+
+	$peso = $item["nr_peso"];
+
+	// =(E179-D179)/E179
+	$result_por_meta = ( ( floatval($meta)-floatval($tempo_perc) )/floatval($meta) )*100;
+
+	// RF MES - =SE(J179>1;I179;I179*J179)
+	if( (floatval($result_por_meta)/100)>1 )
+	{
+		$rf_mes = floatval($peso);
+	}
+	else
+	{
+		$rf_mes = floatval($peso)*($result_por_meta/100);
+	}
+
+	// META PERCENT ACUM - =(E179-H179)/E179
+	$meta_perc_acum=( ( floatval($meta)-floatval($perc_bco_indisp) ) / floatval($meta) ) * 100 ;
+
+	// =SE(M179>1;I179;I179*M179)
+	if( (floatval($meta_perc_acum)/100)>1 )
+	{
+		$meta_perc_acum_aux=floatval($peso);
+	}
+	else
+	{
+		$meta_perc_acum_aux=( floatval($peso)*(floatval($meta_perc_acum)/100) );
+	}
+
+	// % MÉDIA MÓVEL
+	$a_percentual_media_movel[]=floatval($tempo_perc);
+	$percentual_media_movel=0;
+
+	// MÉDIA MÓVEL	
+	$a_rf_mes[]=$rf_mes;
+	$media_movel=0;
+
+	$j=1;
+	for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$percentual_media_movel+=$a_percentual_media_movel[$i-1];
+			$media_movel+=$a_rf_mes[$i-1];
+
+			$j++;
+		}
+	}
+
+	$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+	$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+	$media_movel=floatval($media_movel)/$divisor;
+
+	$body[] = array(
+		$contador--
+		, $item['mes_referencia']
+		, array( number_format( $expediente, 0,',','.' ), 'text-align:right;' )
+		, array( number_format( $bco_fora, 0 ), 'text-align:right;' )
+		, array( number_format( $tempo_perc, 2 ).' %', 'text-align:right;' )
+		, array( "<div style='width:100px;'>". number_format( $meta, 2 ).' %</div>', 'text-align:right;' )
+		, array( number_format( $minutos_exped, 0, ',','.' ), 'text-align:right;' )
+		, array( number_format( $minutos_bco_fora, 0, ',','.' ), 'text-align:right;' )
+		, array( "<div style='width:100px;'>". number_format( $perc_bco_indisp, 2 ).' %</div>', 'text-align:right;' )
+		, array( number_format( $peso, 2 ), 'text-align:right;' )
+		, array( number_format( "<div style='width:100px;'>". $result_por_meta, 2 ).' %</div>', 'text-align:right;' )
+		, array( number_format( $rf_mes, 2 ), 'text-align:right;' )
+		, array( number_format( $meta_perc_acum, 2 ).' %', 'text-align:right;' )
+		, array( number_format( $meta_perc_acum_aux, 2 ), 'text-align:right;' )
+		, array( number_format( $percentual_media_movel, 2 ).' %', 'text-align:right;' )
+		, array( number_format( $media_movel, 2 ), 'text-align:right;' )
+		, $link
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

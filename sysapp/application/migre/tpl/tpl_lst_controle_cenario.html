@@ -1,0 +1,135 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Indicador cenário legal ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+function setYear( y )
+{
+	location.href = "lst_controle_cenario.php?ano=" + y;
+}
+function executarFiltroMes(y)
+{
+	document.frmOnly.action = "lst_controle_cenario.php?ano="+y;
+	document.frmOnly.submit();
+}
+</script>
+
+	<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+
+		<!-- START BLOCK : edicao -->
+
+					<div class="aba_definicao">
+						<div id="aba">
+							<ul>
+								<!-- START BLOCK : ano_sel -->
+								<li onclick="setYear({ano}); " id="abaYear_{ano}" class="{abaSelecionada}"><span>{ano_texto}</span></li>
+								<!-- END BLOCK : ano_sel -->
+							</ul>
+						</div>                            
+						<div class="aba_conteudo">
+							<BR><BR>
+							<div id="ob_year" style="width:100%; text-align:center; display:block;">
+								<div class="dv_year">
+																			
+									<table width="100%" border="0" cellpadding="1" cellspacing="0">
+									<tr valign="top"> 
+									    <td colspan="2" align="right">
+									
+									    	<table width="95%" align="center" border="0" cellspacing="0" cellpadding="0" height="31">
+											<tr>
+												<td class="links2">
+													<form method="post" name="frmOnly">
+													<table class="links2" style="{filtro_mes_style}">
+													<tr>
+													<td valign="bottom">
+													
+														<table>
+															<tr>
+																<td class="links2">
+																	Mês:</td>
+																<td> <select id="mes_sel" name="mes_sel">
+																	<option value="0">Todos</option>
+																	<!-- START BLOCK : mes_sel -->
+																	<option value="{mes}" {mes_selected}>{mes_extenso}</option>
+																	<!-- END BLOCK : mes_sel -->
+																</select>
+																</td>
+															</tr>
+														</table>
+
+													</td>
+
+													<td width="10px"></td>
+													<td><a href="javascript:executarFiltroMes({ano_sel});"><img src="img/btn_atualizar.jpg" border="0"/></a></td>
+													
+													</tr>
+													</table>
+													
+													</form>
+												</td>
+												<td align="center" class="titulo_azul" style="{filtro_mes_style}">Registros de {ano_sel}</td>
+												<td align="right"></td>
+											</tr>
+								            </table>
+								            
+								            <table width="95%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+								              <tr bgcolor="{cor_fundo}"> 
+								                <td colspan="2" class="cabecalho">&nbsp;</td>
+								                <td colspan="2" class="texto2" align="center">Datas:</td>
+								                <td class="cabecalho" align="center">&nbsp;</td>
+								              </tr>
+								              <tr bgcolor="{cor_fundo}"> 
+								                <td bgcolor="#0046ad" class="cabecalho">Edi&ccedil;&atilde;o</td>
+								                <td bgcolor="#0046ad" class="cabecalho" align="center">Registro</td>
+								                <td colspan="2" nowrap><span class="texto4">&raquo;Legal</span><br> 
+								                  <span class="texto4verde">&raquo;+ prevista</span><br> <span class="texto4vermelho">&raquo;+ 
+								                  implem.</span></td>
+								                <td bgcolor="#0046ad" class="cabecalho" align="center">Controle</td>
+								              </tr>
+								              <!-- START BLOCK : projetos -->
+								              <tr bgcolor="{cor_fundo}"> 
+								                <td rowspan="2" class="texto1" valign="top">{cd_edicao}</td>
+								                <td rowspan="2" valign="top"><a href="cad_cenario.php?op=A&c={cd_cenario}&ed={cd_edicao}" class="links2">{cd_cenario}&nbsp;-&nbsp;{cenario}</a></td>
+								                <td colspan="2" rowspan="2" align="center"><span class="texto4">L:{dt_legal}</span><br> 
+								                  <span class="texto4verde">P:{dt_prevista}</span><br> <span class="texto4vermelho">I:{dt_implementacao}</span></td>
+								              </tr>
+								              <tr bgcolor="{cor_fundo}"> 
+								                <td height="18" class="linkus2"><table width="100%" border="0" cellspacing="1" cellpadding="3" bgcolor="#DDDDDD">
+								                    <tr bgcolor="#FFFFFF"> 
+								                      <td class="texto4">Atividade</td>
+								                      <td class="texto4">Data <br>
+								                        Implementa&ccedil;&atilde;o</td>
+								                      <td class="texto4">Data<br>
+								                        Prevista</td>
+								                      <td class="texto4">Pertin&ecirc;ncia</td>
+								                      <td class="texto4">Respons&aacute;vel</td>
+								                      <td class="texto4">Ger&ecirc;ncia</td>
+								                    </tr>
+								                    <!-- START BLOCK : atividade -->
+								                    <tr bgcolor="{cor_fundo}"> 
+								                      <td><a href="cad_atividade_solic.php?n={atividade}&aa={gerencia}&TA=L" class="links2verde">{atividade}</a></td>
+								                      <td class="texto1" background="{img_fundo}">{dt_imp}</td>
+								                      <td class="texto1">{dt_prev}</td>
+								                      <td class="{texto_pertinencia}">{pert}</td>
+								                      <td class="texto4verde">{resp}</td>
+								                      <td class="texto1">{gerencia}</td>
+								                    </tr>
+								                    <!-- END BLOCK : atividade -->
+								                  </table></td>
+								              </tr>
+								              <!-- END BLOCK : projetos -->
+								            </table>
+									      	<p>&nbsp; </p>
+										</td>
+									</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+		<!-- END BLOCK : edicao -->
+
+<!-- INCLUDE BLOCK : footer.html -->

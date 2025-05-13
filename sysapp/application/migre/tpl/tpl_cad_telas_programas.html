@@ -1,0 +1,83 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Telas dos programas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : mensagem -->
+  <tr> 
+    <td colspan="2"> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+  </tr>
+  <!-- END BLOCK : mensagem -->
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" method="post" action="grava_tela_programa.php" onSubmit="return valida_form(this)">
+              <table border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    cadastro </font></font>: </td>
+                  <td colspan="2"> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr> 
+                        <td bgcolor="#dae9f7"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          </font> 
+                          <input name="data_implantacao" type="text" id="data_implantacao" size="10" maxlength="10" readonly value="{data_implantacao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                          <input name="insere" type="hidden" id="insere" value="{insere}">
+                          <input name="cod_programa" type="hidden" id="cod_programa" value="{programa}">
+                          </font> </td>
+                        <td bgcolor="#dae9f7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Software: 
+                          </font><font  color="#0046AD"  size="5" face="Arial, Helvetica, sans-serif">{programa} 
+                          </font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tela</font></td>
+                  <td colspan="2"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cd_tela" type="text" id="cd_tela" value="{cd_tela}" size="5" maxlength="5" readonly >
+                    <input name="tela" type="text" id="tela" value="{tela}" size="50" maxlength="50" >
+                    </font> </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Caption 
+                    da Tela:</font></td>
+                  <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="caption" type="text" id="txt_caption" value="{caption}" size="50" maxlength="100" >
+                    </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Programa:</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <select name="programa" id="programa" >
+                      <!-- START BLOCK : programa -->
+                      <option value="{cd_programa}" {sel_programa}>{nome_programa}</option>
+                      <!-- START BLOCK : programa -->
+                    </select>
+                    </font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Causa 
+                    Influ&ecirc;ncia na Internet? 
+                    <input name="influencia_web" type="text" id="influencia_web" value="{influencia_web}" size="2" maxlength="2" >
+                    </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o:</font></td>
+                  <td colspan="2">
+                    <textarea name="descricao" cols="50" rows="6" id="textarea" >{descricao}</textarea>
+                  </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td colspan="3"> 
+                  	<div align="center"><input class='botao' type="submit" name="Submit" value="Gravar"></div>
+                  </td>
+                </tr>
+              </table>
+      </form>
+    </td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,819 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Tarefa - Definição';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+    <script type="text/javascript">
+    // JACOBSEN 
+ var ds_url = "naook_tarefa.php";
+ function showConfirma(cd_atividade,cd_tarefa,cd_recurso)
+ {
+  var nr_width  = 350;
+  try
+  {
+   document.getElementById('campo_obrigatorio').style.left = (document.body.clientWidth/2) - (nr_width/2);
+  }
+  catch(e)
+  {
+   document.getElementById('campo_obrigatorio').style.left = (document.body.offsetWidth/2) - (nr_width/2);
+  }
+  
+	document.getElementById('campo_obrigatorio').style.top  = 150;
+	document.getElementById('conteudo2').style.display = 'none';
+	document.getElementById('campo_obrigatorio').style.visibility = 'visible';
+	ds_url += "?t=" + cd_tarefa;
+	ds_url += "&a=" + cd_atividade;
+	ds_url += "&recurso=" + cd_recurso;
+   
+ }
+
+function naoOk()
+{
+document.getElementById('form_exec').action = ds_url;
+document.getElementById('form_exec').submit();
+}
+ 
+ function hiddenConfirma()
+ {
+  document.getElementById('conteudo2').style.display = '';
+  document.getElementById('campo_obrigatorio').style.visibility = 'hidden';
+ }
+ 
+	function validTipo()
+	{
+		if(document.getElementById("ds_tipo").value == "")
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	function delLineTable(ob_linha)
+	{
+		ob_linha.parentNode.removeChild(ob_linha);
+	}
+	
+	
+	<!-- START BLOCK : numero_tipo_js -->	
+		var nr_tipo_table = {max_cd_tarefas_layout} + 1;
+	<!-- END BLOCK : numero_tipo_js -->	
+
+	function addTipo()
+	{
+		if(validTipo())
+		{
+			var nr_tipo_index = nr_tipo_table;
+			var ob_detalhe = document.getElementById('ob_detalhe');
+			var ob_linha   = new linha();
+			var ob_celula  = new cel();
+
+					//--------------------------------------------- NOVA TABELA TIPO
+					var ob_tipo_table        = document.createElement('table');
+						ob_tipo_table.border = 0;
+					var ob_tbody    = document.createElement('tbody');
+					ob_tipo_table.appendChild(ob_tbody);
+
+					//--------------------------------------------- CAMPO TIPO
+					var ob_tipo_tr               = new linha();
+						ob_tipo_tr.style.cssText = "background-color: #F4F4F4;";
+					var ob_tipo_cel_1            = new cel();
+						ob_tipo_cel_1.colSpan    = 5;
+						ob_tipo_cel_1.innerHTML  = "Tipo: " + document.getElementById("ds_tipo").value + "<input type='hidden' name='ar_lay_tipo[]' value='" + document.getElementById("ds_tipo").value + "'><input type='hidden' name='ar_lay_tipo_table[]' value='"+nr_tipo_index+"'>";
+					var ob_tipo_cel_2            = new cel();
+					var ob_bt_del                = new input();
+						ob_bt_del.type           = "button";
+						ob_bt_del.value          = "Remover";
+						ob_bt_del.title          = "Remover tipo";
+						ob_bt_del.onclick        = function(){ delLineTable(ob_linha); }					
+						ob_tipo_cel_2.appendChild(ob_bt_del);
+						
+					ob_tipo_tr.appendChild(ob_tipo_cel_1);
+					ob_tipo_tr.appendChild(ob_tipo_cel_2);
+					
+					ob_tbody.appendChild(ob_tipo_tr);
+
+					//--------------------------------------------- CABEÇALHO				
+					var ob_tipo_tr               = new linha();
+						ob_tipo_tr.style.cssText = "background-color: #dae9f7;color:0046ad; font-weight:bold;";
+					var ob_tipo_cel_1           = new cel();
+						ob_tipo_cel_1.innerHTML = "Nome Campo";
+					var ob_tipo_cel_2           = new cel();
+						ob_tipo_cel_2.innerHTML = "Tamanho Campo";
+					var ob_tipo_cel_3           = new cel();
+						ob_tipo_cel_3.innerHTML = "Característica";
+					var ob_tipo_cel_4           = new cel();
+						ob_tipo_cel_4.innerHTML = "Formato Campo";
+					var ob_tipo_cel_5           = new cel();
+						ob_tipo_cel_5.innerHTML = "Definição";
+					var ob_tipo_cel_6           = new cel();
+					var ob_bt_add               = new input();
+						ob_bt_add.type          = "button";
+						ob_bt_add.value         = "Adicionar";
+						ob_bt_add.title         = "Adicionar campo";
+						ob_bt_add.onclick       = function(){ camposTipo(ob_tbody,nr_tipo_index);}					
+						ob_tipo_cel_6.appendChild(ob_bt_add);						
+					
+					ob_tipo_tr.appendChild(ob_tipo_cel_1);
+					ob_tipo_tr.appendChild(ob_tipo_cel_2);
+					ob_tipo_tr.appendChild(ob_tipo_cel_3);
+					ob_tipo_tr.appendChild(ob_tipo_cel_4);
+					ob_tipo_tr.appendChild(ob_tipo_cel_5);
+					ob_tipo_tr.appendChild(ob_tipo_cel_6);
+					
+					ob_tbody.appendChild(ob_tipo_tr);
+					
+					camposTipo(ob_tbody,nr_tipo_index);//Adiciona o primeiro campo
+
+					ob_celula.appendChild(ob_tipo_table);
+					
+			ob_linha.appendChild(ob_celula);
+			ob_detalhe.appendChild(ob_linha);
+			nr_tipo_table++;			
+		}
+	}
+	
+	function camposTipo(obj,nr_tipo_index)
+	{
+		var ob_tipo_tr              = new linha();
+		    ob_tipo_tr.style.cssText = "background-color: #F4F4F4;";
+			ob_tipo_tr.vAlign        = "top";
+		var ob_tipo_cel_1           = new cel();
+			ob_tipo_cel_1.innerHTML = "<input type='text' name='ar_lay_campo_nome_"+nr_tipo_index+"[]' value=''>";
+		var ob_tipo_cel_2           = new cel();
+			ob_tipo_cel_2.innerHTML = "<input type='text' name='ar_lay_campo_tamanho_"+nr_tipo_index+"[]' value=''>";
+		var ob_tipo_cel_3           = new cel();
+			ob_tipo_cel_3.innerHTML = "<input type='text' name='ar_lay_campo_caracteristica_"+nr_tipo_index+"[]' value=''>";
+		var ob_tipo_cel_4           = new cel();
+			ob_tipo_cel_4.innerHTML = "<input type='text' name='ar_lay_campo_formato_"+nr_tipo_index+"[]' value=''>";
+		var ob_tipo_cel_5           = new cel();
+			ob_tipo_cel_5.innerHTML = "<textarea wrap='physical' name='ar_lay_campo_definicao_"+nr_tipo_index+"[]' cols='20' rows='3'></textarea>";
+		var ob_tipo_cel_6           = new cel();
+		var ob_bt_del               = new input();
+			ob_bt_del.type          = "button";
+			ob_bt_del.value         = "Remover";
+			ob_bt_del.title         = "Remover campo";
+			ob_bt_del.onclick       = function(){ delLineTable(ob_tipo_tr); }					
+			ob_tipo_cel_6.appendChild(ob_bt_del);
+		
+		ob_tipo_tr.appendChild(ob_tipo_cel_1);
+		ob_tipo_tr.appendChild(ob_tipo_cel_2);
+		ob_tipo_tr.appendChild(ob_tipo_cel_3);
+		ob_tipo_tr.appendChild(ob_tipo_cel_4);
+		ob_tipo_tr.appendChild(ob_tipo_cel_5);
+		ob_tipo_tr.appendChild(ob_tipo_cel_6);
+		obj.appendChild(ob_tipo_tr);		
+	}
+	
+	function addCampo(id_table,cd_tarefas_layout)
+	{
+		var ob_tbody = document.getElementById(id_table);
+		camposTipo(ob_tbody,cd_tarefas_layout);
+	}
+	
+	
+	function linha()
+	{
+		return document.createElement('tr');
+	}
+	
+	function cel()
+	{
+		var ob_cel =  document.createElement('td');
+			ob_cel.style.cssText = "font-family: Verdana, Arial, Helvetica, sans-serif;font-size:10pt;"
+		return ob_cel;
+	}
+	
+	function input()
+	{
+		return document.createElement('input');
+	}
+	
+	// ARQUIVOS
+	var nr_conta = 0;
+	function addFile()
+    {
+        nr_conta++;
+		var ds_obj_grupo     = 'arquivo_add';
+		var ds_obj_item      = 'arquivo_add_';
+		var ob_grupo_arq     = document.getElementById(ds_obj_grupo);
+        var ob_div_arq       = document.createElement('div');
+		var ds_div_arq       = "'" + ds_obj_item + nr_conta + "'";
+		
+        ob_div_arq.setAttribute('id', ds_obj_item + nr_conta);
+        ob_div_arq.innerHTML = '	<table>';
+		ob_div_arq.innerHTML+= '		<tr>';
+		ob_div_arq.innerHTML+= '        	<td>';	
+		ob_div_arq.innerHTML+= '				<font size="2" face="Verdana, Arial, Helvetica, sans-serif">';
+		ob_div_arq.innerHTML+= '	 				Selecione o arquivo:';
+		ob_div_arq.innerHTML+= '				</font>';
+		ob_div_arq.innerHTML+= '        	</td>';
+		ob_div_arq.innerHTML+= '        	<td>';
+        ob_div_arq.innerHTML+= '				<input name="ar_arquivo[]" type="file"> ';
+		ob_div_arq.innerHTML+= '        	</td>';
+		ob_div_arq.innerHTML+= '        	<td>';
+		ob_div_arq.innerHTML+= '				<input type="button" value="Remover"  onclick="removeFile(' + ds_div_arq + ');">';
+		ob_div_arq.innerHTML+= '        	</td>';
+		ob_div_arq.innerHTML+= '		</tr>';
+		ob_div_arq.innerHTML+= '	</table>';
+							 
+        ob_grupo_arq.appendChild(ob_div_arq);
+    }
+
+    function removeFile(id_obj)
+    {
+		document.getElementById(id_obj).innerHTML = "";
+    }
+    </script>
+
+	<!-- START BLOCK : cadastro -->
+
+<script>
+<!--
+	function ir_definicao()
+	{
+		location.href = "frm_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_execucao()
+	{
+		location.href = "{execucao}";
+	}
+	function ir_historico()
+	{
+		location.href = "{historico}";
+	}
+	function ir_checklist()
+	{
+		location.href = "{checklist}";
+	}
+	function ir_anexo()
+	{
+		location.href = "{anexo}";
+	}
+-->
+</script>
+
+	<form name="form1" id="form_exec" method="post" action="grava_tarefa.php?fl_tipo_grava={fl_tipo_grava}" enctype="multipart/form-data">
+<!-- CAMPO OBRIGATORIO PARA PAUSA E STOP DA TAREFA   -->
+<div id="campo_obrigatorio" style="	padding-left:5px;  
+									padding-right:5px;  
+									border:1px #A5A5A5 solid; 
+									background:#D3D3D3; 
+									position:absolute; 
+									top:0px; 
+									left:0px; 
+									width:350px;
+									height:300px;
+									visibility: hidden;
+									text-align:center;">
+	<fieldset style="width:335px;height:240px; padding:5px;">
+		<legend>
+			<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+				<b>Informe o motivo:</b>
+			</font>
+		</legend>
+		<textarea  id="motivo_tarefa_window" name="motivo_tarefa_window" rows="12" cols="35"></textarea>
+	</fieldset>
+	<br>
+	<input type="button" value="Confirma" id="confirma_status" onclick="naoOk();">
+	<input type="button" value="Cancelar" onclick="hiddenConfirma();">
+</div>		
+
+
+<div id="conteudo2">
+<!-- 
+  --
+  --  ABAS INICIO
+  --
+  -->
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/tarefa'"><span>Lista</span></li>
+						<li id='aba_atividade' class='' onclick="location.href='cad_atividade_atend.php?n={origem}&a=h&aa={aa}'"><span>Atividade</span></li>					
+						<li id="aba_definicao" class="abaSelecionada" onclick="ir_definicao();">
+							<span>Definição</span>
+						</li>
+						<li id="aba_execucao" class="" onclick="ir_execucao();">
+							<span>Execução</span>
+						</li>
+						<li id="aba_checklist" class="" onclick="ir_checklist();" style="{ver_checklist}">
+							<span>Checklist</span>
+						</li>
+						<li id="aba_anexo" class="" onclick="ir_anexo();">
+							<span>Anexo</span>
+						</li>
+						<li id="aba_historico" class="" onclick="ir_historico();">
+							<span>Histórico</span>
+						</li>
+						
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br><br>
+					<div id="div_content">
+
+<!-- 
+  --
+  --  ABAS CONTEUDO
+  --
+  -->
+  
+  
+  
+  
+  
+  
+	<table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td> 
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+        
+        <tr> 
+			<td valign="top">
+
+            <!-- START BLOCK : mensagem -->
+            <font color="#FF0000">{msg}</font> 
+            <!-- END BLOCK : mensagem -->
+          </td>
+		  <td width="90%">&nbsp;</td>
+          <td></td>
+        </tr>
+        <tr valign="top"> 
+    		<td colspan="2">
+			
+              <table border="0" align="center" cellpadding="2" cellspacing="1">
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Atividade Origem:</font></td>
+                  <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{origem} 
+                    / {codigo} 
+                    </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="origem" type="hidden" id="origem2" value="{origem}">
+                    <input name="cd_tarefa" type="hidden" id="cd_tarefa" value="{cd_tarefa}">
+                    <input name="dur_ant" type="hidden" id="dur_ant2" value="{dur_ant}">
+                    <input name="insere" type="hidden" id="insere2" value="{insere}">
+                    </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                  	<td align="right"> <input name="image" type="image" src="img/btn_salvar.jpg" border="0">
+						<span id="botoes_ok_tarefa" style="{visualiza_botoes_ok}">
+							<a href="{nao_ok}"><img src="img/btn_naook_anal.jpg" border="0"></a>				  
+							<a href="ok_tarefa.php?a={origem}&t={cd_tarefa}&recurso={cd_recurso}"><img src="img/btn_ok_anal.jpg" border="0"></a>
+						</span>				  
+						<a href="{url_imprimir}" target="_blank"><img src="img/btn_impressora.jpg" border="0"></a>
+						<a href="exclui_tarefa.php?a={origem}&t={cd_tarefa}"><img src="img/btn_exclusao.jpg" border="0"></a>
+					</td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{projeto}</font></td>
+					<td align="right">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<span style="{fl_encaminhamento_nao}">
+								<input name="chk_encaminhar" type="checkbox" id="chk_encaminhar2" value="S"> Encaminhar para execu&ccedil;&atilde;o
+							</span>
+							<span style="{fl_encaminhamento_sim}">
+								Tarefa já encaminhada para execução.
+							</span>
+						</font>
+					</td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    do programa:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="programa" id="select" >
+                      <!-- START BLOCK : programa -->
+                      <option value="{programa}" {sel_programa}>{programa}</option>
+                      <!-- END BLOCK : programa -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                    da tarefa:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="cad_tarefa" id="select2" >
+                      <!-- START BLOCK : tarefa -->
+                      <option value="{cod_cad_tarefa}"{sel_tarefa}>{nome_cad_tarefa}</option>
+                      <!-- END BLOCK : tarefa -->
+                    </select>
+                    {tipo_origem}</font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Analista:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="mandante" style="font-family: Verdana; font-size: 8 pt">
+                      <!-- START BLOCK : mandante -->
+                      <option value="{cod_analista}"{sel_analista}>{nome_analista}</option>
+                      <!-- END BLOCK : mandante -->
+                    </select>
+                    {cod_analista} - {nome_analista} </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Programador:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="executor" id="select4" style="font-family: Verdana; font-size: 8 pt">
+                      <!-- START BLOCK : atendente -->
+                      <option value="{cod_atendente}"{sel_atendente}>{nome_atendente}</option>
+                      <!-- END BLOCK : atendente -->
+                    </select>
+                    </font></td>
+                </tr>
+
+				<tr>
+				  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Prioridade:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+				    <input id="prioridade_sim" onclick="prioridade_click('');" type="radio" name="prioridade" value="S" {chkPrioridadeSim}> Sim 
+					<input id="prioridade_nao" onclick="prioridade_click('none');" type="radio" name="prioridade" value="N" {chkPrioridadeNao}> Não
+                    </font></td>				
+				</tr>
+
+				<tr id="trPrioridade" style="display:none;">
+					<td>
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nível de prioridade:</font>
+					</td>
+	                <td colspan="3" style='font-family:Verdana, Arial, Helvetica, sans-serif;font-size:12;'>
+	                	<select id="nr_nivel_prioridade" name="nr_nivel_prioridade">
+	                		<option {nr_nivel_prioridade_0} value="0">0</option>
+	                		<option {nr_nivel_prioridade_1} value="1">1</option>
+	                		<option {nr_nivel_prioridade_2} value="2">2</option>
+	                		<option {nr_nivel_prioridade_3} value="3">3</option>
+	                		<option {nr_nivel_prioridade_4} value="4">4</option>
+	                		<option {nr_nivel_prioridade_5} value="5">5</option>
+	                		<option {nr_nivel_prioridade_6} value="6">6</option>
+	                		<option {nr_nivel_prioridade_7} value="7">7</option>
+	                		<option {nr_nivel_prioridade_8} value="8">8</option>
+	                		<option {nr_nivel_prioridade_9} value="9">9</option>
+	                		<option {nr_nivel_prioridade_10} value="10">10</option>
+	                	</select>
+	                	onde 0 é o menor nível e 10 é o maior nível de prioridade
+	            		<script>
+		                  	function prioridade_click(display)
+		                  	{
+		                  		document.getElementById('trPrioridade').style.display=display;
+		                  	}
+							if( document.getElementById('prioridade_sim').checked ) document.getElementById('trPrioridade').style.display='';
+							if( document.getElementById('prioridade_nao').checked ) document.getElementById('trPrioridade').style.display='none';
+						</script>
+					</td>
+				</tr>
+				<tr> 
+                  <td valign="top">
+                  	<font size="2" face="Verdana, Arial, Helvetica, sans-serif"><label for="">Checklist de teste</label></font>
+                  </td>
+                  <td colspan="3">
+                  	<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                  	<input type="radio" name="chk_checklist" value="S" {checklistSim}> Sim 
+					<input type="radio" name="chk_checklist" value="N" {checklistNao}> Não
+					</font>
+                    <!-- <input name="chk_checklist" type="checkbox" id="chk_checklist" value="S" /> -->
+                  </td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de In&iacute;cio Prevista:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_inicio" type="text" id="dt_inicio2" value="{dt_inicio}" size="12" maxlength="10"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de T&eacute;rmino Prevista:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_fim" type="text" id="dt_fim2" value="{dt_fim}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)"  >
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de in&iacute;cio da tarefa:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inicio_prog}</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de fim da tarefa:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_fim_prog}</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de Acordo:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {dt_ok_anal} </font></td>
+                </tr>
+				<tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Resumo:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input type="text" name="resumo" size="80" maxlength="95" value="{resumo}" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Objetivo:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea  name="descricao" id="descricao" cols="60" rows="5" >{descricao}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Funcionalidades/restri&ccedil;&otilde;es 
+                    <br>
+                    da sele&ccedil;&atilde;o (regras): </font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea  name="casos_testes" id="casos_testes" cols="60" rows="5"  >{casos_testes}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Fun&ccedil;&otilde;es 
+                    ou procedimentos<br>
+                    a serem utilizados: </font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea  name="tabs_envolv" id="tabs_envolv" cols="60" rows="5"  >{tabs_envolv}</textarea>
+                    </font></td>
+                </tr>
+				<!--
+					Cristiano Jacobsen
+				-->
+				<tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Nome do Processo:
+						</font>
+					</td>
+					<td colspan="3">
+						<input type="text" name="ds_processo" size="80" maxlength="95" value="{ds_processo}" >
+					</td>
+				</tr>
+				<tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Diretório:
+						</font>
+					</td>
+					<td colspan="3">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input type="text" name="ds_dir" size="80" maxlength="95" value="{ds_dir}" >
+						</font>
+					</td>
+				</tr>
+				<tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Nome:
+						</font>
+					</td>
+					<td colspan="3">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input type="text" name="ds_nome" size="80" maxlength="95" value="{ds_nome}" >
+						</font>
+					</td>
+				</tr>
+				<tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Delimitador:
+						</font>
+					</td>
+					<td colspan="3">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input type="text" name="ds_delimitador" size="80" maxlength="95" value="{ds_delimitador}" >
+						</font>
+					</td>
+				</tr>
+                <tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Largura Fixa:
+						</font>
+					</td>
+					<td colspan="3">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input type="radio" name="fl_largura" value="S" {fl_orientacao_sim}> Sim 
+							<input type="radio" name="fl_largura" value="N" {fl_orientacao_nao}> Não
+						</font>
+					</td>
+                </tr>				
+
+				<tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Tipo:
+						</font>
+					</td>
+					<td colspan="3">
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input type="text" name="ds_tipo" id="ds_tipo" size="80" maxlength="95" value="" >
+						</font>
+						<input type="button" value="Adicionar" onclick="addTipo()" title="Adicionar tipo">
+					</td>
+				</tr>
+				<tr> 
+					<td valign="top" colspan="4" align="center">
+						<table>
+							<tr>
+								<td>
+									<!-- START BLOCK : numero_tipo -->	
+										<input type="hidden" name="max_cd_tarefas_layout" id="max_cd_tarefas_layout" value="{max_cd_tarefas_layout}">
+									<!-- END BLOCK : numero_tipo -->
+									<!-- START BLOCK : tipo_layout -->	
+									<table>
+										<tbody id="tipo_{cd_tarefas_layout}">
+										<tr style="background-color: #F4F4F4;">
+											<td colspan="5" style="font-family: Verdana, Arial, Helvetica, sans-serif;font-size:10pt;">
+												Tipo: {ds_tipo_arq}
+												<input type='hidden' name='ar_lay_tipo[]' value='{ds_tipo_arq}'>
+												<input type='hidden' name='ar_lay_tipo_table[]' value='{cd_tarefas_layout}'>												
+											</td>
+											<td style="font-family: Verdana, Arial, Helvetica, sans-serif;font-size:10pt;">
+												<input type="button" value="Remover" onclick="document.location.href='exclui_tarefas_layout.php?a={cd_atividade}&c={cd_tarefa}&f={fl_tipo_grava}&l={cd_tarefas_layout}'" title="Remover tipo">
+											</td>
+										</tr>
+										<tr style="background-color: #dae9f7;color:0046ad; font-weight:bold; font-family: Verdana, Arial, Helvetica, sans-serif;font-size:10pt;">
+											<td>
+												Nome Campo
+											</td>
+											<td>
+												Tamanho Campo
+											</td>
+											<td>
+												Característica
+											</td>
+											<td>
+												Formato Campo
+											</td>
+											<td>
+												Definição
+											</td>
+											<td>
+												<input type="button" value="Adicionar" onclick="addCampo('tipo_{cd_tarefas_layout}','{cd_tarefas_layout}')" title="Adicionar campo">
+											</td>											
+										</tr>
+										<!-- START BLOCK : tipo_layout_campo -->
+										<tr style="background-color: #F4F4F4; font-family: Verdana, Arial, Helvetica, sans-serif;font-size:10pt;">
+											<td>
+												{ds_tipo_nome}
+											</td>
+											<td>
+												{ds_tamanho}
+											</td>
+											<td>
+												{ds_caracteristica}
+											</td>
+											<td>
+												{ds_formato}
+											</td>
+											<td>
+												{ds_definicao}
+											</td>
+											<td>
+												<input type="button" value="Remover" onclick="document.location.href='exclui_tarefas_layout.php?a={cd_atividade}&c={cd_tarefa}&f={fl_tipo_grava}&l={cd_tarefas_layout}&p={cd_tarefas_layout_campo}'" title="Remover campo">
+											</td>
+										</tr>
+										<!-- START BLOCK : tipo_layout_campo -->
+										</tbody>
+									</table>
+									<!-- END BLOCK : tipo_layout -->
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tbody id="ob_detalhe">
+
+							</tbody>
+						</table>
+					</td>
+				</tr>
+
+			    <tr> 
+					<td valign="top">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Ordenado por:
+						</font>
+					</td>
+					<td colspan="3">
+						 <textarea  name="ds_ordem" cols="60" rows="5" id="ds_ordem" >{ds_ordem}</textarea>
+					</td>
+                </tr>
+              </table>
+            <div align="center" style="display:none"><br>
+				<table width="90%" align="center" cellpadding="4" cellspacing="1">
+					<tr bgcolor="#dae9f7"> 
+						<td colspan="2">
+							<font  color="#0046ad" face="Arial, Helvetica, sans-serif">
+								<b>Arquivos, layouts ou documentos anexos:
+							</font>
+						</td>
+					</tr>
+					<tr> 
+						<td colspan="2" id="arquivo_add" align="center">
+							<script>
+								addFile();
+							</script>
+						</td>
+					</tr>
+					<tr> 
+						<td colspan="2" align="center"> 
+							<input type="button" value="Adicionar" onclick="addFile();">
+						</td>
+					</tr>
+					<tr> 
+						<td colspan="2"  align="center">
+							<table width="100%">
+				                <tr bgcolor="#0046ad"> 
+									<td >
+										<strong>
+											<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+												Nome documento 
+											</font>
+										</strong>
+									</td>
+									<td width="30%"> 
+										<strong>
+											<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+												Tipo de anexo
+											</font>
+										</strong>
+									</td>
+									<td width="10%"> 
+										<br>
+									</td>
+								</tr>							
+				                <!-- START BLOCK : anexo_report-->
+				                <tr bgcolor="#F4F4F4"> 
+									<td>
+										<a href="/upload/{ds_arquivo}">
+											<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+												{ds_arquivo}
+											</font>
+										</a>
+									</td>
+									<td> 
+										<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+											{ds_arquivo_tipo}
+										</font>
+									</td>
+									<td align="center"> 
+										<input type="button" value="Remover" onclick="document.location.href='exclui_tarefas_anexos.php?a={cd_atividade}&c={cd_tarefa}&f={fl_tipo_grava}&p={cd_anexo}'">
+									</td>
+								</tr>
+				                <!-- END BLOCK : anexo_report -->								
+							</table>
+						</td>
+					</tr>					
+				</table>
+            </div>			
+			</td>
+
+			<td>&nbsp;</td>
+
+        </tr>
+		<tr> 
+			  <td colspan="2" align="center">
+			  <img src="img/img_divisoria1.gif" width="80%" height="1">
+			  <br>
+				<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                      <input type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                      </font></div>			  
+			  </td>
+			  <td>&nbsp;</td>
+		</tr>		
+
+		<tr> 
+			  <td colspan="2"><div align="center"><font size="1" face="Verdana"> 
+				  </font></div></td>
+			  <td>&nbsp;</td>
+		</tr>
+      </table>
+  </td></tr></table>
+  
+  
+  
+  
+  
+
+  
+<!-- 
+  --
+  --  ABAS FIM CONTEUDO
+  --
+  -->
+
+
+					</div>
+				</div>
+			</div>
+			
+<!-- 
+  --
+  --  ABAS FIM
+  --
+  -->
+
+</div>
+
+			</form>
+  <!-- END BLOCK : cadastro -->
+
+<!-- Begin: Insert DYNTAR -->
+<link rel="stylesheet" href="inc/dynamic_textarea_resizer/dyntar.css" type="text/css" />
+<script type="text/javascript" src="inc/dynamic_textarea_resizer/dyntar.js"></script>
+<!-- End: Insert DYNTAR -->	
+
+<!-- INCLUDE BLOCK : footer.html -->

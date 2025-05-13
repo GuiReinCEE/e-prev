@@ -1,0 +1,35 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Etapas de projeto ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right"><a href="cad_etapa_projeto.php?op=I&c={cd_projeto}"><img src="img/btn_novo_registro.jpg" border="0"></a> 
+        </div>
+      </blockquote>
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Etapa</font></strong></td>
+                <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Situa&ccedil;&atilde;o 
+                  </strong></font></td>
+                <td colspan="2"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data 
+                  </strong></font></td>
+              </tr>
+              <!-- START BLOCK : etapa_projeto -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_etapa_projeto.php?op=A&c={cd_projeto}&cd_etapa={cd_etapa}">{nome_etapa}</a></font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{situacao_etapa}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_etapa}</font></td>
+                <td bgcolor="{cor_fundo}">{imagem}</td>
+              </tr>
+              <!-- END BLOCK : etapa_projeto -->
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

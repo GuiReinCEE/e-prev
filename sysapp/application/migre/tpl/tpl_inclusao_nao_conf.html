@@ -1,0 +1,200 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Não Conformidade ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.dt_cadastro.value == '') { erros = erros + "- O campo 'Data de cadastro da Não Conformidade' deve estar preenchido.\n"; }
+	if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Não Conformidade' deve estar preenchido.\n"; }
+	if (f.txt_evidencias.value == '') { erros = erros + "- O campo 'Evidências Objetivas' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function envia_msg(m)
+{
+	alert(m);
+	return true;
+}
+
+function aba_lista_click()
+{
+	location.href='{link_lista}';
+}
+//-->
+</script>
+
+{ABA_START}
+
+      <table width="90%" border="0" cellpadding="0" cellspacing="0" >
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="3"> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td colspan="2"> 
+            <form name="form1" method="post" action="grava_nao_conformidade.php" onSubmit="return valida_form(this)">
+              <table border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr> 
+                  <td colspan="2"> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr> 
+                        <td colspan="2"> <input name="insere" type="hidden" id="insere2" value="{insere}"> 
+                          <input name="cod_nao_conf" type="hidden" id="cod_nao_conf2" value="{cod_nao_conf}"> 
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;</td>
+                        <td> 
+                          <!-- START BLOCK : num_nao_conf -->
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Numero: 
+                          {num_nao_conf}</font> 
+                          <!-- END BLOCK : num_nao_conf -->
+                        </td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data: 
+                    </font></td>
+                  <td> <input name="dt_cadastro" type="text" id="dt_cadastro" value="{dt_cadastro}" size="12" maxlength="10" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" ></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero 
+                    N&atilde;o Conformidade:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="numero_cad_nc" type="text" id="numero_cad_nc2" value="{numero_cad}" size="20" maxlength="20" readonly >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Aberto 
+                    por:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="aberto_por"  id="aberto_por"  >
+                      <!-- START BLOCK : aberto_por -->
+                      <option value="{codigo_aberto_por}" {sel_aberto_por} readonly>{aberto_por}</option>
+                      <!-- END BLOCK : aberto_por -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Processo</font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">:</font></p></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="processo"  >
+                      <!-- START BLOCK : processo -->
+                      <!--                <option value="cad_nao_conformidade.php?cp={codigo_processo}" {sel_processo}>{nome_processo}</option> -->
+                      <option value="{codigo_processo}" {sel_processo}>{nome_processo}</option>
+                      <!-- END BLOCK : processo -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Envolvidos 
+                    no processo:</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{envolvidos} 
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o 
+                    da N&atilde;o Conformidade:</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="descricao" cols="50" rows="6" id="txt_descricao" >{descricao}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="responsavel"  id="responsavel"  >
+                      <!-- START BLOCK : responsavel -->
+                      <option value="{cod_responsavel}" {sel_responsavel}>{responsavel}</option>
+                      <!-- END BLOCK : responsavel -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Evid&ecirc;ncias 
+                    Objetivas<br>
+                    (provas da N&atilde;o Conformidade)</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="evidencias" cols="50" rows="6" id="txt_evidencias" >{evidencias}</textarea>
+                    </font> </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Disposi&ccedil;&atilde;o<br>
+                    (solu&ccedil;&atilde;o imediata para resolver o problema)</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="disposicao" cols="50" rows="6" id="textarea11" >{disposicao}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Causa 
+                    da N&atilde;o Conformidade<br>
+                    (Identificar as causas da N&atilde;o Conformidade)</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="causa" cols="50" rows="6" id="textarea12" >{causa}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    Encerramento: (fechamento RNC)</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_encerramento" readonly type="text" id="dt_encerramento3" value="{dt_encerramento}" size="12" maxlength="10" onBlur="compara_datas(this,dt_cadastro);verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td>&nbsp;</td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+
+<!--
+<tr bgcolor="#DCDCCC">
+<td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+de </font></td>
+<td><font size="2" face="Arial, Helvetica, sans-serif">
+<select name="select" id="select2">
+<!-- START BLOCK : diretriz --
+<option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+<!-- END BLOCK : diretriz --
+</select>
+</font></td>
+</tr>
+-->
+
+                <tr> 
+                  <td colspan="2"> <div align="center"> 
+                      <input type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                      <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                    </div></td>
+                </tr>
+              </table>
+            </form>
+            <form name="form2" method="post" action="cad_acompanhamento.php">
+              <table width="33%" border="0" align="center">
+                <tr> 
+                  <td> 
+                    <!-- START BLOCK : codigo -->
+                    <input name="cod_processo" type="hidden" id="cod_processo2" value="{cod_processo}"> 
+                    <input name="cod_nao_conf" type="hidden" id="cod_nao_conf2" value="{cod_nao_conf}"></td>
+                  <!-- END BLOCK : codigo -->
+                </tr>
+              </table>
+            </form></td>
+          <td></td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

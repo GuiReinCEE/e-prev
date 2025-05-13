@@ -1,0 +1,147 @@
+<?php
+class Participante_model extends Model
+{
+	function __construct()
+	{
+		parent::Model();
+	}
+
+	function listar( &$result, $args=array() )
+	{
+		// mount query
+		$sql = "
+		SELECT cd_participante
+		, TO_CHAR(dt_referencia,'MM/YYYY') as mes_referencia
+		, nr_semestre
+		, nr_meta
+		, nr_peso
+		, nr_instituidor
+		, nr_partic_mes
+		, TO_CHAR(dt_inclusao,'DD/MM/YYYY') as dt_inclusao
+		, cd_usuario_inclusao
+		, TO_CHAR(dt_exclusao,'DD/MM/YYYY') as dt_exclusao
+		, cd_usuario_exclusao 
+		FROM igp.participante 
+		WHERE dt_exclusao IS NULL
+		ORDER BY dt_referencia
+		";
+
+		// return result ...
+		$result = $this->db->query($sql);
+	}
+
+	function carregar($cd)
+	{
+		$sql = " SELECT cd_participante
+		, TO_CHAR(dt_referencia,'DD/MM/YYYY') as dt_referencia
+		, nr_semestre
+		, nr_meta
+		, nr_peso
+		, nr_instituidor
+		, nr_partic_mes
+		, TO_CHAR(dt_inclusao,'DD/MM/YYYY') as dt_inclusao
+		, cd_usuario_inclusao
+		, TO_CHAR(dt_exclusao,'DD/MM/YYYY') as dt_exclusao
+		, cd_usuario_exclusao 
+		FROM igp.participante  ";
+		$row=array();
+		$query = $this->db->query( $sql . ' LIMIT 1 ' );
+		$fields = $query->field_data();
+		foreach( $fields as $field )
+		{
+			$row[$field->name] = '';
+		}
+
+		if( intval($cd)>0 )
+		{
+			$sql .= " WHERE cd_participante={cd_participante} ";
+			esc( "{cd_participante}", intval($cd), $sql );
+			$query=$this->db->query($sql);
+
+			if($query->row_array())
+			{
+				$row=$query->row_array();
+			}
+		}
+
+		return $row;
+	}
+
+	function salvar($args,&$msg=array())
+	{
+		if(intval($args['cd_participante'])==0)
+		{
+			$sql="
+			INSERT INTO igp.participante ( dt_referencia 
+			, nr_semestre 
+			, nr_meta 
+			, nr_peso 
+			, nr_instituidor 
+			, nr_partic_mes 
+			, dt_inclusao 
+			, cd_usuario_inclusao 
+			) VALUES ( TO_DATE('{dt_referencia}', 'DD/MM/YYYY') 
+			, {nr_semestre} 
+			, {nr_meta} 
+			, {nr_peso} 
+			, {nr_instituidor} 
+			, {nr_partic_mes} 
+			, CURRENT_TIMESTAMP 
+			, {cd_usuario_inclusao} 
+			)
+			";
+		}
+		else
+		{
+			$sql="
+			UPDATE igp.participante SET 
+			 cd_participante = {cd_participante} 
+			, dt_referencia = TO_DATE('{dt_referencia}', 'DD/MM/YYYY') 
+			, nr_semestre = {nr_semestre} 
+			, nr_meta = {nr_meta} 
+			, nr_peso = {nr_peso} 
+			, nr_instituidor = {nr_instituidor} 
+			, nr_partic_mes = {nr_partic_mes} 
+			 WHERE 
+			cd_participante = {cd_participante} 
+			";
+		}
+
+		esc("{dt_referencia}", $args["dt_referencia"], $sql, "str", FALSE);
+		esc("{nr_semestre}", $args["nr_semestre"], $sql, "float", FALSE);
+		esc("{nr_meta}", $args["nr_meta"], $sql, "float", FALSE);
+		esc("{nr_peso}", $args["nr_peso"], $sql, "float", FALSE);
+		esc("{nr_instituidor}", $args["nr_instituidor"], $sql, "float", FALSE);
+		esc("{nr_partic_mes}", $args["nr_partic_mes"], $sql, "float", FALSE);
+		esc("{cd_usuario_inclusao}", $args["cd_usuario_inclusao"], $sql, "int", FALSE);
+		esc("{cd_participante}", $args["cd_participante"], $sql, "int", FALSE);
+
+		try
+		{
+			$query = $this->db->query($sql);
+
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$msg[]=$e->getMessage();
+
+			return false;
+		}
+	}
+
+	function excluir($id)
+	{
+		$sql = " 
+		UPDATE igp.participante 
+		SET dt_exclusao=current_timestamp, cd_usuario_exclusao={cd_usuario_exclusao} 
+		WHERE md5(cd_participante::varchar)='{cd_participante}' 
+		"; 
+		esc('{cd_usuario_exclusao}', usuario_id(), $sql, 'int'); 
+		esc('{cd_participante}', $id, $sql, 'str'); 
+ 
+		$query=$this->db->query($sql); 
+
+	}
+}
+?>

@@ -1,0 +1,280 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Inscritos Seminário ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2" align="center"> 
+	  <!-- START BLOCK : cadastro -->
+		<script src="inc/mascara.js"></script>
+		<script>
+			function buscaCidades()
+			{
+				var ds_url    = "cad_inscritos_seminario_ajax.php";
+				var lt_param  = "uf=" + document.getElementById('uf').value;
+				ajaxExecute(ds_url, lt_param, "listaCidades", '.innerHTML=', 'POST');
+			}
+			
+			
+			var fl_barra = false;
+			function verificaBarra()
+			{
+				if (trimValue(document.getElementById('cd_barra').value).length == 13)
+				{
+					var ds_url    = "cad_inscritos_seminario_ajax.php";
+					var lt_param  = "cd_barra=" + document.getElementById('cd_barra').value;
+					ajaxExecute(ds_url, lt_param, 'verificaBarraRetorno', '', 'POST');	
+				}
+				else	
+				{
+					fl_barra = true;
+				}
+			}
+			
+			function verificaBarraRetorno(ds_retorno)
+			{
+				fl_barra = true;
+				if(ds_retorno != "")
+				{
+					alert("Código de Barras já existe."); 
+					document.getElementById('cd_barra').value = ''; 	
+					document.getElementById('cd_barra').focus(); 				
+					fl_barra = false;
+				}
+
+			}
+			
+			function validaFormulario()
+			{
+				
+				if(trimValue(document.getElementById('seminario').value) == "")
+				{
+					alert('Informe o Seminário');
+					document.getElementById('seminario').focus(); 
+					return false;
+				}
+				
+				/*
+				if ((trimValue(document.getElementById('cd_barra').value).length > 0) && (trimValue(document.getElementById('cd_barra').value).length < 13) && (trimValue(document.getElementById('codigo').value) == ""))
+				{
+					alert("Código de Barras inválido."); 
+					document.getElementById('cd_barra').focus(); 
+					return false;				
+				}
+				
+				
+				if ((!fl_barra) && (trimValue(document.getElementById('codigo').value) == ""))
+				{
+					return false;	
+				}
+				*/
+				
+				if (trimValue(document.getElementById('nome').value) == "") 
+				{ 
+					alert("Informe o Nome."); 
+					document.getElementById('nome').focus(); 
+					return false;			
+				}				
+				
+				return true;
+			}
+		</script>
+		<BR>
+            <p>
+            <form name="form1" method="post" action="grava_inscrito_seminario.php" onSubmit="return validaFormulario();">
+			<input name="codigo" type="hidden" id="codigo" value="{codigo}">
+            <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="{cor_fundo2}"> 
+					<td>&nbsp;</td>
+					<td colspan="5" align="right">
+						<!-- <a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a>  -->
+						<img src="img/btn_retorna.jpg" border="0" style="cursor:pointer;" onclick="document.location.href = 'lst_inscritos_seminario.php';">
+						<input type="image" src="img/btn_salvar.jpg" border="0"> 
+						
+						<a href="exclui_inscrito_seminario.php?c={codigo}"><img src="img/btn_exclusao.jpg" border="0"></a> 
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Seminário:</td>
+					<td colspan="5">
+						<select name='seminario' id='seminario' style="width:400px;">
+							<option value="">Selecione</option>
+							<!-- START BLOCK : cbo_seminario -->
+							<option value="{cd_seminario}" {fl_seminario}>{ds_seminario}</option>
+							<!-- END BLOCK : cbo_seminario -->							
+						</select>
+                    </td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Presente:</td>
+					<td colspan="5">
+						<input type="text" name="fl_presente" id="fl_presente" value="{fl_presente}" maxlength="1" style="width:50px;">
+                    </td>
+                </tr>			
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Nome:</td>
+					<td colspan="5">
+						<input type="text" name="nome" id="nome" value="{nome}" maxlength="100" style="width:100%">
+                    </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Cargo:</td>
+					<td colspan="5"> 
+						<input type="text" name="cargo" id="cargo" value="{cargo}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Empresa:</td>
+					<td colspan="5">
+						<input type="text" name="empresa"  id="empresa" value="{empresa}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Endereço:</td>
+					<td colspan="5">
+						<input type="text" name="endereco" id="endereco" value="{endereco}" maxlength="200" style="width:100%">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Número:</td>
+					<td>
+						<input type="text" name="numero" id="numero" value="{numero}" size="15"> 
+					</td>
+					<td class="texto1" align="right">Complemento:</td>
+					<td>
+						<input type="text" name="complemento"id="complemento" value="{complemento}" size="20" maxlength="20">
+					</td>	
+					<td class="texto1" align="right">CEP:</td>
+					<td>
+						<input type="text" name="cep" id="cep" value="{cep}" size="10">
+					</td>						
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">UF/Cidade:</td>
+	                <td colspan="5">
+						<select name="uf" id="uf" onChange="buscaCidades();" style="width:50px;">
+							<option value="">- -</option>				
+	                            <!-- START BLOCK : cbo_uf -->
+	                            <option value="{cd_uf}" {fl_uf}>{ds_uf}</option>
+	                            <!-- END BLOCK : cbo_uf -->						
+						</select>
+						<span id="listaCidades">
+							<select name='cidade' id='cidade' style="width:400px;">
+								<option value="">Selecione a cidade</option>
+	                            <!-- START BLOCK : cbo_cidade -->
+	                            <option value="{cd_cidade}" {fl_cidade}>{ds_cidade}</option>
+	                            <!-- END BLOCK : cbo_cidade -->							
+							</select>
+						</span>				
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Telefone</td>
+					<td colspan="2">
+						<input type="text" name="telefone_ddd" id="telefone_ddd" value="{telefone_ddd}" size="2"> 
+						<input type="text" name="telefone" id="telefone" value="{telefone}" size="16"> 
+					</td>
+					<td align="right" class="texto1">Ramal:</td>
+					<td colspan="2">
+						<input type="text" name="telefone_ramal" id="telefone_ramal" value="{telefone_ramal}" size="8">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Fax</td>
+					<td colspan="2">
+						<input type="text" name="fax_ddd" id="fax_ddd" value="{fax_ddd}" size="2"> 
+						<input type="text" name="fax" id="fax" value="{fax}" size="16"> 
+					</td>
+					<td align="right" class="texto1">Ramal:</td>
+					<td colspan="2">
+						<input type="text" name="fax_ramal" id="fax_ramal" value="{fax_ramal}" size="8">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Celular</td>
+					<td colspan="5">
+						<input type="text" name="celular_ddd" id="celular_ddd" value="{celular_ddd}" size="2"> 
+						<input type="text" name="celular" id="celular" value="{celular}" size="16"> 
+					</td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Email</td>
+					<td colspan="5">
+						<input type="text" name="email" id="email" value="{email}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Emp/Red/Seq:</td>
+					<td colspan="3">
+						<select name="patrocinadora" id="patrocinadora" style="width:150px;">
+							<option value="">Selecione</option>				
+	                            <!-- START BLOCK : cbo_patrocinadora -->
+	                            <option value="{cd_empresa}" {fl_empresa}>{ds_empresa}</option>
+	                            <!-- END BLOCK : cbo_patrocinadora -->						
+						</select>						
+						<input type="text" name="re" id="re" value="{re}" size="15">
+						<input type="text" name="seq" id="seq" value="{seq}" size="10">
+					</td>
+					<td align="right" class="texto1">Autoriza mailing:</td>
+					<td>
+						<input name="autoriza_mailing" type="checkbox" id="autoriza_mailing" value="S" {autoriza_mailing}>
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Cadastrado em:</td>
+					<td colspan="5">
+						<input name="data_cadastro" type="text" id="data_cadastro" value="{data_cadastro}" size="10" maxlength="10" readonly disabled> 
+						<input name="hora_cadastro" type="text" id="hora_cadastro" value="{hora_cadastro}" size="10" maxlength="10" readonly disabled>
+					</td>
+                </tr>	
+
+              </table>
+      </form>
+        
+        <!-- START BLOCK :  bt_confirma_presenca -->
+		<form name="form1" method="post" action="grava_inscrito_seminario_presenca.php">
+			<span class="texto1">PRESENÇA NÃO CONFIRMADA</span>
+			<br><br>
+			<input name="codigo_inscrito" type="hidden" id="codigo_inscrito" value="{codigo}">
+			<input name="tp_presenca" type="hidden" id="tp_presenca" value="N">	  			
+			<input type="submit" value="Confirmar Presença" class="botao">
+		</form>
+		<!-- END BLOCK : bt_confirma_presenca -->
+		<!-- START BLOCK : bt_remove_presenca -->
+        <form name="form1" method="post" action="grava_inscrito_seminario_presenca.php">
+			<span class="texto1"><b>PRESENÇA CONFIRMADA</b></span>
+			<br><br>
+			<input name="codigo_inscrito" type="hidden" id="codigo_inscrito" value="{codigo}">	  
+			<input name="tp_presenca" type="hidden" id="tp_presenca" value="S">	  
+			<input type="submit" value="Remover Presença" class="botao">
+		</form>
+		<!-- END BLOCK : bt_remove_presenca -->
+		
+	<script>
+		MaskInput(document.getElementById('cd_barra'),      "9999999999999");
+		
+		MaskInput(document.getElementById('numero'),        "9999999999");
+		MaskInput(document.getElementById('cep'),           "99999-999");
+		
+		MaskInput(document.getElementById('telefone_ddd'),  "99999");
+		MaskInput(document.getElementById('telefone'),      "999999999999999");
+		MaskInput(document.getElementById('telefone_ramal'),"999999");
+		
+		MaskInput(document.getElementById('fax_ddd'),  "99999");
+		MaskInput(document.getElementById('fax'),      "999999999999999");
+		MaskInput(document.getElementById('fax_ramal'),"999999");		
+
+		MaskInput(document.getElementById('celular_ddd'),  "99999");
+		MaskInput(document.getElementById('celular'),      "999999999999999");
+		
+		MaskInput(document.getElementById('re'),"999999");	
+		MaskInput(document.getElementById('seq'),"99");	
+	</script>		  
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

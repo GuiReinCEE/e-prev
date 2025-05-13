@@ -1,0 +1,115 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Contracheque ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<link rel="shortcut icon" href="favicon.ico">
+	<style>
+	.senha_gera * {
+		font-family: arial;
+	}
+	.senha_gera {
+		padding: 2px;
+		margin-top: 0px;
+		margin-left: 20px;
+		margin-bottom: 20px;
+		margin-right: 8px;
+
+		border-width: 1px;
+		border-style: solid;
+		border-color: #ebebeb;
+		border-right-color: #ccc;
+		border-bottom-color: #ccc;
+
+		background-color: #FFFFFF;
+	}
+	.senha_gera h2 {
+		margin: 0px;
+		padding: 4px;
+		background: url(img/posvenda.gif) #ecf4ec;
+		font-size: 16pt;
+	}
+
+	.senha_gera a {
+		font-size: 10pt;
+	}		
+
+	.form_altera_senha_label {
+		display: block;
+		width: 150px;
+		float: left;
+		color: #000;
+		border-bottom: 1px solid #f1f1f1;
+		font-size: 14px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';	
+		line-height: 20px;
+	}
+	
+	.form_altera_senha_input {
+		width: 300px;
+		border-top: 1px solid #333;
+		border-left: 1px solid #333;
+		border-bottom: 1px solid #ccc;
+		border-right: 1px solid #ccc;
+		font-size: 13px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';			
+		margin-bottom: 10px;
+		color: #005930;
+		padding-left:4px;
+		padding-right:4px;
+	}		
+	</style>
+
+	<script>
+		function validaForm()
+		{
+			if(trimValue(document.getElementById('senha').value) == "")
+			{
+				alert("Informe a Senha");
+				document.getElementById('senha').focus();
+				return false;
+			}		
+			else
+			{
+				return true;
+			}
+		}
+	</script>
+
+
+	<center>
+			<BR>
+			<form autocomplete="off" name="form1" method="post" action="cc_login.php" onSubmit="return validaForm();">
+			<div align="center">
+				<div align="left" style="width:500px;"> 
+					<div class="senha_gera" style="padding:8px;">
+						<h2><img src="img/tec_cadeado.png" border="0">Área Restrita - Contracheque</h2>
+						<h2 style="color:red; text-align:center; background:white;">{msg}</h2>
+						<BR>
+
+						<label class="form_altera_senha_label">Senha:</label>
+						<input type="password" name="senha" id="senha" value="" class="form_altera_senha_input">
+						<BR>
+						<div style="text-align:center;padding:8px;">
+							<input type="submit" value="Enviar"  class="botao" style="width: 100px;">
+							<input type="reset" value="Limpar" class="botao_disabled"  style="width: 100px;">
+							<BR>
+						</div>
+					</div>     
+		
+					<div class="senha_gera" style="padding:8px; font-size:10pt;">
+						<ul>
+							<li>Para acessar seu contracheque, informe sua senha da rede</li>
+							<li>A senha da rede é aquela que você utiliza quando liga seu computador</li>
+							<li>Clique no botão enviar</li>
+							<li>Em caso de dúvida entre em contato com o Suporte da GI</li>
+						</ul>
+					</div>				
+				</div>
+			</div>
+			</form>  
+
+<!-- INCLUDE BLOCK : footer.html -->

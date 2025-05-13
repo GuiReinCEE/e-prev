@@ -1,0 +1,167 @@
+<?php
+class Igp_model extends Model
+{
+	function __construct()
+	{
+		parent::Model();
+	}
+
+	function listar( &$result, $args=array() )
+	{
+		// mount query
+		$sql = "
+			SELECT cd_igp
+			, TO_CHAR(dt_referencia,'MM/YYYY') as mes_referencia
+			, acu_rpp
+			, acu_recl
+			, acu_liq_erro
+			, acu_calc_ini
+			, acu_custo
+			, acu_equilibrio
+			, acu_participante
+			, acu_var_orc
+			, acu_treinamento
+			, acu_informatica
+			, acu_sat_colab
+			, acu_aval
+			, acu_sat_part
+			, acu_rentabilidade_ci
+			, mes_rpp
+			, mes_recl
+			, mes_liq_erro
+			, mes_calc_ini
+			, mes_custo
+			, mes_equilibrio
+			, mes_participante
+			, mes_var_orc
+			, mes_treinamento
+			, mes_informatica
+			, mes_sat_colab
+			, mes_aval
+			, mes_sat_part
+			, mes_rentabilidade_ci
+			, mm_rpp
+			, mm_recl
+			, mm_liq_erro
+			, mm_calc_ini
+			, mm_custo
+			, mm_equilibrio
+			, mm_participante
+			, mm_var_orc
+			, mm_treinamento
+			, mm_informatica
+			, mm_sat_colab
+			, mm_aval
+			, mm_sat_part 
+			, mm_rentabilidade_ci
+			, nr_meta
+			FROM igp.igp 
+			ORDER BY dt_referencia DESC
+			LIMIT 12
+		";
+
+		// return result ...
+		$result = $this->db->query($sql);
+	}
+
+	function carregar($cd)
+	{
+		$sql = " SELECT cd_igp
+		, TO_CHAR(dt_referencia,'DD/MM/YYYY') as dt_referencia
+		, acu_rentabilidade_ci
+		, acu_rpp
+		, acu_recl
+		, acu_liq_erro
+		, acu_calc_ini
+		, acu_custo
+		, acu_equilibrio
+		, acu_participante
+		, acu_var_orc
+		, acu_treinamento
+		, acu_informatica
+		, acu_sat_colab
+		, acu_aval
+		, acu_sat_part
+		, mes_rentabilidade_ci
+		, mes_rpp
+		, mes_recl
+		, mes_liq_erro
+		, mes_calc_ini
+		, mes_custo
+		, mes_equilibrio
+		, mes_participante
+		, mes_var_orc
+		, mes_treinamento
+		, mes_informatica
+		, mes_sat_colab
+		, mes_aval
+		, mes_sat_part
+		, mm_rentabilidade_ci
+		, mm_rpp
+		, mm_recl
+		, mm_liq_erro
+		, mm_calc_ini
+		, mm_custo
+		, mm_equilibrio
+		, mm_participante
+		, mm_var_orc
+		, mm_treinamento
+		, mm_informatica
+		, mm_sat_colab
+		, mm_aval
+		, mm_sat_part 
+		, nr_meta 
+		FROM igp.igp ";
+
+		$row=array();
+		$query = $this->db->query( $sql . ' LIMIT 1 ' );
+		$fields = $query->field_data();
+		foreach( $fields as $field )
+		{
+			$row[$field->name] = '';
+		}
+
+		if( intval($cd)>0 )
+		{
+			$sql .= " WHERE cd_igp={cd_igp} ";
+			esc( "{cd_igp}", intval($cd), $sql );
+			$query=$this->db->query($sql);
+
+			if($query->row_array())
+			{
+				$row=$query->row_array();
+			}
+		}
+
+		return $row;
+	}
+
+	function salvar($args,&$msg=array())
+	{
+		if(intval($args['cd_igp'])==0)
+		{
+			$sql="";
+		}
+		else
+		{
+			$sql="";
+		}
+
+		try
+		{
+			$query = $this->db->query($sql);
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$msg[]=$e->getMessage();
+			return false;
+		}
+	}
+
+	function excluir($id)
+	{
+		// TODO: IMPLEMENTAR DEPOIS
+	}
+}
+?>

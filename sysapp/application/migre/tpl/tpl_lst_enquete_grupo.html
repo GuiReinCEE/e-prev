@@ -1,0 +1,76 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Pesquisa ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li onclick="document.location.href='lst_enquete_grupo.php';" class="abaSelecionada">
+				<span>MOVIMENTO</span>
+			</li>
+			<li onclick="document.location.href='cad_enquete_grupo.php';" >
+				<span>CADASTRO</span>
+			</li>	
+		</ul>
+	</div>                            
+	<div class="aba_conteudo">
+	<BR>
+	<BR>
+	<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+		<thead>
+		<tr> 
+			<td>
+				Código
+			</td>			
+			<td>
+				Título
+			</td>					
+			<td>
+				Data
+			</td>
+			<td>
+				Usuário
+			</td>
+		</tr>
+		</thead>
+		<tbody>	
+		<!-- START BLOCK : lista -->
+		<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+			<td>
+				<a href="cad_enquete_grupo.php?cd_enquete_grupo={cd_enquete_grupo}">{cd_enquete_grupo}</a>
+			</td>				
+			<td>
+				<a href="cad_enquete_grupo.php?cd_enquete_grupo={cd_enquete_grupo}">{ds_titulo}</a>
+			</td>					
+			<td style="text-align:center;">
+				{dt_cadastro}
+			</td>							
+			<td style="text-align:center;">
+				{ds_usuario}
+			</td>										
+		</tr>
+		<!-- END BLOCK : lista -->
+		</tbody>	
+	</table>	
+	</div>
+</div>
+<script>
+	var ob_resul = new SortableTable(document.getElementById("table-1"),["Number", "CaseInsensitiveString", "DateTimeBR", "CaseInsensitiveString"]);
+		ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+		ob_resul.sort(2, true);				
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

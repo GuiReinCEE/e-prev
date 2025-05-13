@@ -1,0 +1,240 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Protocolo de documentos recebidos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style>
+#confirm_cancel {
+	margin-top: -50px;
+	margin-left: -50px;
+	left: 50%;
+	top: 50%;
+	position: fixed;
+}
+@media screen
+{
+	div#confirm_cancel {
+		position: fixed;
+	}
+	* html {
+		overflow-y: hidden;
+	}
+	* html body {
+		overflow-y: auto;
+		height: 100%;
+	}
+	* html div#confirm_cancel {
+		position: absolute;
+	}
+}
+input.normal, textarea.normal {
+	border: 1px solid #000000;
+}
+input.required, textarea.required {
+	border: 1px solid #00A8E6;
+}
+input.failed, textarea.failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.failed_custom, textarea.failed_custom {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.passed, textarea.passed {
+	border: 1px solid #000000;
+	color : #000;
+}
+
+.error
+{
+	color: #FFFFFF;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	font-weight:bold;
+}
+
+.resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado th {
+    font-weight: bold;  
+    text-align:center;
+    border: 1px #dae9f7 solid;
+    background:#dae9f7;
+}
+.tb_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px #dae9f7 solid;
+}       
+
+.tb_resultado_selecionado {
+    background:#E6E8B6;
+    border:1px #FAD163 solid;
+    cursor:pointer;
+}
+
+.tb_lista_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_lista_resultado * {
+    font-size: 10pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_lista_resultado th {
+    font-size: 10pt;
+    font-weight: bold;  
+    text-align:center;
+    /*border: 1px solid #CCCCCC;*/
+    color:#FFFFFF;
+    background:#0046ad;
+}
+.tb_lista_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    /*border: 1px solid #CCCCCC;*/
+}
+
+.td_border
+{
+    border: 1px solid #CCCCCC;
+}
+
+.tb_cadastro_saida {
+	border-collapse: collapse;
+	width: 60%;
+	background:#F4F4F4;
+}
+
+.tb_cadastro_saida * {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Arial,'MS Sans Serif';			
+}
+
+.tb_cadastro_saida th {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;
+	background:#dae9f7;
+}
+
+.tb_cadastro_saida td {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;	
+}	
+
+.exibeRevisao {
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}	
+.exibeRevisao th{
+	background:#FAD163;
+	border:1px #FAD163 solid;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;	
+	
+}
+.exibeRevisao td{
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}
+
+.tachado
+{
+	text-decoration:line-through;
+}	
+</style>
+<script language="JavaScript" type="text/JavaScript" src="documento_recebido.js"></script>
+
+<script language="JavaScript">
+function mascara(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+
+function soNumeros(v){
+    return v.replace(/\D/g,"")
+}
+</script>
+			<form name="onlyForm" id="only_form" method="post">
+			<input id="cd_usuario_logado_text" name="cd_usuario_logado_text" type="hidden" value="{cd_usuario_logado_text}" />
+			<input id="cd_comando_text" name="cd_comando_text" type="hidden" value="" />
+			<input id="command" name="command" type="hidden" value="" />
+
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li onclick="thisPage.abaMovimento_Click(this);" 
+							id="abaMovimento" 
+							class="abaSelecionada"
+							urlPartial="documento_recebido_partial_lista.php"
+							contentPartial="div_content"
+							>
+							<span>LISTA</span>
+						</li>
+						<li onclick="thisPage.abaIncluir_Click(this);" id="abaIncluir" 
+							urlPartial="documento_recebido_partial_form.php"
+        					args=""
+        					contentPartial="div_content"
+        					style="{display_aba_incluir}"
+        					>
+							<span>INCLUIR/EDITAR PROTOCOLO</span>
+						</li>
+						<li onclick="thisPage.abaRelatorio_Click(this);"
+							id="abaRelatorio" 
+							urlPartial="documento_recebido_partial_relatorio.php"
+        					>
+							<span>RELATÓRIO</span>
+						</li>
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br><br>
+					<div
+						id="div_content" 
+						urlInitial="documento_recebido_partial_lista.php" 
+						args="page=1"></div>
+				</div>
+			</div>
+
+			</form>
+
+<script>
+	thisPage.initialize();
+</script>
+<!-- INCLUDE BLOCK : footer.html -->

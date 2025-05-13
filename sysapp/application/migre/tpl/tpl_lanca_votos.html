@@ -1,0 +1,231 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Apuração ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f)
+{
+	var erros = "";
+	val=f.votos_0_0_999999.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_999999.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_1_0.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_1_0.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_193020.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_193020.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_196088.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_196088.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_37478.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_37478.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_96814.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_96814.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_115398.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_115398.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_1_999999.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_1_999999.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_0.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_0.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_195545.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_195545.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_185621.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_185621.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_2_999999.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_2_999999.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_3_0.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_3_0.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_128597.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_128597.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	val=f.votos_0_0_212521.value;
+	if (isNaN(val)) {
+		erros = erros + "- Valores inválidos para lançamento.\n"; 
+		f.votos_0_0_212521.focus;
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	var votos_cd = (Number(f.votos_0_0_999999.value) + Number(f.votos_0_0_0.value) + Number(f.votos_0_0_193020.value) + Number(f.votos_0_0_196088.value) + Number(f.votos_0_0_37478.value) + Number(f.votos_0_0_96814.value) + Number(f.votos_0_0_115398.value));
+	var votos_cf = (Number(f.votos_0_1_999999.value) + Number(f.votos_0_1_0.value) + Number(f.votos_0_0_195545.value) + Number(f.votos_0_0_185621.value));
+	var votos_dir = (Number(f.votos_0_2_999999.value) + Number(f.votos_0_3_0.value) + Number(f.votos_0_0_128597.value) + Number(f.votos_0_0_212521.value));
+//	if (f.conta.value == '') { erros = erros + "- Conta Bancária deve ser preenchida.\n"; }
+	if (votos_cd == 0) {
+		erros = erros + "- Por favor, informe valores para lançar este lote.\n"; 
+	}
+
+	if ((votos_cd) != (votos_cf*2)) {
+		erros = erros + "- Valores inválidos para lançamento. Total para Deliberativo deve ser o dobro do Fiscal.\n"; 
+		f.tot_cf.focus;
+	}
+	else {	
+		if ((votos_cd) != (votos_dir*2)) {
+			erros = erros + "- Valores inválidos para lançamento. Total de Deliberativo deve ser o dobro de Diretor\n"; 
+			f.tot_dir.focus;
+		}	
+	}
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	
+	var confirma = confirm("Confirma o lançamento deste lote??\n\nConselho Deliberativo: "+votos_cd+" votos. \nConselho Fiscal: "+votos_cf+" votos.\nDiretor: "+votos_dir+" votos.\n");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+//-->
+</script>
+<script language="JavaScript" type="text/javascript">
+function fnc_soma_votos(votos) {
+//	alert(votos.value); ok
+//	alert(nome); //ok
+//	var id = nome.substr(8,1); ok
+//	alert (id);
+	var votos_cd = (Number(form1.votos_0_0_999999.value) + Number(form1.votos_0_0_0.value) + Number(form1.votos_0_0_193020.value) + Number(form1.votos_0_0_196088.value) + Number(form1.votos_0_0_37478.value) + Number(form1.votos_0_0_96814.value) + Number(form1.votos_0_0_115398.value));	
+	form1.tot_cd.value = votos_cd;
+	var votos_cf = (Number(form1.votos_0_1_999999.value) + Number(form1.votos_0_1_0.value) + Number(form1.votos_0_0_195545.value) + Number(form1.votos_0_0_185621.value));
+	form1.tot_cf.value = votos_cf;
+	var votos_dir = (Number(form1.votos_0_2_999999.value) + Number(form1.votos_0_3_0.value) + Number(form1.votos_0_0_128597.value) + Number(form1.votos_0_0_212521.value));
+	form1.tot_dir.value = votos_dir;
+//	document.write('<div id="total_deliberativo" style="position:absolute; z-index:1; top: 100; left:100;">'+votos_cd+'</div>');
+	//var votos_cd = (eval(f.votos_0_0_999999.value) + eval(f.votos_0_0_0.value) + eval(f.votos_0_0_193020.value) + eval(f.votos_0_0_196088.value) + eval(f.votos_0_0_37478.value) + eval(f.votos_0_0_96814.value) + eval(f.votos_0_0_115398.value));
+	//var votos_cf = (eval(f.votos_0_1_999999.value) + eval(f.votos_0_1_0.value) + eval(f.votos_0_0_195545.value) + eval(f.votos_0_0_185621.value));
+	//var votos_dir = (eval(f.votos_0_2_999999.value) + eval(f.votos_0_3_0.value) + eval(f.votos_0_0_128597.value) + eval(f.votos_0_0_212521.value));
+	
+}; 
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+          <td colspan="2" align="center"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{msg} 
+            </font> 
+            <table align="center" cellpadding="1" cellspacing="1">
+              <form name="form1" method="post" action="soma_votos.php"  onSubmit="return valida_form(this);">
+                <input name="v_num_votos1" type="hidden" value="{v_num_votos1}">
+                <input name="v_num_votos2" type="hidden" value="{v_num_votos2}">
+                <input name="v_num_votos3" type="hidden" value="{v_num_votos3}">
+                <tr> 
+                  <td colspan="5" bgcolor="#0046ad"><table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF">
+                      <tr> 
+                        <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Totais</font></strong></td>
+                        <td align="center" bgcolor="#3D895F"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Deliberativo</font><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="tot_cd" type="text" id="tot_cd" size="10" maxlength="10">
+                          </font></strong></td>
+                        <td align="center" bgcolor="#939393"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Fiscal</font><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="tot_cf" type="text" id="tot_cf" size="10" maxlength="10">
+                          </font></strong></td>
+                        <td align="center" bgcolor="#DAC652"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Diretor</font><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="tot_dir" type="text" id="tot_dir" size="10" maxlength="10">
+                          </font></strong></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr align="center"> 
+                  <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Candidato</font></strong></td>
+                  <td bgcolor="#006235"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Cargo</font></strong></td>
+                  <td colspan="2" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Votos 
+                    a serem lan&ccedil;ados</font></strong></td>
+                  <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Total 
+                    geral </font></strong></td>
+                </tr>
+                <!-- START BLOCK : candidato -->
+                <tr align="right"> 
+                  <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{nome}</strong></font></td>
+                  <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cargo}</font></td>
+                  <td bgcolor="{cor_fundo}"><input name="votos_{cd_empresa}_{seq_dependencia}_{cd_registro_empregado}" {ro_fechada} type="text" id="votos_{cd_empresa}_{seq_dependencia}_{cd_registro_empregado}" value="0" size="5" maxlength="5" onBlur="fnc_soma_votos(this)"></td>
+                  <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cd_empresa" type="hidden" id="cd_empresa" value="{cd_empresa}">
+                    <input name="cd_registro_empregado" type="hidden" value="{cd_registro_empregado}">
+                    <input name="seq_dependencia" type="hidden" value="{seq_dependencia}">
+                    </font></td>
+                  <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{total}</font></td>
+                </tr>
+                <!-- END BLOCK : candidato -->
+                <tr align="center"> 
+                  <td colspan="5" bgcolor="{cor_fundo}"> <input type="submit" name="Submit" value="Lan&ccedil;ar votos" {dis_fechada}></td>
+                </tr>
+                <tr align="center"> 
+                  <td colspan="5" bgcolor="{cor_fundo}"><font color="#FF0000" size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong> 
+                    </strong> </font></td>
+                </tr>
+              </form>
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,198 @@
+<html>
+<head>
+<title>..:: e-prev :: Editar Controle de Visitantes ::..</title>
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+	<style>
+		*{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Verdana, Arial, 'MS Sans Serif';			
+		}
+		
+		body{
+			background: #D4D0C8;
+		}
+		
+		fieldset {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		
+		legend{
+			font-size: 16pt;
+			font-weight: bold;
+		}
+
+		label{
+			font-weight: bold;
+		}
+		
+		input{
+			background: #FFFFFF;
+			width:100%;			
+		}
+
+		select{
+			background: #FFFFFF;
+			width:100%;			
+		}
+		
+		textarea{
+			background: #FFFFFF;
+			height:100px; 
+			width:100%;
+		}
+		
+		span{
+			font-size: 8pt;
+			color:#666666;
+		}
+		
+		.css_botao{
+			text-align:right;
+			width: 100%;
+		}
+	</style>
+	<script>
+		function validaFormulario()
+		{
+			var ds_msg_erro = "";
+			
+			if(trimValue(document.getElementById("ds_nome").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Nome";
+			}	
+			
+			if(trimValue(document.getElementById("cd_tipo").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Código";
+			}	
+
+			if(document.getElementById("cd_tipo").value.length != 2)
+			{
+				ds_msg_erro += "\n- Informe o Código válido";
+			}
+			
+			if(trimValue(document.getElementById("ds_origem").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Procedência";
+			}				
+			
+			if(trimValue(document.getElementById("ds_destino").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Destino";
+			}	
+
+			if((trimValue(document.getElementById("dt_entrada").value) == "") || ((trimValue(document.getElementById("dt_entrada").value) == "") && (trimValue(document.getElementById("hr_entrada").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Dt Entrada";
+			}	
+
+			if((trimValue(document.getElementById("hr_entrada").value) == "") || ((trimValue(document.getElementById("hr_entrada").value) == "") && (trimValue(document.getElementById("dt_entrada").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Hr Entrada";
+			}
+
+			if((((trimValue(document.getElementById("dt_saida").value) == "") && (document.getElementById("fl_saida").value) == "S")) || ((trimValue(document.getElementById("dt_saida").value) == "") && (trimValue(document.getElementById("hr_saida").value) != ""))) 
+			{
+				ds_msg_erro += "\n- Informe o Dt Saída";
+			}	
+
+			if((((trimValue(document.getElementById("hr_saida").value) == "") && (document.getElementById("fl_saida").value) == "S")) || ((trimValue(document.getElementById("hr_saida").value) == "") && (trimValue(document.getElementById("dt_saida").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Hr Saída";
+			}
+
+			
+			if(trimValue(ds_msg_erro) != "")
+			{
+				alert("Os seguinte itens são necessários:\n" + ds_msg_erro)
+			}
+			else
+			{
+				document.getElementById('ob_form').submit();
+			}			
+		}
+	</script>
+<body>
+	<form name="ob_form" id="ob_form" action="edt_visitantes_grava.php" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='cd_visitante' id='cd_visitante' value='{cd_visitante}'>
+		<input type='hidden' name='fl_saida' id='fl_saida' value='{fl_saida}'>
+		<fieldset>
+			<legend>Editar Controle Visitante</legend>
+			
+			<div class="css_botao">
+				<img src="img/btn_salvar.jpg"  onclick="validaFormulario();" style="cursor:pointer;" title="Salvar">
+				<img src="img/btn_retorna.jpg" onClick="window.close();" style="cursor:pointer;" title="Fechar janela">				
+			</div>
+			
+			<div style="float:left; width:20%; margin-left:1%;">
+			<label for="nr_cracha">Crachá</label>
+			<br>
+			<input type="text" name="nr_cracha" id="nr_cracha" value="{nr_cracha}">
+			</div>			
+
+			<div style="float:left; width:75%; margin-left:1%;">
+			<label for="ds_nome">Nome:</label>
+			<br>
+			<input type="text" name="ds_nome" id="ds_nome" value="{ds_nome}" {fl_nome}>
+			</div>						
+
+
+			<div style="float:left; width:20%; margin-left:1%;">
+			<label for="cd_tipo">Código</label>
+			<br>
+			<input type="text" name="cd_tipo" id="cd_tipo" value="{cd_tipo}">
+			</div>
+			
+			<div style="float:left; width:75%; margin-left:1%;">
+			<label for="ds_origem">Procedência</label>
+			<br>
+			<input type="text" name="ds_origem" id="ds_origem" value="{ds_origem}">
+			</div>
+			
+			<div style="float:left; width:96%; margin-left:1%;">
+			<label for="ds_destino">Destino</label>
+			<br>
+			<input type="text" name="ds_destino" id="ds_destino" value="{ds_destino}">
+			</div>
+			<br>
+
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="dt_entrada">Dt Entrada</label>
+			<br>
+			<input type="text" name="dt_entrada" id="dt_entrada" value="{dt_entrada}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+			</div>			
+
+			<div style="float:left; width:20%; margin-left:1%;">
+			<label for="hr_entrada">Hr Entrada</label>
+			<br>
+			<input type="text" name="hr_entrada" id="hr_entrada" value="{hr_entrada}" onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5">
+			</div>
+			
+			
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="dt_saida">Dt Saída:</label>
+			<br>
+			<input type="text" name="dt_saida" id="dt_saida" value="{dt_saida}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+			</div>
+			
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="hr_saida">Hr Saída</label>
+			<br>
+			<input type="text" name="hr_saida" id="hr_saida" value="{hr_saida}" onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5">
+			</div>			
+			
+		</fieldset>
+	</form>
+	<script>
+		MaskInput(document.getElementById('nr_cracha'),       "9999999999");
+		MaskInput(document.getElementById('cd_tipo'),         "99");
+		MaskInput(document.getElementById('dt_entrada'),      "99/99/9999");
+		MaskInput(document.getElementById('hr_entrada'),      "99:99");
+		MaskInput(document.getElementById('dt_saida'),        "99/99/9999");
+		MaskInput(document.getElementById('hr_saida'),        "99:99");
+	</script>
+</body>
+</html>

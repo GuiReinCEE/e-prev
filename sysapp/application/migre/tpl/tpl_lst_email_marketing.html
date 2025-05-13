@@ -1,0 +1,78 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Email marketing ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+
+  	<tr valign="top">
+      <td colspan="2">
+      	<br>
+      	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+          <tr> 
+            <form name="form2" method="post">
+              
+	              <td align="center">
+	              	<table><tr>
+		              <td  align="center">
+		              
+			              <font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;&nbsp;Per&iacute;odo:</font> 
+			              <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+			                <input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+			                a 
+			                <input name="dt_final" type="text" id="dt_final" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+			              </font>
+			              
+		              </td>
+		              <td>
+		              	<input type="image" src="img/btn_atualizar.jpg" border="0">
+	              	  </td>
+	              	</tr></table>
+	              </td>
+              
+            </form>
+          </tr>
+        </table></td>
+      <td>&nbsp;</td>
+    </tr>
+
+  <tr valign="top"> 
+    <td colspan="2"> 
+
+    	<blockquote><div align="right"><a href="cad_email_marketing.php?op=I" class="links2">&raquo;&nbsp;Nova Divulgação</a></div></blockquote>
+
+        <table width="95%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+          <tr bgcolor="#0046ad"> 
+            <td height="33" class="cabecalho">Divulga&ccedil;&atilde;o</td>
+            <td class="cabecalho">Data Divulga&ccedil;&atilde;o</td>
+            <td class="cabecalho">Divis&atilde;o</td>
+			<td class="cabecalho">Emails Aguardando Envio</td>
+			<td class="cabecalho">Emails Enviados</td>
+			<td class="cabecalho">Emails Não Enviados</td>
+			<td class="cabecalho">Total Emails</td>
+          </tr>
+          <!-- START BLOCK : projetos -->
+          <tr bgcolor="{cor_fundo}"> 
+            <td height="18"><a href="cad_email_marketing.php?op=A&c={cd_divulgacao}" class="links2">{cd_divulgacao}&nbsp;-&nbsp;{assunto}</a></td>
+            <td class="texto1" align="center">{dt_cadastro}</td>
+            <td class="texto1" align="center">{divisao}</td>
+			<td class="texto1" align="center">{qt_email_aguarda_env}</td>
+			<td class="texto1" align="center">{qt_email_env}</td>
+			<td class="texto1" align="center">{qt_email_nao_env}</td>
+			<td class="texto1" align="center">{qt_email}</td>
+          </tr>
+          <!-- END BLOCK : projetos -->
+        </table>
+
+        <div align="center">
+			<img src="img/img_divisoria1.gif" height="1" width="90%"><br><a href="cad_email_marketing.php?op=I" class="links2">&raquo;&nbsp;Nova Divulgação</a>
+        </div>
+
+      <p>&nbsp;</p>
+
+  </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

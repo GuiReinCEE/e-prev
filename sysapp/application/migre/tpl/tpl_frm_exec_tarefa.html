@@ -1,0 +1,548 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Tarefa - Execução';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script>
+//Jacobsen
+ function showConfirma(cd_atividade,cd_tarefa,cd_recurso,fl_tipo)
+ {
+  var nr_width  = 350;
+ 
+  try
+  {
+   document.getElementById('campo_obrigatorio').style.left = (document.body.clientWidth/2) - (nr_width/2);
+  }
+  catch(e)
+  {
+   document.getElementById('campo_obrigatorio').style.left = (document.body.offsetWidth/2) - (nr_width/2);
+  }
+
+  document.getElementById('campo_obrigatorio').style.top  = 150;
+
+  if(fl_tipo == "PLAY")
+  {
+   document.getElementById('form_exec').action = "inicia_tarefa.php?a=" + cd_atividade + "&t=" + cd_tarefa + "&recurso=" + cd_recurso;
+   document.getElementById('form_exec').submit(); 
+  }
+  else if(fl_tipo == "PAUSE")
+  {
+   document.getElementById('conteudo2').style.display = 'none';
+   document.getElementById('campo_obrigatorio').style.visibility = 'visible';
+   document.getElementById('confirma_status').onclick = function(){ 
+                  if(document.getElementById('motivo_tarefa_window').value != "")
+                  {
+                   document.getElementById('motivo_tarefa').value = document.getElementById('motivo_tarefa_window').value;
+                   document.getElementById('form_exec').action = "pausa_tarefa.php?a=" + cd_atividade + "&t=" + cd_tarefa + "&recurso=" + cd_recurso;
+                   document.getElementById('form_exec').submit(); 
+                  }
+                 }
+  }
+  else if(fl_tipo == "STOP")
+  {
+   		document.getElementById('conteudo2').style.display = 'none';
+   		document.getElementById('campo_obrigatorio').style.visibility = 'visible';
+   		document.getElementById('confirma_status').onclick = function(){ 
+		if(document.getElementById('motivo_tarefa_window').value != "")
+		{
+			document.getElementById('motivo_tarefa').value = document.getElementById('motivo_tarefa_window').value;
+			document.getElementById('form_exec').action = "encerra_tarefa.php?f={fl_tipo_grava}&a=" + cd_atividade + "&t=" + cd_tarefa + "&recurso=" + cd_recurso;
+			document.getElementById('form_exec').submit(); 
+		}
+	}
+}
+
+  document.getElementById('form_exec').action = "grava_exec_tarefa.php";
+ }
+ 
+ function hiddenConfirma()
+ {
+  document.getElementById('conteudo2').style.display = '';
+  document.getElementById('campo_obrigatorio').style.visibility = 'hidden';
+ }
+</script>
+
+	<!-- CAMPO OBRIGATORIO PARA PAUSA E STOP DA TAREFA   -->
+	<div id="campo_obrigatorio" style="	padding-left:5px;  
+										padding-right:5px;  
+										border:1px #A5A5A5 solid; 
+										background:#D3D3D3; 
+										position:absolute; 
+										top:300px; 
+										left:0px; 
+										width:350px;
+										height:300px;
+										visibility: hidden;
+										text-align:center;
+										z-index:100;
+										">
+		<fieldset style="width:335px;height:240px; padding:5px;">
+			<legend>
+				<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+					<b>Informe o motivo:</b>
+				</font>
+			</legend>
+			<textarea id="motivo_tarefa_window" name="motivo_tarefa_window" rows="12" cols="35"></textarea>
+		</fieldset>
+		<br>
+		<input type="button" value="Confirma" id="confirma_status">
+		<input type="button" value="Cancelar" onclick="hiddenConfirma();">
+	</div>
+
+<!-- START BLOCK : cadastro -->
+
+<script>
+function ir_definicao()
+{
+	location.href = "frm_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+}
+function ir_execucao()
+{
+	location.href = "frm_exec_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+}
+function ir_historico()
+{
+	location.href = "{historico}";
+}
+function ir_checklist()
+{
+	location.href = "frm_tarefa_checklist.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+}
+function ir_anexo()
+{
+	location.href = "{anexo}";
+}
+</script>
+
+<div id="conteudo2">
+<!-- 
+  --
+  --  ABAS INICIO
+  --
+  -->
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/tarefa'"><span>Lista</span></li>
+						<li id='aba_atividade' class='' onclick="location.href='cad_atividade_atend.php?n={origem}&a=h&aa={aa}'"><span>Atividade</span></li>					
+						<li id="aba_definicao" class="" onclick="ir_definicao();">
+							<span>Definição</span>
+						</li>
+						<li id="aba_execucao" class="abaSelecionada" onclick="ir_execucao();">
+							<span>Execução</span>
+						</li>
+						<li id="aba_anexo" class="" onclick="ir_anexo();">
+							<span>Anexo</span>
+						</li>
+						<li id="aba_historico" class="" onclick="ir_historico();">
+							<span>Histórico</span>
+						</li>
+						<li id="aba_checklist" class="" onclick="ir_checklist();" style="{ver_checklist}">
+							<span>Checklist</span>
+						</li>
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br><br>
+					<div id="div_content">
+
+<!-- 
+  --
+  --  ABAS CONTEUDO
+  --
+  -->
+
+	<table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td> 
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+        <tr> 
+          <td valign="top">
+            <!-- START BLOCK : mensagem -->
+            <font color="#FF0000">{msg}</font> 
+            <!-- END BLOCK : mensagem -->
+          </td>
+  	      <td width="90%">&nbsp;</td>
+          <td></td>
+        </tr>
+        <tr valign="top">
+		 <td colspan="2"> 
+			<form name="form1" id="form_exec" method="post" action="grava_exec_tarefa.php">
+
+              <table border="0" align="center" cellpadding="2" cellspacing="1" width="90%">
+                <tr>
+
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Atividade Origem:</font></td>
+
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{origem} 
+                    / {codigo} 
+                    <script language="JavaScript1.2">//editor_generate('descricao');</script>
+                    </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+					<textarea id="motivo_tarefa" name="motivo_tarefa" style="display:none;"></textarea>
+                    <input name="origem" type="hidden" id="origem" value="{origem}">
+                    <input name="cd_tarefa" type="hidden" id="cd_tarefa" value="{cd_tarefa}">
+                    <input name="dur_ant" type="hidden" id="dur_ant" value="{dur_ant}">
+                    <input name="insere" type="hidden" id="insere" value="{insere}">
+                    </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+
+                  <td align="center">
+                      <!-- START BLOCK : _bt_tarefa_action_ -->
+                      {bt_tarefa_action}{ds_status_atual} 
+                      <!-- END BLOCK : _bt_tarefa_action_ -->				  
+				  </td>
+
+                  <td align="right"><input type="image" src="img/btn_salvar.jpg" border="0"><a href="frm_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}&fl_rel=S" target="_blank"><img src="img/btn_impressora.jpg" border="0"></a></td>
+
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                    da tarefa:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="cad_tarefa" id="txt_cad_tarefa" >
+                      <!-- START BLOCK : tarefa -->
+                      <option value="{cod_cad_tarefa}"{sel_tarefa}>{nome_cad_tarefa}</option>
+                      <!-- END BLOCK : tarefa -->
+                    </select>
+                    {tipo_origem}</font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Analista:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="mandante" style="font-family: Verdana; font-size: 8 pt">
+                      <!-- START BLOCK : mandante -->
+                      <option value="{cod_analista}"{sel_analista}>{nome_analista}</option>
+                      <!-- END BLOCK : mandante -->
+                    </select>
+                    {nome_analista} </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Programador:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="executor" id="select" style="font-family: Verdana; font-size: 8 pt">
+                      <!-- START BLOCK : atendente -->
+                      <option value="{cod_atendente}"{sel_atendente}>{nome_atendente}</option>
+                      <!-- END BLOCK : atendente -->
+                    </select>
+                    {nome_programador} </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    do programa:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="programa" id="select3" >
+                      <!-- START BLOCK : programa -->
+                      <option value="{programa}" {sel_programa}>{programa}</option>
+                      <!-- END BLOCK : programa -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Classifica&ccedil;&atilde;o 
+                    da Tarefa:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="tipo_tarefa" id="select2" >
+                      <!-- START BLOCK : tipo_tarefa -->
+                      <option value="{cd_tipo_tarefa}" {sel_tipo_tarefa}>{nome_tipo_tarefa}</option>
+                      <!-- END BLOCK : tipo_tarefa -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de In&iacute;cio Prevista:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {dt_inicio} </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de T&eacute;rmino Prevista:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {dt_fim} </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de in&iacute;cio da tarefa:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inicio_prog}</font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de fim da tarefa:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_fim_prog}</font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de Acordo:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_ok_anal}</font></td>
+                </tr>
+				<!--
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Objetivo:</font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {descricao} </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Funcionalidades/restri&ccedil;&otilde;es 
+                    <br>
+                    da sele&ccedil;&atilde;o (regras): </font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{casos_testes}</font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Fun&ccedil;&otilde;es 
+                    ou procedimentos<br>
+                    a serem utilizados: </font></td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tabs_envolv}</font></td>
+                </tr>
+				-->
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Considera&ccedil;&otilde;es 
+                    gerais e complementos: </font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="obs" cols="60" rows="5" id="obs" >{obs}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="4"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                      </font></div></td>
+                </tr>
+                <!--bloco da acs -->
+                <!-- START BLOCK : tarefa_acs -->
+                <tr> 
+                  <td colspan="4" align="center" bgcolor="#0046AD"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>Caracter&iacute;sticas 
+                    do Trabalho:</b></font></td>
+                </tr>
+                <tr> 
+                  <td colspan="4" align="center"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_grafica" type="checkbox" value="S" {chk_grafica}>
+                          Gr&aacute;fica</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_eletronica" type="checkbox" id="eletronica" value="S" {chk_eletronica}>
+                          Eletr&ocirc;nica</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_evento" type="checkbox" id="evento" value="S" {chk_evento}>
+                          Evento</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr> 
+                  <td colspan="4" align="center"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr bgcolor="#CCCCCC"> 
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_anuncio" type="checkbox" id="anuncio" value="S" {chk_anuncio}>
+                          An&uacute;ncio</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_folder" type="checkbox" id="folder" value="S" {chk_folder}>
+                          Folder</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_mala" type="checkbox" id="mala" value="S" {chk_mala}>
+                          Mala-direta</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_cartaz" type="checkbox" id="cartaz" value="S" {chk_cartaz}>
+                          Cartaz</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_cartilha" type="checkbox" id="cartilha" value="S" {chk_cartilha}>
+                          Cartilha</font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="opt_site" type="checkbox" id="site" value="S" {chk_site}>
+                          Site</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cores:</font></td>
+                  <td colspan="32"><font size="1" face="Verdana"> 
+                    <input name="cores" type="text" id="cores"   value="{cores}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Formato:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <input name="formato" type="text" id="formato"   value="{formato}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Gramatura:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <input name="gramatura" type="text" id="cores3"   value="{gramatura}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Quantia:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <input name="quantia" type="text" id="txt_quantia"   value="{quantia}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Custo:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <input name="custo" type="text" id="cores5"   value="{custo}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">CC:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <input name="cc" type="text" id="cores6"   value="{cc}" size="50" maxlength="100" {ro_solic}>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="4" align="center" bgcolor="#0046AD"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>P&uacute;blico:</b></font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Participante:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_pacs"  {ro_solic}>
+                      <!-- START BLOCK : cbo_pacs -->
+                      <option value="{cd_pacs}" {chk_pacs}>{nome_pacs}</option>
+                      <!-- END BLOCK : cbo_pacs -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_patroc"  {ro_solic}>
+                      <!-- START BLOCK : cbo_patroc -->
+                      <option value="{cd_patr}" {chk_patr}>{nome_patr}</option>
+                      <!-- END BLOCK : cbo_patroc -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Plano:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_nacs"  {ro_solic}>
+                      <!-- START BLOCK : cbo_nacs -->
+                      <option value="{cd_nacs}" {chk_nacs}>{nome_nacs}</option>
+                      <!-- END BLOCK : cbo_nacs -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Comunidade:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_cacs"  {ro_solic}>
+                      <!-- START BLOCK : cbo_cacs -->
+                      <option value="{cd_cacs}" {chk_cacs}>{nome_cacs}</option>
+                      <!-- END BLOCK : cbo_cacs -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Localiza&ccedil;&atilde;o:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_lacs"  {ro_solic}>
+                      <!-- START BLOCK : cbo_lacs -->
+                      <option value="{cd_lacs}" {chk_lacs}>{nome_lacs}</option>
+                      <!-- END BLOCK : cbo_lacs -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Distribui&ccedil;&atilde;o:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_dacs"  {ro_solic}>
+                      <!-- START BLOCK : cbo_dacs -->
+                      <option value="{cd_dacs}" {chk_dacs}>{nome_dacs}</option>
+                      <!-- END BLOCK : cbo_dacs -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&atilde;o:</font></td>
+                  <td colspan="3"> <font size="1" face="Verdana"> 
+                    <textarea rows="10" name="txt_descricao" cols="60" >{descricao}</textarea>
+                    </font> </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana">Atendente da 
+                    Atividade:</font></td>
+                  <td><font size="1" face="Verdana"> 
+                    <select size="1" name="cbo_analista"  {ro_solic}>
+                      <!-- START BLOCK : cbo_analista_acs -->
+                      <option value="{codana}" {chkana}>{nomeana}</option>
+                      <!-- END BLOCK : cbo_analista_acs -->
+                    </select>
+                    </font></td>
+                  <td colspan="2"><font size="1" face="Verdana">Indique para quem 
+                    voc&ecirc; <br>
+                    vai encaminhar esta solicita&ccedil;&atilde;o</font></td>
+                </tr>
+                <!-- END BLOCK : tarefa_acs -->
+                <!-- fim do bloco da acs -->
+                <tr> 
+                  <td colspan="4"><div align="center"></div></td>
+                </tr>
+              </table>
+            </form>
+            <div align="center" style="display:none"> 
+			<img src="img/img_divisoria1.gif" width="80%" height="1"><br><br>
+              <table width="90%" align="center" cellpadding="4" cellspacing="1">
+                <tr bgcolor="#DAE9F7"> 
+                  <td colspan="2"><font  color="#0046AD"  size="5" face="Arial, Helvetica, sans-serif">Arquivos 
+                    ou documentos anexos:</font></td>
+                </tr>
+                <tr bgcolor="#0046AD"> 
+                  <td width="30%"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    documento </font></strong></td>
+                  <td> <div align="left"><font color="#FFFFFF"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                      de anexo</font></strong></font></div>
+                    <div align="center"><font color="#FFFFFF"><strong></strong></font></div></td>
+                </tr>
+                <!-- START BLOCK : anexo-->
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"><a href="http://www.e-prev.com.br/upload/{nome_doc}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome_doc}</font></a></font></td>
+                  <td> <div align="justify"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tipo_doc}</font></div>
+                    <div align="center"></div></td>
+                </tr>
+                <!-- END BLOCK : anexo -->
+                <tr> 
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+              </table>
+			  <img src="img/img_divisoria1.gif" width="80%" height="1">
+			  <br><br>
+              <img src="https://www.e-prev.com.br/upload/{imagem}"> 
+            </div></td>
+          <td>&nbsp;</td>
+        </tr>
+		<tr> 
+			<td colspan="2">
+				<div align="center">
+				<font size="1" face="Verdana"></font>
+				</div>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+        <tr> 
+	        <td colspan="2"></td>
+	        <td></td>
+        </tr>
+      </table>
+	  </td></tr></table>
+
+<!-- 
+  --
+  --  ABAS FIM CONTEUDO
+  --
+  -->
+
+
+					</div>
+				</div>
+			</div>
+			
+<!-- 
+  --
+  --  ABAS FIM
+  --
+  -->
+
+</div>
+
+  <!-- END BLOCK : cadastro -->
+
+<!-- INCLUDE BLOCK : footer.html -->

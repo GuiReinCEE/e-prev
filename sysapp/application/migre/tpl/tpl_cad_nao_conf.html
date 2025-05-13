@@ -1,0 +1,335 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Não conformidade';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<style>
+@media screen {
+	#txt_descricao {display: block;}
+	#txt_descricao_print {display: none;}
+	
+	#txt_evidencias {display: block;}
+	#txt_evidencias_print {display: none;}	
+	
+	#disposicao {display: block;}
+	#disposicao_print {display: none;}		
+	
+	#causa {display: block;}
+	#causa_print {display: none;}		
+}
+
+@media print {
+	body * {
+		font-family: Verdana, Tahoma, Arial;
+		font-size: 10pt;
+	}
+	
+	#txt_descricao {display: none;}
+	#txt_descricao_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}
+	
+	#txt_evidencias {display: none;}
+	#txt_evidencias_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}
+	
+	#disposicao {display: none;}
+	#disposicao_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}
+
+	#causa {display: none;}
+	#causa_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}	
+	
+	.estilo_nc td {
+		border: 8px solid white;
+	}
+}
+
+</style>
+<script language="JavaScript" type="text/JavaScript">
+function valida_form(f) {
+	var erros = "";
+	if (f.dt_cadastro.value == '') { erros = erros + "- O campo 'Data de cadastro da Não Conformidade' deve estar preenchido.\n"; }
+	if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Não Conformidade' deve estar preenchido.\n"; }
+	if (f.txt_evidencias.value == '') { erros = erros + "- O campo 'Evidências Objetivas' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+function envia_msg(m) {
+		alert(m);
+		return true;
+}
+</script>
+	<!-- START BLOCK : mensagem -->
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" >
+        
+        <tr> 
+          <td colspan="3"> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+        </tr>
+	</table>
+        <!-- END BLOCK : mensagem -->
+          <!-- START BLOCK : cadastro -->		
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li id="abaMovimento" onclick="location.href='lst_nao_conf.php'">
+				<span>LISTA</span>
+			</li>
+			<li id="abaMovimento" class="abaSelecionada">
+				<span>NÃO CONFORMIDADE</span>
+			</li>			
+			<li id="abaMovimento" onclick="location.href='cad_acao_corretiva.php?ac={nac}&pro={pro}'">
+				<span>AÇÃO CORRETIVA</span>
+			</li>
+		</ul>
+	</div>   
+	<div class="aba_conteudo">
+		
+		
+		
+		<table class="estilo_nc" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" >
+			<tr valign="top"> 
+				<td colspan="2"> 
+				<form name="form1" method="post" action="grava_nao_conformidade.php" onSubmit="return valida_form(this)">
+              <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr> 
+                  <td colspan="2"> 
+				  
+				  
+				  
+				  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr> 
+                        <td colspan="2" > 
+							<input name="insere" type="hidden" id="insere2" value="{insere}"> 
+                          <input name="cod_nao_conf" type="hidden" id="cod_nao_conf2" value="{cod_nao_conf}"> 
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td align="right">
+						</td>
+                        <td> 
+                          <!-- START BLOCK : num_nao_conf -->
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Numero: 
+                          {num_nao_conf}</font> 
+                          <!-- END BLOCK : num_nao_conf -->
+						  
+
+                        </td>
+                      </tr>
+                    </table>
+					</td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data: 
+                    </font></td>
+                  <td> <input name="dt_cadastro" type="text" id="dt_cadastro" value="{dt_cadastro}" size="12" maxlength="10" onBlur="verifica_data(this)" readonly onKeyUp="mascara_data(this)" >
+                    <input name="dt_verif_eficacia" type="hidden" id="dt_verif_eficacia" value="{dt_verif_eficacia}"></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero 
+                    N&atilde;o Conformidade:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="numero_cad_nc" type="text" id="numero_cad_nc2" value="{numero_cad}" size="20" readonly maxlength="20" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Aberto 
+                    por:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="aberto_por"  id="aberto_por"  >
+                      <!-- START BLOCK : aberto_por -->
+                      <option value="{codigo_aberto_por}" {sel_aberto_por} readonly>{aberto_por}</option>
+                      <!-- END BLOCK : aberto_por -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Processo</font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">:</font></p></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="processo"  >
+                      <!-- START BLOCK : processo -->
+                      <!--                <option value="cad_nao_conformidade.php?cp={codigo_processo}" {sel_processo}>{nome_processo}</option> -->
+                      <option value="{codigo_processo}" {sel_processo}>{nome_processo}</option>
+                      <!-- END BLOCK : processo -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Envolvidos 
+                    no processo:</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{envolvidos} 
+                    </font></td>
+                </tr>
+                <tr>
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="responsavel"  id="responsavel"  >
+                      <!-- START BLOCK : responsavel -->
+                      <option value="{cod_responsavel}" {sel_responsavel}>{responsavel}</option>
+                      <!-- END BLOCK : responsavel -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o 
+                    da N&atilde;o Conformidade:</font></td>
+                  <td>
+<textarea name="descricao" cols="50" rows="6" id="txt_descricao" >{descricao}</textarea>
+<div id="txt_descricao_print">
+{descricao_print}
+</div>
+                    </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Evid&ecirc;ncias 
+                    Objetivas<br>
+                    (provas da N&atilde;o Conformidade)</font></td>
+                  <td>
+<textarea name="evidencias" cols="50" rows="6" id="txt_evidencias" >{evidencias}</textarea>
+<div id="txt_evidencias_print">
+{evidencias_print}
+</div>
+				</td>
+                </tr>
+                <tr> 
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Disposi&ccedil;&atilde;o<br>
+                    (solu&ccedil;&atilde;o imediata para resolver o problema)</font></td>
+                  <td>
+<textarea name="disposicao" cols="50" rows="6" id="disposicao" {ro_resp}>{disposicao}</textarea>
+<div id="disposicao_print">
+{disposicao_print}
+</div>				  
+
+					</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Causa 
+                    da N&atilde;o Conformidade<br>
+                    (Identificar as causas da N&atilde;o Conformidade)</font></td>
+                  <td>
+<textarea name="causa" cols="50" rows="6" id="causa" {ro_resp}>{causa}</textarea>
+<div id="causa_print">
+{causa_print}
+</div>					  
+</td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    Encerramento: (fechamento RNC)</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_encerramento" type="text" id="dt_encerramento3" 
+					       value="{dt_encerramento}" size="12" maxlength="10" readonly {ro_data_encerr} 
+						   onBlur="compara_datas(this,dt_verif_eficacia);verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td>&nbsp;</td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="2"> <div align="center"> 
+                      <input type="submit" name="Submit2" value="Salvar" class="botao" style="width:100px;">
+                      <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                    </div></td>
+                </tr>
+              </table>
+            </form>
+			<BR>
+			
+			
+			
+            <table width="100%" border="0" align="center">
+				<tr> 
+					<td colspan="3">
+						<font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif">
+							Acompanhamentos:
+						</font>				
+					</td>
+				</tr>
+			</table>
+			
+		<table class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+		   	<thead>
+			<tr>
+				<td>Data</td>
+				<td>Situação</td>
+				<td>Registrado por</td>
+			</tr>
+		   	</thead>
+			<tbody>
+				<!-- START BLOCK : acompanhamento -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+					<td align="center">{dt_acomp}</td>
+					<td>{situacao}</td>					
+					<td>{auditor}</td>
+				</tr>
+				<!-- END BLOCK : acompanhamento -->
+			</tbody>
+		</table>			
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["DateBR","CaseInsensitiveString", "CaseInsensitiveString"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(0, true);				
+		</script>				
+			
+
+            <form name="form2" method="post" action="cad_acompanhamento.php">
+              <table width="33%" border="0" align="center">
+                <tr> 
+                  <td> 
+                    <!-- START BLOCK : codigo -->
+                    <input name="cod_processo" type="hidden" id="cod_processo2" value="{cod_processo}"> 
+                    <input name="cod_nao_conf" type="hidden" id="cod_nao_conf2" value="{cod_nao_conf}"></td>
+                  <!-- END BLOCK : codigo -->
+                </tr>
+                <tr> 
+                  <td><div align="center"> 
+                      <input type="submit" name="Submit3" value="Novo Acompanhamento" class="botao">
+                    </div></td>
+                </tr>
+              </table>
+            </form></td>
+        </tr>
+        
+      </table>
+	</div>
+</div>
+<!-- END BLOCK : cadastro -->
+<!-- INCLUDE BLOCK : footer.html -->

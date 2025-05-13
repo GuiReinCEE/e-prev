@@ -1,0 +1,250 @@
+<html><!-- InstanceBegin template="/Templates/menu_projetos.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>..:: e-prev :: Lista Tabelas ::..</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Fireworks MX Dreamweaver MX target.  Created Mon Apr 21 18:21:40 GMT-0300 (Hora padrão leste da Am. Sul) 2003-->
+<!-- ==================== Galeria de estilos ========================================== --> 
+<link href="main.css" rel="stylesheet" type="text/css">
+<!-- ==================== Scripts Java ================================================ --> 
+<script language="JavaScript" type="text/JavaScript" src="inc/menu_principal.js"></script>
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+function pre_carga_imagens() {
+<!-- INCLUDE BLOCK : inc/menu_geral1.tpl -->
+}
+</script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<!-- ==================== Corpo da Tela ==================================================== -->
+<body bgcolor="{bgcolor}" background="{c_skin}{img_fundo_pagina}" text="{text}" link="{link}" vlink="{vlink}" alink="{alink}" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="pre_carga_imagens(); chama_fnc_onload();" onbeforeunload='saida_direta(); return confirma_saida();'>
+<!-- ==================== Menus de primeiro nível ========================================================== --> 
+<!-- INCLUDE BLOCK : inc/menu_geral2.tpl -->
+<!-- ==================== Área livre ======================================================================= --> 
+<!-- INCLUDE BLOCK : inc/menu_geral3.tpl -->
+<!-- ==================== Camadas sobrepostas ============================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral4_camadas_sobrepostas.tpl -->
+<!-- ==================== Menu Principal =================================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral5_menu_principal.tpl -->
+<!-- -------------------- Mensagem individual por tela ----------------------------------------------------------------------------------- -->
+<div id="mensagem_tela" style="position:absolute; width:{larg_msgt}px; height:{alt_msgt}px; z-index:1; left: {pos_msgt}px; top: {top_msgt}px;">
+	<!-- InstanceBeginEditable name="mensagem_tela" -->{mensagem_tela}<!-- InstanceEndEditable -->
+</div>  
+<!-- -------------------- Versão e usuário atual ----------------------------------------------------------------------------------- -->
+<div id="versao" style="position:absolute; width:277px; height:28px; z-index:1; left: {pos_usuario}px; top: {top_usuario}px; visibility: {visibilidade_usuario};"><span class="{classe_usuario}">Versão 2006.7 - </span><a href="cad_recurso_workspace.php" class="{classe_usuario}" title="{dt_login}{dt_scanner}"><!-- InstanceBeginEditable name="usuario" -->{usuario} - {divsao}<!-- InstanceEndEditable --></a><br>
+</div>  
+<!-- ==================== Área principal da tela =========================================================== -->	
+<table border="0" cellpadding="0" cellspacing="0" width="{largura_tela}">
+  <!--DWLayoutTable-->
+  <!-- fwtable fwsrc="layout abertura_compacta.png" fwbase="default.jpg" fwstyle="Dreamweaver" fwdocid = "742308039" fwnested="0" -->
+  <tr> 
+    <td background="{c_menu}{img_fundo_sup}" bgcolor="{cor_sup_banner}" height="{altura_sup_banner}"><a href="http://www.e-prev.com.br/controle_projetos/index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image01','','{c_menu}logo_swap.gif',1)"><img src="{c_menu}logo.gif" alt="Página inicial" name="Image01" border="0" hspace="{espaco_superior}" vspace="{espaco_vertical}" {largura_banner}{altura_banner}></a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="{cor_fundo_banner}" background="{c_menu}img_fundo_banner.jpg" height="{altura_banner}" class="{classe_banner}"><!-- InstanceBeginEditable name="imagem" --><table border="0" cellpadding="0" cellspacing="0" height="90%" style="border-collapse: collapse; white-space:nowrap;"><tr><td><img src="{c_banner}banner_sem_texto.jpg" class="banner_img" border="0"></td><td height="90%" class="banner_titulo"><p>Lista Tabelas</p></td></tr></table>	<!-- InstanceEndEditable --></td>
+  </tr>
+  <tr> 
+    <td height="{altura_inf_banner}" colspan="2" bgcolor="{cor_inf_banner}" background="{c_menu}{img_fundo_menu}"><img src="{c_menu}img_inicial_menu.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+  </tr>
+  <tr> 
+    <td height="{alt_menu_principal}" valign="top" background="{c_menu}img_fundo_menu3.jpg" bgcolor="{cor_inf_banner}"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" {largura_banner}{altura_banner}>
+        <tr> 
+          <td {largura_banner}{altura_banner}><img src="{c_menu}img_paragrafo_skin.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+        </tr>
+      </table></td>
+  </tr>
+	<tr> 
+    <td height="38" colspan="2">
+	<!-- InstanceBeginEditable name="conteudo" -->	
+		<script>
+			function adicionarModelo(ds_esquema,ds_tabela)
+			{
+				document.getElementById('ds_esquema').value  = ds_esquema;
+				document.getElementById('ds_tabela').value   = ds_tabela;
+				document.getElementById('formulario').action = 'cad_modelagem_tabelas.php';
+				document.getElementById('formulario').submit();
+			}
+			
+			function detalheTabelas(ds_esquema,ds_tabela) 
+			{
+				document.getElementById('ds_esquema').value  = ds_esquema;
+				document.getElementById('ds_tabela').value   = ds_tabela;
+				document.getElementById('formulario').action = 'det_modelagem_tabelas.php';
+				document.getElementById('formulario').submit();
+			}			
+		</script>
+		<style>
+			.tb_cadastro_saida{
+				border-collapse: collapse;
+				width: 60%;
+				background:#F4F4F4;
+			}
+			
+			.tb_cadastro_saida *{
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}
+
+			.tb_cadastro_saida th{
+				border: 1px solid gray;
+				padding-left:5px;
+				padding-right:5px;
+				text-align:center;	
+				font-weight: bold;
+				color:#000000;
+				background:#C8D0C8;
+			}
+			
+			.tb_cadastro_saida td{
+				border: 1px solid gray;
+				padding-left:5px;
+				padding-right:5px;	
+			}
+		
+			.tb_lista_resultado {
+				border-collapse: collapse;
+				width: 70%;		
+			}
+			
+			.tb_lista_resultado * {
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}
+			
+			.tb_lista_resultado th {
+				font-size: 10pt;
+				font-weight: bold;	
+				text-align:center;
+				border: 1px solid #CCCCCC;
+				color:#FFFFFF;
+				background:#006633;
+			}
+			.tb_lista_resultado td {
+				padding-left: 5px;
+				padding-right: 5px;
+				border: 1px solid #CCCCCC;
+			}		
+			
+			.tb_resultado_selecionado {
+				background:#E6E8B6;
+				border:1px #FAD163 solid;
+				cursor:pointer;
+			}
+		</style>
+			
+		<BR>
+		<form name="formulario" id="formulario" method="post" action="">	
+			<table class="tb_cadastro_saida" align="center">
+				<tr>
+					<th colspan="3">
+						FILTRO
+					</th>
+				</tr>			
+				<tr>
+					<th>
+						Esquema
+					</th>
+					<td colspan="2">
+						<select name="ds_esquema_filtro" id="ds_esquema_filtro" style="width:200px;">
+							<option value="">Todos</option>
+							<!-- START BLOCK : lst_esquemas -->
+							<option value="{ds_esquema}" {fl_selecionado}>{ds_esquema}</option>
+							<!-- END BLOCK : lst_esquemas -->
+						</select>
+						<input type="hidden" name="ds_esquema" id="ds_esquema" value="">
+						<input type="hidden" name="ds_tabela"  id="ds_tabela"  value="">
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						Modelo
+					</th>
+					<td colspan="2">
+						<select name="ds_modelo_filtro" id="ds_modelo_filtro" style="width:200px;">
+							<option value="">Todos</option>
+							<!-- START BLOCK : lst_modelos_filtro -->
+							<option value="{cd_modelo}" {fl_selecionado}>{ds_modelo}</option>
+							<!-- END BLOCK : lst_modelos_filtro -->
+						</select>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						Tabelas com modelo
+					</th>
+					<td>
+						<select name="ds_tabela_modelo" id="ds_tabela_modelo" style="width:200px;">
+							<option value="">Todos</option>
+							<!-- START BLOCK : ds_tabela_modelo -->
+							<option value="{cd_tabela_modelo}" {fl_selecionado}>{ds_tabela_modelo}</option>
+							<!-- END BLOCK : ds_tabela_modelo -->						
+						</select>
+					</td>
+					<td align="center">
+						<input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar">
+						<img src="img/btn_retorna.jpg" border="0" onClick="document.location.href='lst_modelagem_modelos.php';" style="cursor:pointer;" title="Retornar para listagem de modelos"> 
+					</td>
+				</tr>					
+			</table>
+		</form>		
+		<div style="position: absolute; left: 20%;">
+			<span class="links2">&raquo;Total de registros: 
+			<!-- START BLOCK : qt_total_reg -->
+				{qt_total_reg}
+			<!-- END BLOCK : qt_total_reg -->
+			</span>
+		</div>		
+		<BR>
+		<table class="tb_lista_resultado" align="center">
+			<tr >
+				<th onclick="setOrdem('ds_esquema');" title="Clique para ordenar" style="cursor:pointer;">
+					Esquema
+				</th>
+				<th onclick="setOrdem('ds_tabela');" title="Clique para ordenar" style="cursor:pointer;">
+					Tabela
+				</th>						
+				<th>
+					Modelos(s)
+				</th>		
+				<th>
+					Relaciona
+				</th>				
+				<th>
+					Detalhes
+				</th>				
+			</tr>
+			<!-- START BLOCK : lst_tabelas -->
+			<tr bgcolor="{bg_color}" onmouseover="this.className='tb_resultado_selecionado';" onmouseout="this.className='';">
+				<td style="white-space:nowrap;">
+					{ds_esquema}
+				</td>
+				<td style="white-space:nowrap;">
+					{ds_tabela}
+				</td>						
+				<td style="white-space:nowrap;">
+					<!-- START BLOCK : lst_modelos -->
+						<div style="width:100%; padding-left:2px; padding-right:2px; background:{ds_estilo}; {fl_principal}">{ds_modelo}</div>
+					<!-- END BLOCK : lst_modelos -->
+				</td>						
+				<td style="white-space:nowrap;text-align:center;" onclick="adicionarModelo('{ds_esquema}','{ds_tabela}');" title="Clique para definir o(s) modelo(s)">
+					<img src="img/relaciona_tabela.png" border="0" >
+				</td>	
+				<td style="white-space:nowrap;text-align:center;" title="Visualizar detalhes da tabela" onclick="detalheTabelas('{ds_esquema}','{ds_tabela}');">
+					<img src="img/table_detalhe.png" border="0" >				
+				</td>	
+			</tr>
+			<!-- END BLOCK : lst_tabelas -->
+		</table>
+		<BR>
+		<BR>
+	<!-- InstanceEndEditable --> 
+    </td>
+	</tr>
+</table>
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>

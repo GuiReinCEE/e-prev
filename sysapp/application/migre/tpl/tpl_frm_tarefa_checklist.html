@@ -1,0 +1,179 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Tarefa - Checklist ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<!-- START BLOCK : cadastro -->
+<script>
+<!--
+	function ir_definicao()
+	{
+		location.href = "frm_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_execucao()
+	{
+		location.href = "{execucao}";
+	}
+	function ir_historico()
+	{
+		location.href = "{historico}";
+	}
+	function ir_checklist()
+	{
+		location.href = "frm_tarefa_checklist.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_anexo()
+	{
+		location.href = "{anexo}";
+	}
+	
+	function enviar()
+	{
+		if(confirm('Salvar as informações?'))
+		{
+			document.checklist.comando.value = "salvar_resposta"
+			document.checklist.action = "frm_tarefa_checklist_salvar_resposta.php";
+			document.checklist.target = "checklist_iframe";
+			document.checklist.submit();
+		}
+		else
+		{
+			alert('não salvar!');
+		}
+	}
+-->
+</script>
+
+<iframe style="display:none" name="checklist_iframe"></iframe>
+<form method="post" name="checklist">
+<input name="comando" type="hidden" value="" />
+<input name="cd_tarefas" type="hidden" value="{cd_tarefas}" />
+
+<!-- END BLOCK : cadastro -->
+<!-- 
+  --
+  --  ABAS INICIO
+  --
+  -->
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li id="aba_definicao" class="" onclick="ir_definicao();">
+							<span>Definição</span>
+						</li>
+						<li id="aba_execucao" class="" onclick="ir_execucao();">
+							<span>Execução</span>
+						</li>
+						<li id="aba_anexo" class="" onclick="ir_anexo();">
+							<span>Anexo</span>
+						</li>
+						<li id="aba_historico" class="" onclick="ir_historico();">
+							<span>Histórico</span>
+						</li>
+						<li id="aba_checklist" class="abaSelecionada" onclick="ir_checklist();" style="{ver_checklist}">
+							<span>Checklist</span>
+						</li>
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br><br>
+					<div id="div_content">
+
+<!-- 
+  --
+  --  ABAS CONTEUDO
+  --
+  -->
+
+		
+		
+	<b>{nome_grupo}</b>
+		
+		<table style="align:center;" class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+		<thead>
+		<tr>
+			<td><b>Pergunta</b></td>
+			<td align="center"><b>Visto</b></td>
+			<td align="center"><b>Não se aplica</b></td>
+			<td align="center"><b>Verificado pelo analista</b></td>
+		</tr>
+		</thead>
+		<tbody>
+
+		<!-- START BLOCK : grupos -->
+			<tr bgcolor="{zebra}" onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+				<td><b>{nome_grupo}</b></td>
+				<td align="center"></td>
+				<td align="center"></td>
+				<td align="center"></td>
+			</tr>
+
+			<!-- START BLOCK : perguntas -->
+			<tr bgcolor="{zebra}" onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+				<td>
+					<input type="hidden" name="cd_tarefa_checklist_pergunta[]" value="{cd_tarefa_checklist_pergunta}" />
+					{pergunta}
+				</td>
+				<td align="center">
+					<input {checked_resposta_s} {exibir_objeto} type="radio" name="resposta_{cd_tarefa_checklist_pergunta}" value="S" />
+					{exibir_mensagem_verificado}
+				</td>
+				<td align="center">
+					<input {checked_resposta_n} {exibir_objeto} type="radio" name="resposta_{cd_tarefa_checklist_pergunta}" value="N" />
+					{exibir_mensagem_nao_verificado}
+				</td>
+				<td align="center" style="display:{visible_especialista}">
+					<input {checked_especialista} type="checkbox" name="especialista_{cd_tarefa_checklist_pergunta}" value="S" />
+				</td>
+				<td align="center" style="display:{visible_especialista_2}">
+					{checked_especialista_2}
+				</td>
+			</tr>
+			<!-- END BLOCK : perguntas -->
+
+		<!-- END BLOCK : grupos -->
+
+		</tbody>
+		</table>
+
+		<br />
+
+		<center>
+		<input type="button" class="botao" value="Salvar" onclick="enviar();" style="display:{display_salvar};" />
+		<span style="display:{display_mensagem_salvar}"><b>Não é possível alterar o checklist nesse status da tarefa</b></span>
+		</center>
+
+		<!--
+		  --
+		  --  ABAS FIM CONTEUDO
+		  --
+		  -->
+
+		</div>
+	</div>
+</div>
+
+<!-- 
+  --
+  --  ABAS FIM
+  --
+  -->
+</form>
+
+<script>
+	var ob_resul = new SortableTable(document.getElementById("table-1"),["Number"]);
+	ob_resul.onsort = function ()
+	{
+		var rows = ob_resul.tBody.rows;
+		var l = rows.length;
+		for (var i = 0; i < l; i++)
+		{
+			removeClassName( rows[i], i % 2 ? "sort-par" : "sort-impar" );
+			addClassName( rows[i], i % 2 ? "sort-impar" : "sort-par" );
+		}
+	};
+	// ob_resul.sort(0, false);
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

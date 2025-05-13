@@ -1,0 +1,185 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Inscritos SENGE ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+
+function ir_aba_ident()
+{
+	location.href='cad_inscritos.php?c={cd_registro_empregado}&a=s';
+}
+
+function ir_aba_cont()
+{
+	location.href='cad_inscritos_contato.php?c={cd_registro_empregado}&a=a';
+}
+
+function ir_aba_anx()
+{
+	location.href='cad_inscritos_docs.php?c={cd_registro_empregado}&a=h';
+}
+
+function ir_aba_hist()
+{
+	location.href='cad_inscritos_hist.php?c={cd_registro_empregado}&a=h';
+}
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.dt_nascimento.value == '') { erros = erros + "- Data de Nascimento não foi informada.\n"; }
+	if (f.endereco.value == '') { erros = erros + "- Endereço não foi informado.\n"; }
+	if (f.cep.value == '') { erros = erros + "- CEP não foi informado.\n"; }
+	if (f.compl_cep.value == '') { erros = erros + "- Complemento do CEP não foi informado.\n"; }
+	if (f.cd_pacote.value == '') { erros = erros + "- Pacote não foi informado.\n"; }
+	if (f.pedido_inscricao_is_valid.value == 'N') { erros = erros + "- Não foi incluído o documento Pedido de Inscrição.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		if (f.rg_and_cic_is_valid.value == 'N') {
+			var ret = confirm( "Foi identificado que o documento 1 não foi incluído.\n\nDeseja confirmar mesmo assim?" ); 
+			return ret;
+		}
+		else {
+			return true;
+		}
+	}
+}
+//-->
+</script>
+{ABA_START}
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td colspan="2"> 
+          	<table width="90%" border="0"  cellspacing="0" cellpadding="0">
+              <tr> 
+                <td colspan="2"><blockquote>
+                    <form name="form1"
+                        method="post"
+                        action="grava_inscritos_internet_hist.php" 
+                        onSubmit="return valida_form(this)">
+                    <input name="rg_and_cic_is_valid" id="rg_and_cic_is_valid" value="{rg_and_cic_is_valid}" type="hidden" />
+                    <input name="pedido_inscricao_is_valid" id="pedido_inscricao_is_valid" value="{pedido_inscricao_is_valid}" type="hidden" />
+                      <table border="0" align="left" cellpadding="1" cellspacing="1">
+                        <tr> 
+                          <td> <div align="left"></div></td>
+                          <td > <font size="2" face="Arial, Helvetica, sans-serif"><strong> 
+                            <input name="insere" type="hidden" id="insere" value="{insere}">
+                            <input name="cd_registro_empregado" type="hidden" id="cd_registro_empregado" value="{cd_registro_empregado}">
+                            &nbsp; </strong> </font> </td>
+                        </tr>
+                        <tr> 
+                          <td width="40%" align="right" valign="top"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">RE:</font></b></td>
+                          <td width="60%"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            {cd_registro_empregado} </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            Nome:</font></b></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            {nome} </font> </td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Datas:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            de Inscri&ccedil;&atilde;o:</font></b></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif">{dt_inscricao} 
+                            <input name="dt_inscricao" type="hidden" value="{dt_inscricao}">
+                            <input name="dt_nascimento" type="hidden" id="dt_nascimento" value="{dt_nascimento}">
+                            <input name="endereco" type="hidden" id="endereco" value="{endereco}">
+                            <input name="cep" type="hidden" id="cep" value="{cep}">
+                            <input name="compl_cep" type="hidden" id="compl_cep" value="{compl_cep}">
+                            <input name="cd_pacote" type="hidden" id="cd_pacote" value="{opt_pacote}">
+                            </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            de Confer&ecirc;ncia SENGE:</font></b></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif">{dt_senge} 
+                            <input name="dt_senge" type="hidden" value="{dt_senge}">
+                            </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><font face="Verdana, Arial, Helvetica, sans-serif"><b><font size="2">Data 
+                            de confirma&ccedil;&atilde;o do Email:</font></b></font></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif">{dt_email} 
+                            <input name="dt_email" type="hidden" value="{dt_email}">
+                            </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            de Confer&ecirc;ncia DAP:</font></b></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif"> 
+                            {dt_ok_dap} </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td bgcolor="#0046ad"><font color="#FFFFFF" size="3" face="Century Gothic, Arial, Verdana"><b>Op&ccedil;&otilde;es:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Op&ccedil;&atilde;o 
+                            IRPF: </font></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif">{opt_irpf} 
+                            - {desc_irpf} 
+                            <input name="opt_irpf" type="hidden" id="opt_irpf" value="{opt_irpf}">
+                            </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td align="right" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Op&ccedil;&atilde;o 
+                            Pacote:</font></td>
+                          <td><b><font color="#0046ad" size="3" face="Arial, Helvetica, sans-serif">{opt_pacote} 
+                            - {desc_pacote} 
+                            <input name="opt_pacote" type="hidden" id="opt_pacote" value="{opt_pacote}">
+                            </font></b></td>
+                        </tr>
+                        <tr> 
+                          <td colspan="2" valign="top"><blockquote> 
+                              <p><i><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>Prezado 
+                                Atendente:</b><br>
+                                Ap&oacute;s a verifica&ccedil;&atilde;o das datas 
+                                (Inscri&ccedil;&atilde;o, Confer&ecirc;ncia do 
+                                Instituidor, Confirma&ccedil;&atilde;o do Email) 
+                                e Documenta&ccedil;&atilde;o (RG/CPF + Documento 
+                                de Ades&atilde;o ao Plano), voc&ecirc; deve clicar 
+                                no bot&atilde;o abaixo para confirmar os dados 
+                                e liberar este inscrito para a gera&ccedil;&atilde;o 
+                                da Contribui&ccedil;&atilde;o:</font></i> </p>
+                            </blockquote></td>
+                        </tr>
+                        <tr> 
+                          <td colspan="2"> <div align="center"> 
+                              <input class='botao' type="submit" name="Submit2" value="Confirmar dados e documentos OK" {fl_confirma}>
+							  <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                            </div></td>
+                        </tr>
+                      </table>
+                    </form>
+                  </blockquote></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+{ABA_END}
+<!-- INCLUDE BLOCK : footer.html -->

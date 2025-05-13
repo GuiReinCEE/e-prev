@@ -1,0 +1,28 @@
+<?php
+$body=array();
+$head = array( 
+	'#','Ano','% de Satisfação','Meta',''
+);
+
+foreach( $collection as $item )
+{
+	$link='';
+	if( $item['fl_fechado']!='S' )
+	{
+		$link = anchor("indicador_plugin/info_satisfacao/detalhe/".$item["cd_info_satisfacao"], "editar");
+	}
+
+	$body[] = array(
+		 $item["cd_info_satisfacao"]
+		, $item["nr_ano"]
+		, $item["nr_percentual"]
+		, $item["nr_meta"]
+		, $link );
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

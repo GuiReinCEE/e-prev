@@ -1,0 +1,108 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Acessos ao site ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+
+	function aba_periodo()
+	{
+		location.href='acessos_web.php';
+	}
+
+	function aba_outras()
+	{
+		location.href='acessos_web_analitico.php';
+	}
+</script>
+
+{ABA_START}
+   
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+	            <td width="50%">
+					<form name="form2" method="post" action="acessos_web_paginas.php">
+					<font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;&nbsp;Per&iacute;odo:</font> 
+					<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+					<input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+					a 
+					<input name="dt_final" type="text" id="dt_final" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+					<input type="submit" name="Submit" value="OK">
+                    (datas no formato dd/mm/aaaa)
+                    </font> 
+					</form>
+				</td>
+                <td width="50%">
+                	<a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a>
+                </td>
+              </tr>
+            </table></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr valign="top"> 
+          <td colspan="2"> <table cellspacing="1">
+              <tr> 
+                <td>&nbsp;</td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">P&aacute;gina</font></strong></td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Acessos 
+                  &agrave; p&aacute;gina inicial do site no per&iacute;odo</font></strong></td>
+              </tr>
+              <!-- START BLOCK : default -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{data}</strong></font></td>
+                <td ><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/azul.jpg" width="{numero_acessos_default_10}" height="20">{numero_acessos_default}</font></td>
+              </tr>
+              <!-- END BLOCK : default -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                  da p&aacute;gina</font></strong></td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Acessos 
+                  &agrave;s p&aacute;ginas Institucionais no per&iacute;odo</font></strong></td>
+              </tr>
+              <!-- START BLOCK : projetos -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{data}</strong></font></td>
+                <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/verde2.jpg" width="{largura_acessos}" height="20">{numero_acessos}</font></td>
+              </tr>
+              <!-- END BLOCK : projetos -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr> 
+                <td>&nbsp;</td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">P&aacute;gina</font></strong></td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Acessos 
+                  ao Auto Atendimento no per&iacute;odo</font></strong></td>
+              </tr>
+              <!-- START BLOCK : auto_atendimento_total -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td style="font-family: Verdana, Arial; font-weight: bold; font-size: 10px;">TOTAL</td>
+                <td style="font-family: Verdana, Arial; font-weight: bold; font-size: 10px;">{numero_acessos_aa}</td>
+              </tr>
+              <!-- END BLOCK : auto_atendimento_total -->			  
+              <!-- START BLOCK : auto_atendimento -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{data_aa}</strong></font></td>
+                <td bgcolor="{cor_fundo_aa}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/laranja3.jpg" width="{largura_acessos_aa}" height="20">{numero_acessos_aa}</font></td>
+              </tr>
+              <!-- END BLOCK : auto_atendimento -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table> </td>
+          <td>&nbsp; </td>
+        </tr>
+      </table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

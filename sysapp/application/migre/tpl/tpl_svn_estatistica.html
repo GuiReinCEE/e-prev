@@ -1,0 +1,144 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Desempenho ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<style>
+		*{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		label{
+			font-weight: bold;
+		}
+
+		caption {
+			font-size: 14pt;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			text-align:center;	
+			color:#0046ad;
+			background:#F0E8BA;			
+		}
+
+		.svn_titulo {
+			font-size: 16pt;
+			font-weight: bold;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			text-align:center;	
+		}
+
+		
+		th {
+			font-size: 10pt;
+			font-weight: bold;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			text-align:center;	
+			background:#CCCCCC;
+			white-space:nowrap;
+		}	
+		
+		.tb_resultado{
+			border-collapse: collapse;
+		}
+		
+		.tb_resultado th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			white-space:nowrap;
+		}
+		
+		.tb_resultado td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+			text-align:center;				
+		}	
+
+		.titulo_resumo_atividade {
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			padding:10px;
+		}
+
+		.ano_anterior td{
+			color:green;
+			font-weight: bold;
+		}
+		
+		.ano_atual td{
+			color:green;
+			font-weight: bold;
+			background:#F4F4F4;
+			white-space:nowrap;
+		}	
+	</style>
+
+	<form name="formulario" action="" method="post">
+		<br>
+		<div class="svn_titulo" style="text-align:center;width:100%;">
+			FONTES {tipo} SUBVERSION
+		</div>
+		<br>
+		<table align='center' class='tb_resultado'>
+			<caption>TOTAL</caption>
+			<tr style="cursor:help;">
+				<th title="Até o mês anterior">Tamanho Inicial (Mb)</th>
+				<th title="Até o mês anterior">Tamanho Atual (Mb)</th>
+				<th title="Até o mês anterior">Média Mb/Mês</th>
+				<th title="Até o mês anterior">Média % Cresc./Mês</th>
+			</tr>			
+			<tr>
+				<!-- START BLOCK : BCK_tamanho_inicial -->
+				<td>{nr_tamanho}<br></td>
+				<!-- END BLOCK : BCK_tamanho_inicial -->
+				<!-- START BLOCK : BCK_tamanho_total -->
+				<td>{nr_tamanho}<br></td>
+				<!-- END BLOCK : BCK_tamanho_total -->
+				<!-- START BLOCK : BCK_tamanho_media -->
+				<td>{nr_tamanho}<br></td>
+				<td>{pr_crescimento}<br></td>
+				<!-- END BLOCK : BCK_tamanho_media -->
+			</tr>
+		</table>		
+		<br>
+		<table align='center' class='tb_resultado'>
+			<caption>MENSAL</caption>
+			<tr>
+				<th>Data</th>
+				<th>Tamanho (Mb)</th>
+				<th>% de Crescimento</th>
+			</tr>
+			<!-- START BLOCK : BCK_tamanho_diario -->
+			<tr bgcolor="{bg_color}">
+				<td>{dt_mes}</td>
+				<td>{nr_tamanho}<br></td>
+				<td>{pr_crescimento}<br></td>
+			</tr>
+			<!-- END BLOCK : BCK_tamanho_diario -->	
+		</table>
+		<BR>
+		<table align='center' class='tb_resultado'>
+			<caption>PROJEÇÃO</caption>
+			<tr>
+				<th>Projeção</th>
+				<th>Tamanho (Mb)</th>
+				<th>Tamanho (Gb)</th>					
+			</tr>
+			<!-- START BLOCK : BCK_projecao -->
+			<tr bgcolor="{bg_color}">
+				<td>{dt_ano}</td>
+				<td>{nr_mb}<br></td>
+				<td>{nr_gb}<br></td>
+			</tr>
+			<!-- END BLOCK : BCK_projecao -->	
+		</table>
+	</form>
+	<br>
+
+<!-- INCLUDE BLOCK : footer.html -->

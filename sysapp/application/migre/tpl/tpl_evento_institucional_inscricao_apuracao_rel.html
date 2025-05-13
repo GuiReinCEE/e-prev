@@ -1,0 +1,111 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Relatório de Apuração ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<!-- InstanceBeginEditable name="conteudo" --> 
+	<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+	<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+	<style>
+		.pos_venda_pergunta * {
+			font-family: arial;
+		}
+		.pos_venda_pergunta {
+			padding: 2px;
+			margin-top: 0px;
+			margin-left: 20px;
+			margin-bottom: 20px;
+			margin-right: 8px;
+
+			border-width: 1px;
+			border-style: solid;
+			border-color: #ebebeb;
+			border-right-color: #ccc;
+			border-bottom-color: #ccc;
+
+			background-color: #FFFFFF;
+		}
+		.pos_venda_pergunta h2 {
+			margin: 0px;
+			padding: 4px;
+			/*background-color: #E4EDD5;*/
+			background: url(img/posvenda.gif) #ecf4ec;
+			font-size: 16pt;
+		}
+
+		.pos_venda_resposta {
+			margin-top:3px;
+			padding: 2px;
+		}
+
+		.pos_venda_complemento_obrigatorio {
+			font-size:8pt;
+			color: red;
+			font-weight: bold;
+		}
+		
+		.pos_venda_pergunta label {
+			font-family:arial;
+			font-size:10pt;
+			font-weight: bold;		
+		}
+	</style>
+	<BR>
+		<div class="pos_venda_pergunta" style="text-align:center;padding:8px;">
+			<h2>Resultado</h2>
+			<BR>
+			<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td style="font-size: 12pt;">
+						Posição
+					</td>					
+					<td style="font-size: 12pt;">
+						Código
+					</td>							
+					<td style="font-size: 12pt;">
+						Emp/Re/Seq
+					</td>										
+					<td style="font-size: 12pt;">
+						Nome
+					</td>	
+					<td style="font-size: 12pt;">
+						Contato
+					</td>	
+					
+					<td style="font-size: 12pt;">
+						Quantidade
+					</td>
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="font-size: 12pt;">
+						{nr_posicao}
+					</td>					
+					<td style="font-size: 12pt;">
+						{cd_inscricao}
+					</td>							
+					<td style="font-size: 12pt;">
+						{cd_empresa}/{cd_registro_empregado}/{seq_dependencia}
+					</td>										
+					<td style="font-size: 12pt;">
+						{ds_nome}
+					</td>
+					<td style="font-size: 12pt;">
+						{contato}
+					</td>
+				
+					<td style="font-size: 12pt;">
+						{qt_voto}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista -->
+				</tbody>	
+			</table>				
+		</div>
+
+
+<!-- INCLUDE BLOCK : footer.html -->

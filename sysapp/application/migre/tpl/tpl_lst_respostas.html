@@ -1,0 +1,125 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = '..:: e-prev :: Respostas de pesquisas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<script src="inc/jquery-1.3.2.min.js"></script>
+<script src="inc/jeip.js"></script>
+<style type="text/css">
+	.jeip-saving {
+		background-image: url( 'ajax-loader.gif' );
+		background-repeat: no-repeat;
+		background-position: left;
+		background-color: #903;
+		color: #fff;
+		padding: 0 2px 0 20px;
+	}
+
+	.jeip-mouseover {
+		background-color: #4E8CCF;
+		color: #FFFFFF;
+		cursor:pointer;
+	}
+	
+	.jeip-editfield {
+		width: 100%;
+	}
+	
+	.jeip-saving {
+		font-family: Arial;
+		font-size: 10pt;
+		font-weight: bold;
+		color: #8E8E8E;
+		background: url('img/ajax-loader_4.gif') no-repeat;
+	}
+</style>
+
+
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li onclick="location.href='lst_enquetes.php'">
+				<span>LISTA</span>
+			</li>						
+		
+			<li onclick="location.href='cad_enquetes_definicao.php?c={cd_enquete}'" >
+				<span>DEFINIÇÃO</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_estrutura.php?c={cd_enquete}'"  >
+				<span>ESTRUTURA</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_resultados.php?c={cd_enquete}'" >
+				<span>RESULTADOS</span>
+			</li>
+			<li onclick="location.href='lst_respostas.php?cd_enquete={cd_enquete}'" class="abaSelecionada">
+				<span>RESPOSTAS</span>
+			</li>			
+		</ul>
+	</div>
+	<div class="aba_conteudo">
+		<form action="lst_respostas.php" method="get">
+			<input type="hidden" name="cd_enquete" value="{cd_enquete}">
+			<table border="0">
+				<tr>
+					<td>
+						Filtro:
+					</td>
+					<td>
+						<select name="tp_resposta" id="tp_resposta">
+							<option value="">Todas</option>
+							<option value="S" {tp_resposta_S}>Somente dissertativas</option>
+							<option value="N" {tp_resposta_N}>Não dissertativas</option>
+						</select>
+					</td>
+					<td>
+						<input type="submit" value="Filtrar" class="botao">
+					</td>
+				</tr>
+			</table>
+		</form>
+		<BR>
+		<!-- START BLOCK : pergunta -->
+		<fieldset style="padding: 5px; border: 0px;">
+			<legend style="color: #0046AD; font-size: 12pt; font-weight: bold;">({agrupamento}) {pergunta}</legend>
+			<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td colspan="4">Resposta</td>								
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : resposta -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td>
+						{ip}
+					</td>					
+					<td>
+						{texto}
+					</td>							
+					<td>
+						{valor}
+					</td>	
+					<td>
+						<div id="{cd_resposta}" title="Clique para editar" style="padding-left: 5px; padding-right: 5px; width: 100%; line-height: 12pt;">{descricao}</div>
+						<!-- START BLOCK : editar_resposta -->		
+						<script>
+								$("#{cd_resposta}").eip("enquete_resposta_grava.php", 
+								{ 
+									form_type: "textarea",
+									savebutton_text		: "Salvar",
+									savebutton_class	: "botao",
+									cancelbutton_text	: "Cancelar",
+									cancelbutton_class	: "botao_disabled"						
+								} );
+						</script>
+						<!-- END BLOCK : editar_resposta -->						
+					</td>
+				</tr>
+				<!-- END BLOCK : resposta -->
+				</tbody>	
+			</table>
+		</fieldset>
+		<!-- END BLOCK : pergunta -->	
+	</div>
+</div>
+<!-- INCLUDE BLOCK : footer.html -->

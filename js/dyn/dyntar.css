@@ -1,0 +1,14 @@
+.dyntar-active {
+	visibility: hidden;
+}
+.dyntar-wrapper {
+	border: 1px dashed #808080;
+}
+.dyntar-resizer {
+	height: 11px;
+	font-size: 11px;
+	line-height: 11px;
+	background: #E0E0E0 url(images/dyntar.gif) no-repeat 100% 100%;
+	border: 1px solid #B0B0B0;
+	cursor: n-resize;
+}

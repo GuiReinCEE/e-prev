@@ -1,0 +1,41 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Cidades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+      <form name="form1" method="post" action="grava_cargo_mailing.php">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+        <input name="cd_mailing" type="hidden" id="cd_mailing" value="{cd_mailing}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cargo:</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {codigo} </font></td>
+                  <td align="right" bgcolor="{cor_fundo2}"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a> 
+                    <input type="image" src="img/btn_salvar.jpg" border="0"> <a href="exclui_cargo_mailing.php?c={codigo}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    cargo:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="descricao" type="text" id="descricao" style="font-family: Verdana; font-size: 8 pt" value="{descricao}" size="60">
+                    </font> </td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

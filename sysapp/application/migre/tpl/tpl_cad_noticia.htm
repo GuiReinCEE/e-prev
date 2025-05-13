@@ -1,0 +1,47 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Cadastro de notícias ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+   <center>
+   <form action="{pagina_acao}" method="post">
+   <input type="hidden" name="codigo" value="{codigo}">
+   <table>
+      <tr>
+              <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Titulo</font></strong></td>
+         <td><input type="text" name="titulo" value="{titulo}" size=70 maxlength=200  ></td>
+      </tr>
+      <tr>
+         <td colspan=2><textarea name="noticia" rows=15 cols=80  >{noticia}</textarea></td>
+      </tr>    
+      <tr>
+              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Editorial</font></td>
+         <td>
+            <select name="editorial"  >
+			   <option value="CT" {sel_ct}>Ciência e Tecnologia</option>
+			   <option value="CO" {sel_co}>Colunistas</option>              
+			   <option value="EA" {sel_ea}>Educação Ambiental</option>
+			   <option value="EC" {sel_ec}>Economia</option>
+			   <option value="EN" {sel_en}>Energia</option>
+			   <option value="ET" {sel_et}>Entrevista</option>
+			   <option value="FC" {sel_fc}>Fundação CEEE</option>
+               <option value="FP" {sel_fp}>Fundos de Pensão</option>
+			   <option value="GE" {sel_ge}>Geral</option>
+               <option value="PR" {sel_pr}>Previdência</option>
+			   <option value="PO" {sel_po}>Política</option>
+			   <option value="QU" {sel_qu}>Qualidade</option>
+			   <option value="QV" {sel_qv}>Qualidade de Vida</option>
+			   <option value="RH" {sel_rh}>Recursos Humanos</option>
+            </select>
+         </td>
+      </tr>    
+      <tr>
+         <td colspan=2><div align="center"><input class='botao' type="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></div></td>
+      </tr>        
+   </table>
+   </form>
+   <!-- INCLUDE BLOCK : menu -->
+   </center>
+
+<!-- INCLUDE BLOCK : footer.html -->

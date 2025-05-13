@@ -1,0 +1,37 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Correspondências GAP ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+              
+            <table border="0" align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="{cor_fundo2}"> 
+                <td>&nbsp;</td>
+                <td align="right"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a><a href="exclui_envolvido.php?cd_envolvido={cd_envolvido}&cd_projeto={cd_projeto}" class="links2"><img src="img/btn_exclusao.jpg" border="0">&lt;&lt; Exclui envolvido</a></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td class="texto1">Projeto:</td>
+                <td><a href="cad_projetos.php?op=A&c={cd_projeto}" class="links2">{projeto}</a></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td class="texto1">Nome 
+                  envolvido :</td>
+                <td>{envolvido}</td>
+              </tr>
+            </table>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,294 @@
+<?php
+class participante extends Controller
+{
+    function __construct()
+    {
+        parent::Controller();
+    }
+
+    function index()
+    {
+		if(CheckLogin())
+		{
+	        $this->load->view('igp/participante/index.php');
+		}
+    }
+
+    function listar()
+    {
+        if(CheckLogin())
+        {
+	        $this->load->model('igp/Participante_model');
+	
+	        $data['collection'] = array();
+	        $result = null;
+	
+	        // --------------------------
+			// filtros ...
+	
+			$args=array();
+
+			// --------------------------
+			// listar ...
+	
+	        $this->Participante_model->listar( $result, $args );
+	
+			$data['collection'] = $result->result_array();
+	
+	        if( $result )
+	        {
+	            $data['collection'] = $result->result_array();
+	        }
+	
+	        // --------------------------
+	
+	        $this->load->view('igp/participante/partial_result', $data);
+        }
+    }
+
+	function detalhe($cd=0)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Participante_model');
+			$row=$this->Participante_model->carregar( $cd );
+			if($row)
+			{
+				if($cd==0)
+				{
+					$sql="SELECT to_char(dt_referencia + '1 month'::interval,'DD/MM/YYYY') AS mes_referencia, dt_referencia, nr_meta, nr_peso FROM igp.participante WHERE dt_exclusao IS NULL ORDER BY dt_referencia DESC LIMIT 1";
+					$query = $this->db->query($sql);
+					$row_atual = $query->row_array();
+
+					$row['dt_referencia'] = $row_atual['mes_referencia'];
+					$row['nr_meta'] = $row_atual['nr_meta'];
+					$row['nr_peso'] = $row_atual['nr_peso'];
+				}
+				
+				$data['row'] = $row; 
+			}
+			$this->load->view('igp/participante/detalhe', $data);
+		}
+	}
+
+	function salvar()
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Participante_model');
+
+			$args['cd_participante']=intval($this->input->post('cd_participante', true));
+			$args["dt_referencia"] = $this->input->post("dt_referencia", true);
+			$args["cd_usuario_inclusao"] = usuario_id();
+
+			$args["nr_semestre"] = app_decimal_para_db( $this->input->post("nr_semestre", true) );
+			$args["nr_meta"] = app_decimal_para_db( $this->input->post("nr_meta", true) );
+			$args["nr_peso"] = app_decimal_para_db( $this->input->post("nr_peso", true) );
+			$args["nr_instituidor"] = app_decimal_para_db( $this->input->post("nr_instituidor", true) );
+			$args["nr_partic_mes"] = app_decimal_para_db( $this->input->post("nr_partic_mes", true) );
+
+			$msg=array();
+			$retorno = $this->Participante_model->salvar( $args, $msg );
+
+			if($retorno)
+			{
+				redirect( "igp/participante", "refresh" );			
+			}
+			else
+			{
+				$mensagens = implode('<br>',$msg);
+				exibir_mensagem($msg[0]);
+			}
+		}
+	}
+
+	function excluir($id)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Participante_model');
+
+			$this->Participante_model->excluir( $id );
+
+			redirect( 'igp/participante', 'refresh' );
+		}
+	}
+
+	function criar_indicador()
+	{
+		if( CheckLogin() )
+		{
+			$INDICADOR_TABELA_CODIGO = enum_indicador_tabela_restrito::GRAFICO_IGP_PARTICIPANTE;
+
+			$this->load->helper(array('igp','indicador'));
+			$indicador=array();
+
+			$this->load->model('igp/Participante_model', 'dbmodel');
+
+	        $collection = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+	        $this->dbmodel->listar( $result, $args );
+
+			$collection=$result->result_array();
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
+			//igp_limpar_historico( enum_indicador::PARTICIPANTE );
+
+			$acumular_ate=12; // meses
+
+			$contador=sizeof($collection);
+
+			foreach( $collection as $item )
+			{
+				$semestre = floatval($item['nr_semestre']);
+				$meta = floatval($item['nr_meta']);
+				$peso = floatval($item['nr_peso']);
+				$instituidor = floatval($item['nr_instituidor']);
+
+				$resultado_por_meta = (  floatval($semestre) / floatval($meta)  )*100;
+
+				// SE(F109>1;E109;F109*E109)
+				//		E: $peso
+				//		F: $resultado_por_meta
+				$rf_mes=0;
+				if( (floatval($resultado_por_meta)/100)>1 )
+				{
+					$rf_mes = floatval($peso);
+				}
+				else
+				{
+					$rf_mes = (floatval($resultado_por_meta)/100)*floatval($peso);
+				}
+
+				if(floatval($item['nr_partic_mes'])>0)
+				{
+					$participantes_mes = $item['nr_partic_mes'];
+				}
+				else
+				{
+					$participantes_mes = intval($item["nr_semestre"])+intval($item["nr_instituidor"]);
+				}
+
+				$participantes_mes_sem_instituidor = floatval($participantes_mes)-floatval($instituidor);
+
+				$meta_por_resultado_acumulado = ( floatval($participantes_mes_sem_instituidor) / floatval($meta) )*100;
+
+				// RF ACUM
+				// SE(I109>1;E109;I109*E109)
+				// E: $peso
+				// I: $meta_por_resultado_acumulado
+				if( (floatval($meta_por_resultado_acumulado)/100)>1 )
+				{
+					$rf_acum = floatval($peso);
+				}
+				else
+				{
+					$rf_acum = (floatval($meta_por_resultado_acumulado)/100)*floatval($peso);
+				}
+
+				// MÉDIA MÓVEL, média dos últimos 12 meses
+				$a_percentual_media_movel[]=$participantes_mes_sem_instituidor;
+				$percentual_media_movel=0;
+
+				// MÉDIA MÓVEL, média dos últimos 12 meses do "RF MES"	
+				$a_rf_mes[]=$rf_mes;
+				$media_movel=0;
+
+				$j=1;
+				for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$percentual_media_movel += $a_percentual_media_movel[$i-1];
+						$media_movel += $a_rf_mes[$i-1];
+
+						$j++;
+					}
+				}
+
+				$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+				$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+				$media_movel=floatval($media_movel)/$divisor;
+
+				$row['mes_ano'] =		$item['mes_referencia'];
+				/*$row['VALOR_1'] =		number_format($semestre,2,'.',',');
+				$row['VALOR_2'] =		number_format($meta,2,'.',',');
+				$row['PERCENTUAL'] =	number_format($resultado_por_meta,2,'.',',');*/
+
+				$row['igp_mes'] = $rf_mes;
+				$row['igp_acum'] = $rf_acum;
+				$row['igp_media'] = $media_movel;
+
+				$indicador[] = $row;
+
+				// coleta de dados para histórico dos anos anteriores
+				/*if( strpos($item['mes_referencia'],"12/")>-1 )
+				{
+					$hst_meta = floatval($meta);
+					$hst_resultado = floatval($semestre);
+					$mr = explode( '/', $item['mes_referencia'] );
+					$desvio_meta = floatval($hst_meta)-floatval($hst_resultado);
+
+					igp_gravar_historico( intval($mr[1]), floatval($hst_meta), floatval($hst_resultado), floatval($desvio_meta), enum_indicador::PARTICIPANTE);
+				}*/
+			}
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+			/*$sql = " DELETE FROM indicador.indicador_parametro WHERE cd_indicador_tabela=? ";
+			$this->db->query( $sql, array(intval($INDICADOR_TABELA_CODIGO)) );
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0,0, utf8_encode('Mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1,0, utf8_encode('Nr de Participantes'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2,0, utf8_encode('Meta'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3,0, utf8_encode('% de Atingimento da meta'), 'background,center');*/
+
+			$sql='';
+
+			$linha=1;
+			for( $i=sizeof($indicador)-$acumular_ate;$i<sizeof($indicador);$i++ )
+			{
+				// IGP
+				$sql1 = " SELECT * FROM igp.igp WHERE to_char( dt_referencia, 'MM/YYYY' )='".$indicador[$i]['mes_ano']."'; ";
+				$query = $this->db->query( $sql1 );
+
+				$igp = $query->row_array();
+
+				$prefixo_tabela = "participante";
+				if(sizeof($igp)>0)
+				{
+					$sql .= "UPDATE igp.igp set acu_$prefixo_tabela=".floatval($indicador[$i]['igp_acum']).", mes_$prefixo_tabela=".floatval($indicador[$i]['igp_mes']).", mm_$prefixo_tabela=".floatval($indicador[$i]['igp_media'])." where cd_igp=".intval($igp['cd_igp'])."; ";
+				}
+				else
+				{
+					$sql .= "INSERT INTO igp.igp (acu_$prefixo_tabela, mes_$prefixo_tabela, mm_$prefixo_tabela, dt_referencia) VALUES (".floatval($indicador[$i]['igp_acum']).",".floatval($indicador[$i]['igp_mes']).",".floatval($indicador[$i]['igp_media']).", to_date( '01/".$indicador[$i]['mes_ano']."', 'DD/MM/YYYY' )); ";
+				}
+
+				/*$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, $indicador[$i]['mes_ano'], 'background,center');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, $indicador[$i]['VALOR_1'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, $indicador[$i]['VALOR_2'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, $indicador[$i]['PERCENTUAL'], 'right');*/
+
+				$linha++;
+			}
+
+			$this->db->query($sql);
+
+			// resgatar codigo do indicador
+			$sql = "SELECT cd_indicador FROM indicador.indicador_tabela where cd_indicador_tabela=?";
+			$query = $this->db->query($sql, array(intval($INDICADOR_TABELA_CODIGO)));
+			$res = $query->row_array();
+
+			//echo 'Indicador atualizado com sucesso!'.br();
+			echo 'IGP atualizado com sucesso!'.br(2);
+			echo anchor( 'indicador/apresentacao/detalhe/'.$res['cd_indicador'], 'Ver apresentação' );
+		}
+	}
+}
+?>

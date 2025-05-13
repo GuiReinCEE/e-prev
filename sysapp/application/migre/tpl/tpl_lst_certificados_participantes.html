@@ -1,0 +1,179 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Certificados de Participantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<script>
+	function validaForm()
+	{
+		if((document.getElementById('dt_inicial').value == "") || (document.getElementById('dt_final').value == ""))
+		{
+			alert('Informe o campo Período');
+			document.getElementById('dt_inicial').focus();
+			return false;
+		}
+		else if(document.getElementById('patrocinadora').value == "")
+		{
+			alert('Informe o campo Empresa');
+			document.getElementById('patrocinadora').focus();
+			return false;
+		}		
+		else if(document.getElementById('plano').value == "")
+		{
+			alert('Informe o campo Plano');
+			document.getElementById('plano').focus();
+			return false;
+		}		
+		else
+		{
+			return true;
+		}
+	}
+	
+	function certificadoPDF(cd_empresa, cd_registro_empregado, seq_dependencia, fl_frente, fl_verso)
+	{
+		document.getElementById('cd_empresa').value            = cd_empresa;
+		document.getElementById('cd_registro_empregado').value = cd_registro_empregado;
+		document.getElementById('seq_dependencia').value       = seq_dependencia;		
+		document.getElementById('fl_frente').value = fl_frente;		
+		document.getElementById('fl_verso').value  = fl_verso;		
+		
+		document.getElementById('formCertificado').action = "{urlCertificadoPDF}";
+		document.getElementById('formCertificado').target = "_blank";
+		document.getElementById('formCertificado').submit();
+		document.getElementById('formCertificado').action = "lst_certificados_participantes.php";
+		document.getElementById('formCertificado').target = "";
+	}
+</script>
+
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li class="abaSelecionada">
+				<span>LISTA</span>
+			</li>
+		</ul>
+	</div>                            
+	<div class="aba_conteudo">
+		<form name="form2" id="formCertificado" method="post" action="lst_certificados_participantes.php" onsubmit="return validaForm();">
+		<input type="hidden" name="cd_empresa" id="cd_empresa" value="">
+		<input type="hidden" name="cd_registro_empregado" id="cd_registro_empregado" value="">
+		<input type="hidden" name="seq_dependencia" id="seq_dependencia" value="">
+		<input type="hidden" name="fl_frente" id="fl_frente" value="S">
+		<input type="hidden" name="fl_verso" id="fl_verso" value="S">
+		<table align="center" cellpadding="1" cellspacing="1" border="0">
+			<tr> 
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo (Dt Ingresso):</font></td>
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+				<input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt">
+				a 
+				<input name="dt_final" type="text" id="dt_final" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt">
+				<font size="1">(datas no formato dd/mm/aaaa)</font> </font></td>
+			  <td rowspan="3" align="right" nowrap>
+						 
+				</td>
+			</tr>
+			<tr> 
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa: 
+				</font></td>
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+				<select name="patrocinadora" id="patrocinadora">
+				  <!-- START BLOCK : patrocinadora -->
+				  <option value="{cd_empresa}" {chk_empresa}>{nome_empresa}</option>
+				  <!-- END BLOCK : patrocinadora -->
+				</select>
+				</font></td>
+			</tr>
+			<tr> 
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Plano: 
+				</font></td>
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+				<select name="plano" id="plano">
+				  <!-- START BLOCK : plano -->
+				  <option value="{cd_plano}" {chk_plano}>{nome_plano}</option>
+				  <!-- END BLOCK : plano -->
+				</select>
+				</font></td>
+			</tr>
+			<tr>
+			  <td colspan="3">
+				<input type="submit" value="Filtrar" class="botao">
+				<BR><BR>
+			  </td>
+			</tr>			
+			<tr>
+			  <td colspan="3" align="center">
+				<input type="button" value="Completa" class="botao" {fl_imprimir} onclick="certificadoPDF('','','','S','S');">
+				<input type="button" value="Frente" class="botao" {fl_imprimir} onclick="certificadoPDF('','','','S','N');">
+				<input type="button" value="Verso" class="botao" {fl_imprimir} onclick="certificadoPDF('','','','N','S');">
+				
+				<!--
+				<input type="button" value="Frente" class="botao" {fl_imprimir} onclick="location.href='imprime_certificados_frente.php?emp={emp}&pl={pl}&di={dt_inicial}&df={dt_final}'">
+				<input type="button" value="Verso" class="botao" {fl_imprimir} onclick="location.href='imprime_certificados_verso.php?emp={emp}&pl={pl}&di={dt_inicial}&df={dt_final}'">
+				-->
+				<input type="button" value="Simplificada" class="botao" {fl_imprimir} onclick="location.href='imprime_certificados_nome.php?emp={emp}&plano={pl}&dt_inicial={dt_inicial}&dt_final={dt_final}'">
+				<BR><BR>
+			  </td>
+			</tr>						
+			<tr>
+			  <td colspan="3" class="cabecalho" bgcolor="#0046ad">Impressão dos fundos</td>
+			</tr>
+			<tr> 
+				<td colspan="3" align="center">
+				<a href="imprime_certificados_fundo.php?pc=2" target="_blank">&raquo;&nbsp; CEEEPrev</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=6" target="_blank">&raquo;&nbsp; CRMPrev</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=1" target="_blank">&raquo;&nbsp; AES Sul</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=3" target="_blank">&raquo;&nbsp; CGTEE</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=7" target="_blank">&raquo;&nbsp; Senge</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=8" target="_blank">&raquo;&nbsp; SINPRORS</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=8" target="_blank">&raquo;&nbsp; SINTAE</a><span class="links2"> | </span>
+				<a href="imprime_certificados_fundo.php?pc=9" target="_blank">&raquo;&nbsp; FAMILIA</a>
+				</td>
+			</tr>
+			<tr> 
+				<td colspan="3" align="center">
+					<BR>
+					<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+					<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+					<!-- START BLOCK : total -->
+					<div style="text-align: left; font-family: verdana,arial; font-size: 10px">Quantidade: {total}</div>
+					<!-- END BLOCK : total -->
+					<table class='sort-table' id='table-1' align='center' width='100%' cellspacing='2' cellpadding='2'>
+						<thead>
+						<tr> 
+							<td>EMP/RE/SEQ</td>					
+							<td>Nome</td>					
+							<td>Dt Ingresso</td>					
+						</tr>
+						</thead>
+						<tbody>	
+						 <!-- START BLOCK : participante -->
+						<tr onmouseover='sortSetClassOver(this);' onmouseout='sortSetClassOut(this);'> 
+							<td align="center">{cd_empresa}/{cd_registro_empregado}/{seq_dependencia}</td>							
+							<td align="left"><a href="#" onclick="certificadoPDF({cd_empresa},{cd_registro_empregado},{seq_dependencia},'S','S');">{nome}</a></td>							
+							<td align="center">{dt_ingresso}</td>							
+						</tr>
+						<!-- END BLOCK : participante -->
+						</tbody>	
+					</table>
+					<script>
+						var ob_resul = new SortableTable(document.getElementById("table-1"),["RE","CaseInsensitiveString", "DateBR"]);
+							ob_resul.onsort = function () {
+								var rows = ob_resul.tBody.rows;
+								var l = rows.length;
+								for (var i = 0; i < l; i++) {
+									removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+									addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+								}
+							};
+							ob_resul.sort(1, false);				
+					</script>							
+				</td>
+			</tr>			
+		</table>
+		</form>
+		<BR><BR><BR>
+
+	</div>
+</div>
+<!-- INCLUDE BLOCK : footer.html -->

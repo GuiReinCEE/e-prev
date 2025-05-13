@@ -1,0 +1,70 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Eleitores por município ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right">
+        </div>
+      </blockquote>
+	  		<!-- START BLOCK : lst_estado -->
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Município</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Eleitores</font></strong></td>
+              </tr>
+              <!-- START BLOCK : municipio -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="lst_eleitores_municipio.php?mun={municipio}">{municipio}</a></font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{num_eleitores}</font></td>
+              </tr>
+              <!-- END BLOCK : municipio -->
+			  <!-- START BLOCK : tot_estado -->
+              <tr bgcolor="#CCCCCC"> 
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Total</font></strong></td>
+                <td align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tot_eleitores}</font></strong></td>
+              </tr>
+			  <!-- END BLOCK : tot_estado -->
+            </table>
+			<!-- END BLOCK : lst_estado -->
+            
+			<!-- START BLOCK : lst_municipio -->
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#dae9f7"> 
+                <td colspan="9"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr> 
+                      <td><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{mun}</font></td>
+                      <td align="right"><a href="javascript:history.back()"><img src="img/btn_retorna.jpg" border="0"></a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">REd</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Seq</font></strong></td>
+                <td colspan="6"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome</font></strong></td>
+              </tr>
+              <!-- START BLOCK : mun_municipio -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_empresa}</font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_registro_empregado}</font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{seq_dependencia}</font></td>
+                <td colspan="6" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome}</font></td>
+              </tr>
+              <!-- END BLOCK : mun_municipio -->
+              <!-- START BLOCK : tot_municipio -->
+              <tr bgcolor="#CCCCCC"> 
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Total</font></strong></td>
+                <td colspan="8" align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tot_eleitores}</font></strong></td>
+              </tr>
+              <!-- END BLOCK : tot_municipio -->
+            </table>
+			<!-- END BLOCK : lst_municipio -->
+            <p>&nbsp;</p></td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

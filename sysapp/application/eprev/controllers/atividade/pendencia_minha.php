@@ -1,0 +1,119 @@
+<?php
+class pendencia_minha extends Controller
+{
+	function __construct()
+    {
+        parent::Controller();
+
+        
+		
+		$this->load->model('gestao/pendencia_minha_model');
+	}
+    
+    function index()
+    {
+		CheckLogin();
+		
+		$result = null;
+		$data = Array();
+		$args = Array();
+		
+		$args["cd_usuario"] = $this->session->userdata('codigo');
+
+		$this->pendencia_minha_model->comboPendencia($result, $args);
+		$data['ar_pendencia'] = $result->result_array();
+		
+		#$this->pendencia_minha_model->comboResp1($result, $args);
+		#$data['ar_resp1'] = $result->result_array();
+
+		#$this->pendencia_minha_model->comboResp2($result, $args);
+		#$data['ar_resp2'] = $result->result_array();		
+
+		$this->load->view('atividade/pendencia_minha/index', $data);
+	}
+    
+    function listar()
+    {
+		CheckLogin();
+		
+		$result = null;
+		$data = Array();
+		$args = Array();
+		
+		
+		$args["cd_pendencia"]  = $this->input->post("cd_pendencia", TRUE);
+		$args["dt_limite_ini"] = $this->input->post("dt_limite_ini", TRUE);
+		$args["dt_limite_fim"] = $this->input->post("dt_limite_fim", TRUE);
+		$args["fl_atrasada"]   = $this->input->post("fl_atrasada", TRUE);
+		manter_filtros($args);
+		
+		$args["cd_usuario"] = $this->session->userdata('codigo');
+		
+		$this->pendencia_minha_model->listar($result, $args);
+		$data['collection'] = $result->result_array();
+
+		$this->load->view('atividade/pendencia_minha/index_result', $data);
+	}
+	
+    function checar()
+    {
+		CheckLogin();
+		
+		$result = null;
+		$data = Array();
+		$args = Array();
+		
+		$args["cd_usuario"] = $this->session->userdata('codigo');
+		$args["ds_usuario"] = "";
+		
+		$this->pendencia_minha_model->checar($result, $args);
+		$ar_reg = $result->row_array();
+
+		echo json_encode($ar_reg);
+		
+		/*
+			{"qt_pendencia":"2"}
+			
+			Array
+			(
+				[qt_pendencia] => 2
+			)		
+		*/
+	}
+
+    function checarUsuario($usuario="",$origem="")
+    {
+		#CheckLogin();
+		
+		$result = null;
+		$data = Array();
+		$args = Array();
+		
+		$args["cd_usuario"] = 0;
+		$args["ds_usuario"] = $usuario;
+		$args["ds_origem"]  = $origem;
+		$args["nr_ip"]      = $_SERVER['REMOTE_ADDR'];
+		
+		$this->pendencia_minha_model->checarPC($result, $args);
+		$ar_reg = $result->row_array();
+		
+		if(trim($origem) != "")
+		{
+			$args["qt_pendencia"] = $ar_reg['qt_pendencia'];
+			$args["qt_atrasada"]  = $ar_reg['qt_atrasada'];
+			$this->pendencia_minha_model->checarUsuarioSalvarLog($args);
+		}
+		
+		echo json_encode($ar_reg);
+		
+		/*
+			{"qt_pendencia":"2"}
+			
+			Array
+			(
+				[qt_pendencia] => 2
+			)		
+		*/
+	}	
+}
+?>

@@ -1,0 +1,35 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Escala de Proficiência ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+	<td colspan="2">
+
+		<blockquote>
+			<div align="right"><a href="cad_escala_proficiencia.php?op=I&origem={origem}" class="links2">&raquo;&nbsp;Novo grau para esta escala</a></div>
+		</blockquote>
+		<table align="center" width="777" cellpadding="1" cellspacing="1">
+			<tr> 
+				<td colspan="2" class="titulo_azul">{escala}</td>
+			</tr>
+			<tr bgcolor="#0046ad"> 
+				<td class="cabecalho">Grau</td>
+				<td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Descri&ccedil;&atilde;o</strong></font></td>
+			</tr>
+			<!-- START BLOCK : grau -->
+			<tr> 
+				<td bgcolor="{cor_fundo}" class="texto1">{codigo}</td>
+				<td	bgcolor="{cor_fundo}"><a href="cad_escala_proficiencia.php?op=A&origem={origem}&c={codigo}" class="links2">{descricao}</a></td>
+			</tr>
+			<!-- END BLOCK : grau -->
+		</table>
+
+		<div align="center"></div>
+	</td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

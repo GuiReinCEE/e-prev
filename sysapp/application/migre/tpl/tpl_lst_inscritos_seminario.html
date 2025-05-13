@@ -1,0 +1,160 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Seminário ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<style>
+		.tr_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+		}
+	</style>  	
+	<script>
+		function geraCodigoBarras()
+		{
+			document.getElementById("formulario").target = "_blank";
+			document.getElementById("formulario").action = "inscritos_seminario_barra_imprime.php?cd_seminario="+document.getElementById('cd_seminario').value;
+			document.getElementById("formulario").submit(); 
+			
+			document.getElementById("formulario").target = "";
+			document.getElementById("formulario").action = "lst_inscritos_seminario.php";
+		}
+		
+		function enviaEmailCertificado()
+		{
+			
+			if(confirm('ATENÇÃO!!!\n\nSerá enviado email para todos os presentes com email.\n\nEsta ação não poderá ser desfeita.\n\nVocê realmente tem certeza que deseja enviar os emails?\n\n'))
+			{
+				document.getElementById("formulario").action = "seminario_certificado_2009_envia_email.php?cd_inscricao=-1";
+				document.getElementById("formulario").submit(); 			
+			}
+			
+		}
+		
+		function enviaEmailCertificadoIndividual(cd_inscricao,nr_ano)
+		{
+			if(confirm('ATENÇÃO!!!\n\nEsta ação não poderá ser desfeita.\n\nVocê realmente tem certeza que deseja enviar o email?\n\n'))
+			{
+				document.getElementById("formulario").action = "seminario_certificado_"+nr_ano+"_envia_email.php?cd_inscricao="+cd_inscricao;
+				document.getElementById("formulario").submit(); 			
+			}
+		}	
+
+		function geraExcel()
+		{
+			document.getElementById("formulario").action = "inscritos_seminario_excel.php?cd_seminario="+document.getElementById('cd_seminario').value;
+			document.getElementById("formulario").target = "_blank";
+			document.getElementById("formulario").submit(); 
+			
+			document.getElementById("formulario").target = "";
+			document.getElementById("formulario").action = "lst_inscritos_seminario.php";
+		}		
+	</script>
+	<form name="formulario" id="formulario" method="post" action="lst_inscritos_seminario.php">	
+	<BR>
+	 <div style="padding-left:15px;padding-right:40px; text-align:center;"> 
+	  <table align="center" border="0" cellspacing="2" cellpadding="2">
+        <tr> 
+			<td align="left">
+			<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Seminário:
+			</td>
+			<td align="left">
+			  <select size="1" name="cd_seminario" id="cd_seminario">
+				<!-- START BLOCK : cd_seminario -->
+				<option value="{cd_seminario}" {fl_seminario}>{ds_seminario}</option>
+				<!-- END BLOCK : cd_seminario -->
+			  </select>		  
+			</td>
+		</tr>
+        <tr> 
+			<td align="left">
+			<font size="2" face="Verdana, Arial, Helvetica, sans-serif">E-mail:
+			</td>
+			<td align="left">
+			  <select size="1" name="fl_seminario_email" id="fl_seminario_email">
+				<option value="">Todos</option>
+				<option value="S" {fl_seminario_email_sim}>Sim</option>
+				<option value="N" {fl_seminario_email_nao}>Não</option>
+			  </select>		  
+			</td>
+		</tr>
+        <tr> 
+			<td align="left">
+			<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Presente:
+			</td>
+			<td align="left">
+			  <select size="1" name="fl_seminario_presente" id="fl_seminario_presente">
+				<option value="">Todos</option>
+				<option value="S" {fl_seminario_presente_sim}>Sim</option>
+				<option value="N" {fl_seminario_presente_nao}>Não</option>
+			  </select>		  
+			</td>
+		</tr>		
+		<tr>
+          <td align="center" colspan="2">
+			<input type="submit" value="Atualizar" style="width:120px;" class="botao">
+			<input type="button" value="Gera Excel" onclick="geraExcel();" style="width:120px;" class="botao">
+			<input type="button" value="Código de barras" onclick="geraCodigoBarras();" style="width:120px;" class="botao" disabled>
+			<input type="button" value="Envia Certificado por email" onclick="enviaEmailCertificado();" class="botao" >
+		  </td>
+		</tr>
+      </table>
+	  <BR>
+      <table width="90%" align="center" border="0" cellspacing="1">
+          <tr bgcolor="#F7F7F7"> 
+		  <!-- START BLOCK : total -->
+            <td>
+				<font size="2" face="Verdana, Arial, Helvetica, sans-serif"><B>Total de {desc_total}: {total}</B></font>
+			</td>
+			<td>
+			</td>
+          <!-- START BLOCK : total -->
+		  </tr>
+      </table>	  
+	  
+	
+		<BR>
+		<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+			<thead>
+			<tr> 
+				<td>Nome</td>					
+				<td>Empresa/Instituição</td>
+				<td>Cargo/Função</td>					
+				<td>Inscrição</td>
+				<td>Presença</td>
+				<td colspan="2">Certificado</td>
+			</tr>
+			</thead>
+			<tbody>	
+			<!-- START BLOCK : convidado -->
+			<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+				<td style="white-space: nowrap;"><a href="cad_inscritos_seminario.php?c={cd_codigo}" class="links2">{nome}</a></td>					
+				<td>{empresa}</td>					
+				<td>{cargo_funcao}</td>				
+				<td align="center">{data_cadastro}</td>					
+				<td align="center">{dt_presente}</td>	
+				<td align="center"><a href="https://www.fundacaoceee.com.br/seminario/cenarios_2010/certificado.php?i={cd_inscricao}" target="_blank" style="{fl_certificado}"><img src="img/reuniao_imp_p.gif" border="0"></a></td>					
+				<td align="center"><img src="img/reuniao_envia_email_p.gif" border="0" onclick="enviaEmailCertificadoIndividual('{cd_codigo}','{nr_ano}')" style="cursor:pointer;{fl_certificado_email}"></td>					
+			</tr>
+			<!-- END BLOCK : convidado -->
+			</tbody>	
+		</table>
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["CaseInsensitiveString","CaseInsensitiveString", "CaseInsensitiveString", "DateTimeBR", "DateTimeBR"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(0, false);				
+		</script>
+	</div>
+	  
+	  </form>
+      <!-- InstanceEndEditable --> 
+
+<!-- INCLUDE BLOCK : footer.html -->

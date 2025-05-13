@@ -1,0 +1,352 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<link href="inc/abas.css" rel="stylesheet" type="text/css">
+	<style>
+		.resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado {
+			border-collapse: collapse;
+					
+		}
+		
+		.tb_resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado th {
+			font-weight: bold;	
+			text-align:center;
+			border: 1px #dae9f7 solid;
+			background:#dae9f7;
+		}
+		.tb_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px #dae9f7 solid;
+		}		
+		
+		.tb_resultado_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+			cursor:pointer;
+		}
+		
+		.tb_lista_resultado {
+			border-collapse: collapse;
+			width: 60%;		
+		}
+		
+		.tb_lista_resultado * {
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_lista_resultado th {
+			font-size: 10pt;
+			font-weight: bold;	
+			text-align:center;
+			border: 1px solid #CCCCCC;
+			color:#FFFFFF;
+			background:#0046ad;
+		}
+		.tb_lista_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}	
+
+		.tb_cadastro_saida{
+			border-collapse: collapse;
+			width: 60%;
+			background:#F4F4F4;
+		}
+		
+		.tb_cadastro_saida *{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_cadastro_saida th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			font-weight: bold;
+			color:#000000;
+			background:#dae9f7;
+		}
+		
+		.tb_cadastro_saida td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+		}	
+	</style>	
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+	<script>
+		var id_campo_lista = "";
+		function buscaString(e, obj, ds_campo, ds_funcao)
+		{
+			var ds_busca = obj.value
+			id_campo_lista = obj.id;
+			var ds_url   = "cad_visitantes_ajax.php";
+			
+			if(ds_busca.length > 1)
+			{
+				var keycode;
+				if (window.event)
+				{		
+					keycode = window.event.keyCode;
+				}
+				else if (e) 
+				{
+					keycode = e.which;
+				}
+				
+				if(keycode == 40)
+				{
+					try
+					{
+						document.getElementById('listaOpcoes').focus();
+						document.getElementById('listaOpcoes').options[0].selected = true;;
+					}catch(ee){}
+				}
+				else if(keycode != 13)
+				{
+					var lt_param = "ds_funcao="+ds_funcao;
+						lt_param+= "&ds_busca="+ds_busca;
+						lt_param+= "&ds_campo="+ds_campo;
+						ajaxExecute(ds_url, lt_param, "buscaStringRetorno", '', 'POST');
+				}
+			}
+			else
+			{
+				document.getElementById('ob_sugestao').innerHTML = "";
+			}
+		}
+		
+		function buscaStringRetorno(ds_retorno)
+		{
+			document.getElementById('ob_sugestao').style.display = "none";
+			document.getElementById('ob_sugestao').innerHTML = "";  
+			eval("ar_lista = new Array("+ ds_retorno +");");
+
+			var ob_lista  = document.createElement('select');
+				ob_lista.setAttribute("id", "listaOpcoes");
+				ob_lista.setAttribute("size", "5");
+				
+				ob_lista.onchange = function(e)
+				{
+					document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+				}
+				
+				ob_lista.onkeydown = function(e)
+				{
+					var obj;
+					var keycode;
+
+					if (window.event)
+					{		
+						keycode = window.event.keyCode;
+						obj = event.srcElement;
+					}
+					else if (e) 
+					{
+						keycode = e.which;
+						obj = e.target;
+					}
+					
+					if ((keycode == 13) || (keycode == 27))
+					{
+						document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+						document.getElementById(id_campo_lista).focus();
+						document.getElementById('ob_sugestao').style.display = "none";
+						document.getElementById('ob_sugestao').innerHTML = "";  
+						fl_set = true;
+					}
+					
+					if (keycode == 8)
+					{					
+						if (window.event)
+						{
+							document.getElementById(id_campo_lista).focus();
+							window.event.returnValue = false;
+						}
+						else
+						{
+							document.getElementById(id_campo_lista).focus();
+							return false;
+						}
+					}
+				}
+
+				ob_lista.onblur = function(e)
+				{
+					document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+					document.getElementById(id_campo_lista).focus();
+					document.getElementById('ob_sugestao').style.display = "none";
+					document.getElementById('ob_sugestao').innerHTML = "";  
+					fl_set = true;
+				}	
+			nr_conta = 0;
+			while(nr_conta < ar_lista.length)
+			{
+				if(ar_lista[nr_conta] != "")
+				{
+					var ob_option = document.createElement("option");
+						ob_option.innerHTML  = ar_lista[nr_conta];
+						ob_option.value = ar_lista[nr_conta];
+					ob_lista.appendChild(ob_option);
+				}
+				nr_conta++;
+			}
+			
+			if(ar_lista.length > 1)
+			{
+				document.getElementById('ob_sugestao').style.top = findPosObj(document.getElementById(id_campo_lista)).y + 25; 
+				document.getElementById('ob_sugestao').style.left = findPosObj(document.getElementById(id_campo_lista)).x;
+				document.getElementById('ob_sugestao').style.display = "";
+				document.getElementById('ob_sugestao').appendChild(ob_lista);				
+			}
+		}	
+
+	    function findPosObj(ob_name) 
+	    {
+		    var nr_pos = new Object();
+	        var nr_x = nr_y = 0;
+		    try
+			{
+				if (ob_name.offsetParent) 
+		        {
+				    nr_x = ob_name.offsetLeft
+				    nr_y = ob_name.offsetTop
+				    while (ob_name = ob_name.offsetParent) 
+		            {
+					    nr_x += ob_name.offsetLeft
+					    nr_y += ob_name.offsetTop
+				    }
+			    }
+			} catch(e){}
+		    nr_pos.x = nr_x;
+		    nr_pos.y = nr_y;
+	        return nr_pos;
+	    }
+		
+		function validaFormulario()
+		{
+			var ds_msg_erro = "";
+			
+			if(trimValue(document.getElementById("dt_ini").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Período inicial";
+			}
+
+			if(trimValue(document.getElementById("dt_fim").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Período final";
+			}
+
+			if(trimValue(document.getElementById("ds_nome").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Nome";
+			}	
+			
+			if(trimValue(ds_msg_erro) != "")
+			{
+				alert("Os seguinte itens são necessários:\n" + ds_msg_erro)
+				return false
+			}
+			
+			return true;
+		}
+	</script>
+	<div id="ob_diario" style="width:90%;margin-left:25px;text-align:center;">
+		<br>
+		<form name="formulario" method="post" action="" onSubmit="return validaFormulario();">	
+			<table class="tb_cadastro_saida" align="center">
+				<tr>
+					<th colspan="4">
+						RELATÓRIO VISITANTE
+					</th>
+				</tr>	
+				<tr>
+					<th>
+						Período
+					</th>
+					<td>
+						<input type="text"  name="dt_ini"  id="dt_ini" value="{dt_ini}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+					</td>
+					<td>
+						<input type="text"  name="dt_fim"  id="dt_fim" value="{dt_fim}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+					</td>
+					<td align="center">
+						<input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar">
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Nome
+					</th>
+					<td colspan="3">
+						<input type="text"  name="ds_nome"  id="ds_nome" value="{ds_nome}" onKeyUp="buscaString(event, this, 'ds_nome', 'buscaString');" style="width:100%;">
+					</td>
+				</tr>					
+			</table>
+		</form>
+		<BR>
+		<table class="tb_lista_resultado" align="center">
+			<tr>
+				<th>
+					<br>
+				</th>			
+				<th>
+					Data
+				</th>		
+				<th>
+					Destino
+				</th>						
+				<th>
+					Tempo de Permanência
+				</th>				
+			</tr>
+			<!-- START BLOCK : lst_visitas -->	
+			<tr bgcolor="{bg_color}" onmouseover="this.className='tb_resultado_selecionado';" onmouseout="this.className='';">
+				<td>
+					{nr_conta}
+				</td>					
+				<td style="white-space:nowrap;text-align:center;">
+					{dt_data}
+				</td>						
+				<td style="white-space:nowrap;">
+					{ds_destino}
+				</td>						
+				<td style="white-space:nowrap;text-align:center;">
+					{hr_tempo}
+				</td>				
+			</tr>	
+			<!-- END BLOCK : lst_visitas -->	
+		</table>
+	</div>			
+	<div id="ob_sugestao" style="display:none; z-index:999; position:absolute; top:200px; left:200px;"></div>
+	<br>
+	<br>
+	<script>
+		// DEFINIÇÃO DE MASCARAS PARA OS CAMPOS //
+		MaskInput(document.getElementById('dt_ini'),          "99/99/9999");
+		MaskInput(document.getElementById('dt_fim'),          "99/99/9999");		
+	</script>	
+
+<!-- INCLUDE BLOCK : footer.html -->

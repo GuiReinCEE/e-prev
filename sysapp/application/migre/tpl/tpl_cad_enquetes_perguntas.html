@@ -1,0 +1,203 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+function fnc_confirma_exclusao(codigo,eq) 
+{
+	var confirma = confirm("Confirma a exclusão desta pergunta?");
+	if (confirma == true) 
+	{
+		document.location.href='exclui_enquete_pergunta.php?p='+codigo+'&c='+eq;
+	}
+}
+
+function validaForm()
+{
+	if(trimValue(document.getElementById('questao').value) == "")
+	{
+		alert('Informe a Pergunta.');
+		document.getElementById('questao').focus();
+		return false;
+	}
+	else if(trimValue(document.getElementById('cbo_agrupamento').value) == "")
+	{
+		alert('Informe o Agrupamento.');
+		document.getElementById('cbo_agrupamento').focus();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+</SCRIPT>
+<style>
+	.tab_opcao {
+		border-collapse:collapse;
+		border: 1px solid #0066CC;
+	}
+	
+	.tab_opcao th {
+		padding: 3px;
+		font-family:Arial;
+		font-size:10pt; 
+		color:#FFFFFF;
+		text-align:center;
+		background: #0066CC;
+		border: 1px solid #FFFFFF;
+	}
+	
+	.tab_opcao td {
+		padding: 4px;
+		font-family:Arial;
+		font-size:8pt; 			
+	}				
+</style>
+
+<!-- START BLOCK : mensagem -->
+<div align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong></div>
+<!-- END BLOCK : mensagem -->
+
+<!-- START BLOCK : cadastro -->
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li onclick="location.href='lst_enquetes.php'">
+				<span>LISTA</span>
+			</li>						
+			<li onclick="location.href='cad_enquetes_definicao.php?c={eq}'">
+				<span>DEFINIÇÃO</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_estrutura.php?c={eq}'" >
+				<span>ESTRUTURA</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_perguntas.php?c={codigo}&eq={eq}'" class="abaSelecionada">
+				<span>PERGUNTA</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_resultados.php?c={eq}'">
+				<span>RESULTADOS</span>
+			</li>
+		</ul>
+	</div>
+	<div class="aba_conteudo">
+		<form name="form1" method="post" action="grava_enquete_pergunta.php" onsubmit="return validaForm();" >
+			<input name="codigo" type="hidden" id="codigo" value="{codigo}">
+			<input name="eq" type="hidden" id="eq" value="{eq}">
+			<table border="0" align="center" width="100%" cellspacing="1" cellpadding="1">
+				<tr> 
+					<td colspan="2" height="30" valign="middle" align="center" bgcolor="#0066CC">
+						<h2 style="color:#FFFFFF;">{eq} - {titulo}</h2>
+					</td>
+				</tr>
+			</table>	
+			<BR>
+			<table border="0" align="center" width="100%" class="tab_opcao">
+				<tr bgcolor="{cor_fundo1}"> 
+					<td>
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Pergunta:
+						</font>
+					</td>
+					<td colspan="5">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+							<input name="questao" type="text" id="questao" value="{questao}" style="width:100%" >
+						</font>
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td>
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+							Agrupamento:
+						</font>
+					</td>
+					<td colspan="5">
+						<select size="1" name="cbo_agrupamento" id="cbo_agrupamento" style="width:100%" >
+							<option value="">Selecione</option>
+							<!-- START BLOCK : agrupamento -->
+								<option value="{cd_agrupamento}" {chk_agrupamento}>{nome_agrupamento}</option>
+							<!-- END BLOCK : agrupamento -->
+						</select>
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+					<td >
+						<h2 style="font-family: arial; font-size:10pt;">Respostas possíveis:</h2>
+					</td>
+					<td class="texto1" style="width:60px;">Usar:</td>
+					<td class="texto1" >Rótulo:</td>
+					<td class="texto1" style="width:75px;">Complemento:</td>
+					<td class="texto1" >Rótulo Complemento:</td>
+					<td class="texto1" >Legenda gráfico(opcional):</td>
+                </tr>
+				<!-- START BLOCK : resposta -->
+                <tr bgcolor="{cor_fundo}"> 
+					<td>
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Resposta {nr_resposta}:</font>
+					</td>
+					<td> 
+						<select size="1" name="ac_q{nr_resposta}" id="ac_q{nr_resposta}" >
+							<option value="S" {fl_resposta_sim}>Sim</option>
+							<option value="N" {fl_resposta_nao}>Não</option>
+						</select>						
+					</td>
+					<td> 
+						<input name="rotulo{nr_resposta}" type="text" id="rotulo{nr_resposta}" value="{rotulo}" maxlength="100" style="width:100%">
+					</td>					
+					<td> 
+						<select size="1" name="r{nr_resposta}_complemento" id="r{nr_resposta}_complemento" >
+							<option value="S" {fl_complemento_sim}>Sim</option>
+							<option value="N" {fl_complemento_nao}>Não</option>
+						</select>								
+					</td>					
+					<td> 
+						<input name="r{nr_resposta}_complemento_rotulo" type="text" id="r{nr_resposta}_complemento_rotulo" value="{complemento_rotulo}" maxlength="100" style="width:100%">
+					</td>
+					<td>
+						<input name="legenda{nr_resposta}" type="text" id="legenda{nr_resposta}" value="{legenda}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+				<!-- END BLOCK : resposta -->
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1">Outra resposta?</td>
+					<td>
+						<select size="1" name="ac_q_diss" id="ac_q_diss" >
+							<option value="S" {fl_dissertativa_sim}>Sim</option>
+							<option value="N" {fl_dissertativa_nao}>Não</option>
+						</select>						
+					</td>
+					<td colspan="4">
+						<input name="rotulo_dissertativa" type="text" id="rotulo_dissertativa" value="{rotulo_dissertativa}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+					<td class="texto1">Justificativa? (por quê)</td>
+					<td>
+						<select size="1" name="ac_q_justificativa" id="ac_q_justificativa" >
+							<option value="S" {fl_justificativa_sim}>Sim</option>
+							<option value="N" {fl_justificativa_nao}>Não</option>
+						</select>					
+					</td>
+					<td colspan="4">
+						<input name="rotulo_justificativa" type="text" id="rotulo_justificativa" value="{rotulo_justificativa}" maxlength="100" style="width:100%">
+					</td>
+                </tr>
+            </table>
+			<BR>
+			<table border="0" align="center" width="100%" cellspacing="1" cellpadding="1">
+				<tr> 
+					<td colspan="2" height="30" valign="middle" align="center">
+						<input type="button" value="Voltar" style="width: 100px;" class="botao_disabled" onclick="document.location.href='cad_enquetes_estrutura.php?c={eq}';">
+						<input type="submit" value="Salvar" style="width: 100px;" class="botao" {dis_responsavel}>
+						<input type="button" value="Excluir" style="width: 100px;" class="botao_vermelho" onclick="fnc_confirma_exclusao({codigo},{eq})" {dis_responsavel}>
+					</td>
+				</tr>
+			</table>			  
+		</form>
+	</div>	  
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,37 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Meus relatórios ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2">
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr> 
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Relat&oacute;rio</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                  criacao</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Divisao</font></strong></td>
+                <td colspan="3" align="center" bgcolor="#0046ad"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ver 
+                  como:</strong></font></td>
+                <td align="center" bgcolor="#0046ad"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Manut:</strong></font></td>
+              </tr>
+              <!-- START BLOCK : relatorio -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><a href="http://www.e-prev.com.br/controle_projetos/rel_pdf_dinamico.php?c={cd_relatorio}" target="_blank" class="links2">{titulo}</a></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_criacao}</font></td>
+                <td bgcolor="{cor_fundo}" align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{divisao}</font></td>
+                <td bgcolor="{cor_fundo}" align="center"><a href="rel_pdf_dinamico.php?c={cd_relatorio}&formato=PDF" target="_blank" class="links2">&nbsp;&nbsp;PDF&nbsp;&nbsp;</a></td>
+                <td bgcolor="{cor_fundo}" align="center"><a href="rel_pdf_dinamico.php?c={cd_relatorio}&formato=TXT" target="_blank" class="links2">&nbsp;&nbsp;TXT&nbsp;&nbsp;</a></td>
+                <td bgcolor="{cor_fundo}" align="center"><a href="rel_pdf_dinamico.php?c={cd_relatorio}&formato=EXC" target="_blank" class="links2">&nbsp;&nbsp;EXCEL&nbsp;&nbsp;</a></td>
+                <td bgcolor="{cor_fundo}" align="center"><a href="cad_relatorios.php?c={cd_relatorio}"><img src="img/img_manut.gif" border="0"></a></td>
+              </tr>
+              <!-- END BLOCK : relatorio -->
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

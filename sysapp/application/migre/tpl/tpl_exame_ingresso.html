@@ -1,0 +1,205 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Ingresso - exame médico ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+function exibeFiltro()
+{
+	document.getElementById('bt_exibe').style.display = "none";
+	document.getElementById('bt_oculta').style.display = "";
+	document.getElementById('ob_filtro').style.display = "";
+}
+
+function ocultaFiltro()
+{
+	document.getElementById('bt_exibe').style.display = "";
+	document.getElementById('bt_oculta').style.display = "none";
+	document.getElementById('ob_filtro').style.display = "none";
+}
+</script>
+
+<script type='text/javascript' src='inc/exame_ingresso.js'></script>
+
+		<style>
+			#ob_filtro fieldset {
+				padding-top: 10px;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-bottom: 5px;
+			}
+
+			#ob_filtro legend {
+				font-size: 10px;
+				font-weight: bold;
+				font-family: Courier, Arial,'MS Sans Serif';		
+				text-transform:uppercase;
+			}	
+
+			#ob_filtro label {
+				display: block;
+				width: 250px;
+				float: left;
+				color: #000;
+				border-bottom: 1px solid #f1f1f1;
+				font-weight: normal;
+				font-size: 10px;
+				font-family: Courier, Arial,'MS Sans Serif';	
+				line-height: 20px;
+			}			
+		</style>
+
+		<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="document.location.href='exame_ingresso.php';" class="abaSelecionada">
+						<span>MOVIMENTO</span>
+					</li>
+					<li onclick="document.location.href='exame_ingresso_cad.php';">
+						<span>CADASTRO</span>
+					</li>	
+					<li onclick="document.location.href='exame_ingresso_com_retorno.php';">
+						<span>ENCERRADOS</span>
+					</li>	
+				</ul>
+			</div>                            
+			<div class="aba_conteudo">
+			<BR>
+			<BR>
+			<form id="formPesquisa" action="exame_ingresso.php" method="post">
+
+			<fieldset id="ob_filtro" style="display:none; margin-top:10px;">
+
+				<legend>Filtros</legend>
+
+					<label>Emp/Red/Seq:</label>
+					<input type="text" name="cd_empresa" id="cd_empresa" value="{cd_empresa}" style="width:40px"> 
+					<input type="text" name="cd_registro_empregado" id="cd_registro_empregado" value="{cd_registro_empregado}" style="width:80px">
+					<input type="text" name="seq_dependencia" id="seq_dependencia" value="{seq_dependencia}" style="width:40px">
+
+					<BR>
+					<BR>
+
+					<label>Nome:</label> 
+					<input type="text" name="ds_nome" id="ds_nome" value="{ds_nome}" style="width:400px"> 
+
+					<BR>
+					<BR>
+
+					<label>Dt Envio (Período):</label> 
+					<input type="text" name="dt_envio_ini" id="dt_envio_ini" value="{dt_envio_ini}"> 
+					<input type="text" name="dt_envio_fim" id="dt_envio_fim" value="{dt_envio_fim}">
+
+					<BR>
+					<BR>
+
+		            <label>Apto:</label>                
+					<select name="fl_apto">
+						<option value="" {fl_apto}>Selecione</option>
+						<option value="S" {fl_apto_sim}>SIM</option>
+						<option value="N" {fl_apto_nao}>NÃO</option>
+					</select>
+
+					<div style="clear:both; padding-top:15px; width:90%; text-align:center;">
+						<input type="submit" value="Filtrar" class="botao">
+					</div>
+
+			</fieldset>
+
+			</form>
+			<input type="button" id="bt_exibe"  value="Exibir Filtros"  onclick="exibeFiltro();" class="botao" >
+			<input type="button" id="bt_oculta" value="Ocultar Filtros" onclick="ocultaFiltro();" class="botao" style="display:none;">	
+			<BR>
+			<span class="links2">&raquo; Total de registros: {qt_inscrito}</span>
+			<BR>
+			<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>
+						Emp/Red/Seq
+					</td>					
+					<td>
+						Nome
+					</td>
+					<td>
+						Contato
+					</td>
+					<td>
+						Dt Envio
+					</td>
+					<td>
+						Dt Retorno
+					</td>
+					<td>
+						Apto
+					</td>							
+					<td>
+						Motivo
+					</td>						
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="text-align:center;">
+						{cd_empresa}/{cd_registro_empregado}/{seq_dependencia}
+					</td>					
+					<td>
+						{ds_nome}
+					</td>							
+					<td style="text-align:center;">
+						<form action="exame_ingresso_contato_cad.php" method="post" style="padding:0px; margin:0px;">
+							<input type="hidden" name="cd_exame_ingresso" value="{cd_exame_ingresso}">
+							{qt_contato}
+						</form>
+					</td>										
+					<td style="text-align:center;">
+						{dt_enviado}
+					</td>										
+					<td style="text-align:center;">
+						{dt_retorno}
+					</td>					
+					<td style="text-align:center;">
+						{fl_apto}
+					</td>										
+					<td>
+						{ds_motivo}
+					</td>	
+					
+				</tr>
+				<!-- END BLOCK : lista -->
+				</tbody>	
+			</table>
+			
+			</div>
+		</div>
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["CaseInsensitiveString", "CaseInsensitiveString","CaseInsensitiveString","DateTimeBR","DateTimeBR","CaseInsensitiveString"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(3, true);				
+		</script>
+		<script>
+			MaskInput(document.getElementById('cd_empresa'),            "99");
+			MaskInput(document.getElementById('cd_registro_empregado'), "999999");
+			MaskInput(document.getElementById('seq_dependencia'),       "99");
+			
+			MaskInput(document.getElementById('dt_envio_ini'),   "99/99/9999");
+			MaskInput(document.getElementById('dt_envio_fim'),   "99/99/9999");
+			//MaskInput(document.getElementById('dt_retorno_ini'), "99/99/9999");
+			//MaskInput(document.getElementById('dt_retorno_fim'), "99/99/9999");
+		</script>		
+
+<!-- Begin: Insert DYNTAR -->
+<link rel="stylesheet" href="inc/dynamic_textarea_resizer/dyntar.css" type="text/css" />
+<script type="text/javascript" src="inc/dynamic_textarea_resizer/dyntar.js"></script>
+<!-- End: Insert DYNTAR -->	
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,62 @@
+	#aba 
+	{
+		float:left;
+		width:100%;
+		font-size: 10px;
+		font-weight: bold;
+		font-family:  Tahoma, Arial,"MS Sans Serif";
+		text-transform:uppercase;  
+		padding-left: 0px;
+		background: url("../img/aba_bg_verde.gif") repeat-x bottom #FFFFFF;
+		line-height:normal;
+	}
+	#aba ul
+	{
+		margin: 0;
+		list-style: none;
+		padding-top: 3px;
+	}
+	#aba li 
+	{
+		float:left;
+		margin:0;
+		cursor: pointer;
+		height: 30px;
+	}
+	#aba span 
+	{
+		float:left;
+		display:block;
+		background:url("../img/aba_right_verde.gif") no-repeat right top;
+		padding:9px 15px 4px 15px;
+		text-decoration:none;
+		font-weight:bold;
+		color:#6FAE6F;
+	}
+	#aba .abaSelecionada span 
+	{
+		background-image:url("../img/aba_right_on_verde.gif");
+		color:#FFFFFF;
+		padding-top:10px;
+		padding-bottom:5px;
+	}
+	
+	.aba_definicao 
+	{
+		width:100%;
+		position: relative;
+		margin:0px;
+		z-index: 1;
+	}
+	.aba_conteudo
+	{
+		text-align:left;
+		width:100%;
+		
+		padding-top:0px;
+		padding-bottom:0px;
+		padding-left:0px;
+		padding-right:0px;
+		font-size: 10pt;
+		font-family:Arial, Verdana, "MS Sans Serif";
+	}

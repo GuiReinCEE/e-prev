@@ -1,0 +1,825 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = 'Atividade - Solicitação';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+{style_bootstrap}
+<script language="JavaScript" type="text/JavaScript">
+	function submeter_form(f)
+	{
+		if( valida_form(f) )
+		{
+			if( confirm( 'Salvar?' ) )
+			{
+				$('#btn_salvar').attr('value','salvando...');
+				$('#btn_salvar').attr('disabled',true);
+				$('#btn_salvar_img').hide();
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function cbo_periodicidade_change(valor)
+	{
+		if((valor != '') && ($("#cbo_area").val() == "GC"))
+		{
+			$.post("ajax_proximo_dia_util.php",
+			{
+				qt_dias: '', 
+				dt_data: '', 
+				tipo_manutencao: valor
+			},
+			function(data)
+			{
+				if(($("#dt_limite").val() != "") && (jQuery.trim(data) == ''))
+				{
+					if(confirm("Deseja limpar a data limite?\n\nClique no botão:\n\n[Ok] para limpar\n\n[Cancelar] para manter a data limite (" + $("#dt_limite").val() + ")"))
+					{
+						$("#dt_limite").val(data);
+					}
+				}
+				else
+				{
+					$("#dt_limite").val(data);
+				}
+			});
+
+			$.post("ajax_consultas_gerais.php",
+			{
+				metodo  : 'get_descricao_atividade', 
+				divisao : $("#cbo_area").val(), 
+				codigo  : valor
+			},
+			function(data)
+			{
+				if(jQuery.trim(data) != "")
+				{
+					$("#txt_descricao").val(data);
+				}
+			});
+		}
+	}	
+	
+	function tipo_manutencao_mudou(ob)
+	{
+		if((valor != '') && ($("#cbo_area").val() != "GC"))
+		{
+			$.post("ajax_proximo_dia_util.php",
+			{
+				qt_dias: '', 
+				dt_data: '', 
+				tipo_manutencao: valor
+			},
+			function(data)
+			{
+				if(($("#dt_limite").val() != "") && (jQuery.trim(data) == ''))
+				{
+					if(confirm("Deseja limpar a data limite?\n\nClique no botão:\n\n[Ok] para limpar\n\n[Cancelar] para manter a data limite (" + $("#dt_limite").val() + ")"))
+					{
+						$("#dt_limite").val(data);
+					}
+				}
+				else
+				{
+					$("#dt_limite").val(data);
+				}
+			});
+
+			$.post("ajax_consultas_gerais.php",
+			{
+				metodo  : 'get_descricao_atividade', 
+				divisao : $("#cbo_area").val(), 
+				codigo  : valor
+			},
+			function(data)
+			{
+				if(jQuery.trim(data) != "")
+				{
+					$("#txt_descricao").val(data);
+				}
+			});
+		}
+	}
+
+	function valida_form(f)
+	{
+		var erros = "";
+		var label_dt_limite = '';
+
+		if( f.cbo_area.value=='GRI' )
+		{
+			label_dt_limite = 'Prazo Esperado';
+		}
+		else
+		{
+			label_dt_limite = 'Data Limite';
+		}
+
+		if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Solicitação' deve estar preenchido.\n"; }
+		if (f.cbo_analista.value == '') { erros = erros + "- Especifique um atendente para esta atividade.\n"; }
+
+		if( f.cbo_area.value=='GRI' )
+		{
+			if(f.dt_limite.value=='')
+			{
+				erros = erros + "- O campo '" + label_dt_limite + "' deve estar preenchido.\n";
+			}
+		}
+
+		if(!f.dt_limite.readOnly)
+		{
+			if( f.cbo_area.value=='GRI' )
+			{
+				if ((fnc_compara_datas(f.dt_limite, f.proximo_dia_util)) != true)
+				{
+					erros = erros + "- " + label_dt_limite + " não pode ser menor do que o próximo dia útil.\n";
+				}
+			}
+			else
+			{
+				if ((fnc_compara_datas(f.dt_limite)) != true)
+				{
+					erros = erros + "- " + label_dt_limite + " não pode ser menor do que o próximo dia útil.\n";
+				}
+				/*if ((fnc_compara_hora(f.dt_limite)) != true)
+				{
+					erros = erros + "- " + label_dt_limite + " não pode ser Hoje para atividades abertas após às 15h.\n";
+				}*/
+			}
+		}
+		/*
+		if(!f.dt_limite.readOnly)
+		{
+			if ((fnc_compara_datas(f.dt_limite)) != true)
+			{
+				erros = erros + "- " + label_dt_limite + " não pode ser menor do que Hoje.\n";
+			}
+		}
+		*/
+
+		if (erros != "") {
+			alert("Erros:\n\n"+erros);
+			return false;
+		}
+		else {
+			f.cbo_area.disabled = false;
+			return true;
+		}
+	}
+
+	function confirma_duplicacao(f) 
+	{
+		var confirma = confirm("ATENÇÃO:\n\nEsta atividade será duplicada em outra idêntica.\n\nConfirma a duplicação desta Atividade?\n\n ");
+		if (confirma == true) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function fnc_compara_datas(dt1,dt2) 
+	{
+
+		if (dt1.value == '') {  
+			return true;
+		}
+		else
+		{
+			dia1 = (dt1.value.substring(0,2)); 
+			mes1 = (dt1.value.substring(3,5)); 
+			ano1 = (dt1.value.substring(6,10)); 
+		}
+		if (dt2 == null) {
+			var hoje = new Date();
+			if (hoje.getYear() <=99)
+			   {ano2 = "19"+ hoje.getYear();}
+			else  if (hoje.getYear() <=199)
+			   {ano2 = 1900 + hoje.getYear() ;}
+			else
+			   {ano2 = hoje.getYear() ;}
+			var data1 = "" + ano1 + mes1 + dia1 
+			var data2 = "" + ano2 + (((hoje.getMonth() + 1) < 10) ? "0" : "") + (hoje.getMonth() + 1) + (((hoje.getDate()) < 10) ? "0" : "") + (hoje.getDate()) 
+			if (data1 < data2) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			var data1 = "" + ano1 + mes1 + dia1 
+			dia2 = (dt2.value.substring(0,2)); 
+			mes2 = (dt2.value.substring(3,5)); 
+			ano2 = (dt2.value.substring(6,10)); 
+			var data2 = "" + ano2 + mes2 + dia2 
+			if (data1 < data2) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+	}
+
+	function fnc_menu(cbo_area, n_ativ) 
+	{
+		var result = "" + "cad_atividade_solic.php?n=" + (n_ativ) + "&aa=" + (cbo_area.value) + "&TA=" + (document.getElementById("ta").value);
+		parent.location.href = result;
+	}
+
+	function concluirAtividade(fl_concluir)
+	{
+		if(fl_concluir == 'NA') 
+		{
+			if(jQuery.trim($('#complemento_conclusao').val()) == "")
+			{
+				alert('Informe o Complemento');
+				$('#complemento_conclusao').focus();
+			}
+			else
+			{
+				location='conclui_atividade.php?n={numero_os}&aa=' + $('#aa').val() + '&AT=' + fl_concluir + '&cp=' + $('#complemento_conclusao').val();
+			}
+		}
+		else
+		{
+			$("#formulario").attr("action","conclui_atividade.php");
+			$("#formulario").submit();
+			location='conclui_atividade.php?n={numero_os}&aa=' + $('#aa').val() + '&AT=' + fl_concluir + '&cp=' + $('#complemento_conclusao').val();
+		}
+	}
+</script>
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/{url_lista}'"><span>Lista</span></li>
+			<li id='aba_solicitacao' class='abaSelecionada' onclick="location.href='cad_atividade_solic.php?n={n}&a=s&TA={ta}&aa={aa}'"><span>Solicitação</span></li>
+			<li id='aba_atendimento' class='' onclick="location.href='cad_atividade_atend.php?n={n}&a=a&TA={ta}&aa={aa}'"><span>Atendimento</span></li>
+			<li id='aba_anexos' class='' onclick="location.href='{link_anexo}'"><span>Anexos</span></li>
+			<li id='aba_acompanhamento' class='' onclick="location.href='{link_acompanhamento}'"><span>Acompanhamento</span></li>
+			<li id='aba_historico' class='' onclick="location.href='{link_hsitorico}'"><span>Histórico</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+      <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td>
+		  <form action="duplica_atividade.php?c={numero_os}" method="post" id="frm_duplica" name="frm_duplica" onSubmit="return confirma_duplicacao(this);">
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+				<!-- START BLOCK : dup_ativ -->
+                <tr> 
+					<td valign="top" colspan="2" align="right"><input name="image2" type="image" src="img/btn_dup_at.jpg" hspace="100" vspace="0" border="0"></td>
+					<td></td>
+                </tr>
+				
+				<!-- END BLOCK : dup_ativ -->
+				</table>
+				</form>
+				 <form action="grava_atividade_solic.php" method="POST" id="formulario" name="formulario" onsubmit="return submeter_form(this);">
+				<table width="90%" border="0" cellspacing="0" cellpadding="0">
+				
+           
+
+                <input type="hidden" name="n" id="n" value="{n}">
+				<input type="hidden" name="aa" id="aa" value="{aa}">
+                <input type="hidden" name="status_anterior" value="{status_anterior}">
+                <input type="hidden" name="proximo_dia_util" id="proximo_dia_util" value="{proximo_dia_util}">
+
+                <tr> 
+                  <td colspan="2">
+
+				  <table border="0" align="center" cellpadding="0" cellspacing="1">
+                      <tr> 
+                        <td><font size="1" face="Verdana">Número:</font></td>
+                        <td><font size="1" face="Verdana"><big><b>{numero_os}</b></big></font></td>
+                        <td rowspan="2" align="right" valign="botton">                            
+                         <img src="img/btn_impressora.jpg" style="cursor:pointer;" border="0" onclick="document.location.href=document.location.href+'&imp=S';">
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Dt Solicitação:</font></td>
+                        <td> <p align="left"><font size="1" face="Verdana">{dt_cad}</font></td>
+                      </tr>					  
+					  <!-- START BLOCK : info_atividade_legal -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Pertinência:</font></td>
+                        <td colspan="2" style="font-family: arial; padding-top: 3px; padding-bottom: 5px;">{status_legal}</td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Link:</font></td>
+                        <td colspan="2" style="font-family: arial; padding-top: 3px; padding-bottom: 5px;">{link_legal}</td>
+                      </tr>					  
+					  <!-- END BLOCK : info_atividade_legal -->
+                      <tr> 
+                        <td><font size="1" face="Verdana">Gerência de destino:</font></td>
+                        <td><font size="1" face="Verdana">
+                          <select size=1 name="cbo_area" onChange="fnc_menu(this, {numero_os})" {fl_transferir} {dis_solic}><!--  {fl_transferir} {dis_solic} -->
+                            <!-- START BLOCK : cbo_area -->
+                            <option value="{codare}"{chkare}>{nomeare}</option>
+                            <!-- END BLOCK : cbo_area -->
+                          </select>
+                          <input name="ta" type="hidden" id="ta" value="{ta}">
+                          </font></td>
+						  <td></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Solicitante:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_solicitante" {dis_solic} {dis_cbo_solic} {dis_solic}>
+                            <!-- START BLOCK : cbo_solicitante -->
+                            <option value="{codsol}"{chksol}>{nomesol}</option>
+                            <!-- END BLOCK : cbo_solicitante -->
+                          </select>
+                          </font></td>
+                        <td rowspan="2" align="center" valign="middle"> 
+						<h2 style="margin:0; padding:0px;"><i><font color="{status_cor}" face="Arial,Verdana,  Helvetica, sans-serif">{status_atual}</font></i></h2>
+						<!-- START BLOCK : fl_possui_anexo -->
+						<i><span style="font-family: arial; font-size:10pt; margin:0 px;">Esta atividade possui anexo(s)</span></i>
+						<!-- END BLOCK : fl_possui_anexo -->
+						<BR>
+						</td>						  
+
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Tipo da manutenção:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_tipo_manutencao" id ="cbo_tipo_manutencao" {dis_solic} onchange="tipo_manutencao_mudou(this.value);">
+                            <!-- START BLOCK : cbo_tipo_manutencao -->
+                            <option value="{codman}"{chktpativ}>{nomeman}</option>
+                            <!-- END BLOCK : cbo_tipo_manutencao -->
+                          </select>
+                          </font></td>
+						
+                      </tr>
+					  
+					  
+					  
+					  
+						<!-- START BLOCK : ABRIR_AO_ENCERRAR -->
+						<tr> 
+							<td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Abrir atividade ao encerrar:</font></td>
+							<td valign="top">
+								<script>
+									function setAbrirEncerrar()
+									{
+										$('#tbParaQuem').hide();
+										if($('#fl_abrir_encerrar').val() == "S")
+										{
+											$('#tbParaQuem').show();
+										}
+									}
+								</script>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td valign="top">
+											<select name="fl_abrir_encerrar" id="fl_abrir_encerrar" onchange="setAbrirEncerrar()">
+												<option value="S" {ck_usuario_abrir_ao_encerrar_S}>Sim</option>
+												<option value="N" {ck_usuario_abrir_ao_encerrar_N}>Não</option>
+											</select>
+										</td>
+										<td valign="top">
+											<table id="tbParaQuem" border="0" cellpadding="0" cellspacing="0" style="display:none;">
+												<tr>
+													<td valign="top" style="padding-left: 20px;">										
+														<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Para quem:</font>
+													</td>
+													<td valign="top" style="padding-left: 10px;">
+														<select name="cd_usuario_abrir_ao_encerrar" id="cd_usuario_abrir_ao_encerrar">	
+															<option value="0">Selecione</option>
+															<!-- START BLOCK : CB_USUARIO_ABRIR_AO_ENCERRAR -->
+															<option value="{cd_usuario_abrir_ao_encerrar}" {ck_usuario_abrir_ao_encerrar}>{ds_usuario_abrir_ao_encerrar}</option>
+															<!-- END BLOCK : CB_USUARIO_ABRIR_AO_ENCERRAR -->
+														</select>
+													</td>	
+												</tr>
+												<tr>
+													<td valign="top" style="padding-left: 20px;">										
+														<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descrição:</font>
+													</td>
+													<td valign="top" style="padding-left: 10px;">
+														<textarea id="descricao_abrir_ao_encerrar" name="descricao_abrir_ao_encerrar" rows="5" cols="40" class="resizable">{descricao_abrir_ao_encerrar}</textarea>
+													</td>													
+												</tr>
+											</table>														
+										</td>
+									</tr>
+								</table>
+								<script>
+									setAbrirEncerrar();
+								</script>								
+							</td>
+						</tr>	
+						<!-- END BLOCK : ABRIR_AO_ENCERRAR -->					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+                      <tr {fl_exibe_cbo_periodicidade}> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo da atividade:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <select name="cbo_periodicidade" id="cbo_periodicidade"  {dis_solic} onchange="cbo_periodicidade_change(this.value);">
+                            <!-- START BLOCK : cbo_tipo_atividade -->
+                            <option value="{codtpativ}"{chktpativ}>{nometpativ}</option>
+                            <!-- END BLOCK : cbo_tipo_atividade -->
+                          </select>
+                          </font> </td>
+                      </tr>
+						<tr style="display:{fl_recorrente_exibe}"> 
+							<td>
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Recorrente:</font>
+							</td>
+							<td colspan="2">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+									<select name="cbo_recorrente" id="cbo_recorrente"  style="width:100px;" {dis_solic}>
+		                            <!-- START BLOCK : cbo_recorrente -->
+		                            <option value="{cd_recorrente}" {fl_seleciona}>{ds_recorrente}</option>
+		                            <!-- END BLOCK : cbo_recorrente -->
+									</select>
+									Informe se esta situação já ocorreu antes
+								</font>
+							</td>
+						</tr>					  
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">T&iacute;tulo:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="titulo" type="text" id="titulo"  value="{titulo}" size="60" maxlength="200" {ro_solic}>
+                          </font></td>
+                      </tr>
+                      <!-- START BLOCK : acs -->
+                      <tr> 
+                        <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&atilde;o:</font></td>
+                        <td colspan="2"> <font size="1" face="Verdana"> 
+                          <textarea rows="10" name="txt_descricao" id="txt_descricao" cols="60" class="resizable">{descricao}</textarea>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Atendente 
+                          da Atividade:</font></td>
+                        <td>
+                    	  <font size="1" face="Verdana">
+                    	  <select size="1" name="cbo_analista"  style="font-family: Verdana; font-size: 8 pt" {dis_solic} {gi_mesmo_mes_extension}>
+                            <!-- START BLOCK : cbo_analista_acs -->
+                            <option value="{codana}" {chkana}>{nomeana}</option>
+                            <!-- END BLOCK : cbo_analista_acs -->
+                          </select>
+                          </font>
+                        </td>
+                        <td>
+                    		<font size="1" face="Verdana">Indique para quem voc&ecirc;<br>vai encaminhar esta solicita&ccedil;&atilde;o</font>
+                    	</td>
+                      </tr>
+					  
+					  <!-- START BLOCK : GRI_prazo_esperado -->
+                      <tr style="display:{mensagem_prazo_gri_data_preenchida};">
+                        <td valign="top"><font size="1" face="Verdana">Prazo Esperado:</font></td>
+                        <td><font size="1" face="Verdana"> 
+						  <input type="hidden" name="dt_limite_old" value="{dt_limite}">
+                          <input name="dt_limite" 
+                          	type="text" 
+                          	id="dt_limite"
+                          	onKeyUp="mascara_data(this)"
+                          	onBlur="verifica_data(this)"
+                          	onChange="fnc_compara_datas(this)"
+                          	value="{dt_limite}"
+                          	size="12"
+                          	maxlength="12"
+                          	{ro_solic}
+                          	{readonly_dt_limite_gri}
+                          	>
+                          dd/mm/aaaa</font> <font size="1" face="Verdana">&nbsp; 
+                          </font></td>
+                        <td><font size="1" face="Verdana">Data m&aacute;xima para 
+                          o atendimento desta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+                      <tr style="display:{mensagem_prazo_gri_data_nao_preenchida};">
+                        <td valign="top"><font size="1" face="Verdana">Prazo Esperado:</font></td>
+                        <td><font size="1" face="Verdana">Entre em contato com a GRI para negociar a data adequada ao atendimento.</font> <font size="1" face="Verdana">&nbsp; 
+                          </font></td>
+                        <td></td>
+                      </tr>
+                      <!-- END BLOCK : GRI_prazo_esperado -->
+
+                      <!-- END BLOCK : acs -->
+                      <!-- START BLOCK : nao_acs -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Descrição 
+                          da Solicitação:</font></td>
+                        <td colspan="2"> <font size="1" face="Verdana"> 
+                          <textarea rows="10" id="txt_descricao" name="txt_descricao" cols="60" class="resizable"  {ro_solic}>{descricao}</textarea>
+                          </font> </td>
+                      </tr>
+					  <!-- START BLOCK : campo_justificativa -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Justificativa 
+                          da Solicitação</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <textarea name="txt_problema" cols="60" rows="2" id="txt_problema"  class="resizable"  {ro_solic}>{problema}</textarea>
+                          </font></td>
+                      </tr>
+					  <!-- END BLOCK : campo_justificativa -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Atendente 
+                          da Atividade:</font></td>
+                        <td><font size="1" face="Verdana">
+                          <select size="1" 
+                          	name="cbo_analista"
+                          	style="font-family: Verdana; font-size: 8 pt" {dis_solic} {gi_mesmo_mes_extension}>
+                            <!-- START BLOCK : cbo_analista -->
+                            <option value="{codana}" {chkana}>{nomeana}</option>
+                            <!-- END BLOCK : cbo_analista -->
+                          </select>
+                          </font></td>
+                        <td><font size="1" face="Verdana">Indique para quem voc&ecirc; 
+                          <br>
+                          vai encaminhar esta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Data Limite:</font></td>
+                        <td><font size="1" face="Verdana"> 
+						<input type="hidden" name="dt_limite_old" value="{dt_limite}">
+                          <input name="dt_limite" type="text" id="dt_limite"  onKeyUp="mascara_data(this)" onBlur="verifica_data(this)" onChange="fnc_compara_datas(this)"   value="{dt_limite}" size="12" maxlength="12" {ro_solic}>
+                          dd/mm/aaaa</font> <font size="1" face="Verdana">&nbsp; 
+                          </font></td>
+                        <td><font size="1" face="Verdana">Data m&aacute;xima para 
+                          o atendimento desta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+                      <!-- END BLOCK : nao_acs -->
+
+                      <!-- START BLOCK : GA_complementa_informacoes -->
+                      <tr> 
+						<td colspan="3" align="center">
+							<div valign="middle"
+								 style="width: 550px;
+						            color: InfoText;
+						            background: InfoBackground;
+						            border: #000000 1px solid;
+						            padding: 5px;
+									text-align: center;
+									font-size: 12pt;
+									font-weight: bold;
+									font-family: Calibri, Arial,'MS Sans Serif'">
+								Você deve complementar as informações desta Atividade
+								<BR>
+								<BR>
+								Conforme o solicitado no e-mail, no campo Descrição da Manutenção
+								<BR>
+								<BR>
+								Após complementar clique no botão [Confirmar].
+								<BR>
+								<BR>
+								<input type="submit" value="Confirmar" class="botao">
+								<BR>
+							</div>
+							<br><br>
+							<input type="hidden" name="fl_ga_informacoes_complementares" value="S">
+							<SCRIPT>
+								tipo_manutencao_mudou(document.getElementById('cbo_tipo_manutencao').value);
+							</SCRIPT>
+						</td>
+                      </tr>
+                      <!-- END BLOCK : GA_complementa_informacoes -->					  
+
+						<!-- START BLOCK : re_d -->
+						<tr> 
+							<td colspan="3" align="center" valign="top">
+								<BR>
+							</td>
+						</tr>					  
+						<tr align="center"> 
+							<td colspan="3" valign="top" bgcolor="#0046AD">
+								<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								<b>Atendimento ao Participante:</b>
+								</font>
+							</td>
+						</tr>
+                      <tr> 
+                        <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora/Instituidor:</font></td>
+                        <td bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_patrocinadora"  style="font-family: Verdana; font-size: 8 pt"  {dis_solic}>
+                            <!-- START BLOCK : cbo_patrocinadora -->
+                            <option value="{cd_patr}" {chk_patr}>{nome_patr}</option>
+                            <!-- END BLOCK : cbo_patrocinadora -->
+                          </select>
+                          </font> </td>
+                        <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora 
+                          do participante em atendimento</font></td>
+                      </tr>
+                      <tr> 
+                        <td  bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Plano:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_plan"  style="font-family: Verdana; font-size: 8 pt"  {dis_solic}>
+                            <!-- START BLOCK : cbo_plan -->
+                            <option value="{cd_plan}" {chk_plan}>{nome_plan}</option>
+                            <!-- END BLOCK : cbo_plan -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td  bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">RE 
+                          / Seq:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana"> 
+                          <input name="cd_registro_empregado" type="text" id="cd_registro_empregado"   value="{cd_registro_empregado}" size="12" maxlength="12" {ro_solic}>
+                          <input name="sequencia" type="text" id="sequencia"   value="{sequencia}" size="4" maxlength="4" {ro_solic}>
+                          </font></td>
+                      </tr>
+
+					  <!-- START BLOCK : dados_participante -->
+
+						<tr> 
+							<td  bgcolor="#F4F4F4" height="25">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome:</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4"> 
+								<font size="2" face="Verdana"> 
+								<b>{nome_participante}</b>
+								</font>
+							</td>
+						</tr>					  
+                      <tr> 
+                        <td  bgcolor="#F4F4F4" height="25">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Endereço:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana"> 
+                          {endereco_participante}
+                          </font></td>
+                      </tr>						  
+						<tr> 
+							<td  bgcolor="#F4F4F4" height="25">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Telefone 1:</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4"> 
+								<font size="1" face="Verdana">{telefone_participante1}</font>
+							</td>
+						</tr>
+						<tr> 
+							<td  bgcolor="#F4F4F4" height="25">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Telefone 2:</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4"> 
+								<font size="1" face="Verdana">{telefone_participante2}</font>
+							</td>
+						</tr>						
+
+                      <tr> 
+                        <td bgcolor="#F4F4F4" height="25">
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Email:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana"> 
+                          {email_participante}
+                          </font></td>
+                      </tr>	
+						 <!-- END BLOCK : dados_participante -->
+                      <tr> 
+                        <td  bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Solicitante:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_sdap"  style="font-family: Verdana; font-size: 8 pt"  {dis_solic} {dis_cbo_solic}>
+                            <!-- START BLOCK : cbo_sdap -->
+                            <option value="{cd_sdap}" {chk_sdap}>{nome_sdap}</option>
+                            <!-- END BLOCK : cbo_sdap -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Forma de solicitação:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_fdap" {dis_solic}>
+                            <!-- START BLOCK : cbo_fdap -->
+                            <option value="{cd_fdap}" {chk_fdap}>{nome_fdap}</option>
+                            <!-- END BLOCK : cbo_fdap -->
+                          </select>
+                          </font></td>
+                      </tr>
+
+                      <tr>
+						<td bgcolor="#F4F4F4">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Forma de envio:</font>
+						</td>
+						<td colspan="2" bgcolor="#F4F4F4">
+							<font size="1" face="Verdana">
+							<select size="1" name="cbo_fedap" id="cbo_fedap" {ro_solic}>
+								<option value="0"></option>
+								<option value="1" {fe_correio}>Correio</option>
+								<option value="2" {fe_central}>Central de atendimento</option>
+								<option value="3" {fe_email}>Email</option>
+							</select>
+							</font>
+						</td>
+
+					</tr>
+					<tr>
+
+						<td  bgcolor="#F4F4F4">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Protocolo de atendimento:</font>
+						</td>
+						<td colspan="2" bgcolor="#F4F4F4">
+							<font size="1" face="Verdana"> 
+							<input id="cd_atendimento" name="cd_atendimento" value="{cd_atendimento}" style="width:80px;" {ro_solic} />
+							</font>
+						</td>
+
+                      </tr>
+
+                      <!-- END BLOCK : re_d -->
+                      <!-- START BLOCK : conclusao -->
+						<tr> 
+							<td colspan="3" align="center" valign="top">
+								<BR>
+							</td>
+						</tr>					  
+						<tr> 
+                        <td colspan="3" align="center" valign="top" bgcolor="#0046AD"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>Conclus&atilde;o 
+                          da Atividade:</b></font></td>
+                      </tr>
+						<tr> 
+                        <td valign="top" bgcolor="#DAE9F7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">O 
+                          atendimento desta solicita&ccedil;&atilde;o,<br>
+                          em rela&ccedil;&atilde;o &agrave; sua expectativa:<br>
+                          (clique no bot&atilde;o correspondente)</font></td>
+                        <td colspan="2"> 
+							<table width="100%" border="0" cellspacing="1" cellpadding="10" bgcolor="#DAE9F7">
+								<tr bgcolor="#999999"> 
+									<td align="center" bgcolor="#DAE9F7">
+										<a href="javascript: void(0);" onClick="concluirAtividade('AP')"><img src="img/atividade_ok_sim.png" border="0"></a>
+										<br>
+										<span style="color: blue; font-family: Calibri, Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 14pt;">										
+											Atendeu
+										</span>
+									</td>
+									<!--
+									<td align="center" bgcolor="#DAE9F7">
+										<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+											<a href="#"><img src="img/btn_neutro.jpg" border="0" onclick="concluirAtividade('PA')"></a>
+											<br>
+											Atendeu Parcialmente
+										</font>
+									</td>
+									-->
+									<td align="center" bgcolor="#DAE9F7">
+										<a href="javascript: void(0);" onClick="concluirAtividade('NA')"><img src="img/atividade_ok_nao.png" border="0"></a>
+										<br>
+										<span style="color: red; font-family: Calibri, Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 14pt;">										
+											Não Atendeu
+										</span>												
+									</td>
+								</tr>
+							</table>
+						</td>
+						</tr>
+						<tr> 
+							<td valign="top" bgcolor="#DAE9F7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Complemento:</font></td>
+							<td colspan="2"> 
+                                <textarea id="complemento_conclusao" name="complemento_conclusao" rows="5"  cols="60" style="width: 100%;" class="resizable" {ro_solic}>{complemento}</textarea>
+							</td>
+						</tr>
+                      <!-- END BLOCK : conclusao -->
+
+                    </table></td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr> 
+
+					<td colspan="2">
+                  		<div align="center" style='margin-top:30px;'>
+                    		<input id="btn_salvar" type="submit" class='botao' value="Salvar" name="B1" {fl_conclusao_botao}>
+                    		<input type="reset" class='botao_disabled' value="Cancelar" name="B2" {fl_conclusao_botao}>
+                    	</div>
+					</td>
+					<td>&nbsp;</td>
+
+                </tr>
+
+           
+              </table>
+			   </form>
+            </div></td>
+        </tr>
+      </table>
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

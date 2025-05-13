@@ -1,0 +1,53 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lista plano ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function fnc_confirma_clonagem() {
+	var confirma = confirm("Confirma a duplicação desta versão do Plano?? ATENÇÃO: Esta ação criará uma nova versão do plano com o mesmo conteúdo!!!!");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+//-->
+</SCRIPT>
+
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="left">&nbsp;</td>
+          <td align="left"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{plano}</font></td>
+          <td align="right"><a href="cad_plano.php?tr=I" class="links2">&gt;&gt; 
+            Nova vers&atilde;o</a></td>
+        </tr>
+      </table>
+      <table width="80%" border="0" cellspacing="1">
+        <tr align="center" bgcolor="#0046ad"> 
+          <td>&nbsp;</td>
+          <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Vers&atilde;o</font></strong></td>
+          <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Nome 
+            plano</strong></font></td>
+          <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+            inicial</font></strong></td>
+          <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+            final</font></strong></td>
+          <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>A&ccedil;&atilde;o</strong></font></td>
+        </tr>
+        <!-- START BLOCK : plano -->
+        <tr bgcolor="{cor_fundo}"> 
+          <td width="1%"><a href="cad_plano.php?p={cd_plano}&v={cd_versao}"><img src="img/btn_manut.jpg" border="0"></a></td>
+          <td class="texto1">{cd_versao}</td>
+          <td class="texto1">{descricao}</td>
+          <td class="texto1">{dt_inicio}</td>
+          <td class="texto1">{dt_final}</td>
+          <td class="texto1"><a href="duplicar_certificado.php?p={cd_plano}&v={cd_versao}"  onClick="return fnc_confirma_clonagem(this)">&raquo;&nbsp;Duplicar</a></td>
+        </tr>
+        <!-- END BLOCK : plano -->
+      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

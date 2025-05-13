@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2015 by roXon (http://jsbin.com/ayazin/453/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+<style id="jsbin-css">
+#base{
+  padding:10px;
+  background:#eee;
+}
+#img{
+  max-width:300px;
+}
+</style>
+</head>
+<body>
+  
+
+<input type='file' id="asd" />
+<br>
+<img id="img" src="http://placehold.it/1x1/" />
+<div id="base"></div>
+
+  
+<script id="jsbin-javascript">
+function el(id){return document.getElementById(id);} // Get elem by ID
+
+function readImage() {
+    if ( this.files && this.files[0] ) {
+        var FR= new FileReader();
+        FR.onload = function(e) {
+             el("img").src = e.target.result;
+             el("base").innerHTML = e.target.result;
+        };       
+        FR.readAsDataURL( this.files[0] );
+    }
+}
+
+el("asd").addEventListener("change", readImage, false);
+</script>
+</body>
+</html>

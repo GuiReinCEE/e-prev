@@ -1,0 +1,421 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = '..:: e-prev :: Atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+
+   function getEl(nome)
+   {
+      if (document.all) 
+	  {
+         obj = document.all(nome);
+      }
+	  else
+	  {
+         obj = document.getElementById(nome);
+      }
+	  return obj;
+   }
+
+   // Mantida por questões de compatibilidade
+   function getElement(nome) 
+   {
+      if (document.all)
+	  {
+         obj = document.all(nome);
+      }
+	  else
+	  {
+         obj = document.getElementById(nome);
+      }
+	  return obj;
+   }
+
+   function elEnabled(arrObjId, v)
+   {
+      for (i=0; i<arrObjId; i++)
+	  {
+	     getEl(objArrId[i]).style.enavled = v;
+	  }
+   }
+
+   function buscaDados(p_ano, p_num, p_op)
+   {
+      ano = getEl(p_ano).value;
+	  num = getEl(p_num).value;
+      op = p_op;
+
+	  if ( (ano == '' || num == '') && (op=='') ) {
+	     alert('Para realizar a busca, é necessário informar o Número e o Ano da correspondência');
+	  } else {
+	     if ( (num == -1) && ( (op == 'V') || (op == 'A') ) ) {
+		    if (op == 'V') {
+			   msg = 'Você já está no primeiro registro';
+            } else {
+               msg = 'Você já está no último registro';
+			}
+			if (ano != '') {
+			   msg += '  do ano de '+ano;
+			}
+			alert(msg);
+		 } else {
+            url = "cons_pop_correspondencias.php?n="+num+"&a="+ano+"&op="+op;
+            dynamic = getEl("dyn");
+            dynamic.src = url;
+		 }
+      }
+   }
+
+   
+   function limpaForm() {
+      objList = document.getElementsByTagName("input");
+	  for (i=0; i<objList.length; i++) {
+	     if ( (objList[i].type == "text") || (objList[i].type == "hidden") || (objList[i].type == "checkbox") || (objList[i].type == "radio") ) {
+            objList[i].value = '';
+         }
+	  }
+	  
+      objList = document.getElementsByTagName("textarea");
+      for (i=0; i<objList.length; i++) {
+         objList[i].value = '';
+	  }
+
+	  objList = getElement("divisao");
+	  objList.selectedIndex = 0;
+   }
+   
+   function limpaFormConsulta() {
+      var el1 = getElement("numero");
+	  var el2 = getElement("ano");
+      var v1 = el1.value;
+      var v2 = el2.value;
+	  limpaForm();
+	  el1.value = v1;
+	  el2.value = v2;
+   }
+
+   function consulta() {
+	  setaModo('C');
+	  limpaFormConsulta();
+	  getElement("numero").value = "";
+	  getElement("ano").value = "";
+      getElement("numero").select();	  
+	  getElement("numero").focus();
+   }
+   
+   function inclusao() {
+	  setaModo('I');
+	  getElement("divisao").focus();
+   }
+   
+   function alteracao() {
+	  setaModo('A');
+	  getElement("divisao").focus();
+   }
+
+   function lovParticipantes(emp,re,seq,nome,tipo) {
+      url = "lov_participantes.php?e="+emp+"&r="+re+"&s="+seq+"&n="+nome+"&t="+tipo;
+      w = window.open(url, "_blank", "toolbar=no, width=450, height=300, status=no, scrollbars=yes");
+   }
+
+   function bloqueia(x) {
+      if (x == true) {
+         getElement('divisao').disabled = true;
+         getElement('btnSolicitante').disabled = true;
+         getElement('btnAssinatura').disabled = true;
+         getElement('destinatario_nome').disabled = true;
+         getElement('assunto').disabled = true;
+         getElement('btnGravar').disabled = true;
+	  }
+	  else {
+         getElement('divisao').disabled = false;
+         getElement('btnSolicitante').disabled = false;
+         getElement('btnAssinatura').disabled = false;
+         getElement('destinatario_nome').disabled = false;
+         getElement('assunto').disabled = false;
+         getElement('btnGravar').disabled = false;
+	  }
+   }
+
+   function grava() {
+      op = getElement("operacao").value;
+      if ( (op == 'I') || (op == 'A') ) { 
+	     if (validaForm()) {
+            getElement("frm").submit();
+		 }
+	  } else {
+	     alert('Você está no modo de consulta');
+	  }
+   }
+   
+   function setaModo(modo) {
+      if (modo == 'C') {
+		 bloqueia(true);
+		 getElement("numero").readOnly = false;
+		 getElement("ano").readOnly = false;
+		 getElement("btnBuscar").disabled = false;
+		 getElement("btnPrimeiro").disabled = false;
+		 getElement("btnUltimo").disabled = false;
+		 getElement("btnAnterior").disabled = false;
+		 getElement("btnProximo").disabled = false;
+		 getElement("btnIncluir").disabled = false;
+		 getElement("btnCancelar").value = "Cancelar";
+		 getElement("btnCancelar").disabled = true;
+		 getElement("btnGravar").value = "Gravar";
+		 getElement("btnGravar").disabled = true;
+		 getElement("data").disabled = true;
+		 if ( (getElement("numero").value != "") && (getElement("ano").value != "") ) {
+            getElement("btnAlterar").disabled = false;
+		 } else {
+            getElement("btnAlterar").disabled = true;
+		 }
+	  }
+	  
+	  if (modo == 'A') {
+		 bloqueia(false);
+		 getElement("numero").readOnly = true;
+		 getElement("ano").readOnly = true;
+		 getElement("data").disabled = false;
+		 getElement("btnBuscar").disabled = true;
+		 getElement("btnAlterar").disabled = true;
+		 getElement("btnPrimeiro").disabled = true;
+		 getElement("btnUltimo").disabled = true;
+		 getElement("btnAnterior").disabled = true;
+		 getElement("btnProximo").disabled = true;
+		 getElement("btnIncluir").disabled = true;
+		 getElement("btnCancelar").value = "Cancelar Alteração";
+		 getElement("btnCancelar").disabled = false;
+		 getElement("btnGravar").value = "Gravar Alteração";
+		 getElement("btnGravar").disabled = false;
+	  }
+	  
+	  if (modo == 'I') {
+	     limpaForm();
+		 bloqueia(false);
+		 getElement("numero").readOnly = true;
+		 getElement("ano").readOnly = true;
+		 getElement("btnBuscar").disabled = true;
+		 getElement("btnAlterar").disabled = true;
+		 getElement("btnPrimeiro").disabled = true;
+		 getElement("btnUltimo").disabled = true;
+		 getElement("btnAnterior").disabled = true;
+		 getElement("btnProximo").disabled = true;
+		 getElement("btnCancelar").value = "Cancelar Inclusão";
+		 getElement("btnCancelar").disabled = false;
+		 getElement("btnGravar").value = "Gravar Nova";
+		 getElement("btnGravar").disabled = false;
+		 getElement("data").value = now("DD/MM/YYYY");
+		 getElement("data").disabled = false;
+	  }
+      getElement("operacao").value = modo;
+   }
+   
+   function validaForm() {
+      op = getElement("operacao").value;
+      if ( (op != 'I') && (op != 'A') ) { 
+         alert('Você está no modo de consulta');
+         return false;
+	  } else {
+         var erros = "";
+         erros = erros + (getElement("divisao").selectedIndex < 0 ? "  - É obrigatório selecionar uma divisão\n" : "");
+         erros = erros + (getElement("solicitante_nome").value == "" ? "  - É obrigatório selecionar quem está fazendo a solicitação.\n" : "");
+         erros = erros + (getElement("assinatura_nome").value == "" ? "  - É obrigatório selecionar quem vai assinar o documento.\n" : "");
+         erros = erros + (getElement("destinatario_nome").value == "" ? "  - É obrigatório selecionar o destinatário da corresspondência.\n" : "");
+         erros = erros + (getElement("assunto").value == "" ? "  - É obrigatório informar o assunto.\n" : "");
+		 erros = erros + (eh_data(getElement("data")) != true ? "  - A data informada é inválida.\n" : "");
+         if (erros != "") {
+            erros = "Erros encontrados: \n\n" + erros;
+            alert(erros);
+            return false;
+         } else {
+            return true;
+         }
+	  }
+   }
+
+   function submitForm() {
+      if (validaForm()) {
+	     getElement("frm").submit();
+	  	 return true;
+	  } else {
+	     return false;
+	  }
+   }
+
+   function fnc_onload() {
+      setaModo('C');
+   }
+</script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function chama_fnc_onload() {
+	if (typeof(this["fnc_onload"]) != 'undefined') {
+		fnc_onload();
+	}
+}
+
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+<style type="text/css">
+<!--
+   .hideFrame {
+      width: 1px;
+	  height: 1px;
+	  visibility: hidden;
+   }
+   .botao {
+      width: 130px;
+	  height: 24px;
+   }
+   .botaoNavegacao {
+      width: 80px;
+	  height: 24px;
+   }
+-->
+</style>
+
+      <table border="0" align="center" cellspacing="2">
+        <tr> 
+          <td> <form action="grava_correspondencias.php" method="post" name="frm" id="frm" onSubmit="return validaForm();">
+              <table width="100%" border="0" cellspacing="2">
+			  <Tr><td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#FF0000"><b>
+			  {erro}</b></font></td></Tr>
+                <tr> 
+                  <td valign="top"></td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td valign="top"> <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero</font></strong> 
+                  </td>
+                  <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="numero" type="text" id="numero" size="11" maxlength="10" value="{numero}">
+                    Ano 
+                    <input name="ano" type="text" id="ano" size="5" maxlength="4" value="{ano}">
+                    <input class='botao' style='width:50px;' name="btnBuscar" type="button" id="btnBuscar" onClick="buscaDados('ano', 'numero');" value="Buscar">
+                    <input class='botao' style='width:50px;' name="btnIncluir" type="button" id="btnIncluir" onClick="inclusao();" value="Nova">
+                    <input class='botao' style='width:50px;' name="btnAlterar" type="button" id="btnAlterar" onClick="alteracao('ano', 'numero');" value="Alterar" {showAlterar}>
+                    </font></strong></td>
+                  <td> <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input class='botao' type="button" name="btnPrimeiro" id="btnPrimeiro" value="Primeiro" onClick="buscaDados('ano', 'ante', 'P');">
+                    </font></strong></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Divis&atilde;o</strong></font></td>
+                  <td><select name="divisao" id="divisao">
+                      <!-- START BLOCK : blk_divisao -->
+                      <option value="{cod_divisao}"{sel_divisao}>{nome_divisao}</option>
+                      <!-- END BLOCK : blk_divisao -->
+                    </select></td>
+                  <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input class='botao' type="button" name="btnAnterior" id="btnAnterior" value="Anterior" onClick="buscaDados('ano', 'ante', 'V');">
+                    </font></strong> </font></strong> </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Solicitante</font></strong></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="solicitante_nome" type="text" id="solicitante_nome" size="40" maxlength="60" value="{solicitante_nome}" readonly>
+                    <input class='botao' name="btnSolicitante" type="button" id="btnSolicitante" onClick="lovParticipantes('solicitante_emp','solicitante_re','solicitante_seq','solicitante_nome', 'A');" value="Procurar">
+                    <input name="solicitante_emp" type="hidden" id="solicitante_emp" value="{solicitante_emp}">
+                    <input name="solicitante_re" type="hidden" id="solicitante_re" value="{solicitante_re}">
+                    <input name="solicitante_seq" type="hidden" id="solicitante_seq" value="{solicitante_seq}">
+                    </font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input class='botao' type="button" name="btnProximo" id="btnProximo" value="Pr&oacute;ximo" onClick="buscaDados('ano', 'prox', 'A');">
+                    </font></strong> </font></strong> </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Assinatura</font></strong></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="assinatura_nome" type="text" id="assinatura_nome" size="40" maxlength="60" value="{assinatura_nome}" readonly>
+                    <input class='botao' name="btnAssinatura" type="button" id="btnAssinatura" onClick="lovParticipantes('assinatura_emp','assinatura_re','assinatura_seq','assinatura_nome','A');" value="Procurar">
+                    <input name="assinatura_emp" type="hidden" id="assinatura_emp" value="{assinatura_emp}">
+                    <input name="assinatura_re" type="hidden" id="assinatura_re" value="{assinatura_re}">
+                    <input name="assinatura_seq" type="hidden" id="assinatura_seq" value="{assinatura_seq}">
+                    </font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input class='botao' type="button" name="btnUltimo" id="btnUltimo" value="Ultimo" onClick="buscaDados('ano', 'ante', 'U');">
+                    </font></strong> </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Destinat&aacute;rio</font></strong></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="destinatario_nome" type="text" id="destinatario_nome" size="40" maxlength="60" value="{destinatario_nome}">
+                    </font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Assunto</font></strong></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="assunto" cols="60" rows="5" id="assunto">{assunto}</textarea>
+                    </font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data</strong></font></td>
+                  <td><input name="data" type="text" id="data" size="10" maxlength="10" value="{data}" onBlur="valida_data(this);" onKeyUp="mascara_data(this)" readonly></td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="3" valign="top"><div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                      <input name="operacao" type="hidden" id="operacao" value="{operacao}">
+                      <input name="t" type="hidden" id="t" value="{t}">
+
+                      <input name="btnGravar" type="button" class="botao" id="btnGravar" value="Gravar" onClick="submitForm();">
+                      <input name="brnCancelar" type="button" class="botao" id="btnCancelar" onClick="consulta();" value="Cancelar">
+                      <input name="ante" type="hidden" id="ante">
+                      <input name="prox" type="hidden" id="prox">
+                      </font></div></td>
+                </tr>
+              </table>
+            </form></td>
+        </tr>
+      </table>
+	  <!-- START BLOCK : blk_primeira_execussao -->
+	  {primeira_execussao}
+	  <!-- END BLOCK : blk_primeira_execussao -->
+	  <iframe name="dyn" id="dyn" class="hideFrame"></iframe>
+
+<!-- INCLUDE BLOCK : footer.html -->

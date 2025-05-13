@@ -1,0 +1,218 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+
+	#aba
+	{
+		width:100%;
+	}
+	.aba_definicao 
+	{
+		width:98%;
+	}
+	.aba_conteudo
+	{
+		width:98%;
+	}
+
+</style>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+	function changePage( value )
+	{
+		document.form1.pageIndex.value = value;
+		document.form1.action = 'cad_visitante_manutencao_nome.php';
+		document.form1.submit();
+	}
+	function changeField( index, objChanged )
+	{
+		if ( 
+		
+			document.getElementById('ds_nome_'+index+'').defaultValue!=document.getElementById('ds_nome_'+index+'').value
+		 || document.getElementById('nr_rg_'+index+'').defaultValue!=document.getElementById('nr_rg_'+index+'').value
+		 || document.getElementById('nr_cpf_'+index+'').defaultValue!=document.getElementById('nr_cpf_'+index+'').value
+		 || document.getElementById('cd_registro_empregado_'+index+'').defaultValue!=document.getElementById('cd_registro_empregado_'+index+'').value
+		
+		) {
+			
+			objChanged.value = "s";
+			
+		}
+		else{
+		
+			objChanged.value = "";
+			
+		}
+	}
+	
+	function valida_form(f) {
+	
+		var erros = "";
+		f.action = "grava_visitante_nome.php";
+		f.submit();
+	}
+	
+	function executeFilter() {
+		f = document.form1;
+		f.pageIndex.value = 0;
+		f.action = 'cad_visitante_manutencao_nome.php';
+		f.submit();
+	}
+	
+	function fnc_onload() 
+	{
+		// do nothing 
+	}
+//-->
+</script>
+
+		    <!-- CADASTRO -->
+		    <table width="100%" border="0" cellpadding="0" cellspacing="1">
+
+			<!-- START BLOCK : cadastro -->
+			<tr valign="top">
+			<td>
+
+			  	<form name="form1" id="form1" method="post">
+			  	<input name="pageIndex" id="pageIndex" type="hidden" value="{pageIndex}" />
+				<br>
+
+				<table align="center">
+					<tr bgcolor="{cor_fundo2}">
+						<td><b>Filtro:</b></td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td class="texto1"><b>Nome:</b></td>
+									<td><input type="text" name="filtro_ds_nome" id="filtro_ds_nome" value="{filtro_ds_nome}" /></td>
+								</tr>
+								<tr>
+									<td class="texto1"></td>
+									<td><input type="checkbox" 
+										name="filtro_ds_nome_prioridade" 
+										id="filtro_ds_nome_prioridade" 
+										{filtro_ds_nome_prioridade} 
+										value="s"
+										/> <label for="filtro_ds_nome_prioridade">Apenas nomes repetidos</label></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="button" name="filtrar" id="filtrar" value="OK" onclick="executeFilter()" style="width:100px;" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table width="630" align="center">
+					<tr>
+					<td>
+					<hr style="width:630px"><center>
+					{paginacao}
+					</center><hr style="width:630px">
+					</td>
+					</tr>
+				</table>
+				<table border="0" align="center" cellpadding="0" cellspacing="1">
+
+					<center>
+					<tr bgcolor="{cor_fundo2}">
+						<td></td>
+						<td></td>
+						<td><span><b>Nome:</b></span></td>
+						<td><span><b>RG:</b></span></td>
+						<td><span><b>CPF:</b></span></td>
+						<td><span><b>RE:</b></span></td>
+						<td></td>
+						<td></td>
+					</tr>
+					</center>
+		
+					<!-- START BLOCK : nomes -->
+					<tr>
+
+			  			<td class="texto1"><b>{ordem}.</b></td>
+			  			
+						<td>
+									  		<input name="cd_visitante[]"
+									  			id="cd_visitante_{index}"
+									  			type="hidden"
+									  			value="{cd_visitante}"
+									  			/></td>
+						<td>
+									  		<input name="ds_nome[]"
+										  		id="ds_nome_{index}" 
+										  		type="text"
+										  		value="{ds_nome}"
+										  		style="width:300px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+				  		<td>
+									  		<input name="nr_rg[]"
+										  		id="nr_rg_{index}" 
+										  		type="text"
+										  		value="{nr_rg}"
+										  		style="width:100px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+				  		<td>
+									  		<input name="nr_cpf[]"
+										  		id="nr_cpf_{index}" 
+										  		type="text"
+										  		value="{nr_cpf}"
+										  		style="width:100px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+				  		<td>
+									  		<input name="cd_registro_empregado[]"
+										  		id="cd_registro_empregado_{index}" 
+										  		type="text"
+										  		value="{cd_registro_empregado}"
+										  		style="width:100px"
+										  		onchange="changeField( {index}, document.getElementById('changed_{index}') );"
+										  		/></td>
+						<td>
+									  		<input name="changed[]"
+									  			id="changed_{index}"
+									  			type="hidden"
+									  			value=""
+									  			/></td>
+				  		<td class="texto1"> {ocorrencias}</td>
+
+					</tr>
+					<!-- END BLOCK : nomes -->
+
+				</table>
+				
+				
+				<center>
+					<table width="630">
+						<tr>
+						<td>
+						<hr style="width:630px"><center>
+						{paginacao}
+						</center><hr style="width:630px">
+						</td>
+						</tr>
+					</table>
+				</center>
+
+				<center><input class='botao' type="button" name="Submit" value="Salvar" onclick="valida_form( document.form1 )" style="width:200px;" /></center>
+
+				</form>
+
+			</td>
+			</tr>
+			<!-- END BLOCK : cadastro -->
+
+		    </table>
+		    <!-- FIM DE: CADASTRO -->
+
+<!-- INCLUDE BLOCK : footer.html -->

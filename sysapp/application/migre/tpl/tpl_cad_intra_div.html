@@ -1,0 +1,263 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Ítens da {div} ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script type="text/javascript" src="inc/fckeditor/fckeditor.js"></script>
+<script language="JavaScript" type="text/JavaScript">
+function valida_form(f)
+{
+	var erros = "";
+	if ((f.conteudo.value == '') && (f.txt_titulo.value == ''))
+	{
+		erros = erros + "- O campo 'Título' ou o 'Conteúdo' deve estar preenchido.\n"; 
+	}
+	if (erros != "")
+	{
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+function valida_form2(f)
+{
+	var erros = "";
+	if (f.arquivo.value == '') 
+	{ 
+		erros = erros + "- Por favor, selecione o arquivo. (Botão 'Procurar').\n"; 
+	}
+	if (erros != "")
+	{
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+function win_doc(i,d)
+{
+     w = window.open("documentos_anexos.php?i="+i+"&d="+d, "wdocs", "menubar=no,location=no,scrollbars=no,resizable=no,width=500,height=300");
+}
+function win_doc_atu(i,d,l)
+{
+	w = window.open("documentos_anexos.php?i="+i+"&d="+d+"&cd_link="+l, "wdocs", "menubar=no,location=no,scrollbars=no,resizable=no,width=500,height=300");
+}
+</script>
+<!-- START BLOCK : cadastro -->
+<div class="aba_definicao"><!-- #aba_definicao -->
+
+	<div id="aba"><!-- #aba -->
+		<ul>
+			<li onclick="location.href='lst_intra_div.php?div={div}'">
+				<span>LISTA</span>
+			</li>						
+			<li class="abaSelecionada">
+				<span>Cadastro</span>
+			</li>
+		</ul>
+	</div><!-- #aba -->
+
+	<div class="div_aba_content"><!-- #div_aba_content -->
+		<br><br>
+		<div id="div_content"><!-- #div_content -->
+		<table width="90%" border="0" cellpadding="0" cellspacing="1" align="center">
+			<tr valign="top"> 
+				<td height="500" colspan="2"> 
+					<form name="form1" id="form1" method="post" action="grava_intra_div.php" onSubmit="return valida_form(this)">
+					<table  border="0" align="center" width="100%" cellpadding="0" cellspacing="1">
+						<tr> 
+							<td bgcolor="#F4F4F4" width="15%">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+									Data Inclusão:
+								</font>
+							</td>
+							<td bgcolor="#F4F4F4"> 
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+								{dt_inclusao}
+								</font>
+								<input name="insere" type="hidden" id="insere" value="{insere}"> 
+								<input name="div" type="hidden" id="div" value="{div}"> 
+							</td>
+							<td rowspan="2" align="right" bgcolor="#F4F4F4"> 
+								<input class="botao" type="submit" name="Submit" value="Salvar">
+								<input type="button" class="botao" value="Excluir" onclick="location.href='exclui_intra_div.php?c={cd_item}&div={div}'">
+							</td>					
+						</tr>
+						<tr> 
+							<td bgcolor="#F4F4F4">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+								Código Item:
+								</font>
+							</td>
+							<td bgcolor="#F4F4F4">
+								<input name="cd_item" type="text" id="cd_item" value="{cd_item}" size="10" readonly>
+							</td>
+						</tr>
+						<tr> 
+							<td bgcolor="#F4F4F4">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+									Item Superior:
+								</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4"> 
+								<select name="cd_item_pai" id="cd_item_pai" >
+									<option value="0">Não possui</option>
+									<!-- START BLOCK : subitem -->
+										<option value="{cd_item_pai}" {fl_item_pai}>{ds_item_pai}</option>
+									<!-- END BLOCK : subitem -->
+								</select>	
+							</td>
+						</tr>				
+						<tr> 
+							<td bgcolor="#F4F4F4">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+									Título:
+								</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4"> 
+								<input name="titulo" type="text" id="titulo" value="{titulo}" style="width: 100%;" >
+							</td>
+						</tr>
+						<tr> 
+						  <td colspan="4" bgcolor="#F4F4F4">
+								<script type="text/javascript">
+									<!--
+									// Automatically calculates the editor base path based on the _samples directory.
+									// This is usefull only for these samples. A real application should use something like this:
+									// oFCKeditor.BasePath = '/fckeditor/' ;	// '/fckeditor/' is the default value.
+									//var sBasePath = document.location.pathname.substring(0,document.location.pathname.lastIndexOf('_samples')) ;
+
+									var sBasePath = 'inc/fckeditor/';
+
+									var oFCKeditor = new FCKeditor('conteudo') ;
+									oFCKeditor.BasePath	= sBasePath ;
+									oFCKeditor.Height	= 350 ;
+									oFCKeditor.Value	= '{conteudo}';
+									oFCKeditor.Create() ;
+									//-->
+								</script>				  
+						  </td>
+						</tr>                
+						<tr> 
+							<td height="25" bgcolor="#F4F4F4">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+									Data de Exclusão:
+								</font>
+							</td>
+							<td colspan="2" bgcolor="#F4F4F4">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+									{dt_exclusao}&nbsp; 
+								</font>
+							</td>
+						</tr>
+					</table>
+					</form>
+					<form name="form2" method="post" action="grava_imagem_intra_div.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+						<table border="0" width="100%" align="center" cellpadding="1" cellspacing="1">
+							<tr bgcolor="#F4F4F4"> 
+								<td width="15%"> 
+									<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Selecione o arquivo:</font> 
+									<input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+									<input type="hidden" name="cd_item" value="{cd_item}">
+									<input type="hidden" name="div" value="{div}">
+								</td>
+								<td> 
+									<input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado"><br>
+									<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: Formatos permitidos JPG ou GIF.</font>
+								</td>
+								<td align="center">
+									<input type="submit" name="Submit" value="Associar imagem" class="botao">
+								</td>
+							</tr>
+							<tr> 
+								<td bgcolor="#F4F4F4">
+									<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+										Imagem associada:
+									</font>
+								</td>
+								<td valign="middle" bgcolor="#F4F4F4" align="center"> 
+									{imagem}&nbsp;
+								</td>
+								<td valign="middle" bgcolor="#F4F4F4" align="center">
+									<input type="button" class="botao" value="Excluir imagem" onclick="location.href='exclui_img_intra_div.php?c={cd_item}&div={div}'">
+								</td>
+							</tr>					
+						</table>
+					</form>
+					<br>	
+					<p align="center"><img src="img/img_divisoria1.gif" width="80%" height="1"></p>
+					<br>
+					<form name="form2" id="form2" method="post" action="ordena_intra_div.php">
+						<table width="100%" border="0" align="center" cellpadding="3" cellspacing="1">
+							<tr> 
+								<td colspan="2">
+									<font color="#0046ad" size="4" face="Verdana, Arial, Helvetica, sans-serif">
+										Documentos associados:
+									</font>
+								</td>
+								<td colspan="3" align="right">
+									<input type="button" class="botao" value="Adicionar documento" onclick="win_doc({cd_item},'{div}')">
+								</td>
+							</tr>
+							<tr bgcolor="#0046ad"> 
+								<td>
+									<b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Ordem</font></b>
+								</td>
+								<td>
+									<b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Documento</font></b>
+								</td>
+								<td>
+									<b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data</font></b>
+								</td>
+								<td>
+									<b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Link:</font></b>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- START BLOCK : doc_associado -->
+							<tr bgcolor="{cor_fundo}"> 
+								<td align="right">
+									<input type="text" id="nr_ordem_{cd_link}" name="nr_ordem[{cd_link}]" value="{nr_ordem}" style="width:60px; text-align:right;" >
+									<script>
+										MaskInput(document.getElementById("nr_ordem_{cd_link}"),  "999999");
+									</script>
+								</td>
+								<td>
+									<font size="2" face="Verdana, Arial, Helvetica, sans-serif">{texto}</font>
+								</td>
+								<td align="center">
+									<font size="2" face="Verdana, Arial, Helvetica, sans-serif">{data}</font>
+								</td>
+								<td>
+									<a href="{link}" class="links2" target="_blank">{link}</a>
+								</td>
+								<td>
+									<nobr>
+									<input type="button" class="botao" value="Editar" onclick="win_doc_atu({cd_item},'{div}',{cd_link})">
+									<input type="button" class="botao" value="Excluir" onclick="location.href='exclui_link_intra_div.php?cd_item={cd_item}&div={div}&cd_link={cd_link}'">
+									</nobr>
+								</td>
+							</tr>
+							<!-- END BLOCK : doc_associado -->
+						</table>
+						<BR>
+						<center><input type="submit" name="Submit" value="Atualizar ordem" class="botao"></center>
+					</form>
+					<BR>
+					<BR>
+				</td>
+			</tr>
+		</table>
+		</div><!-- #div_content -->
+	</div><!-- #div_aba_content -->
+</div><!-- #aba_definicao -->
+
+<!-- END BLOCK : cadastro -->
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,242 @@
+<html>
+<head>
+<title>..:: e-prev ::..</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+<link rel="shortcut icon" href="favicon.ico">
+
+
+<script src="inc/jquery-1.3.2.min.js"></script>
+<script src="inc/jquery.price_format.1.3.js"></script>
+<script src="inc/jquery.maskedinput-1.2.js"></script>
+<script src="inc/jquery.numeric.js"></script>
+<script src="inc/jquery.validate.min.js"></script>
+<script src="inc/jquery.simplemodal-1.3.3.min.js"></script>
+<script type='text/javascript' src='../../../js/default.js'></script>
+
+
+<link type='text/css' href='inc/janela/basic.css' rel='stylesheet' media='screen' />
+<!-- IE 6 "fixes" -->
+<!--[if lt IE 7]>
+<link type='text/css' href='inc/janela/basic_ie.css' rel='stylesheet' media='screen' />
+<![endif]-->
+
+
+<script language="JavaScript" type="text/JavaScript">
+	function validaForm() 
+	{
+		if(jQuery.trim($('#usuario').val()) == "")
+		{
+			alert("Informe o Usuário");
+			$('#usuario').focus();
+			return false;
+		}
+		if(jQuery.trim($('#senha').val()) == "")
+		{
+			alert("Informe a Senha");
+			$('#senha').focus();
+			return false;
+		}		
+		else
+		{
+			return true;
+		}
+	}
+</script>
+<style>
+	.senha_nome {
+		height:70px;
+		font-family: arial;
+		font-weight: bold;
+		font-size: 20pt;
+		margin-left: 115px;
+		text-align: left;
+		
+	}	
+
+	.senha_digita {
+		height:30px;
+		font-family: arial;
+		font-weight: normal;
+		font-size: 10pt;
+		line-height: 10pt;
+		margin-top: 0px;
+		margin-left: 50px;
+		margin-right: 30px;
+		text-align:center;
+		
+	}	
+
+	.senha_campos {
+		height:65px;
+		font-family: arial;
+		font-weight: normal;
+		font-size: 10pt;
+		margin-left: 60px;
+		margin-right: 60px;
+		
+	}	
+
+	.senha_campos_label {
+		display: block;
+		width: 80px;
+		float: left;
+		color: #666666;
+		font-size: 10pt;
+		font-weight: bold;
+		font-family: Verdana, Arial;	
+		line-height: 20px;
+	}	
+	
+	.senha_campos_input {
+		width: 290px;
+		border-top: 1px solid #666666;
+		border-left: 1px solid #666666;
+		border-bottom: 1px solid #666666;
+		border-right: 1px solid #666666;
+		font-size: 13px;
+		font-weight: bold;
+		font-family: Verdana,Arial;			
+		margin-bottom: 10px;
+		color: #000;
+		padding-left:4px;
+		padding-right:4px;
+	}	
+	
+	.senha_origem {
+		height:20px;
+		color: #AEAEAE;
+		font-family: Verdana, arial;
+		font-weight: bold;
+		font-size: 9px;
+		text-align:center;
+		
+	}
+	
+	.senha_botoes {
+		height:35px;
+		text-align:center;
+		
+	}	
+	.senha_certificado {
+		height:50px;
+		text-align:center;
+	}	
+
+	.botao_senha{
+		width: 80px;
+		height: 20px;
+		border: 0px;
+		background: url('img/bt_senha_entrar.png') #5972A7;
+	}	
+	
+	.botao_reset{
+		width: 80px;
+		height: 20px;
+		border: 0px;
+		background: url('img/bt_senha_limpar.png') #B1B1B1;			
+	}	
+
+	.highlight {
+		background-color:#EDEFF4;
+		border: 1px solid #3B5998;
+	}	
+</style>
+</head>
+<body style="margin: 0px; background: url('img/login_topo.jpg') no-repeat #F9FDFE;">
+<BR>
+<form autocomplete="off" name="form1" method="post" action="valida_login.php" onSubmit="return validaForm();" onReset="$('#usuario').focus();">
+	<input type="hidden" name="ir_para" id="ir_para" value="{ir_para}" class="senha_campos_input">
+	<div align="center">
+		<div align="left" style="width:500px; height:70px;"> 
+		</div>
+		<BR>
+		<BR>		
+		<div align="left" style="font-size: 10px; width:500px; height:250px; background:url('img/login_eprev_box.png') no-repeat;"> 
+			<BR>
+			<BR>
+			<div class="senha_nome">
+				Bem vindo ao e-prev
+			</div>			
+			
+			<div class="senha_digita">
+				Digite seu nome de usuário e sua senha do Windows.
+			</div>
+			
+			<div class="senha_campos">	
+				<label class="senha_campos_label">Usuário:</label>
+				<input type="text" name="usuario" id="usuario" value="" class="senha_campos_input">
+				<label class="senha_campos_label">Senha:</label>
+				<input type="password" name="senha" id="senha" value="" class="senha_campos_input">
+			</div> 	
+			
+			<div class="senha_botoes">
+				<input type="submit" value=""  class="botao_senha">
+				<input type="reset" value="" class="botao_reset">
+			</div>
+
+			<div class="senha_origem">
+				{ip}
+			</div>
+		</div>
+	</div>
+</form> 
+	<div id="divMensagem" style="background: #FFFFFF; display:none;">
+		<table width="100%" height="100%" border="0">
+			<tr>
+				<td rowspan="2" valign="top" style="width: 60px;">
+					<img src="inc/janela/info.png" border="0">
+				</td>
+				<td valign="top" style="height: 30px; font-family: Arial; font-size: 14pt; font-weight: bold; color: #000; text-align:justify;">
+					Atenção
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" style="font-family: Verdana, Arial; font-size: 12pt; font-weight: bold; color: #274C96; text-align:justify;">
+					{msg}
+				</td>
+			</tr>			
+		</table>
+	</div>
+ 		
+<script>
+	$(document).ready(function() {
+	
+	
+        $('input:text').focus(function() {
+			$(this).addClass('highlight');
+		});
+
+		$('input:text').blur(function(){
+			$(this).removeClass('highlight');
+		});
+
+        $('input:password').focus(function() {
+			$(this).addClass('highlight');
+		});
+
+		$('input:password').blur(function(){
+			$(this).removeClass('highlight');
+		});
+		
+		<!-- START BLOCK : exibe_mensagem -->
+			$('#divMensagem').modal({
+				focus:false,
+				containerCss:{
+				    //border: "4px solid #B2B2B2",
+					width:500,
+					height:130
+					},
+				onClose: function (dialog) {
+					$.modal.close();
+					$("#usuario").focus();
+				}					
+			});
+		<!-- END BLOCK : exibe_mensagem -->
+		<!-- START BLOCK : focus_usuario -->
+			$("#usuario").focus();
+		<!-- END BLOCK : focus_usuario -->
+	});
+</script>		
+</body>
+</html>

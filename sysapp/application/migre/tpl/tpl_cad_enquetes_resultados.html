@@ -1,0 +1,287 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = 'Pesquisa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function win_graf(e,p) {
+	w = window.open("graf_pizza_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=no,resizable=no,width=580,height=300");
+}
+function win_coment(e,p) {
+	w = window.open("comentario_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=yes,resizable=yes,width=500,height=330");
+}
+
+function win_complemento(e,p,r,i,f) {
+	w = window.open("enquete_resposta_complemento.php?cd_enquete="+e+"&cd_questao="+p+"&cd_resp="+r+"&dt_ini="+i+"&dt_fim="+f, "wg1", "toolbar=yes,menubar=yes,location=yes,scrollbars=yes,resizable=yes,width=500,height=330");
+}
+
+function fnc_confirma_exclusao(f) {
+	var confirma = confirm("Confirma a exclusão deste grupo de respostas?? ATENÇÃO: Esta ação é irreversível !!!!");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_agenda(f) {
+	var confirma = confirm("Confirma a marcação desta pesquisa na agenda do Outlook de toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_envio_emails(f) {
+	var confirma = confirm("Confirma o envio dos emails para toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function filtro_Click(o)
+{
+	f = document.form1;
+	f.filtrado.value = "s";
+	f.target = "_self";
+	f.action = "cad_enquetes_resultados.php?c=" + f.codigo.value + "";
+	f.submit();
+}
+
+function relatorioPesquisa()
+{
+	$("#filtrado").val("s");
+	$("#formResultadoPesquisa").attr("target", "_blank");
+	$("#formResultadoPesquisa").attr("action", "{BASE_URL}index.php/ecrm/operacional_enquete/relatorioPDF");
+	$("#formResultadoPesquisa").submit();	
+}
+//-->
+</SCRIPT>
+
+            <!-- START BLOCK : mensagem -->
+            <div class="titulo_vermelho">{msg}</div>
+            <!-- END BLOCK : mensagem -->
+
+            <!-- START BLOCK : cadastro -->
+
+				<div class="aba_definicao"><!-- #aba_definicao -->
+
+					<div id="aba"><!-- #aba -->
+						<ul>
+							<li onclick="location.href='lst_enquetes.php'">
+								<span>LISTA</span>
+							</li>						
+						
+							<li onclick="location.href='cad_enquetes_definicao.php?c={codigo}'" id="abaMovimento">
+								<span>DEFINIÇÃO</span>
+							</li>
+							<li onclick="location.href='cad_enquetes_estrutura.php?c={codigo}'" id="abaMovimento">
+								<span>ESTRUTURA</span>
+							</li>
+							<li onclick="location.href='cad_enquetes_resultados.php?c={codigo}'" id="abaMovimento" class="abaSelecionada">
+								<span>RESULTADOS</span>
+							</li>
+						</ul>
+					</div><!-- #aba -->
+
+					<div class="div_aba_content"><!-- #div_aba_content -->
+						<br><br>
+						<div id="div_content"><!-- #div_content -->
+
+                
+						  	<table width="100%" border="0" cellpadding="1" cellspacing="1">
+						        <tr valign="top"> 
+						          <td class="titulo_vermelho" align="center">
+						
+						            <form name="form1" id="formResultadoPesquisa" id="" method="post" action="cad_enquetes_resultados.php">
+						              <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+						              <input name="filtrado" type="hidden" id="filtrado" value="">
+						                    <table border="0" width="80%" align="center" cellpadding="1" cellspacing="1">
+						                      <tr bgcolor="{cor_fundo1}"> 
+						                        <td> <span class="titulo_verde">{codigo}</span></td>
+						                        <td class="cabecalho" bgcolor="#0046ad">{titulo}</td>
+						                        <td align="center" nowrap> <a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a><a href="lst_enquetes.php"><img src="img/btn_retorna.jpg" border="0" title="Voltar para lista"></a></td>
+						                      </tr>
+
+						                      <tr bgcolor="{cor_fundo1}"> 
+						                        <td colspan="3">
+						                        	<table align="center">
+						                        		<tr>
+						                        			<td class="texto2">
+						                        				Respostas no período de 
+						                        				   <input id="filtro_data_inicio" 
+						                        						name="filtro_data_inicio" 
+						                        						value="{filtro_data_inicio}"
+						                        						onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" 
+						                        						/> 
+				                        						até 
+					                        					   <input id="filtro_data_fim" 
+				                        							    name="filtro_data_fim" 
+				                        							    value="{filtro_data_fim}" 
+				                        							    onBlur="verifica_data(this)" onKeyUp="mascara_data(this)"
+				                        							    />
+						                        			</td>
+						                        			<td>
+						                        				<a href="javascript:filtro_Click(this);"><img border="0" src="img/btn_atualizar.jpg"></a>
+					                        				</td>
+						                        		</tr>
+					                        		</table>
+						                        </td>
+						                      </tr>
+
+
+						                      <tr>
+						                        <td colspan="3" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+						                            <tr align="center"> 
+						                              <td>
+														<!-- rel_pesquisa.php?c={codigo} -->
+														<a href="javascript:relatorioPesquisa();">Relat&oacute;rio (PDF)</a>
+														</td>
+						                            </tr>
+						                          </table>
+						                          <img src="img/img_divisoria1.gif" width="100%" height="1"></td>
+						                      </tr>
+						                    </table>
+						            	</form>
+									      <!-- START BLOCK : componentes_pesquisa -->
+						                  <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+						                    <tr> 
+						                      <td colspan="6"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+						                          <tr> 
+						                            <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#990000" size="5" face="Arial, Helvetica, sans-serif">Resultados:</font><font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif"><a name="ancora_resultados"></a></font></font></td>
+						                          </tr>
+						                        </table></td>
+						                    </tr>
+						                    <tr> 
+						                      <td colspan="5" bgcolor="#990000" class="cabecalho">Item:</td>
+						                      <td bgcolor="#990000" class="cabecalho">Valor</td>
+						                    </tr>
+						                    <!-- START BLOCK : resultados_obtidos -->
+						                    <tr bgcolor="#E7DECF" style="{fl_nr_publico_total}"> 
+						                      <td colspan="5" class="texto2">Público total:</td>
+						                      <td align="center" class="texto2">{nr_publico_total}</td>
+						                    </tr>
+						                    <tr bgcolor="#E7DECF"> 
+						                      <td colspan="5" class="texto2">Número de respondentes:</td>
+						                      <td align="center" class="texto2">{respondentes}</td>
+						                    </tr>
+						                    <tr bgcolor="#E7DECF"> 
+						                      <td colspan="5" class="texto2">M&eacute;dia geral entre 
+						                        todos os agrupamentos, trazidos &agrave; base 10 / n&uacute;m. 
+						                        agrupamentos: ({cont_agrup})</td>
+						                      <td align="center" class="texto2">{media}</td>
+						                    </tr>
+						                    <tr bgcolor="#E7DECF"> 
+						                      <td colspan="5" class="texto2">M&eacute;dia geral entre 
+						                        agrupamentos de respostas({med_agrup}) e percep&ccedil;&atilde;o 
+						                        da &aacute;rea ({percep})</td>
+						                      <td align="center" class="texto2">{media2}</td>
+						                    </tr>
+						                    <tr align="center" bgcolor="#E7DECF"> 
+						                      <td colspan="6" class="texto2"><a href="lst_respostas.php?cd_enquete={codigo}" class="links2vermelho">&raquo;&nbsp;&nbsp;Ver 
+						                        todas as respostas&nbsp;&nbsp;&laquo;</a></td>
+						                    </tr>
+						                    <tr bgcolor="#FF3333"> 
+						                      <td colspan="5" class="cabecalho">Resultado por agrupamento:</td>
+						                      <td class="cabecalho">Valor:</td>
+						                    </tr>
+						                    <!-- END BLOCK : resultados_obtidos -->
+						                    <!-- START BLOCK : resultado_agrupamento -->
+						                    <tr> 
+						                      <td height="18" colspan="5" bgcolor="{cor_fundo}" class="texto1">{agrupamento}</td>
+						                      <td height="18" align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{media_grupo}</font></td>
+						                    </tr>
+						                    <!-- END BLOCK : resultado_agrupamento -->
+						                    <!-- START BLOCK : questoes_optativas -->
+						                    <tr bgcolor="#FF6633"> 
+						                      <td class="cabecalho"><a name="Resultados"></a>Resultados por questões:</td>
+						                      <td align="center" class="cabecalho">Gráfico</td>
+						                      <td align="center" class="cabecalho">Coment&aacute;rios</td>
+						                      <td align="center" class="cabecalho">Resp</td>
+						                      <td align="center" class="cabecalho">Total</td>
+						                      <td align="center" class="cabecalho">Média</td>											  
+						                    </tr>
+						                    <!-- START BLOCK : texto_questao -->
+						                    <tr> 
+						                      <td height="18" bgcolor="{cor_fundo}" class="texto1">{texto_questao}</td>
+						                      <td bgcolor="{cor_fundo}" class="texto1" align="center"><a href="#Resultados" onClick="win_graf({codigo},{cd_pergunta});" class="links2verde">&raquo;Pizza</a></td>
+						                      <td bgcolor="{cor_fundo}" class="texto1" align="center"><a href="#Resultados" onClick="win_coment({codigo},{cd_pergunta});" class="links2azul">&raquo;Ver</a></td>
+						                      <td bgcolor="{cor_fundo}" align="center" class="texto1">{soma_questao}</td>
+						                      <td bgcolor="{cor_fundo}" align="center" class="texto1">{total_questao}</td>
+						                      <td bgcolor="{cor_fundo}" align="center" class="texto1">{media_questao}</td>											  
+						                    </tr>
+						                    <!-- END BLOCK : texto_questao -->
+						                    <!-- END BLOCK : questoes_optativas -->
+						                    <!-- START BLOCK : quadro_resumo -->
+						                    <tr bgcolor="#BFA260"> 
+						                      <td height="18" colspan="6" class="cabecalho">Quadro Resumo</td>
+						                    </tr>
+						                    <!-- START BLOCK : texto_questao_quadro -->
+						                    <tr bgcolor="#DBC699"> 
+						                      <td height="18" colspan="6" class="cabecalho2" align="left">
+											  {texto_questao}
+											  </td>
+						                    </tr>
+						                    <!-- START BLOCK : opcao_quadro -->
+						                    <tr bgcolor="#F0E8BA"> 
+						                      <td height="18" colspan="4" class="texto1">
+											  {opcao}
+
+											  </td>
+						                      <td height="18" class="texto1" align="center">
+											   <!-- START BLOCK : complemento -->
+													<input type="button" class="botao" value="Complemento" onclick="win_complemento('{cd_enquete}','{cd_questao}','{cd_resp}','{dt_ini}','{dt_fim}')">
+											   <!-- END BLOCK : complemento -->											  
+											  </td>
+											  <td height="18" class="texto1" align="right">{soma}</td>
+						                    </tr>
+						                    <!-- END BLOCK : opcao_quadro -->
+						                    <!-- END BLOCK : texto_questao_quadro -->
+						                    <!-- END BLOCK : quadro_resumo -->
+						                    <!-- START BLOCK : questoes_dissertativas -->
+						                    <tr bgcolor="#FF9933"> 
+						                      <td height="18" colspan="6" class="cabecalho">Cr&iacute;ticas 
+						                        e coment&aacute;rios:</td>
+						                    </tr>
+						                    <!-- START BLOCK : texto_resp -->
+						                    <tr> 
+						                      <td height="18" colspan="6" bgcolor="{cor_fundo}" class="texto1">{texto_resp}</td>
+						                    </tr>
+						                    <!-- END BLOCK : texto_resp -->
+						                    <!-- END BLOCK : questoes_dissertativas -->
+						                    <tr bgcolor="#FF9999"> 
+						                      <td height="18" colspan="6" class="cabecalho">Publicar em:</td>
+						                    </tr>
+						                    <!-- START BLOCK : resultado -->
+						                    <tr> 
+						                      <td height="18" colspan="6" bgcolor="{cor_fundo}"><a href="cad_enquetes_respostas.php?c={cd_resposta}&eq={codigo}" class="links2">{resultado}</a></td>
+						                    </tr>
+						                    <!-- END BLOCK : resultado -->
+						                  </table>
+									<!-- END BLOCK : componentes_pesquisa -->
+						          </td>
+						          <td>&nbsp;</td>
+						        </tr>
+						      </table>
+
+						</div><!-- #div_content -->
+					</div><!-- #div_aba_content -->
+				</div><!-- #aba_definicao -->
+
+			<!-- END BLOCK : cadastro -->
+
+	<script>
+		MaskInput( document.getElementById("filtro_data_inicio"), "99/99/9999" );
+		MaskInput( document.getElementById("filtro_data_fim"), "99/99/9999" );
+	</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

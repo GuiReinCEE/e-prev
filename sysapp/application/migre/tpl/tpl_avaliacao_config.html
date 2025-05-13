@@ -1,0 +1,332 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Configurações para avaliação ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style>
+#myDialogId .myButtonClass 
+{
+	padding:3px;
+	font-size:20px;
+	width:100px;
+}
+#myDialogId .ok_button 
+{
+	color:#2F2;
+}
+#myDialogId .cancel_button 
+{
+	color:#F88;
+}
+
+#confirm_cancel
+{
+	margin-top: -50px;
+	margin-left: -50px;
+	left: 50%;
+	top: 50%;
+	position: fixed;
+}
+@media screen
+{
+	div#confirm_cancel
+	{
+		position: fixed;
+	}
+	* html
+	{
+		overflow-y: hidden;
+	}
+	* html body
+	{
+		overflow-y: auto;
+		height: 100%;
+	}
+	* html div#confirm_cancel
+	{
+		position: absolute;
+	}
+}
+input.normal, textarea.normal {
+	border: 1px solid #000000;
+}
+input.required, textarea.required {
+	border: 1px solid #CCCCCC;
+}
+input.failed, textarea.failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.failed_custom, textarea.failed_custom {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.passed, textarea.passed {
+	border: 1px solid #000000;
+	color : #000;
+}
+
+.error
+{
+	color: #FFFFFF;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	font-weight:bold;
+}
+
+.resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado th {
+    font-weight: bold;  
+    text-align:center;
+    border: 1px #dae9f7 solid;
+    background:#dae9f7;
+}
+.tb_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px #dae9f7 solid;
+}       
+
+.tb_resultado_selecionado {
+    background:#E6E8B6;
+    border:1px #FAD163 solid;
+}
+
+.tb_lista_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_lista_resultado * {
+    font-size: 10pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_lista_resultado th {
+    font-size: 10pt;
+    font-weight: bold;  
+    text-align:center;
+    /* border: 1px solid #CCCCCC; */
+    color:#FFFFFF;
+    background:#0046ad;
+}
+.tb_lista_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    /* border: 1px solid #CCCCCC; */
+}
+
+.td_border
+{
+    border: 1px solid #CCCCCC;
+}
+
+.tb_cadastro_saida {
+	border-collapse: collapse;
+	width: 60%;
+	background:#F4F4F4;
+}
+
+.tb_cadastro_saida * {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Arial,'MS Sans Serif';			
+}
+
+.tb_cadastro_saida th {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;
+	background:#dae9f7;
+}
+
+.tb_cadastro_saida td {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;	
+}	
+
+.exibeRevisao {
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}	
+.exibeRevisao th{
+	background:#FAD163;
+	border:1px #FAD163 solid;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;	
+	
+}
+.exibeRevisao td{
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}			
+
+.font_table_title
+{
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Arial, 'MS Sans Serif';
+    color: white;
+}
+
+.fonte_padrao
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;font-size:10px;
+}
+
+h2
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:16px;
+}
+
+</style>
+<!-- ==================== Scripts Java ================================================ --> 
+<script language="JavaScript" type="text/JavaScript" src="avaliacao_config.js"></script>
+
+<script type="text/javascript" src="inc/windows_js_1.3/javascripts/window.js"></script>
+<script type="text/javascript" src="inc/windows_js_1.3/javascripts/window_effects.js"></script>
+
+<!-- SCRIPTS PARA VALIDAÇÃO -->
+<script src="inc/mask.js" type="text/javascript"></script>
+<!-- SCRIPTS PARA VALIDAÇÃO -->
+
+<link href="inc/windows_js_1.3/themes/default.css" rel="stylesheet" type="text/css"></link>
+<link href="inc/windows_js_1.3/themes/alphacube.css" rel="stylesheet" type="text/css"></link>
+
+<script language="JavaScript">
+function imprimir(id, ida)
+{
+	window.open( "avaliacao_print.php?id="+id+"&ida="+ida+"" );
+}
+
+function mascara(o,f)
+{
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+
+function execmascara()
+{
+    v_obj.value=v_fun(v_obj.value)
+}
+
+function soNumeros(v)
+{
+    return v.replace(/\D/g,"")
+}
+
+</script>
+			<form name="onlyForm" id="only_form" method="post">
+
+			<!--
+			  -- BEGIN
+			  -- CAMPOS DE APOIO 
+			  -->
+
+			<!-- ajax_command_hidden contem o comando para procedimentos em ajax, comandos recuperados nas páginas requisitadas -->
+			<input id="ajax_command_hidden" name="ajax_command_hidden" type="hidden" value="" />
+			
+			<!-- ajax_command_hidden contem o comando para procedimentos em ajax, comandos recuperados nas páginas requisitadas -->
+			<input id="load_by_url_hidden" name="load_by_url_hidden" type="hidden" value="{load_by_url}" />
+			<input id="cd_divisao" name="cd_divisao" type="hidden" value="{cd_divisao}" />
+
+			<!--
+			  -- CAMPOS DE APOIO
+			  -- END
+			  -->
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li onclick="esta.aba_conceitos_Click();" 
+							id="aba_conceitos" 
+							class=""
+							style='display:none;'
+							>
+							<span>Conceitos para Avaliações de Desempenho</span>
+						</li>
+						<li onclick="esta.aba_matriz_Click();" 
+							id="aba_matriz" 
+							class=""
+							style='display:none;'
+							>
+							<span>Matriz Salarial</span>
+						</li>
+						<li onclick="esta.aba_classificacao_usuario_Click();" 
+							id="aba_classificacao_usuario" 
+							class=""
+							style='display:none;'
+							>
+							<span>Classificação de Usuário</span>
+						</li>
+						<li onclick="esta.aba_promocao_Click();" 
+							id="aba_promocao" 
+							class=""
+							style='display:none;'
+							>
+							<span>Comitê avaliação</span>
+						</li>
+						<li onclick="esta.aba_relatorio_Click();" 
+							id="aba_relatorio" 
+							class=""
+							style='display:none;'
+							>
+							<span>Relatório de Avaliações Finalizadas</span>
+						</li>
+						<li onclick="esta.aba_relatorio_comite_Click();" 
+							id="aba_relatorio_comite" 
+							class=""
+							style='display:none;'
+							>
+							<span>Relatório de Avaliações no Comitê</span>
+						</li>
+						<li onclick="esta.aba_manutencao_Click();" 
+							id="aba_manutencao" 
+							class=""
+							style='display:none;'
+							>
+							<span>Manutenção</span>
+						</li>
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br /><br />
+					<div id="div_content"></div>
+				</div>
+			</div>
+
+			</form>
+
+<script>
+	esta.init();
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

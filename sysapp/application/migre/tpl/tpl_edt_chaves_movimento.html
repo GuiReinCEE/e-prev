@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>..:: e-prev :: Editar Controle de Chaves ::..</title>
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+	<style>
+		*{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Verdana, Arial, 'MS Sans Serif';			
+		}
+		
+		body{
+			background: #D4D0C8;
+		}
+		
+		fieldset {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		
+		legend{
+			font-size: 16pt;
+			font-weight: bold;
+		}
+
+		label{
+			font-weight: bold;
+		}
+		
+		input{
+			background: #FFFFFF;
+			width:100%;			
+		}
+
+		select{
+			background: #FFFFFF;
+			width:100%;			
+		}
+		
+		textarea{
+			background: #FFFFFF;
+			height:100px; 
+			width:100%;
+		}
+		
+		span{
+			font-size: 8pt;
+			color:#666666;
+		}
+		
+		.css_botao{
+			text-align:right;
+			width: 100%;
+		}
+	</style>
+	<script>
+		function validaFormulario()
+		{
+			var ds_msg_erro = "";
+			
+			if(trimValue(document.getElementById("ds_nome").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Nome";
+			}	
+
+			if((trimValue(document.getElementById("ds_nome_retorno").value) == "") && (document.getElementById("fl_retorno").value) == "S")
+			{
+				ds_msg_erro += "\n- Informe Devolução";
+			}			
+			
+			if((trimValue(document.getElementById("dt_saida").value) == "") || ((trimValue(document.getElementById("dt_saida").value) == "") && (trimValue(document.getElementById("hr_saida").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Dt Entrada";
+			}	
+
+			if((trimValue(document.getElementById("hr_saida").value) == "") || ((trimValue(document.getElementById("hr_saida").value) == "") && (trimValue(document.getElementById("dt_saida").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Hr Saída";
+			}			
+			
+			if((((trimValue(document.getElementById("dt_retorno").value) == "") && (document.getElementById("fl_retorno").value) == "S")) || ((trimValue(document.getElementById("dt_retorno").value) == "") && (trimValue(document.getElementById("hr_retorno").value) != ""))) 
+			{
+				ds_msg_erro += "\n- Informe o Dt Retorno";
+			}	
+
+			if((((trimValue(document.getElementById("hr_retorno").value) == "") && (document.getElementById("fl_retorno").value) == "S")) || ((trimValue(document.getElementById("hr_retorno").value) == "") && (trimValue(document.getElementById("dt_retorno").value) != "")))
+			{
+				ds_msg_erro += "\n- Informe o Hr Retorno";
+			}
+			
+			if(trimValue(ds_msg_erro) != "")
+			{
+				alert("Os seguinte itens são necessários:\n" + ds_msg_erro)
+			}
+			else
+			{
+				document.getElementById('ob_form').submit();
+			}			
+		}
+	</script>
+<body>
+	<form name="ob_form" id="ob_form" action="edt_chaves_movimento_grava.php" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='cd_chave_movimento' id='cd_chave_movimento' value='{cd_chave_movimento}'>
+		<input type='hidden' name='fl_retorno' id='fl_retorno' value='{fl_retorno}'>
+		<fieldset>
+			<legend>Editar Controle Chave</legend>
+			
+			<div class="css_botao">
+				<img src="img/btn_salvar.jpg"  onclick="validaFormulario();" style="cursor:pointer;" title="Salvar">
+				<img src="img/btn_retorna.jpg" onClick="window.close();" style="cursor:pointer;" title="Fechar janela">				
+			</div>
+			
+
+			<label for="ds_nome">Chave:</label>
+			<br>
+			<input type="text" name="ds_chave" id="ds_chave" value="{ds_chave}" readonly>
+
+			<label for="ds_nome">Nome:</label>
+			<br>
+			<input type="text" name="ds_nome" id="ds_nome" value="{ds_nome}">
+
+			<label for="ds_nome_retorno">Devolução:</label>
+			<br>
+			<input type="text" name="ds_nome_retorno" id="ds_nome_retorno" value="{ds_nome_retorno}">			
+
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="dt_saida">Dt Saída</label>
+			<br>
+			<input type="text" name="dt_saida" id="dt_saida" value="{dt_saida}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+			</div>			
+
+			<div style="float:left; width:20%; margin-left:1%;">
+			<label for="hr_saida">Hr Saída</label>
+			<br>
+			<input type="text" name="hr_saida" id="hr_saida" value="{hr_saida}" onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5">
+			</div>
+			
+			
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="dt_retorno">Dt Retorno:</label>
+			<br>
+			<input type="text" name="dt_retorno" id="dt_retorno" value="{dt_retorno}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+			</div>
+			
+			<div style="float:left; width:25%; margin-left:1%;">
+			<label for="hr_retorno">Hr Retorno</label>
+			<br>
+			<input type="text" name="hr_retorno" id="hr_retorno" value="{hr_retorno}" onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5">
+			</div>			
+			
+		</fieldset>
+	</form>
+	<script>
+		MaskInput(document.getElementById('dt_saida'),        "99/99/9999");
+		MaskInput(document.getElementById('hr_saida'),        "99:99");
+		MaskInput(document.getElementById('dt_retorno'),      "99/99/9999");
+		MaskInput(document.getElementById('hr_retorno'),      "99:99");
+
+	</script>
+</body>
+</html>

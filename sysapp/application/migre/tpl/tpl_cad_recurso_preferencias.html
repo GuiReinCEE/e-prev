@@ -1,0 +1,194 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Recursos Humanos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+<!--
+	function winHabilidades(r,h)
+	{
+		w = window.open("recurso_inc_habilidade.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=380,height=230");
+	}
+	function excHabilidades(r,h)
+	{
+		w = window.open("recurso_exc_habilidade.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=100,height=60");
+		w.close();
+		self.location.reload(true);
+	}
+	
+	function ir_perfil()
+	{
+		location.href="cad_recurso_perfil.php?u={usuario_link}&c={codigo_link}";
+	}
+	
+	function ir_work()
+	{
+		location.href="cad_recurso_workspace.php?u={usuario_link}&c={codigo_link}";
+	}
+-->
+</script>
+
+{ABA_START}
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td colspan="2"> 
+            <!-- START BLOCK : mensagem -->
+            <div align="center">
+              <br>
+              <br>
+              <font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{msg}</font>
+            </div>
+            <font face="Verdana, Arial, Helvetica, sans-serif"> 
+            <!-- END BLOCK : mensagem -->
+            <!-- START BLOCK : cadastro -->
+            </font> 
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top"> 
+          <td> 
+			  <font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;              
+              </font> 
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                        <td colspan="2"><form name="form1" method="post" action="grava_recurso_preferencias.php?c={codigo}">
+              <input name="codigo" type="hidden" id="codigo3" value="{codigo}">
+              <input name="formato" type="hidden" id="forma_mens" value="{forma_mens}">
+                          <table border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF">
+                            <tr bgcolor="{cor_fundo2}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Identifica&ccedil;&atilde;o</font></td>
+                              <td bgcolor="{cor_fundo2}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="usuario" type="text" id="usuario" value="{usuario}" size="20" {ro_adm} maxlength="20" style="font-family: Verdana; font-size: 8 pt">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Re: 
+                                {re} </font></td>
+                              <td align="right" bgcolor="{cor_fundo2}"><input type="image" src="img/btn_salvar.jpg"></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="nome" type="text" id="nome" value="{nome}" size="60" maxlength="100" style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Identifica&ccedil;&atilde;o 
+                                usual:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="guerra" type="text" id="guerra" value="{guerra}" size="20" maxlength="20" style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Papel:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                {papel} </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cargo 
+                                / Fun&ccedil;&atilde;o:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                {cargo} </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Divis&atilde;o:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                {divisao} </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Grupos 
+                                de trabalho:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                {grupo} (opcional, como qualidade, expans&atilde;o, 
+                                Funda&ccedil;&atilde;o Solid&aacute;ria, etc.)</font></td>
+                            </tr>
+                            <tr align="center" bgcolor="{cor_fundo2}"> 
+                              <td colspan="4" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>&Aacute;rea 
+                                de trabalho:</strong></font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Skin:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input type="radio" name="opt_skin" id="radio4" value="TRAD" {chk_trad}>
+                                Tradicional 
+                                <input type="radio" name="opt_skin" id="radio5" value="NEO1" {chk_neo1}>
+                                Neo1 
+                                <input type="radio" name="opt_skin" id="radio6" value="MODE" {chk_mode}>
+                                Moderno 
+                                <input type="radio" name="opt_skin" id="radio" value="PRAT" {chk_prat}>
+                                Pr&aacute;tico 
+                                <input type="radio" name="opt_skin" id="radio2" value="COPA" {chk_copa}>
+                                Copa 2006</font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Formato 
+                                da mensagem:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <select name="formato_mensagem" id="select" style="font-family: Verdana; font-size: 8 pt">
+                                  <!-- START BLOCK : form_mens -->
+                                  <option value="{cod_formato}" {sel_formato}>{nome_formato}</option>
+                                  <!-- END BLOCK : form_mens -->
+                                </select>
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">E-mail 
+                                alternativo:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="email_alt" type="text" id="email_alt2" value="{email_alternativo}" size="60" style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td rowspan="5" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Op&ccedil;&otilde;es:</font></td>
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input type="checkbox" name="opt_tarefas" value="S" {chk_tarefas}>
+                                <font size="2">Desejo trabalhar com tarefas</font></font> 
+                              </td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input type="checkbox" name="opt_workspace" value="S" {chk_workspace}>
+                                <font size="2">Mostrar programa CPU Scanner no 
+                                login da rede</font></font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input type="checkbox" name="opt_dicas" value="S" {chk_dicas}>
+                                <font size="2">Ver dicas do sistema na entrada 
+                                do e-prev</font></font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input type="checkbox" name="opt_interatividade" value="S" {chk_interatividade}>
+                                <font size="2">Utilizar interatividade com a rede* 
+                                <font size="1">(necessita instala&ccedil;&atilde;o 
+                                do programa abaixo)</font></font></font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td colspan="3"><p><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Para 
+                                  a instala&ccedil;&atilde;o do programa de auditoria, 
+                                  <br>
+                                  que permitir&aacute; a interatividade com a 
+                                  rede, clique <a href="\\Srvservicos\Executaveis\CPUS\CPUScanner_setup.exe" class="links2">aqui</a>.</font></p></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&otilde;es:</font></td>
+                              <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <textarea name="obs" cols="60" rows="4" id="textarea3" style="font-family: Verdana; font-size: 8 pt">{obs}</textarea>
+                                </font></td>
+                            </tr>
+                          </table>
+            </form></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+		</td>
+        </tr>
+      </table>
+            <!-- END BLOCK : cadastro -->
+          </td>
+  </tr>
+</table>
+
+
+{ABA_END}
+
+
+<!-- INCLUDE BLOCK : footer.html -->

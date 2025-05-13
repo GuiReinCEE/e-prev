@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?><response>
+<fld tp="SYS" id="FNC">{fnc}</fld><fld tp="SYS" id="ERR">{err}</fld>
+<!-- START BLOCK : linha -->
+<fld tp="DAT" id="{fieldName}">fieldValue</fld>
+<!-- END BLOCK : linha -->
+</response>

@@ -1,0 +1,116 @@
+.sort-table {
+	font: 11px tahoma,verdana,helvetica;
+	/*border:		1px Solid ThreeDShadow;*/
+	border:		1px Solid #99BBE8;
+	background:	#FFFFFF;
+	color:		WindowText;
+	border-collapse: collapse;
+}
+
+.sort-table thead {
+	background: url(../sort_table/images/bgblue.gif) #ecf1f4;
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;	
+	text-align:center;
+}
+
+.sort-table thead td {
+	/*border:			2px solid;
+	border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;*/
+	padding: 2px 5px;
+	cursor:	pointer;
+	border: 1px solid #99BBE8;
+	height: 25px;
+	white-space:nowrap;
+}
+
+.sort-table thead td:active {
+	/*border-color:	ButtonShadow ButtonHighlight
+					ButtonHighlight ButtonShadow;*/
+	padding:		3px 4px 1px 6px;
+}
+
+.sort-table thead td[_sortType=None]:active {
+	/*border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;*/
+	padding:		2px 5px;
+}
+
+.sort-table tbody td {
+	/*padding:	2px 5px;*/
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.sort-table tbody td  a{
+	font-family: Arial;
+	font-size: 8pt;
+	font-weight: bold;	
+}
+
+.sort-arrow {
+	width:					11px;
+	height:					11px;
+	background-position:	center center;
+	background-repeat:		no-repeat;
+	margin:					0 2px;
+}
+
+.sort-arrow.descending {
+	background-image:		url("../sort_table/images/downsimple.gif");
+
+}
+
+.sort-arrow.ascending {
+	background-image:		url("../sort_table/images/upsimple.gif");
+}
+
+.sort-par{
+	/*background: #C8D0C8;*/
+	background: #FFFFFF;
+}
+.sort-impar{
+	/*background: #F4F4F4;*/
+	/*background: #EAEEF2;*/
+	background: #FFFFFF;
+	/*background-image:		url("../sort_table/images/row-sel.gif");*/
+	
+}
+
+.sort-selecionado {
+	/*background:#E6E8B6;*/
+	background:#E8EEF7;
+	
+	border:1px #FAD163 solid;
+}
+
+.sort-totalizador td
+{
+	font-weight: bold;
+}
+
+@media print {
+	.sort-table * {
+		font-family: Arial;
+		font-size: 10pt;
+		color: #000000;
+	}
+	.sort-table {
+		border-collapse: collapse;
+	}
+	.sort-table thead td {
+		border: 1px solid gray;	
+	}
+	.sort-table td {
+		border: 1px solid gray;
+	}
+	.sort-totalizador td{
+		border: 1px solid gray;
+	}
+}

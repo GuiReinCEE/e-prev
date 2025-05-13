@@ -1,0 +1,154 @@
+<?php
+$body=array();
+$head=array( 
+	'#', 'Mês','Horas','Homens', 'Horas/Homem<br>Treinamento','Meta Mês', 'Horas<br>acumulado','Empregado<br>acumulado<br>Média 12 meses','h/homem<br>acumulado', 'Peso', 'Result<br>Meta','RF Mês', 'Meta/% Acum', '', 'Média móvel', '', 'Meta ano',''
+);
+
+$acum=0;
+$acumular_ate=12;
+
+$contador=sizeof($collection);
+
+foreach( $collection as $item )
+{
+	$link=anchor("igp/treinamento/detalhe/".$item["cd_treinamento"], "editar");
+	$mes_ano=split( '/',$item["mes_referencia"] );
+
+	$hora=floatval( $item['nr_hora'] );
+	$homem=floatval( $item['nr_homem'] );
+	$meta=floatval($item['nr_meta']);
+	$meta_ano=floatval($item["nr_meta_ano"]);
+	$peso=floatval($item["nr_peso"]);
+
+	// =B82/C82+D81
+	if($mes_ano[0]==1) // todo janeiro inicia novamente.
+	{
+		$hora_homem_treinamento=floatval($hora/$homem);
+	}
+	else // os meses seguintes, acumula.
+	{
+		$hora_homem_treinamento=floatval($hora/$homem+$hora_homem_treinamento);
+	}
+
+	$a_horas_acumulado[]=intval($hora);
+	$horas_acumulado=0;
+	$j=1;
+	for( $i=sizeof($a_horas_acumulado);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$horas_acumulado+=intval($a_horas_acumulado[$i-1]);
+			$j++;
+		}
+	}
+
+	$a_empregado_acumulado[]=intval($homem);
+	$empregado_acumulado=0;
+	$j=1;
+	for( $i=sizeof($a_empregado_acumulado);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$empregado_acumulado+=intval($a_empregado_acumulado[$i-1]);
+			$j++;
+		}
+	}
+	
+	$divisor=(sizeof($a_empregado_acumulado)<$acumular_ate)?sizeof($a_empregado_acumulado):$acumular_ate;
+	$empregado_acumulado=floatval($empregado_acumulado)/$divisor;
+
+	$hora_homem_acumulado = floatval($horas_acumulado)/floatval($empregado_acumulado);
+
+	// =SE(D82>0;D82/E82;1)     hht     mm
+	if( floatval($hora_homem_treinamento)>0 )
+	{
+		$resultado_meta = ( floatval($hora_homem_treinamento) / floatval($meta) ) * 100;
+	}
+	else
+	{
+		$resultado_meta = 100;
+	}
+
+	// =SE(J82>1;I82;I82*J82)
+	if(floatval($resultado_meta/100)>1)
+	{
+		$rf_mes=$peso;
+	}
+	else
+	{
+		$rf_mes=( floatval($peso)*floatval($resultado_meta/100) );
+	}
+
+	// todo ano de 2008 e janeiro de 2009 usam META_ANO para calculo
+	if( intval($mes_ano[1])==2008 || (intval($mes_ano[0])==1 && intval($mes_ano[1])==2009) )
+	{
+		$meta_perc_acumulado=( floatval($hora_homem_acumulado)/floatval($meta_ano) )*100;
+	}
+	else
+	{
+		$meta_perc_acumulado=( floatval($hora_homem_acumulado)/floatval($meta) )*100;
+	}
+
+	//=SE(M82>1;I82;I82*M82)
+	if(floatval($meta_perc_acumulado/100)>1)
+	{
+		$rf_acum=$peso;
+	}
+	else
+	{
+		$rf_acum=( floatval($peso)*floatval($meta_perc_acumulado/100) );
+	}
+
+	// % MÉDIA MÓVEL
+	$a_percentual_media_movel[]=$hora_homem_treinamento;
+	$percentual_media_movel=0;
+
+	// MÉDIA MÓVEL	
+	$a_rf_mes[]=$rf_mes;
+	$media_movel=0;
+
+	$j=1;
+	for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$percentual_media_movel+=$a_percentual_media_movel[$i-1];
+			$media_movel+=$a_rf_mes[$i-1];
+
+			$j++;
+		}
+	}
+
+	$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+	$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+	$media_movel=floatval($media_movel)/$divisor;
+
+	$body[] = array(
+		$contador--
+		, $item['mes_referencia']
+		, number_format($hora, 0)
+		, number_format($homem, 0)
+		, number_format($hora_homem_treinamento, 2)
+		, number_format($meta, 2)
+		, number_format($horas_acumulado, 0,'.','')
+		, number_format($empregado_acumulado, 0)
+		, number_format($hora_homem_acumulado, 2)
+		, number_format($peso, 0)
+		, '<div style="width:50px;">'. number_format($resultado_meta, 0).' %</div>'
+		, number_format($rf_mes, 2)
+		, number_format($meta_perc_acumulado, 3, '.', '').' %'
+		, number_format($rf_acum, 2)
+		, number_format($percentual_media_movel, 2)
+		, number_format($media_movel, 2)
+		, number_format($meta_ano, 0)
+		, $link
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+
+echo $grid->render();
+?>

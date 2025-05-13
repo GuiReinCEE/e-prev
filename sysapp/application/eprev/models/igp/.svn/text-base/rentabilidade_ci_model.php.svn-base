@@ -1,0 +1,129 @@
+<?php
+class Rentabilidade_ci_model extends Model
+{
+	function __construct()
+	{
+		parent::Model();
+	}
+
+	function listar( &$result, $args=array() )
+	{
+		// mount query
+		$sql = "
+		SELECT cd_rentabilidade_ci
+		, to_char(dt_referencia,'MM/YYYY') as mes_referencia
+		, nr_rentabilidade
+		, nr_benchmark
+		, nr_peso_igp
+		FROM igp.rentabilidade_ci r
+		WHERE (r.dt_exclusao is null)
+		ORDER BY r.dt_referencia
+		";
+
+		// return result ...
+		$result = $this->db->query($sql);
+	}
+
+	function carregar($cd)
+	{
+		$sql = "
+			SELECT cd_rentabilidade_ci
+			, to_char( dt_referencia , 'DD/MM/YYYY' ) as dt_referencia
+				, nr_rentabilidade
+			, nr_benchmark
+			, nr_peso_igp
+			FROM igp.rentabilidade_ci 
+		";
+
+		$row=array();
+		$query = $this->db->query( $sql . ' LIMIT 1 ' );
+		$fields = $query->field_data();
+		foreach( $fields as $field )
+		{
+			$row[$field->name] = '';
+		}
+
+		if( intval($cd)>0 )
+		{
+			$sql .= " WHERE cd_rentabilidade_ci={cd_rentabilidade_ci} ";
+			esc( "{cd_rentabilidade_ci}", intval($cd), $sql );
+			$query=$this->db->query($sql);
+
+			if($query->row_array())
+			{
+				$row=$query->row_array();
+			}
+		}
+
+		return $row;
+	}
+
+	function salvar($args, &$msg=array())
+	{
+		if(intval($args['cd_rentabilidade_ci'])==0)
+		{
+			$sql="
+			INSERT INTO igp.rentabilidade_ci (  
+			  dt_referencia 
+			, nr_rentabilidade
+			, nr_benchmark
+			, nr_peso_igp
+			, dt_inclusao 
+			, cd_usuario_inclusao
+			) VALUES ( 
+			  date_trunc( 'month', to_date('{dt_referencia}','DD/MM/YYYY') )
+			, {nr_rentabilidade}
+			, {nr_benchmark}
+			, {nr_peso_igp}
+			, CURRENT_TIMESTAMP 
+			, {cd_usuario_inclusao} 
+			)
+			";
+		}
+		else
+		{
+			$sql="
+			UPDATE igp.rentabilidade_ci SET
+			 cd_rentabilidade_ci = {cd_rentabilidade_ci}
+			, dt_referencia = date_trunc( 'month', to_date('{dt_referencia}','DD/MM/YYYY') )
+			, nr_rentabilidade = {nr_rentabilidade}
+			, nr_benchmark = {nr_benchmark}
+			, nr_peso_igp = {nr_peso_igp}
+			WHERE cd_rentabilidade_ci = {cd_rentabilidade_ci}
+			";
+		}
+
+		esc("{cd_rentabilidade_ci}", $args["cd_rentabilidade_ci"], $sql, "int", false);
+		esc("{dt_referencia}", $args["dt_referencia"], $sql, "str", false);
+		esc("{nr_rentabilidade}", $args["nr_rentabilidade"], $sql, "float", false);
+		esc("{nr_benchmark}", $args["nr_benchmark"], $sql, "float", false);
+		esc("{nr_peso_igp}", $args["nr_peso_igp"], $sql, "float", false);
+		esc("{cd_usuario_inclusao}", $args["cd_usuario_inclusao"], $sql, "int", false);
+
+		try
+		{
+			$query = $this->db->query($sql);
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$msg[]=$e->getMessage();
+			return false;
+		}
+	}
+
+	function excluir($id)
+	{
+		$sql = "
+			UPDATE igp.rentabilidade_ci
+			SET dt_exclusao=current_timestamp, cd_usuario_exclusao={cd_usuario_exclusao} 
+			WHERE md5(cd_rentabilidade_ci::varchar)='{cd_rentabilidade_ci}' 
+		";
+
+		esc('{cd_usuario_exclusao}', usuario_id(), $sql, 'int');
+		esc('{cd_rentabilidade_ci}', $id, $sql, 'str');
+
+		$query=$this->db->query($sql);
+	}
+}
+?>

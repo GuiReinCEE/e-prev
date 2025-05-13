@@ -1,0 +1,181 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<link href="inc/abas.css" rel="stylesheet" type="text/css">
+	<style>
+		.resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado {
+			border-collapse: collapse;
+			width: 100%;		
+		}
+		
+		.tb_resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado th {
+			font-weight: bold;	
+			text-align:center;
+			border: 1px #dae9f7 solid;
+			background:#dae9f7;
+		}
+		.tb_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px #dae9f7 solid;
+		}		
+		
+		.tb_resultado_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+			cursor:pointer;
+		}
+		
+		.tb_lista_resultado {
+			border-collapse: collapse;
+			width: 100%;		
+		}
+		
+		.tb_lista_resultado * {
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_lista_resultado th {
+			font-size: 10pt;
+			font-weight: bold;	
+			text-align:center;
+			border: 1px solid #CCCCCC;
+			color:#FFFFFF;
+			background:#0046ad;
+		}
+		.tb_lista_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}	
+
+		.tb_cadastro_saida{
+			border-collapse: collapse;
+			width: 60%;
+			background:#F4F4F4;
+		}
+		
+		.tb_cadastro_saida *{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_cadastro_saida th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			font-weight: bold;
+			color:#000000;
+			background:#dae9f7;
+		}
+
+		.tb_cadastro_saida td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+		}	
+	</style>	
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+	<div id="ob_diario" style="width:90%;margin-left:25px;text-align:center;">
+		<br>
+		<form name="formulario" method="post" action="">	
+			<table class="tb_cadastro_saida" align="center">
+				<tr>
+					<th colspan="3">
+						RELATÓRIO DIÁRIO
+					</th>
+				</tr>			
+				<tr>
+					<th>
+						Dia
+					</th>
+					<td>
+						<input type="text"  name="dt_dia"  id="dt_dia" value="{dt_dia}" onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10">
+					</td>
+					<td align="center">
+						<input type="image" name="filtrar" src="img/btn_atualizar.jpg" title="Filtrar">
+					</td>
+				</tr>				
+			</table>
+		</form>
+		<br>
+		<!-- START BLOCK : tempo_medio -->
+		<table class="tb_cadastro_saida" align="center">
+			<tr>
+				<th colspan="6">
+					TEMPO
+				</th>
+			</tr>
+			<tr>
+				<th>
+					Mínimo
+				</th>
+				<td>
+					{hr_tempo_min}
+				</td>					
+				<th>
+					Médio
+				</th>
+				<td>
+					{hr_tempo_medio}
+				</td>
+				<th>
+					Máximo
+				</th>
+				<td>
+					{hr_tempo_max}
+				</td>						
+			</tr>
+		</table>
+		<!-- END BLOCK : tempo_medio -->				
+		<BR>
+		<table class="tb_lista_resultado">
+			<tr>
+				<th>
+					Tipo visitante
+				</th>		
+				<th>
+					Quantidade
+				</th>						
+			</tr>
+			<!-- START BLOCK : lst_movimento_diario -->	
+			<tr bgcolor="{bg_color}" onmouseover="this.className='tb_resultado_selecionado';" onmouseout="this.className='';">
+				<td>
+					{descricao}
+				</td>						
+				<td style="white-space:nowrap;text-align:center;">
+					{qt_total}
+				</td>						
+			</tr>	
+			<!-- END BLOCK : lst_movimento_diario -->	
+		</table>
+		<br>
+		<img src="graf_pizza_visitantes_diario.php?dt_dia={dt_dia}" border="0">
+	</div>			
+
+	<script>
+		// DEFINIÇÃO DE MASCARAS PARA OS CAMPOS //
+		MaskInput(document.getElementById('dt_dia'),          "99/99/9999");
+	</script>	
+
+<!-- INCLUDE BLOCK : footer.html -->

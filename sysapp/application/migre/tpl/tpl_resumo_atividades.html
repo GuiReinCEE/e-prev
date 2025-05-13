@@ -1,0 +1,495 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Resumo de atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<style>
+		*{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		label{
+			font-weight: bold;
+		}
+
+		caption {
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';	
+			background:#F0E8BA;
+		}
+
+		caption *{
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';	
+			background:#F0E8BA;
+		}		
+		
+		th {
+			font-size: 10pt;
+			font-weight: bold;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			text-align:center;	
+			background:#CCCCCC;
+			white-space:nowrap;
+		}	
+		
+		.tb_resultado{
+			border-collapse: collapse;
+		}
+		
+		.tb_resultado th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			white-space:nowrap;
+		}
+		
+		.tb_resultado td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+			text-align:center;				
+		}	
+
+		.titulo_resumo_atividade {
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			padding:10px;
+		}
+
+		.ano_anterior td{
+			color:gray;
+			font-weight: bold;
+		}
+		
+		.ano_atual td{
+			color:green;
+			font-weight: bold;
+			background:#F4F4F4;
+			white-space:nowrap;
+		}	
+		
+	</style>
+
+	<form name="formulario" action="" method="post">
+		<!-- INICIO BOTOES E FILTRO -->	
+		<table align="center" >
+			<tr>
+				<td>
+					<label for='nr_ano'>Ano:</label>
+				</td>
+				<td>
+					<select name='nr_ano' id='nr_ano' style="width: 100px;">
+					  <!-- START BLOCK : nr_ano -->
+					  <option value="{nr_ano}" {fl_nr_ano}>{nr_ano}</option>
+					  <!-- END BLOCK : nr_ano -->							
+					</select>
+				</td>	
+
+				<td style="display:none;">
+					<label for='nr_ano'>Atendente:</label>
+				</td>
+				<td style="display:none;">
+					<select name='cd_atendente1' id='cd_atendente1' style="width: 300px;">
+
+					  <!-- START BLOCK : cd_atendente -->
+					  <option value="{cd_atendente}" {fl_cd_atendente}>{ds_atendente}</option>
+					  <!-- END BLOCK : cd_atendente -->							
+					</select>
+				</td>	
+
+				<td>
+					<input type="image" name="submit" src="img/btn_atualizar.jpg">
+				</td>
+				<td>
+					<img src="img/btn_impressora.jpg" border="0" onclick="window.print()" style="cursor:pointer;">
+				</td>
+			</tr>
+		</table>
+		<!-- FIM BOTOES E FILTRO -->
+
+			<!-- INICIO TITULO -->	
+			<table align='center'>
+				<tr>
+					<td class='titulo_resumo_atividade'>
+						{divisao_titulo}
+					</td>
+				</tr>
+			</table>
+			<!-- FIM TITULO -->	
+			<!-- INICIO ATIVIDADES SUPORTE -->	
+			<table align='center' class='tb_resultado' {fl_exibe_GI}>
+				<caption>Atividades Suporte em {ano_titulo}</caption>
+				<tr>
+					<th colspan='10'>MENSAL</th>
+					<th colspan='9'>ACUMULADO</th>
+				</tr>				
+				<tr>
+					<th rowspan="2">Mês/Ano</th>
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>
+					<th rowspan="2">% Atendidas</th>
+					
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>					
+					<th rowspan="2">% Atendidas</th>
+				</tr>
+				<tr>
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+				</tr>
+				<tr class='ano_anterior'>
+					<td>Até 12/{ano_anterior_titulo}</td>
+					<!-- START BLOCK : qt_ano_anterior_suporte -->
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>
+					<td>{qt_anterior_atendida_perc}<br></td>
+					
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>	
+					<td>{qt_anterior_atendida_perc}<br></td>						
+					<!-- END BLOCK : qt_ano_anterior_suporte -->
+				</tr>					
+				
+				<!-- START BLOCK : qt_ano_mes_suporte -->
+				<tr bgcolor="{bg_color}">
+					<td>{mes_ano}</td>
+					<td>{qt_mes_aberta}<br></td>
+					<td>{qt_mes_concluida_crit_auto}<br></td>
+					<td>{qt_mes_concluida_crit_user}<br></td>
+					<td>{qt_mes_concluida_crit_nao}<br></td>
+					<td>{qt_mes_concluida}<br></td>
+					<td>{qt_mes_cancelada}<br></td>
+					<td>{qt_mes_suspensa}<br></td>
+					<td>{qt_mes_atendida}<br></td>
+					<td>{qt_mes_atendida_perc}<br></td>
+					
+					<td>{qt_mes_acumulado_aberta}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_mes_acumulado_concluida}<br></td>
+					<td>{qt_mes_acumulado_cancelada}<br></td>
+					<td>{qt_mes_acumulado_suspensa}<br></td>
+					<td>{qt_mes_acumulado_atendida}<br></td>					
+					<td>{qt_mes_acumulado_atendida_perc}<br></td>	
+				</tr>
+				<!-- END BLOCK : qt_ano_mes_suporte -->		
+				<tr class='ano_atual'>
+					<td>Até 12/{ano_titulo}</td>
+					<!-- START BLOCK : qt_tot_suporte -->
+					<td>{qt_tot_mes_aberta}<br></td>
+					<td>{qt_tot_mes_concluida_crit_auto}<br></td>
+					<td>{qt_tot_mes_concluida_crit_user}<br></td>
+					<td>{qt_tot_mes_concluida_crit_nao}<br></td>
+					<td>{qt_tot_mes_concluida}<br></td>
+					<td>{qt_tot_mes_cancelada}<br></td>
+					<td>{qt_tot_mes_suspensa}<br></td>
+					<td>{qt_tot_mes_atendida}<br></td>
+					<td>{qt_tot_mes_atendida_perc}<br></td>
+					
+					<td>{qt_tot_acumulado_aberta}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_tot_acumulado_concluida}<br></td>
+					<td>{qt_tot_acumulado_cancelada}<br></td>
+					<td>{qt_tot_acumulado_suspensa}<br></td>
+					<td>{qt_tot_acumulado_atendida}<br></td>	
+					<td>{qt_tot_acumulado_atendida_perc}<br></td>	
+					<!-- END BLOCK : qt_tot_suporte -->							
+				</tr>
+			</table>
+			<!-- FIM ATIVIDADES SUPORTE -->	
+			<br>
+			<!-- INICIO ATIVIDADES SISTEMAS -->	
+			<table align='center' class='tb_resultado'>
+				<caption>Atividades <span {fl_exibe_GI}>Sistemas</span> em {ano_titulo}</caption>
+				<tr>
+					<th colspan='10'>MENSAL</th>
+					<th colspan='9'>ACUMULADO</th>
+				</tr>				
+				<tr>
+					<th rowspan="2">Mês/Ano</th>
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>
+					<th rowspan="2">% Atendidas</th>
+					
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>					
+					<th rowspan="2">% Atendidas</th>
+				</tr>
+				<tr>
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+				</tr>				
+				<tr class='ano_anterior'>
+					<td>Até 12/{ano_anterior_titulo}</td>
+					<!-- START BLOCK : qt_ano_anterior_sistema -->
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>
+					<td>{qt_anterior_atendida_perc}<br></td>
+					
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>	
+					<td>{qt_anterior_atendida_perc}<br></td>					
+					<!-- END BLOCK : qt_ano_anterior_sistema -->
+				</tr>					
+				
+				<!-- START BLOCK : qt_ano_mes_sistema -->
+				<tr bgcolor="{bg_color}">
+					<td>{mes_ano}</td>
+					<td>{qt_mes_aberta}<br></td>
+					<td>{qt_mes_concluida_crit_auto}<br></td>
+					<td>{qt_mes_concluida_crit_user}<br></td>
+					<td>{qt_mes_concluida_crit_nao}<br></td>
+					<td>{qt_mes_concluida}<br></td>
+					<td>{qt_mes_cancelada}<br></td>
+					<td>{qt_mes_suspensa}<br></td>
+					<td>{qt_mes_atendida}<br></td>
+					<td>{qt_mes_atendida_perc}<br></td>
+					
+					<td>{qt_mes_acumulado_aberta}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_mes_acumulado_concluida}<br></td>
+					<td>{qt_mes_acumulado_cancelada}<br></td>
+					<td>{qt_mes_acumulado_suspensa}<br></td>
+					<td>{qt_mes_acumulado_atendida}<br></td>					
+					<td>{qt_mes_acumulado_atendida_perc}<br></td>				
+				</tr>
+				<!-- END BLOCK : qt_ano_mes_sistema -->		
+				<tr class='ano_atual'>
+					<td>Até 12/{ano_titulo}</td>
+					<!-- START BLOCK : qt_tot_sistema -->
+					<td>{qt_tot_mes_aberta}<br></td>
+					<td>{qt_tot_mes_concluida_crit_auto}<br></td>
+					<td>{qt_tot_mes_concluida_crit_user}<br></td>
+					<td>{qt_tot_mes_concluida_crit_nao}<br></td>
+					<td>{qt_tot_mes_concluida}<br></td>
+					<td>{qt_tot_mes_cancelada}<br></td>
+					<td>{qt_tot_mes_suspensa}<br></td>
+					<td>{qt_tot_mes_atendida}<br></td>
+					<td>{qt_tot_mes_atendida_perc}<br></td>
+					
+					<td>{qt_tot_acumulado_aberta}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_tot_acumulado_concluida}<br></td>
+					<td>{qt_tot_acumulado_cancelada}<br></td>
+					<td>{qt_tot_acumulado_suspensa}<br></td>
+					<td>{qt_tot_acumulado_atendida}<br></td>	
+					<td>{qt_tot_acumulado_atendida_perc}<br></td>	
+					<!-- END BLOCK : qt_tot_sistema -->							
+				</tr>
+			</table>
+			<!-- FIM ATIVIDADES SISTEMAS -->	
+			<br>
+			<!-- INICIO RESUMO ATIVIDADES -->	
+			<table align='center' class='tb_resultado'>
+				<caption>Resumo Atividades em {ano_titulo}</caption>
+				<tr>
+					<th colspan='10'>MENSAL</th>
+					<th colspan='9'>ACUMULADO</th>
+				</tr>				
+				<tr>
+					<th rowspan="2">Mês/Ano</th>
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>
+					<th rowspan="2">% Atendidas</th>
+					
+					<th rowspan="2">Abertas</th>
+					<th colspan='4'>Concluídas</th>
+					<th rowspan="2">Canceladas</th>
+					<th rowspan="2">Suspensas</th>
+					<th rowspan="2" title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>					
+					<th rowspan="2">% Atendidas</th>
+				</tr>
+				<tr>
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+
+					<th>Crítica<BR> Auto</th>
+					<th>Crítica<BR> Usuário</th>
+					<th>Não<BR> Crítica</th>
+					<th>Total</th>
+				</tr>
+				<tr class='ano_anterior'>
+					<td>Até 12/{ano_anterior_titulo}</td>
+					<!-- START BLOCK : qt_ano_anterior_resumo -->
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>
+					<td>{qt_anterior_atendida_perc}<br></td>
+					
+					<td>{qt_anterior_aberta}<br></td>
+					<td>{qt_anterior_concluida_crit_auto}<br></td>
+					<td>{qt_anterior_concluida_crit_user}<br></td>
+					<td>{qt_anterior_concluida_crit_nao}<br></td>
+					<td>{qt_anterior_concluida}<br></td>
+					<td>{qt_anterior_cancelada}<br></td>
+					<td>{qt_anterior_suspensa}<br></td>
+					<td>{qt_anterior_atendida}<br></td>	
+					<td>{qt_anterior_atendida_perc}<br></td>				
+					<!-- END BLOCK : qt_ano_anterior_resumo -->
+				</tr>					
+				
+				<!-- START BLOCK : qt_ano_mes_resumo -->
+				<tr bgcolor="{bg_color}">
+					<td>{mes_ano}</td>
+					<td>{qt_mes_aberta}<br></td>
+					<td>{qt_mes_concluida_crit_auto}<br></td>
+					<td>{qt_mes_concluida_crit_user}<br></td>
+					<td>{qt_mes_concluida_crit_nao}<br></td>
+					<td>{qt_mes_concluida}<br></td>
+					<td>{qt_mes_cancelada}<br></td>
+					<td>{qt_mes_suspensa}<br></td>
+					<td>{qt_mes_atendida}<br></td>
+					<td>{qt_mes_atendida_perc}<br></td>
+					
+					<td>{qt_mes_acumulado_aberta}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_mes_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_mes_acumulado_concluida}<br></td>
+					<td>{qt_mes_acumulado_cancelada}<br></td>
+					<td>{qt_mes_acumulado_suspensa}<br></td>
+					<td>{qt_mes_acumulado_atendida}<br></td>					
+					<td>{qt_mes_acumulado_atendida_perc}<br></td>					
+				</tr>
+				<!-- END BLOCK : qt_ano_mes_resumo -->		
+				<tr class='ano_atual'>
+					<td>Até 12/{ano_titulo}</td>
+					<!-- START BLOCK : qt_tot_resumo -->
+					<td>{qt_tot_mes_aberta}<br></td>
+					<td>{qt_tot_mes_concluida_crit_auto}<br></td>
+					<td>{qt_tot_mes_concluida_crit_user}<br></td>
+					<td>{qt_tot_mes_concluida_crit_nao}<br></td>
+					<td>{qt_tot_mes_concluida}<br></td>
+					<td>{qt_tot_mes_cancelada}<br></td>
+					<td>{qt_tot_mes_suspensa}<br></td>
+					<td>{qt_tot_mes_atendida}<br></td>
+					<td>{qt_tot_mes_atendida_perc}<br></td>
+					
+					<td>{qt_tot_acumulado_aberta}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_auto}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_user}<br></td>
+					<td>{qt_tot_acumulado_concluida_crit_nao}<br></td>
+					<td>{qt_tot_acumulado_concluida}<br></td>
+					<td>{qt_tot_acumulado_cancelada}<br></td>
+					<td>{qt_tot_acumulado_suspensa}<br></td>
+					<td>{qt_tot_acumulado_atendida}<br></td>	
+					<td>{qt_tot_acumulado_atendida_perc}<br></td>	
+					<!-- END BLOCK : qt_tot_resumo -->							
+				</tr>
+			</table>
+			<!-- FIM RESUMO ATIVIDADES -->				
+			<br>
+			<!-- INICIO RESUMO ATIVIDADES POR DIVISÃO -->	
+			<table align='center' class='tb_resultado'>
+				<caption>Resumo Acumulado por Divisão</caption>
+				<tr>
+					<th>Divisão</th>
+					<th>Abertas</th>
+					<th>Concluídas</th>
+					<th>Canceladas</th>
+					<th>Suspensas</th>
+					<th title="Atividades concluídas + atividades canceladas" style="cursor:help;">Atendidas</th>
+					<th>% Atendidas</th>
+				</tr>
+				<!-- START BLOCK : qt_divisao_resumo -->
+				<tr bgcolor="{bg_color}">
+					<td style="text-align:left;">{ds_divisao}</td>
+					<td>{qt_aberta}<br></td>
+					<td>{qt_concluida}<br></td>
+					<td>{qt_cancelada}<br></td>
+					<td>{qt_suspensa}<br></td>
+					<td>{qt_atendida}<br></td>
+					<td>{qt_atendida_perc}<br></td>
+				</tr>
+				<!-- END BLOCK : qt_divisao_resumo -->
+				<tr class='ano_atual'>
+					<td>Total</td>
+					<!-- START BLOCK : qt_divisao_resumo_total -->
+					<td>{qt_tot_aberta}<br></td>
+					<td>{qt_tot_concluida}<br></td>
+					<td>{qt_tot_cancelada}<br></td>
+					<td>{qt_tot_suspensa}<br></td>
+					<td>{qt_tot_atendida}<br></td>
+					<td>{qt_tot_atendida_perc}<br></td>
+					<!-- END BLOCK : qt_divisao_resumo_total -->							
+				</tr>				
+			</table>
+	</form>
+	<br>
+
+<!-- INCLUDE BLOCK : footer.html -->

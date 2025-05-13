@@ -1,0 +1,345 @@
+<?php
+class custo_administrativo extends Controller
+{
+    function __construct()
+    {
+        parent::Controller();
+    }
+
+    function index()
+    {
+		if(CheckLogin())
+		{
+	        $this->load->view('igp/custo_administrativo/index.php');
+		}
+    }
+
+    function listar()
+    {
+        if(CheckLogin())
+        {
+	        $this->load->model('igp/Custo_administrativo_model');
+
+			$data['collection'] = array();
+	        $result = null;
+
+			// --------------------------
+			// listar ...
+
+			$args=array();
+
+	        $this->Custo_administrativo_model->listar( $result, $args );
+
+			$data['collection'] = $result->result_array();
+
+	        if( $result )
+	        {
+	            $data['collection'] = $result->result_array();
+	        }
+
+	        // --------------------------
+
+	        $this->load->view('igp/custo_administrativo/partial_result', $data);
+        }
+    }
+
+	function detalhe($cd=0)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Custo_administrativo_model');
+			$row=$this->Custo_administrativo_model->carregar( $cd );
+			if($row)
+			{
+				if($cd==0)
+				{
+					$sql="SELECT to_char(dt_referencia + '1 month'::interval,'DD/MM/YYYY') AS mes_referencia, dt_referencia, nr_meta, nr_peso FROM igp.custo_administrativo WHERE dt_exclusao IS NULL ORDER BY dt_referencia DESC LIMIT 1";
+					$query = $this->db->query($sql);
+					$row_atual = $query->row_array();
+
+					$row['dt_referencia'] = $row_atual['mes_referencia'];
+					$row['nr_meta'] = $row_atual['nr_meta'];
+					$row['nr_peso'] = $row_atual['nr_peso'];
+				}
+
+				$data['row'] = $row;
+			}
+			$this->load->view('igp/custo_administrativo/detalhe', $data);
+		}
+	}
+
+	function salvar()
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Custo_administrativo_model');
+			
+			$args['cd_custo_administrativo']=intval($this->input->post('cd_custo_administrativo', true));
+	
+			$args["dt_referencia"] = $this->input->post("dt_referencia",true);
+			$args["nr_despesa"] = app_decimal_para_db( $this->input->post("nr_despesa",true) );
+			$args["nr_contribuicao"] = app_decimal_para_db( $this->input->post("nr_contribuicao",true) );
+			$args["nr_meta"] = app_decimal_para_db( $this->input->post("nr_meta",true) );
+			$args["nr_peso"] = app_decimal_para_db( $this->input->post("nr_peso",true) );
+			$args["cd_usuario_inclusao"] = usuario_id();
+
+			$msg=array();
+			$retorno = $this->Custo_administrativo_model->salvar( $args, $msg );
+
+			if($retorno)
+			{
+				redirect( "igp/custo_administrativo", "refresh" );			
+			}
+			else
+			{
+				$mensagens = implode('<br>', $msg);
+				exibir_mensagem( $msg[0] );
+			}
+		}
+	}
+
+	function excluir($id)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Custo_administrativo_model');
+
+			$this->Custo_administrativo_model->excluir( $id );
+
+			redirect( 'igp/custo_administrativo', 'refresh' );
+		}
+	}
+	function criar_indicador()
+	{
+		if( CheckLogin() )
+		{
+			$INDICADOR_TABELA_CODIGO = enum_indicador_tabela_restrito::GRAFICO_IGP_CUSTO_ADMINISTRATIVO;
+
+			$this->load->helper(array('igp','indicador'));
+			$indicador=array();
+
+			$this->load->model('igp/Custo_administrativo_model', 'dbmodel');
+
+	        $collection = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+	        $this->dbmodel->listar( $result, $args );
+
+			$collection=$result->result_array();
+
+			igp_limpar_historico(enum_indicador::CUSTO_ADMINISTRATIVO);
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+			$acumular_ate=12;
+			$contador=sizeof($collection);
+			foreach( $collection as $item )
+			{
+				$despesa = floatval($item["nr_despesa"]);
+				$contribuicao = floatval($item["nr_contribuicao"]);
+				$gasto=(floatval($despesa)/floatval($contribuicao)) * 100;
+				$meta = floatval($item["nr_meta"]);
+
+				$arr[]=floatval($despesa);
+				$despesa_acumulada = 0;
+				$j=1;
+				for( $i=sizeof($arr);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$despesa_acumulada+=$arr[$i-1];
+
+						$j++;
+					}
+				}
+
+				$arr_2[]=floatval($contribuicao);
+				$contribuicao_acumulada = 0;
+				$j=1;
+				for( $i=sizeof($arr_2);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$contribuicao_acumulada+=$arr_2[$i-1];
+
+						$j++;
+					}
+				}
+				
+				$perc_gasto_sobre_acum =(floatval($despesa_acumulada)/floatval($contribuicao_acumulada))*100;
+				$peso = floatval($item["nr_peso"]);
+				
+				$meta_por_resultado = ( floatval($meta)/floatval($gasto) )*100;
+				
+				// =SE(K216>1;J216;J216*K216)
+				if( (floatval($meta_por_resultado)/100)>1 )
+				{
+					$rf_mes = $peso;
+				}
+				else
+				{
+					$rf_mes =(floatval($peso)*floatval($meta_por_resultado))/100;
+				}
+				
+				$meta_por_perc_acum = ( floatval($meta) / floatval($perc_gasto_sobre_acum) )*100;
+
+				// =SE(N216<1;N216*J216;J216)
+				if( (floatval($meta_por_perc_acum)/100)<1 )
+				{
+					$rf_acum=(floatval($meta_por_perc_acum)*floatval($peso))/100;
+				}
+				else
+				{
+					$rf_acum=$peso;
+				}
+
+				// % MÉDIA MÓVEL
+				$a_percentual_media_movel[]=floatval($gasto);
+				$percentual_media_movel=0;
+
+				// MÉDIA MÓVEL	
+				$a_rf_mes[]=$rf_mes;
+				$media_movel=0;
+
+				$j=1;
+				for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$percentual_media_movel+=$a_percentual_media_movel[$i-1];
+						$media_movel+=$a_rf_mes[$i-1];
+
+						$j++;
+					}
+				}
+
+				$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+				$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+				$media_movel=floatval($media_movel)/$divisor;
+
+				$row['mes_ano'] = $item['mes_referencia'];
+				$row['despesa'] = number_format($despesa,2,'.',',');
+				$row['contribuicao'] = number_format($contribuicao,2,'.',',');
+				$row['gasto'] = number_format($gasto,2,'.',',');
+				$row['gasto_acumulado'] = number_format($perc_gasto_sobre_acum,2,'.',',');
+				$row['meta'] = $meta;
+				$row['media_movel'] = $percentual_media_movel;
+
+				$row['igp_mes'] = $rf_mes;
+				$row['igp_acum'] = $rf_acum;
+				$row['igp_media'] = $media_movel;
+
+				$indicador[] = $row;
+
+				// coleta de dados para histórico dos anos anteriores
+				if( strpos($item['mes_referencia'],"12/")>-1 )
+				{
+					$hst_meta = floatval($meta);
+					$hst_resultado = floatval($perc_gasto_sobre_acum);
+					$mr = explode( '/', $item['mes_referencia'] );
+					$desvio_meta = floatval($hst_meta)-floatval($hst_resultado);
+
+					igp_gravar_historico( intval($mr[1]), floatval($hst_meta), floatval($hst_resultado), floatval($desvio_meta), enum_indicador::CUSTO_ADMINISTRATIVO );
+				}
+			}
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+			$sql = " DELETE FROM indicador.indicador_parametro WHERE cd_indicador_tabela=? ";
+			$this->db->query( $sql, array(intval($INDICADOR_TABELA_CODIGO)) );
+
+			$sql='';
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0,0, utf8_encode('Mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1,0, utf8_encode('Despesa Administrativa'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2,0, utf8_encode('Contribuição Previdenciária'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3,0, utf8_encode('% Custo Adm. Mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4,0, utf8_encode('Acumulado'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5,0, utf8_encode('Meta'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 6,0, utf8_encode('Média Móvel 12 Meses'), 'background,center');
+
+			$linha=1;
+			$contador_media=0;
+			$contador_media_ano=0;
+			$media=0;
+			$media_ano=0;
+			for( $i=sizeof($indicador)-$acumular_ate;$i<sizeof($indicador);$i++ )
+			{
+				// IGP
+				$sql1 = " SELECT * FROM igp.igp WHERE to_char( dt_referencia, 'MM/YYYY' )='".$indicador[$i]['mes_ano']."'; ";
+				$query = $this->db->query( $sql1 );
+
+				$igp = $query->row_array();
+
+				$prefixo_tabela="custo";
+				if(sizeof($igp)>0)
+				{
+					$sql .= "UPDATE igp.igp set acu_$prefixo_tabela=".floatval($indicador[$i]['igp_acum']).", mes_$prefixo_tabela=".floatval($indicador[$i]['igp_mes']).", mm_$prefixo_tabela=".floatval($indicador[$i]['igp_media'])." where cd_igp=".intval($igp['cd_igp'])."; ";
+				}
+				else
+				{
+					$sql .= "INSERT INTO igp.igp (acu_$prefixo_tabela, mes_$prefixo_tabela, mm_$prefixo_tabela, dt_referencia) VALUES (".floatval($indicador[$i]['igp_acum']).",".floatval($indicador[$i]['igp_mes']).",".floatval($indicador[$i]['igp_media']).", to_date( '01/".$indicador[$i]['mes_ano']."', 'DD/MM/YYYY' )); ";
+				}
+
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, $indicador[$i]['mes_ano'], 'background,center');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, $indicador[$i]['despesa'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, $indicador[$i]['contribuicao'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format( $indicador[$i]['gasto'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, number_format( $indicador[$i]['gasto_acumulado'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, number_format( $indicador[$i]['meta'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 6, $linha, number_format( $indicador[$i]['media_movel'], 2, ',', '' ), 'right');
+
+				$media += floatval(app_decimal_para_db($indicador[$i]['gasto']));
+				$contador_media++;
+				
+				if( strpos($indicador[$i]['mes_ano'],"/".date('Y'))>-1 )
+				{
+					$media_ano += floatval(app_decimal_para_db($indicador[$i]['gasto']));
+					$contador_media_ano++;
+				}
+
+				$linha++;
+			}
+
+			$media = floatval($media) / $contador_media;
+			$media_ano = floatval($media_ano) / $contador_media_ano;
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, '', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format($media,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media '.date('Y'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format($media_ano,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+
+			$this->db->query($sql);
+
+			// resgatar codigo do indicador
+			$sql = "SELECT cd_indicador FROM indicador.indicador_tabela where cd_indicador_tabela=?";
+			$query = $this->db->query($sql, array(intval($INDICADOR_TABELA_CODIGO)));
+			$res = $query->row_array();
+
+			echo 'Indicador atualizado com sucesso!'.br();
+			echo 'IGP atualizado com sucesso!'.br(2);
+			echo anchor( 'indicador/apresentacao/detalhe/'.$res['cd_indicador'], 'Ver apresentação' );
+		}
+	}
+}
+?>

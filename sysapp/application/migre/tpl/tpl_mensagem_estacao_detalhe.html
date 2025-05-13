@@ -1,0 +1,161 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Mensagens nas estações ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<form id="only_form" name="only_form" method="POST" enctype="multipart/form-data">
+
+<link href="mensagem_estacao.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/JavaScript" src="mensagem_estacao.js"></script>
+
+	<div id="mensagem_operacao" style="display:none;"></div>
+
+	<div id="conteudo">
+	
+		<div id="command_bar" class="command-bar">
+			<a href="mensagem_estacao.php" class="link-comando">&lt;&lt; Voltar para lista de mensagens</a>
+		</div>
+
+		<input type="hidden" id="cd_mensagem_estacao" name="cd_mensagem_estacao" value="{cd_mensagem_estacao}" />
+
+		<div class="box">
+
+			<div class="title"><label for="nome">SOBRE A MENSAGEM</label></div>
+			<div class="content">
+
+				<table cellpadding="10">
+
+				<tr>
+				<td><b><label for="nome">Nome:</label> </b></td>
+				<td>
+					<input name="nome" id="nome" style="width:600px;" maxlength="255" class="text" value="{nome}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+
+				</table>
+
+			</div>
+
+		</div>
+
+		<div class="box">
+
+			<div class="title"><label for="arquivo">ARQUIVO</label></div>
+			<div class="content">
+
+				<table cellpadding="10">
+
+				<tr>
+				<td><b><label for="arquivo">Arquivo:</label> </b></td>
+				<td><input id="arquivo" name="arquivo" type="file" /></td>
+				</tr>
+
+				</table>
+				
+				{arquivo}
+
+			</div>
+
+			<div class="message">As dimensões ideais para mensagem são de 650x450 para exibição sem barras de rolagem, mas as imagens podem ser de qualquer dimensão.</div>
+		</div>
+		
+		<div class="box">
+
+			<div class="title"><label for="url_link">LINK</label></div>
+			<div class="content">
+
+				<table cellpadding="10">
+
+				<tr>
+				<td><b><label for="url_link">Url:</label> </b></td>
+				<td><input id="url_link" name="url_link" type="text" value="{url_link}" style="width: 500px;"></td>
+				</tr>
+
+				</table>
+
+
+			</div>
+
+			<div class="message">Link para clicar na mensagem exibida. Não obrigatório. Exemplo: http://www.fundacaoceee.com.br</div>
+		</div>		
+
+		<div class="box">
+
+			<div class="title"><label for="dt_inicial">AGENDAMENTO</label></div>
+			<div class="content">
+
+				<table cellpadding="10">
+
+				<tr>
+				<td><b><label for="dt_inicial">Data:</label> </b></td>
+				<td>
+					<input name="dt_inicial" 
+						id="dt_inicial" 
+						style="width:120px;" 
+						maxlength="10" 
+						class="text" 
+						value="{dt_inicial}" 
+						onkeypress="return handleEnter(this, event);"
+						/>
+				</td>
+				</tr>
+
+				</table>
+
+			</div>
+			
+			<div class="message">
+			Data que a mensagem será exibida. <br />Lembrando que a mensagem só é exibida quando a estação de trabalho é iniciada.<br />
+			<br />
+			O sistema aceita apenas uma mensagem por dia, portanto informe uma data que ainda não tenha mensagem agendada.
+			</div>
+
+		</div>
+
+		<div class="box">
+
+			<div class="title">PÚBLICO ALVO</div>
+			<div class="content">
+
+				<input type="radio" id="todas" name="publico" {checked_todas} onclick="$('gerencia_div').hide();" value="ALL"> <label for="todas">Toda Fundação CEEE</label><br />
+				<input type="radio" id="gerencias" name="publico" {checked_gerencias} onclick="$('gerencia_div').show();"> <label for="gerencias">Algumas Gerências</label>
+				<div id="gerencia_div" style="margin-left:50px;{style_gerencias}">
+					<!-- START BLOCK : gerencias -->
+					<input {checked_gerencia} name="gerencias[]" id="{gerencia_sigla}" type="checkbox" value={gerencia_sigla}> <label for="{gerencia_sigla}">{gerencia_nome}</label><br />
+					<!-- END BLOCK : gerencias -->
+				</div>
+
+			</div>
+
+			<div class="message">
+				<!-- Selecione as gerências que receberão as mensagens ou escolha "TODAS". -->
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="savecancel">
+
+		<table width="100%">
+			<tr>
+			<td align="left"><input type="button" class="botao save" value="Salvar" onclick="eu.salvar();" /> <input type="button" class="botao save" value="Voltar" onclick="eu.cancelar_edicao();" /></td>
+			<td align="right">
+				<input type="hidden" class="botao save" name="dt_exclusao" id="dt_exclusao" value="" />
+				<input type="button" class="botao save" value="Excluir" onclick="eu.excluir();" style="{display_edicao}" />
+			</td>
+			</tr>
+		</table>
+
+	</div>
+</form>
+
+<script>
+
+$("nome").focus();
+
+MaskInput( document.getElementById('dt_inicial'), "99/99/9999" );
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,42 @@
+<?php 
+	set_title('Sócio Instituidor - Cadastro');
+	$this->load->view('header'); 
+?>
+<script>
+	
+	<?php
+        echo form_default_js_submit(array("nome","nr_ordem"));
+	?>
+
+	function ir_lista()
+	{
+		location.href='<?php echo site_url("ecrm/socio_instituidor"); ?>';
+	}
+	
+</script>
+<?php
+	$abas[] = array('aba_lista', 'Lista', FALSE, 'ir_lista();');
+	$abas[] = array('aba_detalhe', 'Cadastro', true, 'location.reload();');
+
+	echo aba_start( $abas );
+
+	echo form_open('ecrm/socio_instituidor/salvar');
+	echo form_start_box( "default_box", "Participante" );
+		echo form_default_text('cd_socio_instituidor', "Código: ", intval($row['cd_socio_instituidor']), "style='width:500px;border: 0px;' readonly" );
+		echo form_default_dropdown('cd_empresa', 'Empresa: *', $patrocinadoras_dd, $row['cd_empresa']);
+        echo form_default_text("nome", "Nome: * ", $row, "style='width:100%;'");
+		echo form_default_cpf("cpf", "CPF: * ", $row);
+				
+	echo form_end_box("default_box");
+
+	echo form_command_bar_detail_start();
+		echo button_save();
+
+	echo form_command_bar_detail_end();
+
+	echo aba_end();
+
+	echo form_close();
+
+	$this->load->view('footer_interna');
+?>

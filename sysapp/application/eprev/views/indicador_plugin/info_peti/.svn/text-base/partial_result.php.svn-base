@@ -1,0 +1,52 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Descrição', 'Realização', 'Meta', '% Realização', ''
+);
+
+$tabela = indicador_tabela_aberta(  intval(enum_indicador::INFO_PETI)  );
+
+if(sizeof($tabela)<=0)
+{
+	echo "Não foi identificado período aberto para o Indicador";
+}
+else
+{
+	$contador = sizeof( $collection );
+	$ultimo_ano_lancado=0;
+	$ultimo_semestre_lancado=0;
+	foreach( $collection as $item )
+	{
+		$link='';
+		if( $item['fl_fechado']!='S' )
+		{
+			$link = anchor("indicador_plugin/info_peti/detalhe/".$item["cd_info_peti"], "editar");
+		}
+
+		$nr_percentual = floatval( $item['nr_realizacao'] ) * 100 /  floatval( $item['nr_meta'] );
+
+		$ultimo_ano_lancado=$item['nr_ano_referencia'];
+		$ultimo_semestre_lancado=$item['nr_semestre'];
+
+		$body[] = array(
+			 $contador--
+			, $item['ds_descricao']
+			, number_format($item['nr_realizacao'],1,',','.')
+			, app_decimal_para_php($item['nr_meta'])
+			, number_format($nr_percentual,1,',','.')
+			, $link 
+		);
+	}
+
+	echo "<input id='tar' type='hidden' value='".$tabela[0]['nr_ano_referencia']."' />";
+	echo "<input id='ual' type='hidden' value='".$ultimo_ano_lancado."' />";
+	echo "<input id='usl' type='hidden' value='".$ultimo_semestre_lancado."' />";
+
+	$this->load->helper('grid');
+	$grid = new grid();
+	$grid->head = $head;
+	$grid->body = $body;
+
+	echo $grid->render();
+}
+?>

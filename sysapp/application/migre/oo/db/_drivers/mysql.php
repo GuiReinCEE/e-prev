@@ -1,0 +1,74 @@
+<?php
+class mysql extends DatabaseSuper implements i_database
+{
+	// Conexão
+	function connect()
+	{
+		// TODO: Implements
+	}
+
+	// Criação da query
+	/**
+	 * 
+	 * @param string $key
+	 * @param string $value
+	 */
+	function setParameter($key, $value, $options=array())
+	{
+		// TODO: Implements
+	}
+
+	// Execução da query
+	/**
+	 * 
+	 * @return void
+	 */
+	function execute()
+	{
+		// TODO: Implements
+	}
+	
+	/**
+	 * 
+	 * @return array Coleção com todo o resultado da query
+	 */
+	function get()
+	{
+		// TODO: Implements
+	}
+	
+	/**
+	 * 
+	 * @return array Array com colunas da query da primeira linha retornada
+	 */
+	function getFirst()
+	{
+		// TODO: Implements
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	function haveError()
+	{
+		// TODO: Implements
+	}
+	
+	/**
+	 * 
+	 */
+	function escape($value)
+	{
+		// TODO: Implements
+	}
+	
+	/**
+	 * 
+	 */
+	function newId($value)
+	{
+		// TODO: Implements
+	}
+}
+?>

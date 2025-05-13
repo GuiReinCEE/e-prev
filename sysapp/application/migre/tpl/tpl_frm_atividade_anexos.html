@@ -1,0 +1,146 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Atividade - Anexos';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+function valida_form2(f)
+{
+	if(f.arquivo.value=='')
+	{
+		alert('Informe o arquivo');
+		return false;
+	}
+
+	if( confirm('Enviar?') )
+	{ 
+		return true; 
+	} 
+	else 
+	{ 
+		return false; 
+	}
+}
+</script>
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/minhas'"><span>Lista</span></li>
+			<li id='aba_solicitacao' class='' onclick="location.href='cad_atividade_solic.php?n={n}&a=s&TA={ta}&aa={aa}'"><span>Solicitação</span></li>
+			<li id='aba_atendimento' class='' onclick="location.href='cad_atividade_atend.php?n={n}&a=a&TA={ta}&aa={aa}'"><span>Atendimento</span></li>
+			<li id='aba_anexos' class='abaSelecionada' onclick="{link_anexo}"><span>Anexos</span></li>
+			<li id='aba_Historico' class='' onclick="location.href='cad_atividade_hist.php?n={n}&a=h&TA={ta}&aa={aa}'"><span>Histórico</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+      <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td> 
+              <table width="90%" border="0"  cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td valign="top"></td>
+                  <td width="100%">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center">
+
+				  <table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
+                    <tr>
+                      <td colspan="6" align="right">
+						<a href="#" onclick="document.location.href='cad_atividade_atend.php?n={n}&a=a&aa={aa}';"><img src="img/btn_retorna.jpg" border="0"></a>
+					  </td>
+                    </tr>
+					<tr>
+                      <td colspan="6" align="center"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Arquivos 
+                        anexados:</font></td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" align="center" bgcolor="#0046ad"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Manuten&ccedil;&atilde;o 
+                        do documento</font></td>
+                      <td  align="center" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero</font></strong></td>
+                      <td  align="center" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></strong></td>
+                      <td  align="center" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Arquivo</font></strong></td>
+                      <td  align="center" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                        upload</font></strong></td>
+                    </tr>
+                    <!-- START BLOCK : anexos -->
+                    <tr> 
+                      <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.e-prev.com.br/upload/{nome_arquivo}" target="_blank"><img src="img/btn_abrir.jpg" border="0"></a></font></td>
+                      <td align="center" bgcolor="#F4F4F4"><a href="deleta_anexo.php?n={n}&a={cd_anexo}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                      <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_anexo}</font></td>
+                      <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tipo_anexo}</font></td>
+                      <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome_arquivo}</font></td>
+                      <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_upload}</font></td>
+                    </tr>
+                    <!-- END BLOCK : anexos -->
+                  </table>
+					<table border="0" align="center" cellpadding="1" cellspacing="1">
+              <form name="form2" method="post" action="grava_anexo.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+	    		<input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+				<input type="hidden" name="cd_atividade" value="{n}">
+                <tr> 
+                        <td> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione 
+                          o arquivo<br>
+                          <img src="img/btn_passo_1.jpg" width="30" height="30"></font> 
+                        </td>
+                  <td> 
+                    <input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado">
+                          <br>
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: 
+                          Tamanho limitado a 10MB nos formatos DOC, XLS, PDF, 
+                          JPG ou GIF.</font>
+					</td>
+          </tr>
+          <tr> 
+            <td colspan="2">
+			   <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+
+                            <img src="img/btn_passo_2.jpg" width="30" height="30">Clique 
+                            neste bot&atilde;o para confirmar a opera&ccedil;&atilde;o&gt;&gt; 
+                            <input class='botao' type="submit" name="Submit" value="Anexar">
+                            &lt;&lt; Clique neste bot&atilde;o para confirmar 
+                            a opera&ccedil;&atilde;o</font></div>
+			</td>
+          </tr></form>
+        </table>
+                <img src="img/img_divisoria1.gif" width="80%" height="1"> 
+
+                </td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td colspan="2"><div align="center"><font size="1" face="Verdana">
+                      <!-- START BLOCK : acompanhamento_OLD -->
+                      <tr> 
+                        <td align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{texto}</font></td>
+                        <td colspan="2" align="center" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_acomp}</font></td>
+                      </tr>
+                      <!-- END BLOCK : acompanhamento_OLD -->
+
+                    </font></div></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            
+            <div align="center"></div></td>
+        </tr>
+      </table>
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

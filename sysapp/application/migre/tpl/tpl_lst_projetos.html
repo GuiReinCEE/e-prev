@@ -1,0 +1,57 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Projetos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"><blockquote><div align="right"><a href="cad_projetos.php?op=I&tp=P" class="links2">&gt;&gt; Novo Projeto</a></div></blockquote>
+	<table width="90%" border="0" cellspacing="0" cellpadding="0">
+	<tr> 
+		<td background="img/img_fundo_atividade.jpg" valign="top"><img src="img/img_menu_projetos.jpg" border="0" usemap="#Map"> 
+		<map name="Map">
+			<area shape="rect" coords="2,0,124,37" href="lst_sistemas.php">
+			<area shape="rect" coords="125,0,259,37" href="lst_projetos.php">
+			<area shape="rect" coords="260,0,405,37" href="lst_processos.php">
+		</map>
+		</td>
+		<td width="100%" background="img/img_fundo_celula_superior.jpg">&nbsp;</td>
+		<td><img src="img/img_canto_sup_dir_ativ.jpg" width="6" height="42"></td>
+	</tr>
+	<tr> 
+		<td colspan="2" background="img/img_fundo_atividade.jpg">
+              <input name="codigo" type="hidden" id="codigo3" value="{codigo}">
+              <input name="formato" type="hidden" id="forma_mens" value="{forma_mens}">
+			              <table width="90%" border="0" align="center" cellspacing="1">
+                    <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&Aacute;rea</font></strong></td>
+                <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Descri&ccedil;&atilde;o</strong></font></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                  cadastro</font></strong></td>
+              </tr>
+              <!-- START BLOCK : projetos -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><a href="cad_projetos.php?op=A&c={cod_projeto}" class="links2">{projeto}</a></td>
+                <td bgcolor="{cor_fundo}" class="texto1">{divisao}</td>
+                <td bgcolor="{cor_fundo}" class="texto1"><i>{descricao}</i></td>
+                <td bgcolor="{cor_fundo}" class="texto1">{data_cad}</td>
+              </tr>
+              <!-- END BLOCK : projetos -->
+            </table>
+
+		</td>
+		<td background="img/img_fundo_dir.jpg">&nbsp;</td>
+	</tr>
+	<tr> 
+		<td colspan="2" background="img/img_fundo_ativ_cel5.jpg"><img src="img/img_canto_inf_esq.jpg"></td>
+		<td background="img/img_fundo_dir.jpg"><img src="img/img_canto_inf_dir.jpg"></td>
+	</tr>
+	</table>			  
+	<div align="center"> </div>
+  </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

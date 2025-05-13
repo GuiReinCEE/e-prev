@@ -1,0 +1,164 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Tabela [{tabela_titulo}] ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script src="inc/codepress/codepress.js" type="text/javascript"></script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+		<script>
+			function disableCodePress()
+			{
+				comando.toggleEditor();
+				condicao.toggleEditor();
+				contagem.toggleEditor();
+				comando_inicial.toggleEditor();
+				comando_final.toggleEditor();
+			}
+		</script>
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+		<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+	  
+		<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="document.location.href='lst_tabelas_atualizar.php?sel=D';">
+						<span>DIÁRIO</span>
+					</li>
+					<li onclick="document.location.href='lst_tabelas_atualizar.php?sel=S';">
+						<span>SINCRONIZADO</span>
+					</li>
+					<li onclick="document.location.href='lst_tabelas_atualizar.php?sel=M';">
+						<span>MENSAL</span>
+					</li>
+					<li onclick="document.location.href='lst_tabelas_atualizar.php?sel=E';">
+						<span>EVENTUAL</span>
+					</li>
+					<li onclick="document.location.href='lst_tabelas_atualizar.php?sel=I';">
+						<span>INATIVA</span>
+					</li>					
+					<li onclick="document.location.href='cad_tabelas_atualizar.php?c={tabela}';" class="abaSelecionada">
+						<span>CADASTRO</span>
+					</li>					
+				</ul>
+			</div>                            
+			<div class="aba_conteudo">
+			<BR><BR>	  
+			<form width="100%" name="form1" method="post" action="grava_tabelas_atualizar.php" onsubmit="disableCodePress();">
+				<input name="codigo" type="hidden" id="codigo" value="{tabela}">
+				<table width="100%" border="0" align="center" cellpadding="1" cellspacing="1">
+				<tr bgcolor="{cor_fundo2}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Tabela:
+					</td>
+					<td>
+						<input type="text" value="{tabela}" readonly style="width:100%">
+					</td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Comando de sele&ccedil;&atilde;o:
+					</td>
+					<td>
+						<textarea name="comando" style="width:100%" rows="8" id="comando" class="codepress sql linenumbers-on">{comando}</textarea>
+                    </td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Condição:
+					</td>
+					<td>
+						<textarea name="condicao" style="width:100%" rows="8" id="condicao" class="codepress sql linenumbers-on">{condicao}</textarea>
+                    </td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Comando de contagem:
+					</td>
+					<td >
+						<textarea name="contagem" style="width:100%" rows="4" id="contagem" class="codepress sql linenumbers-on">{contagem}</textarea>
+                    </td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Comando Inicial:
+					</td>
+					<td >
+						<textarea name="comando_inicial" style="width:100%" rows="3" id="comando_inicial" class="codepress sql linenumbers-on">{comando_inicial}</textarea>
+					</td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" valign="top" class="texto1">
+						Comando Final:
+					</td>
+					<td >
+						<textarea name="comando_final" style="width:100%" rows="3" id="comando_final" class="codepress sql linenumbers-on">{comando_final}</textarea>
+					</td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" class="texto1">
+						Periodicidade:
+					</td>
+					<td >
+						<input name="periodicidade" type="text" id="periodicidade"  value="{periodicidade}" size="10">
+					</td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" class="texto1">
+						Última atualização:
+					</td>
+					<td >
+						<input name="dt_inicio" type="text" id="dt_inicio"  value="{dt_inicio}" readonly>
+						<input name="dt_final" type="text" id="dt_final"  value="{dt_final}" readonly>
+						<input name="hr_tempo" type="text" id="hr_tempo"  value="{hr_tempo}" readonly>
+					</td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" class="texto1">
+						Bancos:
+					</td>
+					<td style="white-space:nowrap;" class="texto1">
+						Postgres? 
+						<input name="postgres" type="text" id="postgres"  value="{postgres}" size="2" maxlength="2">
+						Oracle? 
+						<input name="oracle" type="text" id="oracle"  value="{oracle}" size="2" maxlength="2">
+						Access Call Center: 
+						<input name="access_callcenter" type="text" id="access_callcenter"  value="{access_callcenter}" size="2" maxlength="2">
+                    </td>
+                </tr>
+				<tr bgcolor="{cor_fundo1}"> 
+					<td style="white-space:nowrap;" class="texto1">
+						Atualiza&ccedil;&atilde;o:
+					</td>
+					<td  class="texto1">
+						Truncar? 
+						<input name="truncar" type="text" id="truncar" value="{truncar}" size="2" maxlength="2">
+						Incrementar 
+						<input name="incrementar" type="text" id="incrementar" value="{incrementar}" size="2" maxlength="2">
+						Campo controle
+						<input name="campo_controle" type="text" id="campo_controle" value="{campo_controle}" size="12" maxlength="120">
+                    </td>
+                </tr>
+                <tr> 
+					<td colspan="2" align="center">
+						<input type="submit" name="Submit" value="Gravar" class="botao">
+                    </td>
+                </tr>
+				</table>
+			</form>
+			</div>
+		</div>	  
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

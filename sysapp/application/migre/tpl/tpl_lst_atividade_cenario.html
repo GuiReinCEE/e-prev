@@ -1,0 +1,103 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Atividades Legais ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style>
+.filter-bar
+{
+	padding-top:10px;
+	padding-bottom:10px;
+	border-top: dashed 1px #6FAE6F;
+	text-align:center;
+	background:#EEEEEE;
+}
+
+.command-bar
+{
+	text-align:center;
+	background:white;
+}
+
+body
+{
+	font-family: Arial, Verdana;
+	font-size: 10pt;
+}
+
+#data_inicial, #data_final
+{
+	font-size:22px;
+	width:130px;
+}
+</style>
+
+<script language="JavaScript" type="text/JavaScript" src="lst_atividade_cenario.js"></script>
+
+		<!-- BARRA DE COMANDOS -->
+		<div id="command_bar" class="command-bar"></div>
+		<br />
+
+		<!-- BARRA DE FILTRO -->
+		<form>
+		<input id="debug_man" name="debug_man" type="hidden" value="{debug_man}" />
+
+		<div class="filter-bar" style="display:;border-bottom: 1px dashed green;">
+			<b>FILTROS:</b> <span id="filtros_span"></span> <br><a href="javascript:exibir_filtro();" style="font-weight: normal;"> [alterar filtros] </a><!-- input type="button" value="Exibir Filtro" class="botao" onclick="$('filter_bar').show();" / -->
+
+			<div id="filter_bar" style="display:none; border-top: 1px dashed green;margin-top:10px;padding-top:10px;">
+
+			<table cellpadding="0" cellspacing="0" align="center"><tr><td valign="top">
+				<h2>Pertinência</h2>
+				<table align="center" cellpadding="5" cellspacing="0">
+				<tr>
+					<td><input type="checkbox" name="nao_pertinente" id="nao_pertinente" value="S" onkeypress="return handleEnter(this, event);" /></td>
+					<td><label for="nao_pertinente">Não Pertinente</label></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="pertinente_com_reflexo" id="pertinente_com_reflexo" value="S" onkeypress="return handleEnter(this, event);" /></td>
+					<td><label for="pertinente_com_reflexo">Pertinente com reflexo </label></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="pertinente_sem_reflexo" id="pertinente_sem_reflexo" value="S" onkeypress="return handleEnter(this, event);" /></td>
+					<td><label for="pertinente_sem_reflexo">Pertinente sem reflexo </label></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="nao_verificado" id="nao_verificado" value="S" checked onkeypress="return handleEnter(this, event);" /></td>
+					<td><label for="nao_verificado">Aguardando verificação</label></td>
+				</tr>
+				</table>
+
+			</td><td valign="top" style="padding-left:30px">
+
+				<h2>Data da solicitação</h2>
+
+				<label for="data_inicial">De</label> <input id="data_inicial" name="data_inicial" OnKeyDown="mascaraData(this,event);" onkeypress="return handleEnter(this, event);" /> <label for="data_final">até</label> <input name="data_final" id="data_final" OnKeyDown="mascaraData(this,event);" onkeypress="return handleEnter(this, event);" />
+
+			</td>
+
+			</tr></table>
+			<br>
+			<input type="button" 
+					class="botao"
+					value="Filtrar" 
+					onclick="eu.filtrar();" 
+					/><!-- <input type="button" class="botao" value="Limpar" /> --><input type="button" class="botao" value="Esconder filtros" onclick="$('filter_bar').hide();" />
+
+			</div>
+		</div>
+		</form>
+		<div id="result_div"></div>
+		<br />
+		<!-- BARRA DE COMANDOS -->
+
+	<script>
+	if( $F('debug_man')!='t' )
+		Event.observe( window, 'load', eu.filtrar );
+
+	MaskInput( document.getElementById('data_inicial'), "99/99/9999" );
+	MaskInput( document.getElementById('data_final'), "99/99/9999" );
+	</script>
+
+<!-- InstanceEnd --></html>

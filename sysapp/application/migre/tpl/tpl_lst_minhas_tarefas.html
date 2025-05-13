@@ -1,0 +1,187 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Minhas tarefas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+	function exibeFiltro()
+	{
+		$('bt_exibe').toggle();
+		$('bt_oculta').toggle();
+		$('ob_filtro').toggle();
+	}
+</script>
+
+<style>
+	#ob_filtro fieldset {
+		padding-top: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-bottom: 5px;
+	}
+
+	#ob_filtro legend {
+		font-size: 10px;
+		font-weight: bold;
+		font-family: Courier, Arial,'MS Sans Serif';		
+		text-transform:uppercase;
+	}	
+
+	#ob_filtro_status label {
+		font-size: 10px;
+		font-family: Courier, Arial,'MS Sans Serif';		
+	}
+
+	#ob_filtro_outros label {
+		display: block;
+		width: 250px;
+		float: left;
+		color: #000;
+		border-bottom: 1px solid #f1f1f1;
+		font-weight: normal;
+		font-size: 10px;
+		font-family: Courier, Arial,'MS Sans Serif';	
+		line-height: 20px;
+	}			
+</style>
+
+<form name="form2" method="post" action="lst_minhas_tarefas.php">    
+<div style="padding-left:10px; padding-right:10px;">
+	<fieldset id="ob_filtro" style="display:none; margin-top:10px;">
+		<legend>Filtros</legend>	
+		
+		<div id="ob_filtro_status" style="float:left;padding:5;">
+			
+			<input name="ar_status[]" type="checkbox" value="AMAN" {fl_AMAN}><label>Aguardando Manutenção</label>
+			<br>
+			<input name="ar_status[]" type="checkbox" value="EMAN" {fl_EMAN}><label>Em Manutenção</label>
+			<br>
+			<input name="ar_status[]" type="checkbox" value="SUSP" {fl_SUSP}><label>Em Manutenção (Em Pausa)</label>
+			<BR>
+			<input name="ar_status[]" type="checkbox" value="LIBE" {fl_LIBE}><label>Liberadas</label>
+			<br>
+			<input name="ar_status[]" type="checkbox" value="CONC" {fl_CONC}><label>Concluídas</label>
+			<br>	
+		</div>
+
+		<div id="ob_filtro_outros" style="float:left;margin-left:25px;padding:5;">
+			<label>Prioridade:</label>
+			<select name="cd_prioridade">
+				<option value="">Todos</option>
+				<option value="S"{fl_prioridade_sim}>Sim</option>
+				<option value="N"{fl_prioridade_nao}>Não</option>
+			</select>
+			<BR>
+			<br>	
+
+			<label>Solicitante:</label>                
+			<select name="cd_solicitante">
+			  <!-- START BLOCK : cbo_solicitante -->
+			  <option value="{cd_solicitante}"{fl_solicitante}>{ds_solicitante}</option>
+			  <!-- END BLOCK : cbo_solicitante -->
+			</select>
+			<BR>
+			<br>	
+			
+			<label>Atendente:</label>
+			<select name="cd_atendente">
+			  <!-- START BLOCK : cbo_atendente -->
+			  <option value="{cd_atendente}" {fl_atendente}>{ds_atendente}</option>
+			  <!-- END BLOCK : cbo_atendente -->
+			</select>
+			<BR>
+			<br>	
+			
+			<label>Dt Encaminhamento (Período):</label> 
+			<input type="text" name="dt_ini_encaminhado" id="dt_ini_encaminhado" value="{dt_ini_encaminhado}"> 
+			<input type="text" name="dt_fim_encaminhado" id="dt_fim_encaminhado" value="{dt_fim_encaminhado}">
+			<BR>
+			<br>	
+			
+			<label>Dt Concluído (Período):</label> 
+			<input type="text" name="dt_ini_concluido" id="dt_ini_concluido" value="{dt_ini_concluido}"> 
+			<input type="text" name="dt_fim_concluido" id="dt_fim_concluido" value="{dt_fim_concluido}">
+			<BR>
+			<br>	
+
+			<label>Atividade/Tarefa:</label> 
+			<input style="width:70px;" type="text" name="cd_atividade" id="cd_atividade" value="{cd_atividade}">/ 
+			<input style="width:70px;" type="text" name="cd_tarefa" id="cd_tarefa" value="{cd_tarefa}">
+		</div>	
+		<div style="clear:both; padding-top:15px; width:90%; text-align:center;padding:5;">
+		<input type="submit" value="Filtrar" class="botao">
+		</div>
+	</fieldset>
+	<br>
+	<input type="button" id="bt_exibe"  value="Exibir Filtros"  onclick="exibeFiltro();" class="botao" >
+	<input type="button" id="bt_oculta" value="Ocultar Filtros" onclick="exibeFiltro();" class="botao" style="display:none;">
+	<BR>
+	
+	<span class="links2">&raquo; Total de tarefas: {qt_total_tarefas}<br>Coluna Nível: 0 é o menor nível e 10 é o maior nível de prioridade</span>
+	<BR>			
+	<table class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+	<thead>
+		<tr> 
+			<td align="center"><b>#</b></td>
+			<td align="center"><b>Solic/Atend</b></td>
+			<td align="center"><b>Ativ.</b></td>
+			<td align="center"><b>Tarefa</b></td>
+			<td align="center"><b>Prior.</b></td>
+			<td align="center" nowrap><b>Nível</b></td>
+			<td align="center" width="300px;"><b>Resumo</b></td>				
+			<td align="center"><b>Status</b></td>
+			<td align="center" nowrap><b>Encamin.</b></td>
+			<td align="center" nowrap><b>Ini Prev</b></td>
+			<td align="center" nowrap><b>Fim Prev</b></td>
+			<td align="center" nowrap><b>Ini Real</b></td>
+			<td align="center" nowrap><b>Fim Real</b></td>
+			<td align="center" nowrap><b>Concluído</b></td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- START BLOCK : tarefas -->
+		<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+			<td><a href="frm_exec_tarefa.php?os={cod_os}&c={evento}&f={fl_tipo_grava}" class="{classe_link}"><img src="img/btn_manut.jpg" border="0"></a></td>
+			<td align="center" >{solicitante} <BR> {executor}</td>
+			<td align="center" >{cod_os}</td>
+			<td align="center" >{evento}</td>
+			<td align="center" >{prioridade}</td>
+			<td align="center" >{nr_nivel_prioridade}</td>					
+			<td >{resumo}</td>
+			<td align="center" >{status}</td>
+			<td align="center" >{dt_encaminhamento}</td>
+			<td align="center" >{dt_inicio_prev}</td>
+			<td align="center" >{dt_fim_prev}</td>
+			<td align="center" >{dt_inicio_prog}</td>
+			<td align="center" >{dt_fim_prog}</td>
+			<td align="center" >{dt_ok_anal}</td>
+		</tr>
+		<!-- END BLOCK : tarefas -->
+	</tbody>
+	</table>
+</div>
+</form>
+<script>
+	var ob_resul = new SortableTable(document.getElementById("table-1"),[null, "CaseInsensitiveString", "Number", "Number", "CaseInsensitiveString", "Number", "CaseInsensitiveString", "CaseInsensitiveString", "DateBR", "DateBR", "DateBR", "DateBR", "DateBR", "DateBR", "Number"]);
+	ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+		ob_resul.sort(4, true);				
+</script>
+<script>
+	MaskInput(document.getElementById('dt_ini_encaminhado'), "99/99/9999");
+	MaskInput(document.getElementById('dt_fim_encaminhado'), "99/99/9999");
+	MaskInput(document.getElementById('dt_ini_concluido'), "99/99/9999");
+	MaskInput(document.getElementById('dt_fim_concluido'), "99/99/9999");
+	
+	MaskInput(document.getElementById('cd_atividade'), "9999999999");
+	MaskInput(document.getElementById('cd_tarefa'), "9999999999");
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,324 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Projetos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+<!--
+function win_pessoas_chave(r,h)
+{
+	w = window.open("envolvidos_processo.php?r="+r+"&h="+h, "wpessoas", "menubar=no,location=no,scrollbars=no,resizable=no,width=380,height=230");
+}
+-->
+</script>
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_projetos' class='' onclick='location.href="{link_projetos}"'><span>Projetos</span></li>
+			<li id='aba_projeto' class='abaSelecionada'><span>Projeto</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : mensagem -->
+  <tr> 
+    <td colspan="2"> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+  </tr>
+  <!-- END BLOCK : mensagem -->
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" method="post" action="grava_projeto.php">
+        <input name="codproj" type="hidden" id="codproj" value="{codproj}">
+		<input type="hidden" id="tela_voltar" name="tela_voltar" value="{tela_voltar}">
+		<input name="tp" type="hidden" id="tp" value="{tp}">
+              <table border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr bgcolor="#dae9f7"> 
+                  <td bgcolor="#dae9f7"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">C&oacute;digo</font> 
+                  </td>
+                  <td colspan="2"> <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr bgcolor="#dae9f7"> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{codigo}</font></td>
+                        <td align="right"><input type="image" src="img/btn_salvar.jpg" border="0"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a><img src="img/btn_retorna.jpg" border="0" onClick="document.location.href=document.getElementById('tela_voltar').value;" style="cursor:pointer;" title="Retornar para listagem"><a href="exclui_projeto.php?c={codigo}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto</font></td>
+                  <td colspan="2" bgcolor="#dae9f7">
+                    <input name="sistema" type="text" id="sistema" value="{nome}" size="50" maxlength="50" >
+					<!-- START BLOCK : acomp -->
+                      &nbsp;<a href="cad_acomp_projetos.php?c={cd_acompanhamento}&tr=U" class="links2">&gt;&gt; Ver acompanhamento</a>
+                      <!-- START BLOCK : acomp -->
+					</td>	
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="descricao" cols="50" rows="6" id="descricao">{descricao}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="opt_tipo" type="radio" value="S" {chk_sistema}>
+                    Sistema 
+                    <input type="radio" name="opt_tipo" value="P" {chk_projeto}>
+                    Projeto</font></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td colspan="3"> <blockquote> <font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Atribui&ccedil;&atilde;o 
+                      de Responsabilidades:</font> </blockquote></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&Aacute;rea 
+                    / Divis&atilde;o:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="area" id="area" >
+                      <!-- START BLOCK : area -->
+                      <option value="{cod_area}" {sel_area}>{nome_area}</option>
+                      <!-- START BLOCK : area -->
+                    </select>
+                    Divis&atilde;o Respons&aacute;vel pela manuten&ccedil;&atilde;o 
+                    neste projeto</font> </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Analista 
+                    Respons&aacute;vel:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="analista" id="analista" >
+                      <!-- START BLOCK : analista -->
+                      <option value="{cod_analista}" {sel_analista}>{nome_analista}</option>
+                      <!-- END BLOCK : analista -->
+                    </select>
+                    Respons&aacute;vel pela manuten&ccedil;&atilde;o neste projeto&nbsp; 
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Gerente 
+                    Respons&aacute;vel:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="responsavel" id="select2" >
+                      <!-- START BLOCK : responsavel -->
+                      <option value="{cod_responsavel}" {sel_responsavel}>{nome_responsavel}</option>
+                      <!-- END BLOCK : responsavel -->
+                    </select>
+                    Gerente respons&aacute;vel pelo andamento deste projeto</font> 
+                  </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Respons&aacute;vel 1 (sponsor):</font> </td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="administrador1" id="administrador1" >
+                      <!-- START BLOCK : administrador1 -->
+                      <option value="{cod_admin1}" {sel_admin1}>{nome_admin1}</option>
+                      <!-- END BLOCK : administrador1 -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Respons&aacute;vel 2 (vice-sponsor):</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="administrador2" id="administrador2" >
+                      <!-- START BLOCK : administrador2 -->
+                      <option value="{cod_admin2}" {sel_admin2}>{nome_admin2}</option>
+                      <!-- END BLOCK : administrador2 -->
+                    </select>
+                    Responde na aus&ecirc;ncia do anterior</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Demais 
+                    pessoas envolvidas:</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+				  <!-- START BLOCK : pessoas_chave -->
+				  {pessoas_chave}
+				  <!-- END BLOCK : pessoas_chave -->
+				  </font></td>
+                  <td align="right"> <a href="#" onClick="win_pessoas_chave({codigo},'')"><img src="img/btn_pessoas_chave.jpg" border="0"></a></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td colspan="3"> <blockquote><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Classifica&ccedil;&otilde;es 
+                      deste projeto:</font></blockquote></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">N&iacute;vel:</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <select name="nivel" id="select7" >
+                      <!-- START BLOCK : nivel -->
+                      <option value="{cod_nivel}" {sel_nivel}>{nome_nivel}</option>
+                      <!-- END BLOCK : nivel -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto 
+                    Superior:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="projeto_superior" id="projeto_superior" >
+                      <!-- START BLOCK : projeto_superior -->
+                      <option value="{cod_projeto_superior}" {sel_projeto_superior}>{desc_projeto_superior}</option>
+                      <!-- START BLOCK : projeto_superior -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Programa 
+                    Institucional:</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <select name="programa" id="programa" >
+                      <!-- START BLOCK : programa -->
+                      <option value="{cod_programa}" {sel_programa}>{desc_programa}</option>
+                      <!-- END BLOCK : programa -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Diretriz:</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <select name="diretriz" id="select" >
+                      <!-- START BLOCK : diretriz -->
+                      <option value="{cod_diretriz}" {sel_diretriz}>{desc_diretriz}</option>
+                      <!-- END BLOCK : diretriz -->
+                    </select>
+                    </font></td>
+                </tr>
+                <!--          <tr bgcolor="#DCDCCC">
+            <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+              de </font></td>
+            <td><font size="2" face="Arial, Helvetica, sans-serif">
+              <select name="select" id="select2">
+                <!-- START BLOCK : diretriz --
+                <option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+                <!-- END BLOCK : diretriz --
+              </select>
+              </font></td>
+          </tr>
+-->
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    Implantação: </font> </font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"><strong> 
+                    <input name="data_implantacao" type="text" id="data_implantacao" size="10" maxlength="10" value="{data_implantacao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    </strong></font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td colspan="3"> <div align="center"> 
+                      <input class='botao' type="submit" name="Submit" value="Gravar">
+                    </div></td>
+                </tr>
+              </table>
+      </form>
+	  <!--
+            <table width="63%" border="0" align="center" cellspacing="1">
+              <tr> 
+                <td colspan="2" align="center"><img src="img/tit_tab_rateio.jpg"></td>
+                 START BLOCK : cabecalho 
+				<td align="right"><a href="{link}?p={projeto}&a=A"><img src="img/btn_abrir.jpg" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#dae9f7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data 
+                  Inicio</strong></font></td>
+                
+                <td bgcolor="#dae9f7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{dt_ini}</strong></font></td>
+                <td bgcolor="#dae9f7" align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Rateio 
+                  em %</font></strong></td>
+                END BLOCK : cabecalho 
+              </tr>
+              <tr bgcolor="#0046ad"> 
+               START BLOCK : perc_prev 
+                <td colspan="2" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Programa 
+                  Previdenci&aacute;rio</strong></font></td>
+                <td align="center" bgcolor="#dae9f7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{perc_prev}</strong></font></td>
+                 END BLOCK : perc_prev 
+              </tr>
+              <tr> 
+                <td width="50%" bgcolor="#dae9f7"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora</font></strong></td>
+                <td width="11%" bgcolor="#dae9f7"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Plano</font></strong></td>
+                <td width="13%" bgcolor="#dae9f7"> <div align="right"><strong></strong></div></td>
+              </tr>
+              START BLOCK : rateio 
+              <tr bgcolor="#F4F4F4"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{patrocinadora}</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{plano}</font></td>
+                <td> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{percentual}</font><font size="1"> 
+                    </font></div></td>
+              </tr>
+               END BLOCK : rateio 
+              <tr bgcolor="#0046ad"> 
+                START BLOCK : perc_outros 
+                <td colspan="2" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Programa 
+                  de Investimentos</strong></font></td>
+                <td align="center" bgcolor="#dae9f7"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{perc_inv}</font></strong></td>
+              </tr>
+              <tr bgcolor="#0046ad"> 
+                <td colspan="2" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Programa 
+                  de Empr&eacute;stimos</strong></font></td>
+                <td align="center" bgcolor="#dae9f7"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{perc_emp}</font></strong></td>
+              </tr>
+              <tr bgcolor="#0046ad"> 
+                <td colspan="2" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Programa 
+                  de Seguros</strong></font></td>
+                <td align="center" bgcolor="#dae9f7"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{perc_seg}</font></strong></td>
+               END BLOCK : perc_outros 
+              </tr>
+            </table>
+			
+	   START BLOCK : rateio_projeto 
+      <form name="form2" method="post" action="insere_tabela_rateio.php">
+        <table border="0" align="center">
+          <tr>
+            <td width="51"><input type="submit" name="cad_nova_tab_rateio" value="Cadastrar nova tabela de Rateio"></td>
+          </tr>
+        </table>
+        <input type="hidden" name="codigo_projeto" value="{cod_projeto}">
+      </form>
+	   END BLOCK : rateio_projeto -->	
+
+	  
+      <!-- START BLOCK : projetos_dependentes -->
+      <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projetos 
+        dependentes </font></p>
+      <table border="0" align="center" cellpadding="1" cellspacing="1">
+        <tr bgcolor="#B8DEC7"> 
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o</font></td>
+          <td bgcolor="#B8DEC7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Atendente</font></td>
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">In&iacute;cio</font></td>
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Situa&ccedil;&atilde;o</font></td>
+        </tr>
+        <!-- START BLOCK : lst_itens -->
+        <tr valign="top"> 
+          <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{descricao}</font></td>
+          <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{atendente}</font></td>
+          <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{dt_inicio}</font></td>
+          <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{situacao}</font></td>
+        </tr>
+        <!-- END BLOCK : lst_itens -->
+      </table>
+	  <!-- END BLOCK : projetos_dependentes -->
+      <p>&nbsp; </p>
+      <!-- INCLUDE BLOCK : menu_d -->
+    </td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+
+<!-- INCLUDE BLOCK : footer.html -->

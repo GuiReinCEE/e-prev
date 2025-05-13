@@ -1,0 +1,262 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Resumo de atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+
+var selecionado_mesano = '';
+
+function carregar_atividades(mes, ano)
+{
+	new Ajax.Updater( 'lista_atividade__div', 'resumo_atividades_gri.php', 
+	{ 
+		parameters: 
+		{ 
+		  	command: 'atividade'
+		  	, mes: mes
+		  	, ano:ano
+		},
+		onComplete:function()
+		{
+			if(selecionado_mesano!='')
+			{
+				$(selecionado_mesano).src = 'img/information.png';
+			}
+			
+			selecionado_mesano = ano + '_' + mes + '_img';
+			$(selecionado_mesano).src = 'img/accept.png';
+			configure_table_atividade();
+		}
+	});
+}
+function configure_table_atividade()
+{
+	var ob_resul = new SortableTable(document.getElementById("table-1"),[null, "Number", "CaseInsensitiveString", "CaseInsensitiveString", "CaseInsensitiveString", "DateBR", "DateBR", "DateBR"]);
+	ob_resul.onsort = function ()
+	{
+		var rows = ob_resul.tBody.rows;
+		var l = rows.length;
+		for (var i = 0; i < l; i++)
+		{
+			removeClassName( rows[i], i % 2 ? "sort-par" : "sort-impar" );
+			addClassName( rows[i], i % 2 ? "sort-impar" : "sort-par" );
+		}
+	};
+	ob_resul.sort(2, false);
+}
+
+</script>
+
+	<style>
+		*{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		label{
+			font-weight: bold;
+		}
+
+		caption {
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';	
+			background:#F0E8BA;
+		}
+
+		caption *{
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';	
+			background:#F0E8BA;
+		}		
+		
+		th {
+			font-size: 10pt;
+			font-weight: bold;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			text-align:center;	
+			background:#CCCCCC;
+			white-space:nowrap;
+		}	
+		
+		.tb_resultado{
+			border-collapse: collapse;
+		}
+		
+		.tb_resultado th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			white-space:nowrap;
+		}
+		
+		.tb_resultado td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+			text-align:center;				
+		}	
+
+		.titulo_resumo_atividade {
+			color:#0046ad;
+			font-size: 18pt;
+			font-family: Arial, Verdana,'MS Sans Serif';
+			padding:10px;
+		}
+
+		.ano_anterior td{
+			color:gray;
+			font-weight: bold;
+		}
+		
+		.ano_atual td{
+			color:green;
+			font-weight: bold;
+			background:#F4F4F4;
+			white-space:nowrap;
+		}	
+		
+	</style>
+
+	<form name="formulario" action="" method="post">
+		<!-- INICIO BOTOES E FILTRO -->	
+		<table align="center" >
+			<tr>
+				<td>
+					<label for='nr_ano'>Ano:</label>
+				</td>
+				<td>
+					<select name='nr_ano' id='nr_ano' style="width: 100px;">
+					  <!-- START BLOCK : nr_ano -->
+					  <option value="{nr_ano}" {fl_nr_ano}>{nr_ano}</option>
+					  <!-- END BLOCK : nr_ano -->
+					</select>
+				</td>	
+
+				<td style="display:none;">
+					<label for='nr_ano'>Atendente:</label>
+				</td>
+				<td style="display:none;">
+					<select name='cd_atendente1' id='cd_atendente1' style="width: 300px;">
+
+					  <!-- START BLOCK : cd_atendente -->
+					  <option value="{cd_atendente}" {fl_cd_atendente}>{ds_atendente}</option>
+					  <!-- END BLOCK : cd_atendente -->
+					  						
+					</select>
+				</td>	
+
+				<td>
+					<input type="image" name="submit" src="img/btn_atualizar.jpg">
+				</td>
+				<td>
+					<img src="img/btn_impressora.jpg" border="0" onclick="window.print()" style="cursor:pointer;">
+				</td>
+			</tr>
+		</table>
+		<!-- FIM BOTOES E FILTRO -->
+
+			<!-- INICIO TITULO -->	
+			<table align='center'>
+				<tr>
+					<td class='titulo_resumo_atividade'>
+						{divisao_titulo}
+					</td>
+				</tr>
+			</table>
+			<!-- FIM TITULO -->	
+			<!-- INICIO ATIVIDADES SUPORTE -->	
+			<table align='center' class='tb_resultado'>
+				<caption>Atividades</caption>
+				<tr>
+					<th colspan='5'>MENSAL</th>
+				</tr>				
+				<tr>
+					<th title="">Mês/Ano</th>
+					<th title="">Abertas</th>
+					<th title="">Solicitadas</th>
+					<th title="">Atendidas no prazo</th>
+					<th title="">Atendidas fora do prazo</th>
+				</tr>
+				<!-- START BLOCK : qt_ano_mes_suporte -->
+				<tr bgcolor="{bg_color}">
+					<td>{mes_ano}</td>
+					<td>{abertas}</td>
+					<td>{solicitadas}</td>
+					<td>{atendidas_no_prazo}</td>
+					<td>{atendidas_fora_prazo}</td>
+				</tr>
+				<!-- END BLOCK : qt_ano_mes_suporte -->
+			</table>
+
+			<!-- LISTA DE ATIVIDADES -->
+			<div id="lista_atividade__div"></div>
+			<!-- LISTA DE ATIVIDADES -->
+
+			<!-- FIM ATIVIDADES SUPORTE -->
+			<br>
+			<br><br>
+
+			<table align='center' class='' cellpadding="5" cellspacing="0">
+				<caption>Atividades Atendidas por Mês x Gerência</caption>
+				<tr>
+					<th title="">Mês</th>
+					<th title="">Gerência</th>
+					<th title="">Quantidade</th>
+					<th title="">Percentual</th>
+				</tr>
+				<!-- START BLOCK : qt_mes_gerencia -->
+				<tr bgcolor="{bg_color}" >
+					<td>{mes}</td>
+					<td>{gerencia}</td>
+					<td align="right">{quantidade}</td>
+					<td align="right">{percentual}%</td>
+				</tr>
+				<!-- END BLOCK : qt_mes_gerencia -->
+				<!-- START BLOCK : total_qt_mes_gerencia -->
+				<tr bgcolor="#eeeeee">
+					<td>Total</td>
+					<td></td>
+					<td align="right"><b>{total_quantidade}</b></td>
+					<td></td>
+				</tr>
+				<!-- END BLOCK : total_qt_mes_gerencia -->
+			</table>
+
+			<br><br>
+
+			<table align='center' class='' cellpadding="10" cellspacing="0">
+				<caption>Atividades Atendidas por Programa</caption>
+				<tr>
+					<th title="">Programa</th>
+					<th title="">Atividades</th>
+					<th title="">Dias</th>
+				</tr>
+				<!-- START BLOCK : qt_dias_programa -->
+				<tr bgcolor="{bg_color}" >
+					<td>{programa}</td>
+					<td align="right">{quantidade}</td>
+					<td align="right">{dias}</td>
+				</tr>
+				<!-- END BLOCK : qt_dias_programa -->
+				<!-- START BLOCK : total_qt_dias_programa -->
+				<tr bgcolor="#eeeeee">
+					<td>Total</td>
+					<td align="right"><b>{total_quantidade}</b></td>
+					<td align="right"><b>{total_dias}</b></td>
+				</tr>
+				<!-- END BLOCK : total_qt_dias_programa -->
+			</table>
+
+			<br>
+
+	</form>
+	<br>
+
+<!-- INCLUDE BLOCK : footer.html -->

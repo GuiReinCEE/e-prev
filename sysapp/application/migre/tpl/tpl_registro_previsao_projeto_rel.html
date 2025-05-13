@@ -1,0 +1,104 @@
+<html>
+<head>
+	<title>..:: e-prev :: Previsão ::..</title>
+	<style type="text/css">
+		* {
+			font-family: "Courier New", Courier, mono;
+			font-size: 9pt;
+			font-weight: normal;
+			line-height: normal;			
+		}
+		
+		body {
+			margin: 0px;
+		}
+		
+		.assunto {
+			text-align:justify;
+		}
+		
+		legend {
+			font-weight: bold;
+		}		
+		
+		.titulo {
+			margin-top: 10px;
+			width:98%;
+			font-weight: bold;
+			font-size: 16pt;
+			text-align:center;			
+		}
+		
+		.sub_titulo {
+			font-weight: bold;
+			font-size: 14pt;
+		}		
+		
+		label{
+			font-weight: bold;
+		}
+		
+		.pagina_imp {
+			width:700px; 
+			margin: 0px; 
+			padding: 5px; 
+		}
+
+		.dt_impressao {
+			position: absolute; 
+			top:0%;
+			letf:0%;
+			width:690px;
+			text-align:right;
+			font-size: 7pt;
+		}
+
+		.img_logo {
+			position: absolute; 
+			top:0%;
+			letf:0%;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="pagina_imp">
+		<!-- START BLOCK : dt_impressao -->
+		<img src="img/logo_rel.gif" border="0" class="img_logo"> 
+		<div class="dt_impressao">
+			{ds_usuario} - {dt_impressao}
+		</div>
+		<!-- END BLOCK : dt_impressao -->
+		
+		<div class="titulo">
+			PREVISÃO
+		</div>
+		<br>
+		<br>
+
+		<!-- START BLOCK : projeto -->
+		<div class="sub_titulo">
+			PROJETO: {ds_projeto}
+		</div>
+		<!-- START BLOCK : projeto -->
+		
+		<br>
+		<!-- START BLOCK : registro -->
+		<hr>
+		<label>{ds_pergunta}</label>
+		<br>
+		{ds_resposta}		
+		<br>
+		<br>
+		<!-- END BLOCK : registro -->
+	</div>
+	<script>
+		function imprimir()
+		{
+			window.print();
+		}
+		
+		window.onload = imprimir;
+	</script>	
+</body>
+</html>

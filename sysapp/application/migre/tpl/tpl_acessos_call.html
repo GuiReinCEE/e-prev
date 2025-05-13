@@ -1,0 +1,56 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Acessos ao Call Center ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr> 
+          <td><img src="img/img_menu_consolidado.jpg" border="0" usemap="#Map"> 
+            <map name="Map">
+              <area shape="rect" coords="200,1,397,35" href="acessos_call_analitico.php">
+            </map> </td>
+          <td width="100%" background="img/img_fundo_web_cel1.jpg">&nbsp;</td>
+          <td><img src="img/img_canto_sup_dir_consol.jpg" > </td>
+        </tr>
+        <tr valign="top"> 
+          <td colspan="2" background="img/img_f2.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="50%"> <form name="form2" method="post" action="acessos_call.php">
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;&nbsp;Per&iacute;odo:</font> 
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    a 
+                    <input name="dt_final" type="text" id="dt_final" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    <input type="submit" name="Submit" value="OK">
+                    (datas no formato dd/mm/aaaa) </font> </form></td>
+                <td width="50%"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a></td>
+              </tr>
+            </table></td>
+          <td background="img/img_fundo_dir.jpg">&nbsp;</td>
+        </tr>
+        <tr valign="top"> 
+          <td colspan="2" background="img/img_f2.jpg"> <table width="80%" cellspacing="1">
+              <tr> 
+                <td>&nbsp;</td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data</font></strong></td>
+                <td><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Acessos</font></strong></td>
+              </tr>
+              <!-- START BLOCK : projetos -->
+              <tr> 
+                <td>&nbsp;</td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{data}</strong></font></td>
+                <td bgcolor="{cor_fundo}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/azul.jpg" width="{numero_acessos}" height="20">{numero_acessos}</font></td>
+              </tr>
+              <!-- END BLOCK : projetos -->
+            </table></td>
+          <td background="img/img_fundo_dir.jpg">&nbsp; </td>
+        </tr>
+        <tr valign="top"> 
+          <td background="img/img_fundo_ativ_cel5.jpg"><img src="img/img_canto_inf_esq.jpg"></td>
+          <td width="100%" background="img/img_fundo_ativ_cel5.jpg"></td>
+          <td background="img/img_fundo_ativ_cel5.jpg"><img src="img/img_canto_inf_dir.jpg" width="6" height="6"></td>
+        </tr>
+      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

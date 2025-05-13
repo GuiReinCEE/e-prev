@@ -1,0 +1,770 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Acompanhamento de projeto ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style>
+	ul {
+		font-size:10pt; font-family:Verdana, Arial, Helvetica, sans-serif;
+		list-style: none;
+		padding:5px;
+		margin:0px;
+	}
+</style>
+<script language="JavaScript">
+	var ob_window = "";
+	
+	function win_reuniao(cd_acomp,cd_reuniao) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_reunioes_projeto.php";
+			ds_url += "?cd_acomp="   + cd_acomp;
+			ds_url += "&cd_reuniao=" + cd_reuniao;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wReuniao", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 		
+	}
+	
+	function win_reuniao_relatorio(cd_acomp, cd_reuniao) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_reunioes_projeto_rel.php";
+			ds_url += "?cd_acomp="   + cd_acomp;
+			ds_url += "&cd_reuniao=" + cd_reuniao;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wReuniaoRel", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 		
+	}	
+
+	function win_operacional_relatorio(cd_acomp, cd_operacional) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_operacional_projeto_rel.php";
+			ds_url += "?cd_acomp="       + cd_acomp;
+			ds_url += "&cd_operacional=" + cd_operacional;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wOperacionalRel", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 		
+	}
+	
+	function win_escopo_relatorio(cd_acomp, cd_escopo) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_escopo_projeto_rel.php";
+			ds_url += "?cd_acomp="  + cd_acomp;
+			ds_url += "&cd_escopo=" + cd_escopo;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wEscopoRel", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 		
+	}	
+	
+	function win_escopo_mudanca_relatorio(cd_acomp, cd_mudanca_escopo) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_escopo_mudanca_projeto_rel.php";
+			ds_url += "?cd_acomp="  + cd_acomp;
+			ds_url += "&cd_mudanca_escopo=" + cd_mudanca_escopo;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wEscopoMudancaRel", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 		
+	}	
+	
+	function win_previsao_relatorio(cd_acomp, cd_previsao) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_previsao_projeto_rel.php";
+			ds_url += "?cd_acomp="  + cd_acomp;
+			ds_url += "&cd_previsao=" + cd_previsao;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wPrevisaoRel", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 		
+	}	
+	
+	function win_previsao(cd_acomp, cd_previsao) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+		 
+		var ds_url = "registro_previsao_projeto.php";
+			ds_url += "?cd_acomp="   + cd_acomp;
+			ds_url += "&cd_previsao=" + cd_previsao;		
+		
+		var nr_width = document.body.clientWidth - 50;;
+		var nr_height = 425;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wPrevisao", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 				
+	}
+
+	function win_escopo(cd_acomp,cd_escopo) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_escopo_projeto.php";
+			ds_url += "?cd_acomp=" + cd_acomp;
+			ds_url += "&cd_escopo=" + cd_escopo;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wEscopo", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 
+	}
+	
+	function win_wbs(cd_acomp) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_wbs_projeto.php";
+			ds_url += "?cd_acomp=" + cd_acomp;
+	
+		var nr_width = 400;
+		var nr_height = 150;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wWBS", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=no,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 
+	}	
+
+	function win_mudanca_escopo(cd_acomp,cd_mudanca_escopo) 
+	{
+	    if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_escopo_mudanca_projeto.php";
+			ds_url += "?cd_acomp=" + cd_acomp;
+			ds_url += "&cd_mudanca_escopo=" + cd_mudanca_escopo;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wMudancaEscopo", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 
+	}	
+
+	function incluiOperacional(cd_acomp,cd_operacional) 
+	{
+		if(ob_window != "")
+		{
+			ob_window.close();
+		}
+
+		var ds_url = "registro_operacional_projeto.php";
+			ds_url += "?cd_acomp=" + cd_acomp;
+			ds_url += "&cd_operacional=" + cd_operacional;
+		
+		var nr_width = document.body.clientWidth - 50;
+		var nr_height = document.body.clientHeight - 50;
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		ob_window = window.open(ds_url, "wDescOperacional", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 
+	}	
+	
+	function excluirReuniao(cd_acomp, cd_reuniao)
+	{
+		if(confirm('\nDeseja realmente excluir a reunião?\n\n'))
+		{
+			document.location.href='exclui_reunioes_projeto.php?cd_acomp='+ cd_acomp + '&cd_reuniao='+ cd_reuniao;
+		}
+	}
+	
+	function excluirOperacional(cd_acomp, cd_operacional)
+	{
+		if(confirm('\nDeseja realmente excluir a registro operacional?\n\n'))
+		{
+			document.location.href = 'exclui_registro_operacional_projeto.php?cd_acomp='+ cd_acomp +'&cd_operacional='+ cd_operacional;
+		}
+	}	
+
+	function excluirWBS(cd_acomp, cd_wbs)
+	{
+		if(confirm('\nDeseja realmente excluir o WBS?\n\n'))
+		{
+			document.location.href = 'exclui_wbs_projeto.php?cd_acomp='+ cd_acomp +'&cd_wbs='+ cd_wbs;
+		}
+	}	
+	
+	function excluirEscopo(cd_acomp, cd_escopo)
+	{
+		if(confirm('\nDeseja realmente excluir o escopo?\n\n'))
+		{
+			document.location.href = 'exclui_acompanhamento_escopo.php?cd_acomp='+ cd_acomp +'&cd_escopo='+ cd_escopo;
+		}
+	}	
+	
+	function excluirMudancaEscopo(cd_acomp, cd_mudanca_escopo)
+	{
+		if(confirm('\nDeseja realmente excluir a mudança de escopo?\n\n'))
+		{
+			document.location.href = 'exclui_acompanhamento_mudanca_escopo.php?cd_acomp='+ cd_acomp +'&cd_mudanca_escopo='+cd_mudanca_escopo;
+		}
+	}
+	
+	function excluirPrevisao(cd_acomp, cd_previsao)
+	{
+		if(confirm('\nDeseja realmente excluir a previsão?\n\n'))
+		{
+			document.location.href = 'exclui_previsao.php?ac='+ cd_acomp +'&re='+cd_previsao;
+		}
+	}	
+	
+	
+	function enviarEmailReuniao(cd_acomp, cd_reuniao)
+	{
+		if(confirm('\nDeseja enviar a reunião para os envolvidos?\n\n'))
+		{
+			document.location.href='registro_reunioes_projeto_email.php?cd_acomp='+ cd_acomp + '&cd_reuniao='+ cd_reuniao;
+		}
+	}
+
+	function cancelaAcompanhamento(cd_acomp)
+	{
+		if(confirm('Confirma a operação CANCELAR o acompanhamento?'))
+		{
+			document.location.href='cancela_acomp_proj.php?c='+ cd_acomp;
+		}
+	}
+
+	function encerraAcompanhamento(cd_acomp)
+	{
+		if(confirm('Confirma a operação ENCERRAR o acompanhamento?'))
+		{
+			document.location.href='encerra_acomp_proj.php?c='+ cd_acomp;
+		}
+	}
+				  
+	function enviaEmailAcompanhamento(cd_acomp, tp_envio)
+	{
+		if(tp_envio == "")
+		{
+			alert("Informe o destino do email");
+		}
+		else
+		{
+			if(confirm('Confirma o envio do EMAIL para '+ tp_envio +'?'))
+			{
+				document.location.href='encaminha_acomp.php?cd_acomp='+ cd_acomp +'&tp_envio='+ tp_envio;
+			}
+		}
+	}	
+</script>
+
+	<style>
+		.tb_resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_resultado {
+			border-collapse: collapse;
+			width: 90%;		
+		}
+		
+		.tb_resultado th {
+			font-weight: bold;	
+			text-align:center;
+			border: 1px #DAE9F7 solid;
+			background:#DAE9F7;
+		}
+		.tb_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px #DAE9F7 solid;
+		}	
+
+		.tr_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+		}		
+		
+		.tb_lista_resultado * {
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Verdana, Arial,'MS Sans Serif';			
+		}
+		
+		.tb_lista_resultado {
+			border-collapse: collapse;
+			width: 90%;	
+			background:#F4F4F4;			
+		}		
+		
+		.tb_lista_resultado caption {
+			font-size: 16pt;
+			font-weight: normal;
+			font-family: Arial, Verdana, 'MS Sans Serif';		
+			text-align:center;
+			color:#0046ad;
+			border: 1px #DAE9F7 solid;
+			background:#DAE9F7;			
+		}		
+		
+		.tb_lista_resultado th {
+			font-size: 10pt;
+			font-weight: bold;	
+			text-align:center;
+			border: 1px solid #CCCCCC;
+			color:#FFFFFF;
+			background:#0046ad;
+		}
+		.tb_lista_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+			
+		}		
+	</style>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> 
+	<form name="form1" method="post" action="grava_acomp_projeto.php">
+        <table  width="90%" border="0" align="center" cellpadding="0" cellspacing="1">
+            <tr bgcolor="#DAE9F7"> 
+                <td>
+					<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto/Sistema:</font>
+				</td>
+                <td>
+					<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+	                    <select name="projeto" id="select">
+	                      <!-- START BLOCK : projeto -->
+	                      <option value="{cd_projeto}" {sel_projeto}>{nome_projeto}</option>
+	                      <!-- END BLOCK : projeto -->
+	                    </select>
+	                    <a href="cad_projetos.php?c={cod_proj}" class="links2">&gt;&gt; Ver projeto</a>
+					</font>
+				</td>
+                <td align="center">
+					<input type="button" value="Voltar" onClick="document.location.href='lst_acomp_projetos.php';" class="botao_disabled"  style="width:100px;">
+					<input type="button" value="Imprimir" onClick="document.location.href='cad_acomp_projetos.php?c={cd_acomp}&print=S';" class="botao_disabled"  style="width:100px;">
+					<input type="submit" value="Salvar" class="botao"  style="width:100px;" {fl_encerrado_cancelado}>	
+					<input type="button" value="Cancelar" onClick="cancelaAcompanhamento('{cd_acomp}')" class="botao" style="width:100px;" {fl_encerrado_cancelado}>
+					<input type="button" value="Encerrar" onClick="encerraAcompanhamento('{cd_acomp}')" class="botao"  style="width:100px;" {fl_encerrado_cancelado}>
+				  </td>
+                </tr>
+
+                <tr bgcolor="#DAE9F7"> 
+                  <td> <div align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                      Refer&ecirc;ncia</font></div></td>
+                  <td >
+                    <input name="dt_acomp" type="text" id="dt_acomp" size="15" maxlength="10" value="{dt_acomp}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    <input name="insere" type="hidden" id="insere" value="{insere}">
+                    <input name="cd_acomp" type="hidden" id="cd_acomp" value="{cd_acomp}">
+                    
+					
+					
+					</td>
+                  <td >
+				 </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Analistas 
+                    Respons&aacute;veis: </font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- START BLOCK : analista -->
+                    <input name="opt_analista[]" type="checkbox" id="opt_analista[]" value="{cod_analista}" {chk_analista}>
+                    {nome_analista} <br>
+                    <!-- END BLOCK : analista -->
+                    </font> </td>
+                </tr>
+                <tr align="center" bgcolor="{cor_fundo_status}"> 
+                  <td height="30" colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{status}</strong></font> 
+                  </td>
+                </tr>
+				<tr bgcolor="#DAE9F7">
+					<td>
+						<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Enviar Email:</font>
+					</td>
+					<td>
+						<select name="tp_envio" id="tp_envio" style="width: 150px;">
+							<option value="">Selecione</option>
+							<option value="TODOS">Todos</option>
+							<!--<option value="GERENTE">Gerente</option>
+							<option value="ANALISTAS">Analistas</option>-->
+						</select>
+						<input type="button" value="Enviar" onClick="enviaEmailAcompanhamento('{cd_acomp}',document.getElementById('tp_envio').value)" class="botao" {fl_encerrado_cancelado}>
+					</td>
+					<td>
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Todo dia 10 de cada mês é enviado email para TODOS</font>
+					</td>
+				</tr>				
+		</table>		
+		<BR>		
+				
+
+		<table class="tb_lista_resultado" align="center">
+			<caption>
+				Reuniões
+			</caption>						
+			<tr> 
+				<th>Data</th>
+				<th>Resumo</th>
+				<th>Presentes</th>
+				<th style="white-space:nowrap;">Motivo não ocorrência</th>
+				<th>Anexo</th>
+				<th style="white-space:nowrap;">
+					<img src="img/reuniao_add_p.gif" border="0" title="Registra nova reunião" onClick="win_reuniao({cd_acomp},'')" style="cursor:pointer;">
+					<img src="img/reuniao_imp_p.gif" border="0" title="Imprimir reuniões" onClick="win_reuniao_relatorio('{cd_acomp}','')" style="cursor:pointer;">
+				</th>				
+			</tr>
+			<!-- START BLOCK : reuniao -->
+			<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';"> 
+				<td>{dt_reuniao}</td>
+				<td>{desc_reuniao}</td>
+				<td>
+					{envolv_reuniao}
+					<!-- START BLOCK : reuniao_envolvido -->
+					<span style="white-space:nowrap;">{envolvido}</span><br>
+					<!-- END BLOCK : reuniao_envolvido -->
+				</td>
+				<td>{motivo_reuniao}</td>
+				<td align="center">
+					<a href='file:///{ds_arquivo_fisico}' class='links3' style="{fl_anexo}" target='_blank'><img src='img/anexo_ver.gif' border='0' style='cursor:pointer;' title='Visualizar Anexo' ></a>					
+				</td>
+				<td style="white-space:nowrap; width:10%; text-align:center;">
+					<img src="img/reuniao_edt_p.gif"   border="0" onClick="win_reuniao({cd_acomp},'{cd_reuniao}')" title="Visualizar/Editar Reunião" style="cursor:pointer;">
+					<img src="img/reuniao_envia_email_p.gif" border="0" title="Enviar reunião para envolvidos" onClick="enviarEmailReuniao('{cd_acomp}','{cd_reuniao}')" style="cursor:pointer;">
+					<img src="img/reuniao_imp_p.gif" border="0" title="Imprimir reunião" onClick="win_reuniao_relatorio('{cd_acomp}','{cd_reuniao}')" style="cursor:pointer;">
+					<img src="img/reuniao_del_p.gif" border="0" onClick="excluirReuniao('{cd_acomp}','{cd_reuniao}')" title="Excluir Reunião" style="cursor:pointer;">
+				</td>				
+			</tr>
+			<!-- END BLOCK : reuniao -->
+		</table>
+		<br>
+		
+		<table class="tb_lista_resultado" align="center">
+			<caption>
+				Etapas
+			</caption>	
+			<tr>
+				<th valign="top" style="width:16%">
+					<br>
+					Análise de Requisitos
+				</th>
+				<td valign="top" style="width:42%">
+					Status:
+					<br>
+					<select name="status_ar" style="width:100%">
+						<!-- START BLOCK : status_ar -->
+						<option value="{cd_status_ar}" {sel_status_ar}>{nome_status_ar}</option>
+						<!-- END BLOCK : status_ar -->
+					</select>
+					<br>
+					Descrição:
+					<br>
+					<textarea name="desc_ar" style="width:100%;" rows="4" id="desc_ar">{desc_ar}</textarea>
+				</td>
+				<td valign="top" style="width:42%; padding-top:5px;">
+					<table class="tb_lista_resultado" align="center">
+						<caption style="font-size: 11pt; font-weight: bold;">
+							Registro Operacional
+						</caption>	
+						<tr>
+							<th>
+								Autor
+							</th>
+							<th>
+								Processo
+							</th>
+							<th>
+								Finalizado
+							</th>	
+							<th>
+								<img src="img/registro_operacional_add_p.gif" border="0"  onClick="incluiOperacional({cd_acomp},'')" style="cursor:pointer;" title="Nova Registro Operacional">
+							</th>
+						</tr>
+						<!-- START BLOCK : lst_operacional -->
+						<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';">
+							<td>
+								{ds_autor}
+							</td>
+							<td>
+								{ds_nome}
+							</td>
+							<td>
+								{dt_finalizado}
+							</td>							
+							<td style="white-space:nowrap; width:10%;text-align:center;">
+								<img src="img/registro_operacional_edt_p.gif" border="0" onClick="incluiOperacional({cd_acomp},'{cd_operacional}')" style="cursor:pointer;" title="Visualizar/Editar Registro Operacional">
+								<img src="img/registro_operacional_imp_p.gif" border="0" onClick="win_operacional_relatorio('{cd_acomp}','{cd_operacional}')" style="cursor:pointer;" title="Imprimir Registro Operacional">
+								<img src="img/registro_operacional_del_p.gif" border="0" onClick="excluirOperacional({cd_acomp},'{cd_operacional}')" style="cursor:pointer;" title="Excluir Registro Operacional">
+							</td>
+						</tr>
+						<!-- END BLOCK : lst_operacional -->		
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top" style="width:16%">
+					<br>
+					Escopo
+				</th>
+				<td valign="top" style="width:42%">
+					Status:
+					<br>								
+					<select name="status_es" style="width:100%;">
+						<!-- START BLOCK : status_es -->
+						<option value="{cd_status_es}" {sel_status_es}>{nome_status_es}</option>
+						<!-- END BLOCK : status_es -->
+					</select>
+					<br>
+					Descrição:
+					<br>
+					<textarea name="desc_es" style="width:100%;" rows="4" id="desc_es">{desc_es}</textarea>
+				</td>
+				<td valign="top" style="width:42%; padding-top:5px;">
+					<div style="float:left; width:48%;">
+					<table class="tb_lista_resultado" align="center">
+						<caption style="font-size: 11pt; font-weight: bold;">
+							Escopo
+						</caption>	
+						<tr>
+							<th>
+								Data
+							</th>
+							<th>
+								<img src="img/escopo_add_p.gif" border="0"  onClick="win_escopo({cd_acomp},'')" style="cursor:pointer;" title="Novo Escopo">
+							</th>
+						</tr>
+						<!-- START BLOCK : escopo -->
+						<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';">
+							<td style="cursor:help; width:90%;" title='{ds_nome_user}'>
+								{dt_cadastro}
+							</td>
+							<td style="white-space:nowrap; width:10%;text-align:center;">
+								<img src="img/escopo_edt_p.gif" border="0" onClick="win_escopo({cd_acomp},'{cd_escopo}')" style="cursor:pointer;" title="Visualizar/Editar Escopo">
+								<img src="img/registro_operacional_imp_p.gif" border="0" onClick="win_escopo_relatorio('{cd_acomp}','{cd_escopo}')" style="cursor:pointer;" title="Imprimir Escopo">
+								<img src="img/escopo_del_p.gif" border="0" onClick="excluirEscopo({cd_acomp},'{cd_escopo}')" style="cursor:pointer;" title="Excluir Escopo">
+							</td>
+						</tr>
+						<!-- END BLOCK : escopo -->		
+					</table>
+					</div>
+					<div style="float:left; width:48%;">
+					<table class="tb_lista_resultado" align="center">
+						<caption style="font-size: 11pt; font-weight: bold;">
+							WBS
+						</caption>	
+						<tr>
+							<th>
+								Data
+							</th>
+							<th>
+								<img src="img/wbs_add_p.gif" border="0"  onClick="win_wbs({cd_acomp},'')" style="cursor:pointer;" title="Novo WBS">
+							</th>
+						</tr>
+						<!-- START BLOCK : escopo_wbs -->
+						<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';">
+							<td style="cursor:help; width:90%;" title='{ds_nome_user}'>
+								{ds_arquivo}
+							</td>
+							<td style="white-space:nowrap; width:10%;text-align:center;">
+								<a href='file:///{ds_arquivo_fisico_link}' class='links3' target='_blank'><img src='img/wbs_ver_p.gif' border='0' style='cursor:pointer;' title='Visualizar WBS' ></a>
+								<img src="img/wbs_del_p.gif" border="0" onClick="excluirWBS({cd_acomp},'{cd_wbs}')" style="cursor:pointer;" title="Excluir WBS">
+							</td>
+						</tr>
+						<!-- END BLOCK : escopo_wbs -->		
+					</table>
+					</div>
+				</td>
+			</tr>			
+			<tr>
+				<th valign="top" style="width:16%">
+					<br>
+					Aprovação do Usuário
+				</th>
+				<td valign="top" style="width:42%">
+					Status:
+					<br>								
+					<select name="status_au" style="width:100%;">
+						<!-- START BLOCK : status_au -->
+						<option value="{cd_status_au}" {sel_status_au}>{nome_status_au}</option>
+						<!-- END BLOCK : status_au -->
+					</select>
+					<br>
+					Descrição:
+					<br>
+					<textarea name="desc_au" style="width:100%;" rows="4" id="desc_au">{desc_au}</textarea>
+				</td>
+				<td style="width:42%">
+				</td>
+			</tr>	
+			<tr>
+				<th valign="top" style="width:16%">
+					<br>
+					Desenvolvimento
+				</th>
+				<td valign="top" style="width:42%">
+					Status:
+					<br>								
+					<select name="status_de" style="width:100%;">
+						<!-- START BLOCK : status_de -->
+						<option value="{cd_status_de}" {sel_status_de}>{nome_status_de}</option>
+						<!-- END BLOCK : status_de -->
+					</select>
+					<br>
+					Descrição:
+					<br>
+					<textarea name="desc_de" style="width:100%;" rows="4" id="desc_de">{desc_de}</textarea>
+				</td>
+				<td valign="top" style="width:42%; padding-top:5px;">
+				</td>
+			</tr>	
+			<tr>
+				<th valign="top" style="width:16%">
+					<br>
+					Mudança de Escopo
+				</th>
+				<td valign="top" style="width:42%">
+					Status:
+					<br>								
+					<select name="status_me" style="width:100%;">
+						<!-- START BLOCK : status_me -->
+						<option value="{cd_status_me}" {sel_status_me}>{nome_status_me}</option>
+						<!-- END BLOCK : status_me -->
+					</select>
+					<br>
+					Descrição:
+					<br>
+					<textarea name="desc_me" style="width:100%;" rows="4" id="desc_de">{desc_me}</textarea>
+				</td>
+				<td valign="top" style="width:42%; padding-top:5px;">
+					<table class="tb_lista_resultado" align="center">
+						<caption style="font-size: 11pt; font-weight: bold;">
+							Mudança de Escopo
+						</caption>	
+						<tr>
+							<th>
+								Solicitante
+							</th>
+							<th>
+								Data
+							</th>
+							<th>
+								<img src="img/mudanca_escopo_add_p.gif" border="0"  onClick="win_mudanca_escopo({cd_acomp},'')" style="cursor:pointer;" title="Nova Mudança de Escopo">
+							</th>
+						</tr>
+						<!-- START BLOCK : mudanca_escopo -->
+						<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';">
+							<td style="cursor:help; width:90%;" title='{ds_nome_solicitante}'>
+								{ds_solicitante}
+							</td>
+							<td style="cursor:help; width:90%;" title='{ds_nome_solicitante}'>
+								{dt_cadastro}
+							</td>
+							<td style="white-space:nowrap; width:10%;text-align:center;">
+								<img src="img/mudanca_escopo_edt_p.gif" border="0" onClick="win_mudanca_escopo({cd_acomp},'{cd_mudanca_escopo}')" style="cursor:pointer;" title="Visualizar/Editar Mudança de Escopo">
+								<img src="img/registro_operacional_imp_p.gif" border="0" onClick="win_escopo_mudanca_relatorio('{cd_acomp}','{cd_mudanca_escopo}')" style="cursor:pointer;" title="Imprimir Mudança de Escopo">
+								<img src="img/mudanca_escopo_del_p.gif" border="0" onClick="excluirMudancaEscopo({cd_acomp},'{cd_mudanca_escopo}')" style="cursor:pointer;" title="Excluir Mudança de Escopo">
+							</td>
+						</tr>
+						<!-- END BLOCK : mudanca_escopo -->		
+					</table>
+				</td>
+			</tr>			
+		</table>
+		<br>
+		
+		<table class="tb_lista_resultado" align="center">
+			<caption>
+				Previsto para o próximo mês
+			</caption>						
+			<tr> 
+				<th>Mês/Ano</th>
+				<th>Previsão</th>
+				<th>Obs</th>
+				<th style="white-space:nowrap;">
+					<img src="img/previsao_add_p.gif" border="0" title="Nova previsão" onClick="win_previsao({cd_acomp},'{cd_prev}')" style="cursor:pointer;">
+				</th>				
+			</tr>
+			<!-- START BLOCK : prev -->
+			<tr onmouseover="this.className='tr_selecionado';" onmouseout="this.className='';"> 
+				<td style="text-transform: uppercase;">{ano_mes}</td>
+				<td>{desc_prev}</td>
+				<td>{obs}</td>
+				<td style="white-space:nowrap; width:10%; text-align:center;">
+					<img src="img/previsao_edt_p.gif"   border="0" onClick="win_previsao({cd_acomp},'{cd_prev}')" title="Visualizar/Editar Previsão" style="cursor:pointer;">
+					<img src="img/registro_operacional_imp_p.gif" border="0" onClick="win_previsao_relatorio('{cd_acomp}','{cd_prev}')" style="cursor:pointer;" title="Imprimir Previsão">					
+					<img src="img/previsao_del_p.gif" border="0" onClick="excluirPrevisao('{cd_acomp}','{cd_prev}')" title="Excluir Previsão" style="cursor:pointer;">
+				</td>				
+			</tr>
+			<!-- END BLOCK : prev -->
+		</table>
+		<br>		
+
+		<div style="width:90%; text-align:center;">
+		    <input type="submit" name="Submit2" value="Salvar" class="botao" style="width: 150px;" {fl_encerrado_cancelado}>
+		</div>
+		<br>
+		<br>
+      </td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

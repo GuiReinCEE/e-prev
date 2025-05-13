@@ -1,0 +1,400 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = 'Email Marketing - Cadastro';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+
+
+<script language="JavaScript" type="text/JavaScript">
+function submeter_form(f)
+{
+	if( valida_form(f) )
+	{
+		document.getElementById('btn_salvar_img').value='Salvando...';
+		document.getElementById('btn_salvar_img').disabled=true;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function valida_form(f)
+{
+	var erros = "";
+	if (f.assunto.value == '') 
+	{ 
+		erros = erros + "- O campo 'Assunto do Email' deve estar preenchido.\n"; 
+	}
+	
+	if (erros != "") 
+	{
+		alert("Erros:\n\n" + erros);
+		return false;
+	}
+	else
+	{
+		if (f.enviar.checked == true) 
+		{
+			var confirma = confirm("ATENÇÃO: Esta ação é irreversível !!!!\n\nConfirma o envio de emails para o(s) público(s) selecionado(s)?\n\n");
+			if (confirma == true) 
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+
+function valida_form2(f) 
+{
+	var erros = "";
+	if (f.arquivo.value == '') 
+	{ 
+		erros = erros + "- Por favor, selecione o arquivo. (Botão 'Procurar').\n"; 
+	}
+	
+	if (erros != "") 
+	{
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else 
+	{
+		return true;
+	}
+}
+
+
+function getPublicoSelecionado()
+{
+	$('#lista_publico_selecionado').html("");
+	
+	var total = 0;
+	
+	$('#tbGrupo tbody tr').each(function() {
+		
+		$(this).find("input:first-child").each(function(){
+			var tipo = $(this).attr("type");
+			if(tipo.toUpperCase() == "CHECKBOX")
+			{
+				if($(this).is(":checked"))
+				{
+					$('#lista_publico_selecionado').append('<table border="0"><tr><td class="texto1" style="width: 80px; text-align:center; font-weight:bold; color:red;">'+$("#lb_publico_qt_"+$(this).val()).text()+'</td><td class="texto1" style="font-weight:bold; color:red;">'+$("#lb_publico_"+$(this).val()).text()+'</td></tr></table>');
+					
+					total+= parseInt($("#lb_publico_qt_"+$(this).val()).text());				
+				}
+			}
+		});		
+	});	
+	
+	$('#lista_publico_selecionado').append('<hr><table border="0"><tr><td class="texto1" style="width: 80px; text-align:center; font-weight:bold; color:blue;">'+total+'</td></tr></table>');	
+}
+
+
+	
+$(document).ready(function(){
+	getPublicoSelecionado();
+});
+</script>
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_lista' class='' onclick="location.href='{site_url}/ecrm/divulgacao'"><span>Lista</span></li>
+			<li id='aba_solicitacao' class='abaSelecionada' onclick="location.reload();"><span>Divulgação</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td colspan="2"> <form name="form1" id="form1" method="post" action="grava_email_marketing.php" onSubmit="return submeter_form(this)">
+              <table border="0" align="center" cellpadding="0" cellspacing="1" width="85%">
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td colspan="3" class="texto1"><table border="0" cellspacing="0" cellpadding="0" width="100%">
+                      <tr bgcolor="#0046ad"> 
+                        <td colspan="4" class="cabecalho2" height="33" align="center"> 
+                          {assunto} {situacao}</td>
+                      </tr>
+                      <tr> 
+                        <td class="cabecalho2" align="center"><a href="lst_envia_emails.php?divulg={cd_divulgacao}&fl_retornado=N" class="links2verde">
+						Listar emails enviados 
+						<!-- START BLOCK : qt_email_enviado -->
+						({qt_email_enviado})
+						<!-- END BLOCK : qt_email_enviado -->
+						</a>
+						</td>
+                        <td align="center">
+						<a href="lst_envia_emails.php?divulg={cd_divulgacao}&fl_retornado=S" class="links2vermelho">
+						Listar emails retornados
+						<!-- START BLOCK : qt_email_nao_enviado -->
+						({qt_email_nao_enviado})
+						<!-- END BLOCK : qt_email_nao_enviado -->
+						</a>
+						<!--
+						<a href="rel_pdf_dinamico.php?c=123&p1=cd_divulgacao&v1={cd_divulgacao}" target="_blank" class="links2vermelho">Listar emails retornados</a>
+						-->
+						</td>
+                        <td align="center" class="links2">
+						Total de emails 
+						<!-- START BLOCK : qt_email -->
+						({qt_email})
+						<!-- END BLOCK : qt_email -->
+						</td>
+                        <td align="right">
+							<input type="submit" name="image" value="Salvar" id='btn_salvar_img' class="botao"> 
+						</td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Número Divulgação:</td>
+                  <td colspan="2" bgcolor="{cor_fundo1}" class="texto1"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td><input name="cd_divulgacao" type="text" id="cd_divulgacao" value="{cd_divulgacao}" readonly size="10" maxlength="10"></td>
+                        <td class="links2" align="right"> <input name="enviar" type="checkbox" id="enviar" value="S" {fl_enviar}>
+                          Enviar emails ao salvar&nbsp;</td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Data Divulgação:</td>
+                  <td colspan="2"><input name="dt_inclusao" type="text" id="dt_inclusao2" size="10" maxlength="10" value="{dt_inclusao}" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" > 
+                    <input name="insere" type="hidden" id="insere2" value="{insere}"> 
+                  </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Agendar para:</td>
+                  <td colspan="2" class="texto1">
+					<input name="dt_envio" type="text" id="dt_envio2" size="10" maxlength="10" value="{dt_envio}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    (horário para envio: a partir de 00h 01min)</td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Remetente:</td>
+                  <td colspan="2"><input name="remetente" type="text" id="remetente" value="{remetente}" size="77" maxlength="200"></td>
+                </tr>				
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Assunto Email:</td>
+                  <td colspan="2"><input name="assunto" type="text" id="assunto2" value="{assunto}" size="77" maxlength="200"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" width="350px;"><b>Palavras chaves:</b> 
+						<BR>
+						<BR>
+						Utilize as palavras chaves abaixo que serão substituídas com informação de acordo com o cadastro do participante.
+						<BR>
+						<BR>
+						<b>[NOME]</b> = Nome cadastrado ou do participante<BR>
+						<b>[EMP]</b> = Código da empresa<BR>
+						<b>[RE]</b> = Registro de empregado<BR>
+						<b>[SEQ]</b> = Sequência<BR>
+						<b>[RE_CRIPTO]</b> = Identificação criptografada.<BR>
+						<BR>
+						<b>[LINK_1]</b> = Url preenchinda no campo Link<BR>
+						
+					</td>
+                  <td colspan="2" class="texto1"><textarea name="conteudo" cols="77" rows="10" id="textarea2" >{conteudo}</textarea></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Link:</td>
+					<td colspan="2">
+						<input type="text" name="url_link" id="url_link" value="{url_link}" style="width: 100%;">
+					</td>
+                </tr>				
+				</table>
+				
+				
+				<table border="0" align="center" cellpadding="0" cellspacing="1" width="85%">
+                <tr bgcolor="{cor_fundo1}"> 
+					<td class="texto1" width="20%" valign="top">
+						Publicação - Edição: <input name="edicao" type="text" id="edicao" size="5" maxlength="5"> 
+					</td>
+					<td> 
+						<!-- START BLOCK : publicacao -->
+						<input name="chk_publicacao" type="radio" id="radio2" value="{cd_publicacao}" {publicacao_checked}> 
+						<a href="cad_publicacao.php?op=A&c={cd_publicacao}" class="links2azul">{nome_publicacao}</a><br> 
+						<!-- END BLOCK : publicacao -->
+					</td>
+					</tr>
+                </table>
+				
+				
+				<BR>
+				<style>
+					#lista_publico_selecionado * {
+						font-weight:bold; color:red;
+					}
+				</style>
+				<table border="0" align="center" cellpadding="3" cellspacing="1" width="85%" style="border: 1px solid #F0C36D; background: #F9EDBE;">
+					<tr> 
+						<td class="texto1" valign="top" width="220px;">Público selecionado:</td>
+						<td class="texto1" >
+							<table border="0"><tr><td class="texto1" style="width: 80px; text-align:center; font-weight:bold;">Quant.</td><td class="texto1" style="font-weight:bold;">Grupo</td></tr></table>		
+							<hr>							
+						</td>
+					</tr>
+					<tr> 
+						<td class="texto1" valign="top" width="220px;"></td>
+						<td class="texto1" id="lista_publico_selecionado"></td>
+					</tr>					
+				</table>
+				<BR>
+			  
+				
+				<table border="0" align="center" cellpadding="0" cellspacing="1" width="85%">
+				<tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" valign="top" width="220px;">Público alvo:</td>
+                  <td id="obPublico" class="links2">Opções não exclusivas (assinale tantas quanto necessário)<br> 
+					Filtrar: <input type="text" id="FilterTextBox" name="FilterTextBox" style="width: 400px;">			  
+				  
+					<table class="sort-table" id="tbGrupo" align="center" width="100%" cellspacing="2" cellpadding="2">
+						<thead>
+							<td></td>
+							<td>Quant.</td>
+							<td>Grupo</td>
+						</thead>
+						<tbody>
+						<!-- START BLOCK : publico -->
+						<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+							<td style="width: 20px; text-align:center;"><input type="checkbox" name="ar_grupo[]" id="chk_publico_{cd_publico}" value="{cd_publico}" {publico_checked} onclick="getPublicoSelecionado()"></td>
+							<td id="lb_publico_qt_{cd_publico}" style="width: 60px; text-align:center;">{qt_registro_grupo}</td> 
+							<td id="lb_publico_{cd_publico}">{nome_publico}</td>							
+						</tr>
+						<!-- END BLOCK : publico -->
+						</tbody>
+					</table> 
+
+					<script>
+						function removeAccents(s){
+							var r = s.toLowerCase();
+							non_asciis = {'a': '[àáâãäå]', 'ae': 'æ', 'c': 'ç', 'e': '[èéêë]', 'i': '[ìíîï]', 'n': 'ñ', 'o': '[òóôõö]', 'oe': 'œ', 'u': '[ùúûuü]', 'y': '[ýÿ]'};
+							for (i in non_asciis) 
+							{ 
+								r = r.replace(new RegExp(non_asciis[i], 'g'), i); 
+							}
+							return r;
+						};
+						
+						$(document).ready(function(){
+							$('#FilterTextBox').keypress(function(event){
+								if (event.keyCode == 13) 
+								{
+									event.preventDefault();
+									return false;
+								}
+							});							
+						
+							//add index column with all content.
+							$("#tbGrupo tbody tr:has(td)").each(function(){
+								var t = $(this).text().toLowerCase(); //all row text
+								$("<td class='indexColumn' style='display:none;'></td>").hide().text(removeAccents(t)).appendTo(this);
+							});//each tr
+						 
+							$("#FilterTextBox").keyup(function(event){
+								if (event.keyCode == 27) 
+								{
+									$("#FilterTextBox").val("").keyup();
+								}
+								else
+								{
+									var s = $(this).val();
+									    s = removeAccents(s);
+										s = s.toLowerCase().split(" ");
+									    
+									//show all rows.
+									$("#tbGrupo tbody tr:hidden").show();
+									$.each(s, function(){
+										$("#tbGrupo tbody tr:visible .indexColumn:not(:contains('"+ this + "'))").parent().hide();
+									});//each
+								}
+							});//key up.
+						});//document.ready				
+					</script>
+                  </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" valign="top">Emails Avulsos (separar por ;):</td>
+                  <td class="links2"><textarea name="emails_outros" cols="80" rows="5" id="textarea3">{emails_outros}</textarea></td>
+                </tr>
+
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" valign="top">Arquivo associado:</td>
+                  <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td width="50%"><a href="http://www.e-prev.com.br/upload/{arquivo_associado}" target="_blank"> 
+                          <input name="arquivo" type="hidden" id="arquivo" value="{arquivo_associado}">
+                          {arquivo_associado}</a></td>
+                        <td width="50%" align="center"><a href="exclui_arquivo_divulgacao.php?c={cd_divulgacao}" class="links2vermelho">Exclui 
+                          Arquivo</a></td>
+                      </tr>
+                    </table></td>
+                </tr>
+              </table>
+            </form>
+            
+				
+            <form name="form2" method="post" action="grava_imagem.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+                <input type="hidden" name="MAX_FILE_SIZE" value="8048000">
+                <input type="hidden" name="cd_divulgacao" value="{cd_divulgacao}">
+				
+				<table border="0" align="center" cellpadding="1" cellspacing="1" width="777">
+                <tr align="center"> 
+                  <td colspan="2"><font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Arquivos 
+                    anexados </font></td>
+                </tr>
+                <tr align="center"> 
+                  <td colspan="2" class="texto1">(&eacute; necess&aacute;rio salvar 
+                    a divulga&ccedil;&atilde;o antes de anexar arquivo)</td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione 
+                    o arquivo</font> </td>
+                  <td bgcolor="#F4F4F4"> <input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado"> 
+                    <br> <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: 
+                    Tamanho m&aacute;ximo do arquivo limitado a 2MB nos formatos 
+                    PDF, JPG ou GIF.<br>
+                    Sugerimos não enviar arquivos nos formatos XLS (Excel) e DOC 
+                    (Word).<br>
+                    Para enviá-los transforme-os antes em PDF.</font> </td>
+                </tr>
+                <tr> 
+                  <td colspan="2"> <div align="center"> 
+                      <input type="submit" name="Submit" value="Anexar arquivo ao email" class="botao">
+                    </div></td>
+                </tr>
+				</table>
+			 </form>
+            
+			</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+	  
+	  
+			</div>
+			
+			<br />
+	</div>
+
+</div>
+	  
+<!-- INCLUDE BLOCK : footer.html -->

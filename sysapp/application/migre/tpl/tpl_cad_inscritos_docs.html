@@ -1,0 +1,183 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Inscritos SENGE ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+<!--
+function win_documento(r,h)
+{
+	w = window.open("participante_inc_documento.php?r="+r+"&h="+h, "wdocumento", "menubar=no,location=no,scrollbars=no,resizable=no,width=400,height=170");
+}
+
+function ir_aba_ident()
+{
+	location.href='cad_inscritos.php?c={cd_registro_empregado}&a=s';
+}
+
+function ir_aba_cont()
+{
+	location.href='cad_inscritos_contato.php?c={cd_registro_empregado}&a=a';
+}
+
+function ir_aba_anx()
+{
+	location.href='cad_inscritos_docs.php?c={cd_registro_empregado}&a=h';
+}
+
+function ir_aba_hist()
+{
+	location.href='cad_inscritos_hist.php?c={cd_registro_empregado}&a=h';
+}
+-->
+</script>
+
+{ABA_START}
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr>
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top">
+          <td colspan="2">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top"> 
+          <td>
+              <table width="90%" border="0"  cellspacing="0" cellpadding="0">
+				<tr>
+                      <td  colspan="2" align="center"> <blockquote>
+                          <table width="90%" border="0" align="left" cellpadding="1" cellspacing="1" bgcolor="#dae9f7">
+                            <tr bgcolor="#0046ad"> 
+                              <td colspan="2" bgcolor="#dae9f7"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Documentos 
+                                deste participante:</font></td>
+                              <td align="right" bgcolor="#dae9f7"> <a href="#" onClick="win_documento({cd_registro_empregado},'')"><img src="img/btn_novo.jpg" border="0"></a></td>
+                            </tr>
+                            <tr bgcolor="#0046ad"> 
+                              <td align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                                documento </font></strong></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                                entrega</font></strong><strong></strong></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                                Inclus&atilde;o </font></strong></td>
+                            </tr>
+                            <!-- START BLOCK : docs -->
+                            <tr bgcolor="#F4F4F4"> 
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tipo_doc}</font></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_entrega}</font></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inclusao}</font></td>
+                            </tr>
+                            <!-- END BLOCK : docs -->
+                            <tr bgcolor="#F4F4F4"> 
+                              <td colspan="3" align="center">&nbsp;</td>
+                            </tr>
+                          </table>
+				</blockquote></td></tr>
+                    <tr> 
+                      <td colspan="2"> 
+                        <blockquote>
+                          <table width="90%" border="0" align="left" cellpadding="1" cellspacing="1" bgcolor="#dae9f7">
+                            <tr bgcolor="#dae9f7"> 
+                              <td colspan="6"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Arquivos 
+                                anexados:</font></td>
+                            </tr>
+                            <tr bgcolor="#0046ad"> 
+                              <td colspan="2" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Manuten&ccedil;&atilde;o 
+                                do documento</strong></font></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero</font></strong></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></strong></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Arquivo</font></strong></td>
+                              <td  align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                                upload</font></strong></td>
+                            </tr>
+                            <!-- START BLOCK : anexos -->
+                            <tr bgcolor="#F4F4F4"> 
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.e-prev.com.br/upload/{nome_arquivo}"><img src="img/btn_abrir.jpg" border="0"></a></font></td>
+                              <td align="center"><a href="deleta_anexo.php?n={n}&a={cd_anexo}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_anexo}</font></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tipo_anexo}</font></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome_arquivo}</font></td>
+                              <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_upload}</font></td>
+                            </tr>
+                            <!-- END BLOCK : anexos -->
+                            <tr bgcolor="#F4F4F4"> 
+                              <td colspan="6" align="center">&nbsp;</td>
+                            </tr>
+                            <tr bgcolor="#F4F4F4"> 
+                              <td colspan="6" align="center"><table border="0" align="center" cellpadding="1" cellspacing="1">
+                                  <form name="form2" method="post" action="grava_anexo.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+                                    <input type="hidden" name="cd_atividade" value="{n}">
+                                    <tr> 
+                                      <td> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione 
+                                        o arquivo<br>
+                                        <img src="img/btn_passo_1.jpg" width="30" height="30"></font> 
+                                      </td>
+                                      <td> <input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado"> 
+                                        <br> <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: 
+                                        Tamanho limitado a 2MB nos formatos DOC, 
+                                        XLS, PDF, JPG ou GIF.</font> </td>
+                                    </tr>
+                                    <tr> 
+                                      <td colspan="2"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                          <img src="img/btn_passo_2.jpg" width="30" height="30">Clique 
+                                          neste bot&atilde;o para confirmar a 
+                                          opera&ccedil;&atilde;o&gt;&gt; 
+                                          <input class="botao" type="submit" name="Submit" value="Anexar">
+                                          &lt;&lt; Clique neste bot&atilde;o para 
+                                          confirmar a opera&ccedil;&atilde;o</font></div></td>
+                                    </tr>
+                                  </form>
+                                </table></td>
+                            </tr>
+                            <tr bgcolor="#F4F4F4"> 
+                              <td colspan="6" align="center"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#FFFFFF">
+                                  <tr> 
+                                    <td colspan="2">&nbsp;</td>
+                                  </tr>
+                                  <tr> 
+                                    <td colspan="2" bgcolor="#dae9f7"><font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Benefici&aacute;rios 
+                                      Pec&uacute;lio</font></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome</font></b></td>
+                                    <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Percentual</font></b></td>
+                                  </tr>
+                                  <!-- START BLOCK : peculio -->
+                                  <tr> 
+                                    <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome}</font></td>
+                                    <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{percentual}</font></td>
+                                  </tr>
+                                  <!-- END BLOCK : peculio -->
+                                </table></td>
+                            </tr>
+                          </table>
+                        <br>                          
+                        </blockquote></td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2"><a href="imprime_inscricao.php?n={cd_registro_empregado}" target="_blank"><img src="img/btn_imprime_inscricao.jpg" border="0"></a></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            
+            <div align="center"></div></td>
+        </tr>
+      </table></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,1037 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+	<style>
+		.dv_cadastro{
+			margin-top: 25px;
+			margin-bottom: 25px;
+			margin-left: 25px;
+			margin-right: 25px;
+			width: 100%;			
+		}
+
+		.tb_cadastro{
+			border-collapse: collapse;
+			width: 100%;
+			background:#F4F4F4;
+		}
+
+		.tb_cadastro *{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_cadastro th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			font-weight: bold;
+			color:#000000;
+			background:#dae9f7;
+		}
+
+		.tb_cadastro td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+			
+		}
+
+		.resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado {
+			border-collapse: collapse;
+			width: 100%;		
+		}
+		
+		.tb_resultado * {
+			font-size: 8pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_resultado th {
+			font-weight: bold;	
+			text-align:center;
+			border: 1px #dae9f7 solid;
+			background:#dae9f7;
+		}
+		.tb_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px #dae9f7 solid;
+		}		
+		
+		.tb_resultado_selecionado {
+			background:#E6E8B6;
+			border:1px #FAD163 solid;
+			cursor:pointer;
+		}
+		
+		.tb_lista_resultado {
+			border-collapse: collapse;
+			width: 100%;		
+		}
+		
+		.tb_lista_resultado * {
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+		
+		.tb_lista_resultado th {
+			font-size: 10pt;
+			font-weight: bold;	
+			text-align:center;
+			border: 1px solid #CCCCCC;
+			color:#FFFFFF;
+			background:#0046ad;
+		}
+		.tb_lista_resultado td {
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}	
+
+		.tb_cadastro_saida{
+			border-collapse: collapse;
+			width: 60%;
+			background:#F4F4F4;
+		}
+		
+		.tb_cadastro_saida *{
+			font-size: 10pt;
+			font-weight: normal;
+			font-family: Arial,'MS Sans Serif';			
+		}
+
+		.tb_cadastro_saida th{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;
+			text-align:center;	
+			font-weight: bold;
+			color:#000000;
+			background:#dae9f7;
+		}
+		
+		.tb_cadastro_saida td{
+			border: 1px solid gray;
+			padding-left:5px;
+			padding-right:5px;	
+			
+		}	
+
+		.desabilitado {
+			color: gray;
+			background: #CCCCCC;
+		}
+		
+		#listaOpcoes {
+			width: 300px;
+			border: 1px #000000 solid;
+			font-size:8pt;
+		}
+	</style>	
+	<script src="inc/pck_funcoes.js"></script>
+	<script src="inc/mascara.js"></script>
+	<script>
+		var ob_window = "";
+		
+		function buscaMovimento()
+		{
+			var ds_url    = "cad_visitantes_ajax.php";
+			var lt_param  = "ds_funcao=buscaMovimento";
+			ajaxExecute(ds_url, lt_param, "ob_movimento_lista", '.innerHTML=', 'POST');
+		}
+
+		function buscaMovimentoSaida()
+		{
+			var ds_url    = "cad_visitantes_ajax.php";
+			var lt_param  = "ds_funcao=buscaMovimentoSaida";
+			ajaxExecute(ds_url, lt_param, "ob_movimento_saida_lista", '.innerHTML=', 'POST');
+		}
+		
+		function setControle()
+		{
+			document.getElementById('ob_controle').style.display  = '';
+			document.getElementById('ob_movimento').style.display = 'none';
+			document.getElementById('ob_movimento_saida').style.display = 'none';
+			
+			document.getElementById('abaControle').className  = 'abaSelecionada';
+			document.getElementById('abaMovimento').className = '';
+			document.getElementById('abaMovimentoSaida').className = '';
+			
+			document.getElementById('ob_sugestao').innerHTML = "";
+			
+			document.getElementById('nr_cracha').focus();
+		}
+		
+		function setMovimento()
+		{
+			
+			document.getElementById('ob_controle').style.display  = 'none';
+			document.getElementById('ob_movimento').style.display = '';
+			document.getElementById('ob_movimento_saida').style.display = 'none';
+			
+			document.getElementById('abaControle').className  = '';
+			document.getElementById('abaMovimento').className = 'abaSelecionada';
+			document.getElementById('abaMovimentoSaida').className = '';
+			
+			buscaMovimento();
+			document.getElementById('ob_sugestao').innerHTML = "";
+			
+			document.getElementById('nr_cracha_saida').focus();
+			
+			
+		}
+		
+		function setMovimentoSaida()
+		{
+			
+			document.getElementById('ob_controle').style.display  = 'none';
+			document.getElementById('ob_movimento').style.display = 'none';
+			document.getElementById('ob_movimento_saida').style.display = '';
+			
+			document.getElementById('abaControle').className  = '';
+			document.getElementById('abaMovimento').className = '';
+			document.getElementById('abaMovimentoSaida').className = 'abaSelecionada';
+			
+			buscaMovimentoSaida();
+			document.getElementById('ob_sugestao').innerHTML = "";
+		}		
+		
+		function buscaRE(obj)
+		{
+			var cd_pessoa = obj.value
+			var ds_url   = "cad_visitantes_ajax.php";
+			var lt_param = "ds_funcao=buscaRE";
+			    lt_param+= "&cd_pessoa="+cd_pessoa;
+			if ((trimValue(cd_pessoa) != "") && ((trimValue(document.getElementById('cd_cpf').value) == "") || (document.getElementById('cd_cpf').readOnly)))
+			{
+				ajaxExecute(ds_url, lt_param, "verificaRetorno", '', 'POST');
+				document.getElementById('cd_rg').readOnly   = true;
+				document.getElementById('cd_cpf').readOnly  = true;
+				document.getElementById('ds_nome').readOnly = true;
+
+				document.getElementById('cd_rg').className   = "desabilitado";
+				document.getElementById('cd_cpf').className  = "desabilitado";
+				document.getElementById('ds_nome').className = "desabilitado";
+				
+				document.getElementById('cd_rg').value   = "";
+				document.getElementById('cd_cpf').value  = "";
+				document.getElementById('ds_nome').value = "";				
+			}
+			else if(!obj.readOnly)
+			{
+				document.getElementById('ob_resultado').innerHTML = '<br><br><br><br><br>';
+				document.getElementById('cd_rg').readOnly   = false;
+				document.getElementById('cd_cpf').readOnly  = false;				
+				document.getElementById('ds_nome').readOnly = false;
+
+				document.getElementById('cd_rg').className   = "";
+				document.getElementById('cd_cpf').className  = "";
+				document.getElementById('ds_nome').className = "";
+
+				document.getElementById('ds_nome').value = "";
+				document.getElementById('cd_emp').value = "";
+				document.getElementById('cd_seq').value = "";
+				document.getElementById('cd_cpf').value = "";
+				document.getElementById('cd_rg').value = "";
+			}
+		}
+		
+		function buscaRG(obj)
+		{
+			var cd_pessoa = obj.value
+			var ds_url   = "cad_visitantes_ajax.php";
+			var lt_param = "ds_funcao=buscaRG";
+			    lt_param+= "&cd_pessoa="+cd_pessoa;
+			if(trimValue(cd_pessoa) != "")
+			{
+				ajaxExecute(ds_url, lt_param, "verificaRetorno", '', 'POST');
+				document.getElementById('cd_re').readOnly   = true;
+				document.getElementById('cd_cpf').readOnly  = true;
+				document.getElementById('ds_nome').readOnly = true;
+
+				document.getElementById('cd_re').className   = "desabilitado";
+				document.getElementById('cd_cpf').className  = "desabilitado";
+				document.getElementById('ds_nome').className = "desabilitado";
+				
+				document.getElementById('cd_re').value   = "";
+				document.getElementById('cd_cpf').value  = "";
+				document.getElementById('ds_nome').value = "";				
+			}
+			else if(!obj.readOnly)
+			{
+				document.getElementById('ob_resultado').innerHTML = '<br><br><br><br><br>';
+				document.getElementById('cd_re').readOnly   = false;
+				document.getElementById('cd_cpf').readOnly  = false;				
+				document.getElementById('ds_nome').readOnly = false;
+				
+				document.getElementById('cd_re').className   = "";
+				document.getElementById('cd_cpf').className  = "";
+				document.getElementById('ds_nome').className = "";				
+				
+				document.getElementById('ds_nome').value = "";
+			}
+		}
+		
+		function buscaCPF(obj)
+		{
+			var cd_pessoa = obj.value
+			var ds_url   = "cad_visitantes_ajax.php";
+			var lt_param = "ds_funcao=buscaCPF";
+			    lt_param+= "&cd_pessoa="+cd_pessoa;
+			if ((trimValue(cd_pessoa) != "") && ((trimValue(document.getElementById('cd_re').value) == "") || (document.getElementById('cd_re').readOnly)))
+			{
+				ajaxExecute(ds_url, lt_param, "verificaRetorno", '', 'POST');
+				document.getElementById('cd_re').readOnly   = true;
+				document.getElementById('cd_rg').readOnly   = true;
+				document.getElementById('ds_nome').readOnly = true;	
+
+				document.getElementById('cd_re').className   = "desabilitado";
+				document.getElementById('cd_rg').className   = "desabilitado";
+				document.getElementById('ds_nome').className = "desabilitado";	
+				
+				document.getElementById('cd_re').value   = "";
+				document.getElementById('cd_rg').value   = "";
+				document.getElementById('ds_nome').value = "";				
+			}
+			else if(!obj.readOnly)
+			{
+				document.getElementById('ob_resultado').innerHTML = '<br><br><br><br><br>';
+				document.getElementById('cd_re').readOnly   = false;
+				document.getElementById('cd_rg').readOnly   = false;
+				document.getElementById('ds_nome').readOnly = false;
+				
+				document.getElementById('cd_re').className   = "";
+				document.getElementById('cd_rg').className   = "";
+				document.getElementById('ds_nome').className = "";				
+				
+				document.getElementById('ds_nome').value = "";	
+				document.getElementById('cd_emp').value  = "";
+				document.getElementById('cd_seq').value  = "";
+				document.getElementById('cd_re').value   = "";
+				document.getElementById('cd_rg').value   = "";				
+			}
+		}	
+
+		function setDados(cd_emp, cd_re, cd_seq, cd_rg, cd_cpf, ds_nome)
+		{
+			document.getElementById('cd_emp').value  = cd_emp;
+			document.getElementById('cd_re').value   = cd_re;
+			document.getElementById('cd_seq').value  = cd_seq;
+			document.getElementById('cd_rg').value   = cd_rg;
+			document.getElementById('cd_cpf').value  = cd_cpf;	
+			document.getElementById('ds_nome').value = ds_nome;	
+			document.getElementById('cd_tipo_acesso').focus();
+		}
+
+		function verificaRetorno(ds_retorno)
+		{
+			if(trimValue(ds_retorno) == "")
+			{
+				document.getElementById('ds_nome').readOnly = false;
+				document.getElementById('ob_resultado').innerHTML = "<br><br><span style='color:red; font-size:12pt;'>Não foi encontrado nenhum resultado.</span><br><br><span style='color:blue; font-size:12pt;'>Preencha o cadastro para inserir.</span><br><br>";
+				document.getElementById('cd_re').className   = "";
+				document.getElementById('cd_rg').className   = "";
+				document.getElementById('cd_cpf').className  = "";
+				document.getElementById('ds_nome').className = "";				
+				document.getElementById('ds_nome').focus();
+			}
+			else if(trimValue(ds_retorno).indexOf('nr_total = 1;') > -1)
+			{
+				eval(trimValue(ds_retorno));
+				document.getElementById('ob_resultado').innerHTML = "<br><br><span style='color:blue;'>Foi encontrado 1 resultado.</span><br><br><br>";
+			}
+			else
+			{
+				document.getElementById('ob_resultado').innerHTML = "<span style='color:blue;'><br>Foi encontrado mais de 1 resultado.<br> Selecione um nome abaixo:</span><br><br>" + ds_retorno;
+			}
+		}
+		
+		var id_campo_lista = "";
+		var fl_busca = true;
+		function buscaString(e, obj, ds_campo, ds_funcao)
+		{
+			var ds_busca = obj.value.toUpperCase()
+			id_campo_lista = obj.id;
+			var ds_url   = "cad_visitantes_ajax.php";
+			var keycode;
+			if (window.event)
+			{		
+				keycode = window.event.keyCode;
+			}
+			else if (e) 
+			{
+				keycode = e.which;
+			}			
+			
+			//document.getElementById('ob_resultado').innerHTML += "A=> "+ keycode + "<BR>";
+			
+			if((keycode == 13) && (fl_busca))
+			{
+				var lt_param = "ds_funcao="+ds_funcao;
+					lt_param+= "&ds_busca="+ds_busca;
+					lt_param+= "&ds_campo="+ds_campo;
+					
+					//alert(id_campo_lista + '\n' + lt_param)
+					
+					ajaxExecute(ds_url, lt_param, "buscaStringRetorno", '', 'POST');
+			}
+			else if(keycode == 40)
+				{
+					try
+					{
+						document.getElementById('listaOpcoes').focus();
+						document.getElementById('listaOpcoes').options[0].selected = true;
+					}catch(ee){}
+				}
+			else
+			{
+				document.getElementById('ob_sugestao').innerHTML = "";
+			}
+			fl_busca = true;
+		}
+		
+		function buscaNomeDados(ds_nome)
+		{
+			//document.getElementById('ob_resultado').innerHTML += ds_nome;
+			var ds_url    = "cad_visitantes_ajax.php";
+			var lt_param  = "ds_funcao=buscaNomeDados";
+			    lt_param += "&ds_busca=" + ds_nome;
+			ajaxExecute(ds_url, lt_param, "buscaNomeDadosRetorno", '', 'POST');
+		}
+		
+		function buscaNomeDadosRetorno(ds_retorno)
+		{
+			//document.getElementById('ob_resultado').innerHTML += "<BR> TESTE <BR>" + ds_retorno;
+			if(trimValue != "")
+			{
+				eval(ds_retorno);
+			}
+		}		
+		
+		function buscaStringRetorno(ds_retorno)
+		{
+			//alert(ds_retorno);
+			//document.getElementById('ob_resultado').innerHTML = ds_retorno;
+			
+			document.getElementById('ob_sugestao').style.display = "none";
+			document.getElementById('ob_sugestao').innerHTML = "";  
+			eval("ar_lista = new Array("+ ds_retorno +");");
+
+			var ob_lista  = document.createElement('select');
+				ob_lista.setAttribute("id", "listaOpcoes");
+				ob_lista.setAttribute("size", "5");
+				
+				ob_lista.onchange = function(e)
+				{
+					document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+					
+				}
+				
+				ob_lista.onkeydown = function(e)
+				{
+					var obj;
+					var keycode;
+
+					if (window.event)
+					{		
+						keycode = window.event.keyCode;
+						obj = event.srcElement;
+					}
+					else if (e) 
+					{
+						keycode = e.which;
+						obj = e.target;
+					}
+					
+					if ((keycode == 13) || (keycode == 27))
+					{
+						document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+						document.getElementById(id_campo_lista).focus();
+						fl_busca = false;
+						document.getElementById('ob_sugestao').style.display = "none";
+						document.getElementById('ob_sugestao').innerHTML = "";  
+						fl_set = true;
+						//document.getElementById('ob_resultado').innerHTML += "B=> "+ keycode + "<BR>";
+						if(document.getElementById(id_campo_lista).id == "ds_nome")
+						{
+							buscaNomeDados(document.getElementById(id_campo_lista).value);
+						}
+						
+						//document.getElementById(getProximoCampo(id_campo_lista)).focus();
+						
+						if(getProximoCampo(id_campo_lista) != "")
+						{
+							document.getElementById(getProximoCampo(id_campo_lista)).focus();
+						}
+						else
+						{
+							document.getElementById(id_campo_lista).focus();
+						}
+					}
+					
+					if (keycode == 8)
+					{					
+						if (window.event)
+						{
+							document.getElementById(id_campo_lista).focus();
+							window.event.returnValue = false;
+						}
+						else
+						{
+							document.getElementById(id_campo_lista).focus();
+							return false;
+						}
+					}
+				}
+
+				ob_lista.onblur = function(e)
+				{
+					document.getElementById(id_campo_lista).value = this.options[this.selectedIndex].value;
+					document.getElementById(id_campo_lista).focus();
+					document.getElementById('ob_sugestao').style.display = "none";
+					document.getElementById('ob_sugestao').innerHTML = "";  
+					fl_set = true;
+				}	
+			nr_conta = 0;
+			while(nr_conta < ar_lista.length)
+			{
+				if(ar_lista[nr_conta] != "")
+				{
+					var ob_option = document.createElement("option");
+						ob_option.innerHTML  = ar_lista[nr_conta];
+						ob_option.value = ar_lista[nr_conta];
+					ob_lista.appendChild(ob_option);
+				}
+				nr_conta++;
+			}
+			
+			if(ar_lista.length > 1)
+			{
+				document.getElementById('ob_sugestao').style.top = findPosObj(document.getElementById(id_campo_lista)).y + 25; 
+				document.getElementById('ob_sugestao').style.left = findPosObj(document.getElementById(id_campo_lista)).x;
+				document.getElementById('ob_sugestao').style.display = "";
+				document.getElementById('ob_sugestao').appendChild(ob_lista);				
+			}
+		}
+		
+	    function findPosObj(ob_name) 
+	    {
+		    var nr_pos = new Object();
+	        var nr_x = nr_y = 0;
+		    try
+			{
+				if (ob_name.offsetParent) 
+		        {
+				    nr_x = ob_name.offsetLeft
+				    nr_y = ob_name.offsetTop
+				    while (ob_name = ob_name.offsetParent) 
+		            {
+					    nr_x += ob_name.offsetLeft
+					    nr_y += ob_name.offsetTop
+				    }
+			    }
+			} catch(e){}
+		    nr_pos.x = nr_x;
+		    nr_pos.y = nr_y;
+	        return nr_pos;
+	    }
+		
+		function gravaAcesso()
+		{
+			var ds_msg_erro = "";
+			
+			if(trimValue(document.getElementById("ds_nome").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Nome";
+			}			
+
+			if(trimValue(document.getElementById("cd_tipo_acesso").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Código de Procedência";
+			}
+			
+			if(trimValue(document.getElementById("ds_origem").value) == "")
+			{
+				ds_msg_erro += "\n- Informe a Procedência";
+			}
+
+			if(trimValue(document.getElementById("ds_destino").value) == "")
+			{
+				ds_msg_erro += "\n- Informe o Destino";
+			}			
+		
+			if(trimValue(ds_msg_erro) != "")
+			{
+				alert("Os seguinte itens são necessários:\n" + ds_msg_erro)
+			}
+			else
+			{
+				var ds_url   = "grava_visitantes_ajax.php";
+				var lt_param = "nr_cracha="+document.getElementById("nr_cracha").value;
+				    lt_param+= "&cd_emp="+document.getElementById("cd_emp").value;
+					lt_param+= "&cd_re="+document.getElementById("cd_re").value;
+					lt_param+= "&cd_seq="+document.getElementById("cd_seq").value;
+					lt_param+= "&cd_rg="+document.getElementById("cd_rg").value;
+					lt_param+= "&cd_cpf="+document.getElementById("cd_cpf").value;
+					lt_param+= "&cd_tipo_acesso="+document.getElementById("cd_tipo_acesso").value;
+					lt_param+= "&ds_nome="+document.getElementById("ds_nome").value;
+					lt_param+= "&ds_origem="+document.getElementById("ds_origem").value;
+					lt_param+= "&ds_destino="+document.getElementById("ds_destino").value;
+					ajaxExecute(ds_url, lt_param, "bancoDadosRetorno", '', 'POST');
+					
+					limparEntrada();
+			}			
+		}
+		
+		function marcaSaida(cd_acesso)
+		{
+			var ds_url    = "cad_visitantes_ajax.php";
+			var lt_param  = "ds_funcao=marcaSaida";
+				lt_param += "&cd_acesso="+cd_acesso;
+			if(confirm("Deseja marcar a saída?"))
+			{
+				ajaxExecute(ds_url, lt_param, "bancoDadosRetorno", '', 'POST');
+			}
+		}	
+
+		function bancoDadosRetorno(ds_retorno)
+		{
+			if(trimValue(ds_retorno) == "")
+			{
+				document.getElementById('ob_resultado').innerHTML = "<br><br><span style='color:blue; font-size:12pt;'>Registro atualizado.</span><br><br><br>";
+				setMovimento();
+			}
+			else if(ds_retorno.indexOf("QT_REG") > -1)
+			{
+				ds_retorno = ds_retorno.replace("QT_REG ","");
+				if(ds_retorno == "0")
+				{
+					alert('Não foram encontrados registros para marcar saída.');
+				}
+				setMovimento();
+			}
+			else
+			{
+				alert('Ocorreu o seguinte erro:\n\n'+ds_retorno);
+			}
+		}
+		
+		function buscaTipoAcesso()
+		{
+			var ds_url    = "cad_visitantes_ajax.php";
+			var lt_param  = "ds_funcao=buscaTipoAcesso";
+				lt_param += "&cd_tipo_acesso="+document.getElementById('cd_tipo_acesso').value;
+				ajaxExecute(ds_url, lt_param, "document.getElementById('ds_tipo_acesso')", '.innerHTML=', 'POST');
+		}
+
+		function marcaSaidaCracha()
+		{
+			if(trimValue(document.getElementById('nr_cracha_saida').value) != "")
+			{
+				var ds_url    = "cad_visitantes_ajax.php";
+				var lt_param  = "ds_funcao=marcaSaidaCracha";
+					lt_param += "&nr_cracha=" + document.getElementById('nr_cracha_saida').value;
+				if(confirm("Deseja marcar a saída?"))
+				{
+					ajaxExecute(ds_url, lt_param, "bancoDadosRetorno", '', 'POST');
+					document.getElementById('nr_cracha_saida').value = '';
+				}
+			}
+		}
+		
+		function marcaSaidaNome()
+		{
+			if(trimValue(document.getElementById('ds_nome_saida').value) != "")
+			{
+				var ds_url    = "cad_visitantes_ajax.php";
+				var lt_param  = "ds_funcao=marcaSaidaNome";
+					lt_param += "&ds_nome=" + document.getElementById('ds_nome_saida').value;
+				if(confirm("Deseja marcar a saída?"))
+				{
+					ajaxExecute(ds_url, lt_param, "bancoDadosRetorno", '', 'POST');
+					document.getElementById('ds_nome_saida').value = '';
+				}
+			}
+		}	
+
+		function marcaSaidaProcedencia()
+		{
+			if(trimValue(document.getElementById('ds_origem_saida').value) != "")
+			{
+				var ds_url    = "cad_visitantes_ajax.php";
+				var lt_param  = "ds_funcao=marcaSaidaProcedencia";
+					lt_param += "&ds_origem=" + document.getElementById('ds_origem_saida').value;
+				if(confirm("Deseja marcar a saída?"))
+				{
+					ajaxExecute(ds_url, lt_param, "bancoDadosRetorno", '', 'POST');
+					document.getElementById('ds_origem_saida').value = '';
+				}
+			}
+		}		
+		
+		function editarEntrada(cd_visitante)
+		{
+			if(ob_window != "")
+			{
+				ob_window.close();
+			}
+
+			var ds_url = "edt_visitantes.php";
+				ds_url += "?cd_visitante=" + cd_visitante;
+			
+			var nr_width  = 480;
+			var nr_height = 260;
+			var nr_left = ((screen.width - 10) - nr_width) / 2;
+			var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+			ob_window = window.open(ds_url, "wEdtVisitante", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,status=no,titlebar=no,toolbar=no");		 					
+		}
+		
+		function limparEntrada()
+		{
+			document.getElementById("formularioCadastro").reset();
+			document.getElementById("ds_tipo_acesso").innerHTML = '';
+			
+			document.getElementById('cd_re').readOnly   = false;
+			document.getElementById('cd_rg').readOnly   = false;
+			document.getElementById("cd_cpf").readOnly  = false;
+			document.getElementById('ds_nome').readOnly = false;	
+			
+			document.getElementById('cd_re').className   = "";					
+			document.getElementById('cd_rg').className   = "";
+			document.getElementById('cd_cpf').className  = "";
+			document.getElementById('ds_nome').className = "";		
+		}
+	</script>
+	
+	<div class="aba_definicao">
+		<div id="aba">
+			<ul>
+				<li onclick="setControle(); " id="abaControle">
+					<span><U>E</U>NTRADA</span>
+				</li>
+				<li onclick="setMovimento();" id="abaMovimento" class="abaSelecionada">
+					<span><U>S</U>AÍDA</span>
+				</li>					
+				<li onclick="setMovimentoSaida();" id="abaMovimentoSaida">
+					<span><U>M</U>OVIMENTO</span>
+				</li>				
+			</ul>
+		</div>                            
+		<div class="aba_conteudo">
+			<BR>
+			<div id="ob_controle" style="width:100%; text-align:center; display:none;">
+				<div class="dv_cadastro">
+				<input type="hidden" name="cd_emp" id="cd_emp">
+				<input type="hidden" name="cd_seq" id="cd_seq">
+				<form name="formularioCadastro" id="formularioCadastro">
+				<table width="100%">
+					<tr>
+						<td width="70%" valign="top">
+							<table class="tb_cadastro">
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										Crachá
+									</th>
+									<td>
+										<input type="text" name="nr_cracha" id="nr_cracha" onfocus="this.select();">
+									</td>		
+								</tr>					
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										RE
+									</th>
+									<td>
+										<input type="text" name="cd_re" id="cd_re" onblur="buscaRE(this);" onfocus="this.select();">
+									</td>		
+								</tr>			
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										RG
+									</th>
+									<td>
+										<input type="text" name="cd_rg" id="cd_rg" onblur="buscaRG(this);" onfocus="this.select();">
+									</td>		
+								</tr>									
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										CPF
+									</th>
+									<td>
+										<input type="text" name="cd_cpf" id="cd_cpf" onblur="buscaCPF(this);" onfocus="this.select();">
+									</td>		
+								</tr>											
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										Nome:
+									</th>
+									<td>
+										<input type="text" name="ds_nome" id="ds_nome" style="width:100%" onKeyUp="buscaString(event, this, 'ds_nome', 'buscaNome');">
+									</td>		
+								</tr>
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										Procedência:
+									</th>
+									<td>
+										<input type="text" name="cd_tipo_acesso" id="cd_tipo_acesso" onBlur="buscaTipoAcesso();" style="width:10%" onfocus="this.select();">
+										<span id="ds_tipo_acesso"></span>
+										<br>
+										<input type="text" name="ds_origem" id="ds_origem" style="width:100%" onKeyUp="buscaString(event, this, 'ds_origem', 'buscaString');">
+									</td>		
+								</tr>								
+								<tr>
+									<th style="white-space:nowrap;width:15%;" valign="top">
+										Destino:
+									</th>
+									<td>
+										<input type="text" name="ds_destino" id="ds_destino" style="width:100%" onKeyUp="buscaString(event, this, 'ds_destino', 'buscaString');">
+									</td>		
+								</tr>	
+								<tr>
+									<th colspan="2" style="white-space:nowrap;text-align:center;">
+										<input class='botao' type="button" name="Salvar" value="Gravar" border="0" title="Gravar" onclick="gravaAcesso();">
+										<input class='botao' type="button" name="Limpar" value="Limpar" border="0" title="Limpar" onclick="if(confirm('Deseja limpar formulário?'))limparEntrada();">
+									</th>		
+								</tr>								
+							</table>
+						</td>
+						<td width="30%" valign="top" >
+							<table height="100%" width="100%" cellspacing="0" cellpadding="0" style="background:#FFFFFF;">
+							  <tr align="center"> 
+								<td class="links2" height="20" align="left" background="img/img_fundo_amarelo1.jpg"><img src="img/img_esq_amarelo1.jpg"></td>
+								<td class="links2" height="20" align="center" background="img/img_fundo_amarelo1.jpg">Resultados</td>
+								<td class="links2" height="20" align="right" background="img/img_fundo_amarelo1.jpg"><img src="img/img_dir_amarelo1.jpg"></td>
+							  </tr>
+							  <tr align="center" class="resultado"> 
+								<td id="ob_resultado" colspan="3" align="center" height="100%" style="border-left: #A9AB7C 1px solid; border-right: #A9AB7C 1px solid; border-bottom: #A9AB7C 1px solid;">
+									<br><br><br><br><br>
+								</td>
+							  </tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				</form>
+				</div>
+			</div>
+			<div id="ob_movimento">
+				<BR>
+					<table class="tb_cadastro_saida" align="center">
+						<tr>
+							<th>
+								Crachá:
+							</th>
+							<td>
+								<input type="text" name="nr_cracha_saida" id="nr_cracha_saida" style="width:60px;">
+							</td>
+							<td align="center">
+								<input type="image" name="salvar" src="img/btn_salvar.jpg" title="Gravar" onclick="marcaSaidaCracha();">
+							</td>
+						</tr>					
+						<tr>
+							<th>
+								Nome:
+							</th>
+							<td>
+								<input type="text" name="ds_nome_saida" id="ds_nome_saida" style="width:300px;" onKeyUp="buscaString(event, this, 'ds_nome_saida', 'buscaNomeSaida');">
+							</td>
+							<td align="center">
+								<input type="image" name="salvar" src="img/btn_salvar.jpg" title="Gravar" onclick="marcaSaidaNome();">
+							</td>
+						</tr>	
+						<tr>
+							<th>
+								Procedência:
+							</th>
+							<td>
+								<input type="text" name="ds_origem_saida" id="ds_origem_saida" style="width:300px;" onKeyUp="buscaString(event, this, 'ds_origem_saida', 'buscaProcedenciaSaida');">
+							</td>
+							<td align="center">
+								<input type="image" name="salvar" src="img/btn_salvar.jpg" title="Gravar" onclick="marcaSaidaProcedencia();">
+							</td>
+						</tr>						
+					</table>				
+				<BR>
+				<div id="ob_movimento_lista">
+	
+				</div>
+			</div>
+			<div id="ob_movimento_saida">
+				<BR>
+				<div id="ob_movimento_saida_lista">
+	
+				</div>
+			</div>			
+		</div>
+	</div>	
+	<div id="ob_sugestao" style="display:none; z-index:999; position:absolute; top:200px; left:200px;"></div>	
+	<script>
+		document.getElementById('nr_cracha_saida').onkeydown = checkKeycodeCrachaSaida;
+		function checkKeycodeCrachaSaida(e) 
+		{
+			var keycode;
+			if (window.event)
+			{		
+				keycode = window.event.keyCode;
+			}
+			else if (e) 
+			{
+				keycode = e.which;
+			}
+			
+			if ((keycode == 13) && (document.getElementById('ob_movimento').style.display  == ''))
+			{
+				marcaSaidaCracha();			
+			}
+		}		
+
+		
+		function autoTAB(e) 
+		{
+			var keycode;
+			if (window.event)
+			{		
+				keycode = window.event.keyCode;
+			}
+			else if (e) 
+			{
+				keycode = e.which;
+			}
+			
+			if (keycode == 13)
+			{
+				document.getElementById(getProximoCampo(this.id)).focus();
+			}
+		}		
+		
+		
+		document.onkeydown = checkKeycode;
+		function checkKeycode(e) 
+		{
+			var keycode;
+			var control = false;
+			if (window.event)
+			{		
+				keycode = window.event.keyCode;
+				control = window.event.ctrlKey;
+			}
+			else if (e) 
+			{
+				keycode = e.which;
+				control = e.ctrlKey;
+			}
+
+            if ((keycode == 69) && (control))
+			{
+				try
+				{
+					e.preventDefault(); //cancela o evento no fire
+				}
+				catch(err)
+				{
+					window.event.returnValue=false; //cancela o evento no ie
+				} 
+				setControle();
+            }
+			
+            if ((keycode == 83) && (control))
+			{
+				try
+				{
+					e.preventDefault(); //cancela o evento no fire
+				}
+				catch(err)
+				{
+					window.event.returnValue=false; //cancela o evento no ie
+				} 
+				setMovimento();
+            }
+			
+            if ((keycode == 77) && (control))
+			{
+				try
+				{
+					e.preventDefault(); //cancela o evento no fire
+				}
+				catch(err)
+				{
+					window.event.returnValue=false; //cancela o evento no ie
+				} 
+				setMovimentoSaida();
+            }			
+		}
+
+		// DEFINIÇÃO DE MASCARAS PARA OS CAMPOS //
+		MaskInput(document.getElementById('nr_cracha'),       "9999999999");
+		MaskInput(document.getElementById('nr_cracha_saida'), "9999999999");
+		MaskInput(document.getElementById('cd_re'),           "9999999999");
+		MaskInput(document.getElementById('cd_rg'),           "9999999999");
+		MaskInput(document.getElementById('cd_cpf'),          "99999999999");
+		MaskInput(document.getElementById('cd_tipo_acesso'),  "99");
+
+		addEvent(document.getElementById('ds_nome'),         "keyup", mascaraMaiusculo);
+		addEvent(document.getElementById('ds_origem'),       "keyup", mascaraMaiusculo);
+		addEvent(document.getElementById('ds_destino'),      "keyup", mascaraMaiusculo);
+		addEvent(document.getElementById('ds_nome_saida'),   "keyup", mascaraMaiusculo);
+		addEvent(document.getElementById('ds_origem_saida'), "keyup", mascaraMaiusculo);
+
+		addEvent(document.getElementById('nr_cracha'),       "keyup", autoTAB);
+		addEvent(document.getElementById('cd_re'),           "keyup", autoTAB);
+		addEvent(document.getElementById('cd_rg'),           "keyup", autoTAB);
+		addEvent(document.getElementById('cd_cpf'),          "keyup", autoTAB);
+		addEvent(document.getElementById('cd_tipo_acesso'),  "keyup", autoTAB);
+
+		setMovimento();
+
+		var ar_campo = new Array();
+		var nr_index = 0;
+		for(i=0; i < document.getElementById('ob_controle').getElementsByTagName('INPUT').length; i++)
+		{
+			var obj = document.getElementById('ob_controle').getElementsByTagName('INPUT')[i];
+			if(obj.type.toUpperCase() == "TEXT")
+			{
+				ar_campo[nr_index] = obj.id;
+				nr_index++;
+			}
+		}
+		
+		function getProximoCampo(id_obj)
+		{
+			var nr_proximo = -1;
+			for(i=0; i < ar_campo.length; i++)
+			{
+				if(ar_campo[i] == id_obj)
+				{
+					nr_proximo = i + 1;
+					break;
+				}
+			}		
+			
+			if((nr_proximo > -1) && (nr_proximo < ar_campo.length))
+			{
+				return ar_campo[nr_proximo];
+			}
+			else
+			{
+				return '';
+			}
+		}
+	</script>	
+
+<!-- INCLUDE BLOCK : footer.html -->

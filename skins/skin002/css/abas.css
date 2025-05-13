@@ -1,0 +1,65 @@
+#aba 
+{
+	float:left;
+	width:102%;
+	font-size: 10px;
+	font-weight: bold;
+	font-family:  Tahoma, Arial,"MS Sans Serif";
+	text-transform:uppercase;  
+	padding-left: 10px;
+	background: url("../img/aba_bg.gif") repeat-x bottom;
+	line-height:normal;
+}
+#aba ul 
+{
+	margin: 0;
+	list-style: none;
+	padding-top: 3px;
+}
+#aba li 
+{
+	float:left;
+	background:url("../img/aba_left.gif") no-repeat left top;
+	margin:0;
+	padding:0 0 0 9px;
+	cursor: pointer;
+}
+#aba span 
+{
+	float:left;
+	display:block;
+	background:url("../img/aba_right.gif") no-repeat right top;
+	padding:5px 15px 4px 6px;
+	text-decoration:none;
+	font-weight:bold;
+	color:#8d8d8d;
+}
+#aba .abaSelecionada 
+{
+	background-image:url("../img/aba_left_on.gif");
+}
+#aba .abaSelecionada span 
+{
+	background-image:url("../img/aba_right_on.gif");
+	color:#333;
+	padding-bottom:5px;
+}
+.aba_definicao 
+{
+	width:93%;
+	position: absolute;
+	margin:10px;
+	z-index: 1;
+}
+.aba_conteudo
+{
+	text-align:left;
+	width:93%;
+	
+	padding-top:15px;	
+	padding-bottom:15px;	
+	padding-left:15px;	
+	padding-right:15px;	
+	font-size: 10pt;
+	font-family:   Arial, Verdana, "MS Sans Serif";		
+}

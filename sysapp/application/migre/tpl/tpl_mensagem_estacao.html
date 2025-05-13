@@ -1,0 +1,61 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Mensagens nas Estações ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<link href="mensagem_estacao.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/JavaScript" src="mensagem_estacao.js"></script>
+
+	<div id="conteudo">
+
+		<!-- BARRA DE COMANDOS -->
+		<div id="command_bar" class="command-bar" style="text-align: center;background:transparent;">
+			<input type="button" value="Nova Mensagem" onclick="eu.nova();" class="botao" />
+		</div>
+		<br />
+
+		<!-- BARRA DE FILTRO -->
+		<form name="filtro_form">
+		<input id="debug_man" name="debug_man" type="hidden" value="{debug_man}" />
+		<div class="filter-bar" style="display:;border-bottom: 1px dashed green;">
+			<b>FILTROS:</b> <span id="filtros_span"></span> <br><a href="javascript:exibir_filtro();" style="font-weight: normal;"> [alterar filtros] </a><!-- input type="button" value="Exibir Filtro" class="botao" onclick="$('filter_bar').show();" / -->
+
+			<div id="filter_bar" style="display:none; border-top: 1px dashed green;margin-top:10px;padding-top:10px;">
+
+			<table cellpadding="0" cellspacing="0" align="center">
+			<tr>
+			<td valign="top" style="padding-left:30px">
+
+				<h2>Data do agendamento</h2>
+
+				<label for="data_inicial">De</label> <input id="data_inicial" name="data_inicial" OnKeyDown="mascaraData(this,event);" onkeypress="return handleEnter(this, event);" /> <label for="data_final">até</label> <input name="data_final" id="data_final" OnKeyDown="mascaraData(this,event);" onkeypress="return handleEnter(this, event);" />
+
+			</td>
+			</tr>
+			</table>
+			
+			<br>
+			
+			<input type="button" 
+					class="botao"
+					value="Filtrar" 
+					onclick="eu.filtrar();" 
+					/><input type="button" class="botao" value="Esconder filtros" onclick="$('filter_bar').hide();" />
+			</div>
+		</div>
+		</form>
+		<div id="result_div"></div>
+		<br />
+		<!-- BARRA DE COMANDOS -->
+
+	</div>
+
+<script>
+	MaskInput( document.getElementById('data_inicial'), "99/99/9999" );
+	MaskInput( document.getElementById('data_final'), "99/99/9999" );
+
+	Event.observe( window, 'load', eu.filtrar );
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

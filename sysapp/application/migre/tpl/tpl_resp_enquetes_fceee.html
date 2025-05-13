@@ -1,0 +1,356 @@
+<html>
+<head>
+<script src="inc/prototype-1.4.0.js"></script>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>
+<script type="text/javascript">        
+	_uacct = "UA-1928021-1";        
+	urchinTracker();        
+	_uacct = "UA-1928878-1";        
+	urchinTracker();       
+</script>
+<script src="inc/pck_funcoes.js"></script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function msg_pensionistas()
+{
+	alert("Somente altere a sequencia se for pensionista");
+}
+
+function validaFormulario()
+{
+	if(document.getElementById('emp').value == "")
+	{
+		alert('Informe a Empresa.');
+		document.getElementById('emp').focus(); 
+		return false;
+	}
+	
+	if(trimValue(document.getElementById('re').value) == "")
+	{
+		alert('Informe a Re + dígito.');
+		document.getElementById('re').focus(); 
+		return false;
+	}
+
+	/*if(trimValue(document.getElementById('seq').value) == "")
+	{
+		alert('Informe a Sequência.');
+		document.getElementById('seq').focus(); 
+		return false;
+	}*/	
+	
+	return true;
+}
+//-->
+</script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function trimValue(str)
+{
+
+    while (str.charAt(0) == " ")
+    {
+        str = str.substr(1,str.length -1);
+    }
+
+    while (str.charAt(str.length-1) == " ")
+    {
+        str = str.substr(0,str.length-1);
+    }
+    str = str.replace(/\r|\n|\r\n/g,"");
+    return str;
+}
+
+function validaComplemento(id_campo)
+{
+	var obj = document.getElementById(id_campo);
+	
+	if ((obj != undefined) && (obj != null))
+	{
+		if(trimValue(obj.value) == "")
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function valida_form(f) {
+	var erros = "";
+	var ncampos_marc = 0;
+	var i = 0;
+	if (f.obrigatorio.value == 'S') 
+	{
+		var l = (f.limt.value + 20);
+		var campos = Form.getElements(f);
+		for (i=1; i<campos.length; i++) 
+		{
+			if (campos[i].checked) 
+			{
+				if((validaComplemento(campos[i].name+"_complemento_"+campos[i].value)))
+				{
+					ncampos_marc = ncampos_marc + 1
+				}
+				else
+				{
+					alert("Informe o complemento da resposta.");
+					return false;
+				}
+			}
+		}
+		if (ncampos_marc != f.limt.value) 
+		{
+			alert("Por favor, responda a todas as perguntas.");
+			return false;
+		}
+		else 
+		{
+			return true;
+		}
+	} else {
+		if (f.obrigatorio.value == 'P') {
+			var l = (f.limt.value + 20);
+			var campos = Form.getElements(f);
+			for (i=1; i<campos.length; i++) {
+				if (campos[i].checked) {
+					ncampos_marc = ncampos_marc + 1
+				}
+			}
+			if (ncampos_marc == 0) {
+				var confirma = confirm("Você não selecionou nehuma opção nesta tela. Confirma?");
+				if (confirma == true) {
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+}
+//-->
+</script>
+<script>
+	function mostreLinksLocais(paragrafo){
+		paragrafo = $(paragrafo);
+		var links = $A(paragrafo.getElementsByTagName('a'));
+		//vamos achar os links que têm rel="local"
+		var linksLocais = links.findAll( function(link){
+			var rel = link.getAttribute("rel");
+			return rel =='local';
+		});
+		//agora vamos extrair o texto de cada link
+		var textos = linksLocais.pluck('innerHTML');
+		//vamos colocar os textos em uma única string
+		var resultado = textos.inspect();
+		alert(resultado);
+	}
+
+</script>
+<title>.: Bemvindo ao portal Funda&ccedil;&atilde;o CEEE :.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="./main.css" rel="stylesheet" type="text/css">
+</head>
+<body  topmargin="0" leftmargin="0" bgcolor="#FFFFFF">
+<div id="menu_sup" style="position:absolute; left:0px; top:0px; width:100%; height:30px; z-index:1; visibility: visible;" class="links2">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td background="http://www.fundacaoceee.com.br/img/novo_site/fundo_barra_superior.jpg"><img src="http://www.fundacaoceee.com.br/img/novo_site/barra_superior_institucional.jpg" border="0" usemap="#map"></td></tr></table>	
+</div>
+<div id="aa" style="position:absolute; left:380px; align:right; top:12px; width:459px; height:31px; z-index:2; visibility: visible;" class="links2branco"> 
+
+  
+</div>
+<div id="conteudo" style="position:absolute; left:0px; top:68px; height:33px; z-index:2; visibility: visible;" class="links2branco"> 
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td bgcolor="#003399"  background="./img/novosite/img_fundo10.jpg">&nbsp;&nbsp;</td>
+<td bgcolor="#FFFFFF" valign="top"><img src="./img/novosite/img_canto1.jpg"></td>
+<td valign="top">
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td colspan="2" align="center"> 
+            <!-- START BLOCK : mensagem -->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+              <tr> 
+                <td align="center"><font color="#006633" size="5" face="Arial, Helvetica, sans-serif">{mensagem}</font></td>
+              </tr>
+            </table>
+            <!-- END BLOCK : mensagem -->
+            <form action="grava_enquete_resultado.php" method="post" onSubmit="return valida_form(this);" >
+              <!-- START BLOCK : cadastro -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td align="center" class="texto1"><b>{titulo}: </b> <input name="cd_enquete" type="hidden" value="{eq}"> 
+                    <input name="proxima_ordem" type="hidden" value="{proxima_ordem}"> 
+                    <br> <img src="img/img_divisoria1.gif" width="100%" height="1"> 
+                  </td>
+                </tr>
+                <tr> 
+                  <td><font color="#006633" size="5" face="Arial, Helvetica, sans-serif">{grupo}</font> 
+                    <input name="cd_agrupamento" type="hidden" value="{cd_agrupamento}"> 
+                    <input name="ultima_tela" type="hidden" value="{ultima_tela}"></td>
+                </tr>
+              </table>
+              <table width="100%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+                <!-- START BLOCK : escala -->
+                <tr bgcolor="#006633"> 
+                  <td height="18" bgcolor="{cor_fundo}" class="links2">&nbsp;</td>
+                  <!-- START BLOCK : grau -->
+                  <td class="linkusu" align="center">{grau}</td>
+                  <!-- END BLOCK : grau -->
+                  <!-- START BLOCK : colunas_vazias -->
+                  <td colspan="{ncols_vazias}"></td>
+                  <!-- END BLOCK : colunas_vazias -->
+                </tr>
+                <!-- END BLOCK : escala -->
+                <!-- START BLOCK : pergunta -->
+                <tr bgcolor="{cor_fundo}"> 
+                  <td valign="top" height="18" class="links2">{titulo}<strong>{grupo}</strong></td>
+                  <td>
+				  <table width="100%" height="100%" cellspacing="1" border="0" bgcolor="#FFFFFF">
+                      <tr bgcolor="{cor_fundo}"> 
+                        <!-- START BLOCK : resposta -->
+                        <td valign="top" align="left" class="texto4">
+							<input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                            {rotulo}
+							<br>
+							{complemento}
+						</td>
+                        <!-- END BLOCK : resposta -->
+                      </tr>
+                    </table>
+					</td>
+                  <!-- START BLOCK : justificativa -->
+                  <td align="center" class="texto4">{rotulo_justificativa} 
+                    <textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea></td>
+                  <!-- END BLOCK : justificativa -->
+                  <!-- START BLOCK : resposta_dissertativa -->
+                  <td align="center" class="texto4" colspan="{ncolsamp_diss}"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                    {rotulo_dissertativa} 
+                    <input type="{type_dissert}" name="R_diss_{cd_pergunta}"></td>
+                  <!-- END BLOCK : resposta_dissertativa -->
+                </tr>
+                <!-- END BLOCK : pergunta -->
+				
+				
+                <!-- START BLOCK : pergunta_linha -->
+                <tr bgcolor="{cor_fundo}"> 
+					<td height="18" class="links2">{titulo}<strong>{grupo}</strong></td>
+					<!-- START BLOCK : resposta_linha -->
+					<td align="center" class="texto4">
+						<input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>                            
+						{rotulo}
+						<br>
+						{complemento}
+					</td>
+					<!-- END BLOCK : resposta_linha -->
+					<!-- START BLOCK : justificativa_linha -->
+					<td align="center" class="texto4">{rotulo_justificativa} 
+						<textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea>
+					</td>
+					<!-- END BLOCK : justificativa_linha -->
+					<!-- START BLOCK : resposta_dissertativa_linha -->
+					<td align="center" class="texto4" colspan="{ncolsamp_diss}">
+						<input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>{rotulo_dissertativa} 
+						<input type="{type_dissert}" name="R_diss_{cd_pergunta}">
+					</td>
+					<!-- END BLOCK : resposta_dissertativa_linha -->
+                </tr>
+                <!-- END BLOCK : pergunta_linha -->
+				
+				
+              <!-- START BLOCK : pergunta_vertical -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td height="18" class="links2">{titulo}<strong>{grupo}</strong></td>
+				</tr>				
+				<!-- START BLOCK : resposta_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                <td align="left" class="texto4"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                            {rotulo}
+							<br>
+							{complemento}
+					</td>
+				</tr>
+				<!-- END BLOCK : resposta_vertical -->
+				
+				<!-- START BLOCK : justificativa_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                  <td align="center" class="texto4">{rotulo_justificativa} <textarea name="R_justificativa_{cd_pergunta}" cols="20" rows="2"></textarea></td>
+				 </tr>
+				<!-- END BLOCK : justificativa_vertical -->
+				<!-- START BLOCK : resposta_dissertativa_vertical -->
+				<tr bgcolor="{cor_fundo}"> 
+                <td align="center" class="texto4" colspan="{ncolsamp_diss}"><input name="R_{cd_pergunta}" type="radio" value="{valor}" {chk_1}>
+                    {rotulo_dissertativa}
+                    <input type="{type_dissert}" name="R_diss_{cd_pergunta}"></td>
+				</tr>
+				<!-- END BLOCK : resposta_dissertativa_vertical -->
+              
+              <!-- END BLOCK : pergunta_vertical -->			  
+              </table>
+              <!-- START BLOCK : resposta_texto -->
+              <table width="100%">
+                <tr> 
+                  <td align="center" class="texto1">{rotulo_dissertativa} 
+                    <textarea name="resp_texto" cols="77" rows="5"></textarea></td>
+                </tr>
+              </table>
+              <!-- END BLOCK : resposta_texto -->
+              <table width="100%">
+                <tr> 
+                  <td align="center"> 
+                    <!-- START BLOCK : bola_voltar -->
+                    <a href="javascript:history.back()" class="links2vermelho"><img src="img/img_bola_voltar.jpg" border=0 alt="&laquo;&nbsp;Voltar"></a> 
+                    <!-- END BLOCK : bola_voltar -->
+                  </td>
+                  <td align="center" >{fl_nova}<input name="image" type="image" src="img/img_bola_{continuar}.jpg" border=0 alt="Continuar&nbsp;&raquo;"  class="links2vermelho" {fl_nova_exibe}></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center" class="texto1"> 
+                    <!-- START BLOCK : nota_rodape -->
+                    {nota_rodape} 
+                    <!-- END BLOCK : nota_rodape -->
+                  </td>
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center"> 
+                    <!-- START BLOCK : informacoes -->
+                    <input name="limt" type="hidden" value="{limt}"><input name="obrigatorio" type="hidden" value="{obrigatorio}"> <font color="#006633" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Nesta tela, voc&ecirc; dever&aacute; responder {limt} pergunta{s}.</font> 
+                    <!-- END BLOCK : informacoes -->
+                  </td>
+                </tr>
+              </table>
+            </form>
+            <!--            <a href="resp_enquetes.php?c={eq}&agrup=1" class="links2">grupo 1</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=2" class="links2">grupo 2</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=3" class="links2">grupo 3</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=4" class="links2">grupo 4</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=5" class="links2">grupo 5</a><span class="links2"> | </span>
+			<a href="resp_enquetes.php?c={eq}&agrup=6" class="links2">grupo 6</a></td> -->
+        </tr>
+      </table></td>
+  </tr>
+</table>
+      </td>
+</tr>
+</table>
+</div>
+<map name="Map">
+  <area shape="rect" coords="11,9,255,61" href="http://www.fundacaoceee.com.br">
+  
+  
+</map>
+</body>
+</html>

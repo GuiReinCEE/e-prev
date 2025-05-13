@@ -1,0 +1,287 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Empresas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript" src="cad_empresas.js"></script>
+<script language="JavaScript">
+   <!--
+function winramo(r,h) {
+	     w = window.open("ramo_empresa.php?r="+r+"&h="+h, "wramo", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+	  }
+function win_anexo(r,h) {
+	     w = window.open("cad_contatos_empresa.php?r="+r+"&h="+h, "wespec", "menubar=no,location=no,scrollbars=no,resizable=no,width=450,height=290");
+	  }
+--> </script>
+
+<style>
+#myDialogId .myButtonClass 
+{
+	padding:3px;
+	font-size:20px;
+	width:100px;
+}
+#myDialogId .ok_button 
+{
+	color:#2F2;
+}
+#myDialogId .cancel_button 
+{
+	color:#F88;
+}
+
+#confirm_cancel
+{
+	margin-top: -50px;
+	margin-left: -50px;
+	left: 50%;
+	top: 50%;
+	position: fixed;
+}
+@media screen
+{
+	div#confirm_cancel
+	{
+		position: fixed;
+	}
+	* html
+	{
+		overflow-y: hidden;
+	}
+	* html body
+	{
+		overflow-y: auto;
+		height: 100%;
+	}
+	* html div#confirm_cancel
+	{
+		position: absolute;
+	}
+}
+input.normal, textarea.normal {
+	border: 1px solid #000000;
+}
+input.required, textarea.required {
+	border: 1px solid #CCCCCC;
+}
+input.failed, textarea.failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.failed_custom, textarea.failed_custom {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.passed, textarea.passed {
+	border: 1px solid #000000;
+	color : #000;
+}
+
+.error
+{
+	color: #FFFFFF;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	font-weight:bold;
+}
+
+.resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado th {
+    font-weight: bold;  
+    text-align:center;
+    border: 1px #C8D0C8 solid;
+    background:#C8D0C8;
+}
+.tb_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px #C8D0C8 solid;
+}       
+
+.tb_resultado_selecionado {
+    background:#E6E8B6;
+    border:1px #FAD163 solid;
+}
+
+.tb_lista_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_lista_resultado * {
+    font-size: 10pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_lista_resultado th {
+    font-size: 10pt;
+    font-weight: bold;  
+    text-align:center;
+    /* border: 1px solid #CCCCCC; */
+    color:#FFFFFF;
+    background:#006633;
+}
+.tb_lista_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    /* border: 1px solid #CCCCCC; */
+}
+
+.td_border
+{
+    border: 1px solid #CCCCCC;
+}
+
+.tb_cadastro_saida {
+	border-collapse: collapse;
+	width: 60%;
+	background:#F4F4F4;
+}
+
+.tb_cadastro_saida * {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Arial,'MS Sans Serif';			
+}
+
+.tb_cadastro_saida th {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;
+	background:#C8D0C8;
+}
+
+.tb_cadastro_saida td {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;	
+}	
+
+.exibeRevisao {
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}	
+.exibeRevisao th{
+	background:#FAD163;
+	border:1px #FAD163 solid;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;	
+	
+}
+.exibeRevisao td{
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}			
+
+.font_table_title
+{
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Arial, 'MS Sans Serif';
+    color: white;
+}
+</style>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+		<form name="form1" method="post" action="grava_empresa.php">
+		<input name="codigo" type="hidden" id="codigo" value="{codigo}">
+		<input name="insere" type="hidden" id="insere" value="{insere}">	        
+  			<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="location.href='cad_empresas.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_identificacao" 
+							class="{aba_identificacao}"
+							>
+						<span><U>I</U>DENTIFICAÇÃO</span>
+					</li>
+					<li onclick="location.href='cad_empresas_pessoas.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_pessoas" 
+        					style="{exibir_aba_pessoas}"
+							class="{class_aba_pessoas}"
+        					>
+						<span><U>P</U>ESSOAS</span>
+					</li>
+					<li onclick="location.href='cad_empresas_contatos.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_contatos" 
+        					style="{exibir_aba_contatos}"
+							class="abaSelecionada"
+        					>
+						<span><U>C</U>ONTATOS</span>
+					</li>
+					<li onclick="cad_empresas.aba_comunidades_Click();" 
+							id="aba_comunidades" 
+        					style="{exibir_aba_comunidades}"
+							class="{class_aba_comunidades}"
+        					>
+						<span>C<U>O</U>MUNIDADES</span>
+					</li>
+				</ul>
+			</div>
+			<div class="div_aba_content">
+				<br><br>
+				<div id="div_content">
+					<table border="0" align="center" cellpadding="1" cellspacing="1" width="90%">
+						<tr bgcolor="{cor_fundo1}"> 
+							<td colspan="2" valign="top" class="titulo_verde">{nome_empresa_entidade}:</td>
+							<td valign="top" class="titulo_verde" align="right"><a href="#" onClick="win_anexo({cd_empresa},'')" class="links2">&raquo;&nbsp;Incluir contato</a></td>
+						</tr>
+						<tr bgcolor="{cor_fundo1}"> 
+							<td colspan="3">
+								<table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="#CDCDCD"> 
+									<tr bgcolor="#006633">
+										<td colspan="4" height="33" class="cabecalho">Contatos realizados ou previstos:</td>
+									</tr> 
+									<!-- START BLOCK : contato -->
+									<tr bgcolor="{cor_fundo}">
+										<td>&nbsp;&raquo;&nbsp;</td>
+										<td><a href="#" onClick="win_anexo({cd_empresa},'{cd_contato}')" class="links2verde">{data}</a></td>
+										<td class="linkusu"><font color="#006633">{descrica}</font></td>
+										<td align="center"><a href="exclui_contato_empresa.php?emp={cd_empresa}&cont={cd_contato}"><img src="img/btn_linha_lixeira.jpg" border="0"></a></td>
+									</tr> 
+									<!-- END BLOCK : contato -->
+								</table>
+							</td>
+						</tr>
+					</table>
+					<br><br><br>&nbsp
+				</div>
+			</div>
+			</div>
+		</form>
+
+<!-- INCLUDE BLOCK : footer.html -->

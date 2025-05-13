@@ -1,0 +1,169 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Mês', 'Orçado', 'Realizado', '% Orçado', 'Meta', 'Orçado<br>Acumulado', 'Realizado<br>Acumulado', '% Partic<br>Acum', 'Peso', 'Meta /<br>Resultado', 'RF Mês', 'Meta /<br>Acum', 'RF Acum', '% Média Móvel', 'Média Móvel', ''
+);
+
+$acumular_ate=12;
+
+$contador=sizeof($collection);
+
+foreach( $collection as $item )
+{
+	$link=anchor("igp/variacao_orcamentaria/detalhe/" . $item["cd_variacao_orcamentaria"], "editar");
+
+	$orcado = floatval($item["nr_orcado"]);
+	$realizado = floatval($item["nr_realizado"]);
+	$gasto=(floatval($realizado)/floatval($orcado)) * 100;
+	$meta = floatval($item["nr_meta"]);
+
+	$arr[]=floatval($orcado);
+	$orcado_acumulada = 0;
+	$j=1;
+	for( $i=sizeof($arr);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$orcado_acumulada+=$arr[$i-1];
+
+			$j++;
+		}
+	}
+
+	$arr_2[]=floatval($realizado);
+	$realizado_acumulada = 0;
+	$j=1;
+	for( $i=sizeof($arr_2);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$realizado_acumulada+=$arr_2[$i-1];
+
+			$j++;
+		}
+	}
+
+	$perc_gasto_sobre_acum=(floatval($realizado_acumulada)/floatval($orcado_acumulada))*100;
+	$peso=floatval($item["nr_peso"]);
+
+	$meta_por_resultado = ( floatval($gasto)/floatval($meta) )*100;
+
+	// = SE(K170>0,98;SE(K170<1,02;J170;SE(K170>=2;0;1-(K170-1))*J170);K170*J170)
+	// K = meta por resultado
+	// J = peso
+	if( (floatval($meta_por_resultado)/100)>0.98 )
+	{
+		if( (floatval($meta_por_resultado)/100)<1.02 )
+		{
+			$rf_mes = $peso;
+		}
+		else
+		{
+			if( (floatval($meta_por_resultado)/100)>=2 )
+			{
+				$rf_mes = 0;
+			}
+			else
+			{
+				$rf_mes = 1-( (floatval($meta_por_resultado)/100)-1 );
+			}
+			$rf_mes = $rf_mes * $peso;
+		}
+	}
+	else
+	{
+		$rf_mes = (floatval($meta_por_resultado)/100) * $peso;
+	}
+
+	$meta_por_perc_acum = ( floatval($perc_gasto_sobre_acum)/floatval($meta) )*100;
+
+	// = SE(M170>0,98;SE(M170<1,02;J170;SE(M170>=2;0;1-(M170-1))*J170);M170*J170)
+	// M = meta perc acum
+	// J = peso
+	if( (floatval($meta_por_perc_acum)/100)>0.98 )
+	{
+		if( (floatval($meta_por_perc_acum)/100)<1.02 )
+		{
+			$rf_acum = $peso;
+		}
+		else
+		{
+			if( (floatval($meta_por_perc_acum)/100)>=2 )
+			{
+				$rf_acum = 0;
+			}
+			else
+			{
+				$rf_acum = 1 - ( (floatval($meta_por_perc_acum)/100)-1 );
+			}
+			
+			$rf_acum = $rf_acum * $peso;
+		}
+	}
+	else
+	{
+		$rf_acum = (floatval($meta_por_perc_acum)/100) * $peso;
+	}
+	
+	
+	if( (floatval($meta_por_perc_acum)/100)<0 )
+	{
+		$rf_acum=((floatval($meta_por_perc_acum)/100)*floatval($peso));
+	}
+	else
+	{
+		$rf_acum=$peso;
+	}
+
+	// % MÉDIA MÓVEL
+	$a_percentual_media_movel[]=floatval($gasto);
+	$percentual_media_movel=0;
+
+	// MÉDIA MÓVEL	
+	$a_rf_mes[]=$rf_mes;
+	$media_movel=0;
+
+	$j=1;
+	for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$percentual_media_movel+=$a_percentual_media_movel[$i-1];
+			$media_movel+=$a_rf_mes[$i-1];
+
+			$j++;
+		}
+	}
+
+	$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+	$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+	$media_movel=floatval($media_movel)/$divisor;
+
+	$body[] = array(
+		$contador--
+		, $item['mes_referencia']
+		, array( number_format($orcado,2,',','.'),'text-align:right;' )
+		, array( number_format($realizado,2,',','.'),'text-align:right;' )
+		, array( "<div style='width:50px;'>".number_format($gasto,2).' %</div>','text-align:right;' )
+		, array( "<div style='width:50px;'>".number_format($meta,2).' %</div>','text-align:right;' )
+		, array( number_format($orcado_acumulada,2,',','.'),'text-align:right;' )
+		, array( number_format($realizado_acumulada,2,',','.'),'text-align:right;' )
+		, array( number_format($perc_gasto_sobre_acum,2).' %','text-align:right;' )
+		, array( number_format($peso,2),'text-align:right;' )
+		, array( number_format($meta_por_resultado,2).' %','text-align:right;' )
+		, array( number_format($rf_mes,2),'text-align:right;' )
+		, array( "<div style='width:50px;'>".number_format($meta_por_perc_acum,2).' %</div>','text-align:right;' )
+		, array( number_format($rf_acum,2),'text-align:right;' )
+		, array( number_format($percentual_media_movel,2).' %','text-align:right;' )
+		, array( number_format($media_movel,2),'text-align:right;' )
+		, $link
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+
+echo $grid->render();
+?>

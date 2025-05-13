@@ -1,0 +1,396 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Ação Corretiva';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<style>
+@media screen {
+	#txt_descricao {display: block;}
+	#txt_descricao_print {display: none;}
+	
+	#raz_nao_imp {display: block;}
+	#raz_nao_imp_print {display: none;}	
+}
+
+@media print {
+	body * {
+		font-family: Verdana, Tahoma, Arial;
+		font-size: 10pt;
+	}
+	
+	#txt_descricao {display: none;}
+	#txt_descricao_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}
+	
+	#raz_nao_imp {display: none;}
+	#raz_nao_imp_print 
+	{
+		float: none !important;
+		overflow: visible !important; 
+		height: auto;			
+		display: block;
+	}
+	
+	.estilo_nc td {
+		border: 8px solid white;
+	}
+}
+
+</style>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f)
+{
+	var erros = "";
+	if (f.disposicao.value == '') { erros = erros + "- Para informar Ação Corretiva, a disposição da Não Conformidade deve estar preenchida.\n"; }
+	if (f.causa.value == '') { erros = erros + "- Para informar Ação Corretiva, a causa da Não Conformidade deve estar preenchida.\n"; }
+	if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Ação Corretiva proposta' deve estar preenchido.\n"; }
+	if (f.cod_responsavel.value == '') { erros = erros + "- Não é possível cadastrar uma ação corretiva sem indicar o responsável pela não conformidade. \n"; }
+	if (f.txt_dt_prop_imp.value == '') { erros = erros + "- Data proposta para implementação da Ação Corretiva deve ser informada. \n"; }
+	if ( f.dt_efe_imp_orig.value == '' ) {}
+	else 
+	{ 
+		if (f.dt_efe_imp.value != f.dt_efe_imp_orig.value)
+		{
+			if (  ! ( fnc_compara_datas(f.dt_efe_imp) ) || f.dt_efe_imp.value==""  ) 
+			{ 
+				erros = erros + "- Data da efetiva implementação deve ser igual ou maior a data de hoje. - (" + f.txt_sysdate.value + ")\n";
+			}
+		}
+	}
+	if (f.dt_prop_imp.value != f.dt_prop_impl_original.value)
+	{
+		if ((fnc_compara_datas(f.dt_prop_imp)) == true)
+		{
+			if (f.dt_prop_impl_original.value == '')
+			{ }
+			else
+			{
+				erros = erros + "- Data Proposta para a implementação não pode ser alterada.\n"; 
+			}
+		}
+		else
+		{
+			erros = erros + "- Data Proposta para a implementação não pode ser menor do que Hoje.\n"; 
+		}
+	}
+	
+	if(f.dt_prorrogada.value != "")
+	{
+		if(f.dt_prorrogada.value != f.dt_prorrogada_old_value.value)
+		{		
+			if ((fnc_compara_datas(f.dt_prorrogada)) == false)
+			{
+				erros+= "- Prorrogada até não pode ser menor do que Hoje.\n"
+			}
+		}
+	}
+	else
+	{
+		if(f.dt_prorrogada.value != f.dt_prorrogada_old_value.value)
+		{
+			erros+= "- Prorrogada até não pode ser em branco.\n";
+			f.dt_prorrogada.value = f.dt_prorrogada_old_value.value;
+		}
+	}	
+	
+	if(f.dt_efe_verif.value != "")
+	{
+		if(f.dt_efe_imp.value == "")
+		{
+			erros+= "- Data da efetiva implementação deve ser informada.\n";
+		}
+		else
+		{
+			if(fnc_compara_datas(f.dt_efe_verif,f.dt_efe_imp))
+			{
+				var ar_tmp = f.dt_efe_verif.value.split("/");
+				var dt_hoje = new Date();
+				var dt_efe_verif = new Date(ar_tmp[2],(ar_tmp[1]-1),ar_tmp[0],dt_hoje.getHours(),dt_hoje.getMinutes(),dt_hoje.getSeconds(),dt_hoje.getMilliseconds())
+				if (dt_efe_verif > dt_hoje) 
+				{
+					erros+= "- Data da efetiva verificação não pode ser maior do que Hoje.\n";
+				}
+			}
+			else
+			{
+				erros+="- Data da efetiva verificação não pode ser menor que a Data da efetiva implementação.\n";
+			}
+		}
+	}
+	else
+	{
+		if(f.dt_efe_verif.value != f.dt_efe_verif_old_value.value)
+		{
+			erros+= "- Data da efetiva verificação não pode ser em branco.\n";
+			f.dt_efe_verif.value = f.dt_efe_verif_old_value.value;
+		}
+	}	
+
+	
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function fnc_compara_datas(dt1, dt2)
+{
+	if (dt1.value == '')
+	{  
+		return true;
+	}
+	else
+	{
+		dia1 = (dt1.value.substring(0,2)); 
+		mes1 = (dt1.value.substring(3,5)); 
+		ano1 = (dt1.value.substring(6,10)); 
+	}
+	if (dt2 == null)
+	{ 
+		var hoje = new Date();
+		if (hoje.getYear() <=99)
+		   {ano2 = "19"+ hoje.getYear();}
+		else  if (hoje.getYear() <=199)
+		   {ano2 = 1900 + hoje.getYear() ;}
+		else
+		   {ano2 = hoje.getYear() ;}
+		var data1 = "" + ano1 + mes1 + dia1 
+		var data2 = "" + ano2 + (((hoje.getMonth() + 1) < 10) ? "0" : "") + (hoje.getMonth() + 1) + (((hoje.getDate()) < 10) ? "0" : "") + (hoje.getDate()) 
+		if (data1 < data2) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else
+	{
+		var data1 = "" + ano1 + mes1 + dia1 
+		dia2 = (dt2.value.substring(0,2)); 
+		mes2 = (dt2.value.substring(3,5)); 
+		ano2 = (dt2.value.substring(6,10)); 
+		var data2 = "" + ano2 + mes2 + dia2 
+		if (data1 < data2) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+}
+
+//-->
+</script>
+
+     
+<!-- START BLOCK : mensagem -->
+ <table width="90%" border="0" cellpadding="0" cellspacing="0">
+<tr> 
+  <td colspan="4"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong><BR>
+	  <img src="img/btn_voltar.jpg" border="0" onClick=history.back()></p></td>
+</tr>
+</table>
+<!-- END BLOCK : mensagem -->
+
+<!-- START BLOCK : cadastro -->
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li id="abaMovimento" onclick="location.href='lst_nao_conf.php'">
+				<span>LISTA</span>
+			</li>
+			<li id="abaMovimento" onclick="location.href='cad_nao_conformidade.php?c={nnc}&tr=U'">
+				<span>NÃO CONFORMIDADE</span>
+			</li>			
+			<li id="abaMovimento" class="abaSelecionada">
+				<span>AÇÃO CORRETIVA</span>
+			</li>
+		</ul>
+	</div>   
+	<div class="aba_conteudo">		
+		  <form name="form1" method="post" action="grava_acao_corretiva.php"  onSubmit="return valida_form(this)">
+              <table class="estilo_nc" width="100%" border="0" align="center" cellpadding="2" cellspacing="2">
+                <tr> 
+                  <td ></td>
+                  <td align="center"> 
+                    <!-- START BLOCK : codigo_acao -->
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">{codigo}</font> 
+                    <font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <!-- END BLOCK : codigo_acao -->
+                    <input name="insere" type="hidden" id="insere" value="{insere}">
+                    <!-- START BLOCK : codigo -->
+                    <input name="cod_acao" type="hidden" id="cod_acao" value="{cod_acao}">
+                    <input name="cod_processo" type="hidden" id="cod_processo" value="{cod_processo}">
+                    <input name="cod_nao_conf" type="hidden" id="cod_nao_conf" value="{cod_nao_conf}">
+                    <input name="dt_cadastro" type="hidden" id="dt_cadastro" value="{dt_cadastro}">
+                    <input name="tipo_acao" type="hidden" id="tipo_acao" value="{tipo_acao}">
+                    <input name="cod_responsavel" type="hidden" id="cod_responsavel" value="{cod_responsavel}">
+					<input name="disposicao" type="hidden" id="disposicao" value="{disposicao}">
+					<input name="causa" type="hidden" id="causa" value="{causa}">
+                    <!-- END BLOCK : codigo -->
+                    </font><font  color="#0046AD"  size="5" face="Arial, Helvetica, sans-serif">{mensagem}</font> 
+                  </td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Processo:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {num_processo} - {nome_processo}</font></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&atilde;o 
+                    Conformidade:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    {num_nao_conf} - {dt_cadastro}</font></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" valign="top" bgcolor="#0046AD" style="color:#FFFFFF"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Apresenta&ccedil;&atilde;o 
+                    da A&ccedil;&atilde;o Corretiva:</font></b></td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">A&ccedil;&atilde;o 
+                    Corretiva Proposta (A&ccedil;&atilde;o proposta para <br>
+                    eliminar as causas da N&atilde;o Conformidade)</font></td>
+                  <td> 					
+<textarea name="descricao" cols="50" rows="6" id="txt_descricao" {ro_resp}>{descricao}</textarea>
+<div id="txt_descricao_print">
+{descricao_print}
+</div>					
+					</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    limite para apresenta&ccedil;&atilde;o</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dt_limite" type="text" id="dt_limite" value="{dt_limite}" size="12" maxlength="10" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">(data de abertura da NC + 15 dias)</font></font> </td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    da apresenta&ccedil;&atilde;o</font></td>
+                  <td> <p><font size="2" face="Arial, Helvetica, sans-serif"> 
+                      <input name="dt_apresentacao" type="text" id="dt_apresentacao" readonly value="{dt_apresentacao}" size="12" maxlength="10" onBlur="verifica_data(this);compara_datas(this,dt_cadastro);" onChange="fnc_compara_datas(this)" onKeyUp="mascara_data(this)" >
+                      </font> </p></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" bgcolor="#0046AD" style="color:#FFFFFF"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Implementa&ccedil;&atilde;o 
+                    da A&ccedil;&atilde;o Corretiva </b></font></td>
+                </tr>
+                <tr> 
+                  <td height="40"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    proposta</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dt_prop_imp" type="text" id="txt_dt_prop_imp" value="{dt_prop_imp}" size="12" maxlength="10" {dt_prop_readonly} onBlur="verifica_data(this);fnc_compara_datas(this)" onKeyUp="mascara_data(this)" >
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">(a data mímima de proposta é a data de hoje + 5 dias)</font></					
+					
+                    <input name="dt_prop_impl_original" type="hidden" id="dt_prop_impl_original" value="{dt_prop_impl_original}">
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Prorrogada 
+                    at&eacute;</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dt_prorrogada" 
+                    	type="text" 
+                    	id="dt_prorrogada" 
+                    	value="{dt_prorrogada}" 
+                    	size="12" 
+                    	maxlength="10" 
+                    	{ro_comite}
+                    	onBlur="verifica_data(this)" 
+                    	onKeyUp="mascara_data(this)" 
+                    	style="font-family: Verdana; font-size: 8 pt; background-color: #F4F4F4"
+                    	{prorrogacao_readonly}
+                    	>
+                    <input name="dt_prorrogada_old_value" type="hidden" id="dt_prorrogada_old_value" value="{dt_prorrogada}" size="12" maxlength="10" {ro_comite} onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #F4F4F4">
+					<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Uso exclusivo 
+                    do Comit&ecirc; da Qualidade</font></font></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    da efetiva implementa&ccedil;&atilde;o</font></td>
+                  <td>
+
+	                  	<font size="2" face="Arial, Helvetica, sans-serif"> 
+
+		                    <input name="dt_efe_imp"
+		                    	type="text"
+		                    	id="dt_efe_imp"
+		                    	value="{dt_efe_imp}"
+		                    	size="12"
+		                    	maxlength="10"
+		                    	onBlur="verifica_data(this)"
+		                    	onChange="fnc_compara_datas(this)"
+		                    	onKeyUp="mascara_data(this)"
+		                    	{ro_dt_efe_imp}
+		                    	/>
+		                    <input name="dt_efe_imp_orig" 
+		                    	type="hidden" 
+		                    	id="dt_efe_imp_orig" 
+		                    	value="{dt_efe_imp_orig}"
+		                    	/>
+		                    <input name="txt_sysdate" 
+		                    	type="hidden" 
+		                    	id="txt_sysdate" 
+		                    	value="{txt_sysdate}"
+		                    	/>
+
+						</font>
+
+					</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Raz&atilde;o 
+                    da n&atilde;o implementa&ccedil;&atilde;o at&eacute; a data 
+                    proposta</font></td>
+                  <td>
+<textarea name="raz_nao_imp" cols="50" rows="6" id="raz_nao_imp" {ro_resp}>{raz_nao_imp}</textarea>
+<div id="raz_nao_imp_print">
+{raz_nao_imp_print}
+</div>						
+					</td>
+                </tr>
+                <tr> 
+                  <td colspan="2" bgcolor="#0046AD" style="color:#FFFFFF"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Verifica&ccedil;&atilde;o 
+                    da Efic&aacute;cia da A&ccedil;&atilde;o Corretiva </font></b></td>
+                </tr>
+                <tr> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    da efetiva verifica&ccedil;&atilde;o</font></td>
+                  <td>
+
+	                  	<font size="2" face="Arial, Helvetica, sans-serif">
+		                    <input type="text" name="dt_efe_verif" id="dt_efe_verif" value="{dt_efe_verif}" size="12" maxlength="10" onBlur="verifica_data(this)" {ro_comite} onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #F4F4F4">
+		                    <input type="hidden" name="dt_efe_verif_old_value" id="dt_efe_verif_old_value" value="{dt_efe_verif}" size="12" maxlength="10" onBlur="verifica_data(this)" {ro_comite} onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #F4F4F4">
+							<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Uso exclusivo do Comit&ecirc; da Qualidade</font>
+	                    </font>
+
+                  </td>
+                  <td></td>
+                </tr>
+                <tr> 
+                  
+                  <td colspan="3"> 
+					<div align="center" style="display:{fl_button}"> 
+					<BR>
+                      <input type="submit" name="Submit2" value="Salvar" class="botao" style="width: 100px;">
+                      <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                    </div>
+				</td>
+                  
+                </tr>
+              </table>
+            </form>
+	</div>
+</div>	  
+<!-- END BLOCK : cadastro -->	  
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,219 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de Projetos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_lista' class='' onclick='location.href="{link_lista}"'><span>Processos</span></li>
+			<li id='aba_detalhe' class='abaSelecionada'><span>Processo</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : mensagem -->
+  <tr> 
+    <td colspan="2"> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+  </tr>
+  <!-- END BLOCK : mensagem -->
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" method="post" action="grava_processos.php">
+              <table width="60%" border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr bgcolor="#dae9f7"> 
+                  <td colspan="3"> 
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr> 
+                        <td bgcolor="#dae9f7"> 
+                          <div align="left"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            Implantação</font><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            </font> 
+                            <input name="data_cad" type="text" id="data_cad" size="15" maxlength="10" value="{data_cad}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                      <input name="cod_processo" type="hidden" id="cod_processo" value="{cod_processo}">
+                      <input name="insere" type="hidden" id="insere" value="{insere}">
+                      </strong> </font> </div></td>
+                </tr>
+              </table></td>
+          </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Processo</font></td>
+                  <td colspan="2"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="processo" type="text" id="sistema" value="{processo}" size="80" >
+              </font> </td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Objetivo</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="objetivo" cols="80" rows="4" id="objetivo" >{objetivo}</textarea>
+              </font></td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="descricao" cols="80" rows="6" id="descricao" >{descricao}</textarea>
+              </font> </td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Insumos</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="insumos" cols="80" rows="3" id="insumos" >{insumos}</textarea>
+              </font></td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Produtos</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="produtos" cols="80" rows="3" id="produtos" >{produtos}</textarea>
+              </font></td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sub-processos</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="sub_processos" cols="80" rows="3" id="sub_processos" >{sub_processos}</textarea>
+              </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+              </font> </td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Requisitos<br>
+              Aplic&aacute;veis</font></td>
+                  <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="requisitos" cols="80" rows="3" id="textarea2" >{requisitos}</textarea>
+              </font></td>
+          </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Envolvidos</font></td>
+                  <td width="0%" valign="middle"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <p> 
+                <!-- ok  <select name="envolvido" size="5" multiple="yes"  id="select2" > 
+          <select name="envolvido" size="5" multiple="yes" onBlur="Vermult(this)">-->
+                <select name="envolvido[]" size="5" multiple="yes" onChange="chkenvolvido(this)" >
+                  <!-- START BLOCK : envolvido_b -->
+                  <option value="{codigo_env}" {sel_envolvido}>{envolvido}</option>
+                  <!-- END BLOCK : envolvido_b -->
+                </select>
+                Segure a tecla CTRL e clique</font></td>
+                  <td valign="middle"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel 
+                    <select name="responsavel"  id="select2"  >
+                <!-- START BLOCK : responsavel -->
+                <option value="{codigo_resp}" {sel_responsavel}>{responsavel}</option>
+                <!-- END BLOCK : responsavel -->
+              </select>
+              </font></td>
+          </tr>
+          <!--          <tr bgcolor="#DCDCCC">
+            <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+              de </font></td>
+            <td><font size="2" face="Arial, Helvetica, sans-serif">
+              <select name="select" id="select2">
+                <!-- START BLOCK : diretriz --
+                <option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+                <!-- END BLOCK : diretriz --
+              </select>
+              </font></td>
+          </tr>
+-->
+                <tr bgcolor="#F4F4F4"> 
+                  <td colspan="3"> 
+                    <div align="center"> 
+                <input class='botao' type="submit" name="Submit2" value="Gravar">
+                <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+              </div></td>
+          </tr>
+        </table>
+      </form>
+      <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/tit_procedimentos.jpg" width="196" height="30"></font></p>
+      <blockquote> 
+        <p align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><a href="cad_processos.php?tr=I"><img src="img/btn_novo_procedimento.jpg" alt="Incluir	novo procedimento" width="140" height="22" border="0"></a></strong></font></p>
+      </blockquote>
+      <table width="80%" align="center" cellspacing="1">
+        <tr> 
+          <td width="30%" bgcolor="#dae9f7"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o 
+            do Procedimento</font></strong></td>
+          <td width="55%" bgcolor="#dae9f7"> <div align="left"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Objetivo</font></strong></div></td>
+          <td width="15%" bgcolor="#dae9f7"> <div align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+              de Inclus&atilde;o</font></strong></div></td>
+        </tr>
+        <!-- START BLOCK : procedimentos-->
+        <tr> 
+          <!--      <td bgcolor="{cor_fundo}"><font size="2" face="Arial, Helvetica, sans-serif"><a href="cad_processos.php?c={codigo}&tr=U">{<font face="Verdana, Arial, Helvetica, sans-serif">codigo</font>}</a></font></td> -->
+          <td bgcolor="#DCDCCC"><font size="2" face="Arial, Helvetica, sans-serif"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome_proced}</font></font></td>
+          <!--          <td bgcolor="{cor_fundo}"><div align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome}</font></div></td>-->
+          <td bgcolor="#DCDCCC"><div align="justify"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{objetivo_proced}</font></div></td>
+          <td bgcolor="#DCDCCC"><div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inclusao_proced}</font></div></td>
+        </tr>
+        <!-- END BLOCK : procedimentos -->
+      </table>
+      <div align="center"> 
+        <p><img src="img/tit_its.jpg" width="287" height="30"></p>
+      </div>
+      <blockquote>
+        <div align="right"><img src="img/btn_nova_it.jpg" width="180" height="22"></div>
+      </blockquote>
+      <div align="center">
+        <table width="80%" align="center" cellspacing="1">
+          <tr> 
+            <td width="30%" bgcolor="#dae9f7"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o 
+              IT</font></strong></td>
+            <td width="55%" bgcolor="#dae9f7"> <div align="left"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Objetivo</font></strong></div></td>
+            <td width="15%" bgcolor="#dae9f7"> <div align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                de Inclus&atilde;o</font></strong></div></td>
+          </tr>
+          <!-- START BLOCK : its-->
+          <tr> 
+            <td bgcolor="#DCDCCC"><font size="2" face="Arial, Helvetica, sans-serif"><a href="cad_processos.php?c={codigo}&tr=U"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome_it}</font></a></font></td>
+            <td bgcolor="#DCDCCC"><div align="justify"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{objetivo_it}</font></div></td>
+            <td bgcolor="#DCDCCC"><div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inclusao_it}</font></div></td>
+          </tr>
+		  <tr>
+		  <td colspan="3">
+		        <form name="form2" method="post" action="grava_it.php" enctype="multipart/form-data">
+	    <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+		<br><br>
+        <table border="0" align="center" cellpadding="1" cellspacing="1">
+          <tr> 
+            <td>
+			   <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione o arquivo</font>
+			</td>
+            <td>
+                <input type="file" name="arquivo" size="60"><br>
+                <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: Tamanho 
+                m&aacute;ximo do arquivo limitado a 2MB.</font>
+			</td>
+          </tr>
+          <tr> 
+            <td colspan="2">
+			   <div align="center"><input class='botao' type="submit" name="Submit" value="Enviar"></div>
+			</td>
+          </tr>
+        </table>
+      </form>
+</td></tr>
+          <!-- END BLOCK : its -->
+        </table>
+        <p>&nbsp;</p>
+      </div>
+      <p></p>
+      <p>&nbsp;</p></td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

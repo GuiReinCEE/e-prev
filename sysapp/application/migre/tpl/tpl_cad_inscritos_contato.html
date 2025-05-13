@@ -1,0 +1,197 @@
+		<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Inscritos SENGE ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+
+
+function ir_aba_ident()
+{
+	location.href='cad_inscritos.php?c={cd_registro_empregado}&a=s';
+}
+
+function ir_aba_cont()
+{
+	location.href='cad_inscritos_contato.php?c={cd_registro_empregado}&a=a';
+}
+
+function ir_aba_anx()
+{
+	location.href='cad_inscritos_docs.php?c={cd_registro_empregado}&a=h';
+}
+
+function ir_aba_hist()
+{
+	location.href='cad_inscritos_hist.php?c={cd_registro_empregado}&a=h';
+}
+
+</script>
+
+{ABA_START}
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td colspan="2"> 
+				<table width="90%" border="0"  cellspacing="0" cellpadding="0">
+
+              <tr> 
+                <td colspan="2"><blockquote>
+                    <form name="form1" method="post" action="grava_inscritos_internet_contato.php">
+                      <table border="0" align="left" cellpadding="1" cellspacing="1">
+                        <tr> 
+                          <td> <div align="left"></div></td>
+                          <td colspan="3" > <font size="2" face="Arial, Helvetica, sans-serif"><strong> 
+                            <input name="insere" type="hidden" id="insere" value="{insere}">
+                            <input name="cd_registro_empregado" type="hidden" id="cd_registro_empregado" value="{cd_registro_empregado}">
+                            &nbsp; </strong> </font> </td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RE:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            {cd_registro_empregado} </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            Nome: {codigo}</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            {nome} </font> </td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                          <td colspan="3" bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Endere&ccedil;amento:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Endere&ccedil;o:</font></b></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="endereco" id="endereco" maxlength='40' style='width:400px;' value="{endereco}">
+                            <!--<textarea name="endereco" cols="50" rows="2" id="endereco" >{endereco}</textarea>-->
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Bairro:</font></b></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="bairro" type="text" id="bairro"  value="{bairro}" size="40" maxlength='25' >
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Cidade:</b></font></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size=1 name="cbo_cidade"  >
+                              <!-- START BLOCK : cbo_cidade -->
+                              <option value="{cod_cidade}" {sel_cidade}>{cidade}</option>
+                              <!-- END BLOCK : cbo_cidade -->
+                            </select>
+                            </font></td>
+                          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Estado:</b></font></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size=1 name="cbo_uf"  onChange="jumpCheck('parent', this, 'inscricao_etapa_2.php?uf={cod_uf}&uf_pro={cod_uf_pro}');" >
+                              <!-- START BLOCK : cbo_uf -->
+                              <option value="{cod_uf}" {sel_uf}>{uf}</option>
+                              <!-- END BLOCK : cbo_uf -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>CEP:</b></font></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="cep" type="text" id="cep"  value="{cep}" size="6" maxlength="5">
+                            </font>-<font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="complemento_cep" type="text" id="complemento_cep"  value="{complemento_cep}" size="4" maxlength="3">
+                            </font><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.correios.com.br/servicos/cep/cep_default.cfm" target="_blank"><font color="#0000FF">Consulta 
+                            de CEP</font></a></font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; 
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                          <td colspan="3" bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Dados 
+                            para contato:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Telefone:</b></font></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="ddd" type="text" id="ddd"  value="{ddd}" size="4" maxlength="3">
+                            </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="telefone" type="text" id="telefone"  value="{telefone}" size="10" maxlength="10">
+                            </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="ramal" type="text" id="ramal"  value="{ramal}" size="6" maxlength="5">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Celular:</b></font></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="ddd_cel" type="text" id="ddd_cel"  value="{ddd_cel}" size="4" maxlength="3">
+                            </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="celular" type="text" id="celular"  value="{celular}" size="10" maxlength="10">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Fax:</b></font></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="ddd_fax" type="text" id="ddd_fax"  value="{ddd_fax}" size="4" maxlength="3">
+                            </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="fax" type="text" id="fax"  value="{fax}" size="10" maxlength="10">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Email:</b></font></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="email" type="text" id="cep10"  value="{email}" size="50" maxlength="50">
+                            </font></td>
+                        </tr>
+                        <tr align="center"> 
+                          <td colspan="4" valign="top" bgcolor="#0046ad"><font color="#FFFFFF" size="3" face="Verdana, Arial, Helvetica, sans-serif"><b>Emails 
+                            Enviados</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="center" valign="top" bgcolor="#CCCCCC"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data</font></b></td>
+                          <td align="center" bgcolor="#CCCCCC"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Assunto</font></b></td>
+                          <td align="center" bgcolor="#CCCCCC"><b><font size="2" face="Verdana, Arial, Helvetica, sans-serif">End. 
+                            email</font></b></td>
+                          <td align="center" bgcolor="#CCCCCC">&nbsp;</td>
+                        </tr>
+                        <!-- START BLOCK : email -->
+                        <tr> 
+                          <td align="center" valign="top" bgcolor="#CCCCCC"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_envio}</font></td>
+                          <td align="center" bgcolor="#CCCCCC"><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"><i>{assunto}</i></font></td>
+                          <td align="center" bgcolor="#CCCCCC"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{para}</font></td>
+                          <td align="center" bgcolor="#CCCCCC"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b><a href="cad_envia_emails.php?op=A&c={num_email}&e=SNG">Ver</a></b></font></td>
+                        </tr>
+                        <!-- END BLOCK : email -->
+                        <tr valign="middle" bgcolor="#66CC99"> 
+                          <td height="40" colspan="4" align="center"><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><a href="gera_email_senha.php?re={cd_registro_empregado}">Gerar 
+                            email de senha</a></strong></font></td>
+                        </tr>
+                        <tr valign="middle" bgcolor="#99CC66"> 
+                          <td height="40" colspan="4" align="center"><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><a href="gera_email_confirmacao.php?re={cd_registro_empregado}">Gerar 
+                            email de confirma&ccedil;&atilde;o de inscri&ccedil;&atilde;o</a></strong></font></td>
+                        </tr>
+                        <tr> 
+                          <td colspan="4"> <div align="center"> 
+                              <input class='botao' type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                              <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                            </div></td>
+                        </tr>
+                      </table>
+                    </form>
+                  </blockquote></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,112 @@
+<?php
+class Socio_instituidor_model extends Model
+{
+	function __construct()
+	{
+		parent::Model();
+	}
+
+
+	function cadastro(&$result, $args=array())
+	{
+		$qr_sql = "
+					SELECT si.cd_socio_instituidor,
+					       si.nome,
+						   si.cpf,
+						   si.cd_empresa
+					  FROM extranet.socio_instituidor si
+					 WHERE si.cd_socio_instituidor = ".intval($args['cd_socio_instituidor'])."
+		          ";
+		#echo "<pre>$qr_sql</pre>";
+		$result = $this->db->query($qr_sql);
+	}
+
+	function listar(&$result, $args=array())
+	{
+		$qr_sql = "
+					SELECT si.cd_socio_instituidor,
+					       si.nome,
+						   si.cpf,
+                           si.cd_empresa,
+                           si.fl_socio,
+                           p.sigla AS ds_empresa,
+                           CASE WHEN si.fl_socio = 'S' THEN 'Sócio'
+                                WHEN si.fl_socio = 'N' THEN 'Não Sócio'
+                                ELSE 'Não informado'
+                           END AS ds_socio,
+						   TO_CHAR(si.dt_inclusao,'DD/MM/YYYY HH24:MI') AS dt_inclusao,
+						   TO_CHAR(si.dt_validacao,'DD/MM/YYYY HH24:MI') AS dt_validacao
+					  FROM extranet.socio_instituidor si
+                      JOIN public.patrocinadoras p
+                        ON p.cd_empresa = si.cd_empresa
+                     WHERE 1 = 1
+                     ".((trim($args['cd_empresa']) != "") ? " AND si.cd_empresa = ".intval($args['cd_empresa']) : "")."
+                     ".((trim($args['cpf']) != "") ? " AND si.cpf = '".$args['cpf']."'" : "")."
+		          ";
+		#echo "<pre>$qr_sql</pre>";
+		$result = $this->db->query($qr_sql);
+	}
+
+	function salvar(&$result, $args=array())
+	{
+		$retorno = 0;
+
+		if(intval($args['cd_socio_instituidor']) > 0)
+		{
+            #### UPDATE ####
+            $qr_sql = "
+                        UPDATE extranet.socio_instituidor
+                           SET nome = ".(trim($args['nome']) == "" ? "DEFAULT" : "'".$args['nome']."'").",
+                               cpf  = ".(trim($args['cpf']) == "" ? "DEFAULT" : "'".$args['cpf']."'").",
+                               cd_empresa = ".(trim($args['cd_empresa']) == '' ? "DEFAULT" : intval($args['cd_empresa']))."
+                         WHERE cd_socio_instituidor = ".intval($args['cd_socio_instituidor']).";
+                ";
+            $this->db->query($qr_sql);
+			$retorno = intval($args['cd_socio_instituidor']);
+
+		} else {
+            #### INSERT ####
+			$new_id = intval($this->db->get_new_id("extranet.socio_instituidor", "cd_socio_instituidor"));
+			$qr_sql = "
+						INSERT INTO extranet.socio_instituidor
+						     (
+							   cd_socio_instituidor,
+							   nome,
+							   cpf,
+							   cd_empresa,
+							   cd_usuario_inclusao
+							 )
+                        VALUES
+						     (
+							   ".$new_id.",
+							   ".(trim($args['nome']) == "" ? "DEFAULT" : "'".$args['nome']."'").",
+							   ".(trim($args['cpf']) == "" ? "DEFAULT" : "'".$args['cpf']."'").",
+							   ".(trim($args['cd_empresa']) == '' ? "DEFAULT" : intval($args['cd_empresa'])).",
+							   ".(intval($args['cd_usuario_inclusao']) == 0 ? "DEFAULT" : $args['cd_usuario_inclusao'])."
+							 );
+					  ";
+			$this->db->query($qr_sql);
+			$retorno = $new_id;
+        }
+
+		#echo "<pre>$qr_sql</pre>";
+		#exit;
+
+		return $retorno;
+	}
+
+    function empresas(&$result, $args=array())
+	{
+		$qr_sql = "
+					SELECT p.cd_empresa AS value,
+						   p.sigla AS text
+					  FROM public.patrocinadoras p
+                     WHERE p.tipo_cliente = 'I'
+                     ORDER BY p.sigla
+		          ";
+		// echo "<pre>$qr_sql</pre>";
+		$result = $this->db->query($qr_sql);
+	}
+
+}
+?>

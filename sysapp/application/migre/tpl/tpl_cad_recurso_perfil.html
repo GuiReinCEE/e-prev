@@ -1,0 +1,365 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Recursos Humanos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+   <!--
+function winHabilidades(r,h) {
+	     w = window.open("recurso_inc_habilidade.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=380,height=230");
+	  }
+function excHabilidades(r,h) {
+	     w = window.open("recurso_exc_habilidade.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=100,height=60");
+		 w.close();
+		 self.location.reload(true);
+	  }
+   --> </script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	return true;
+	if (f.indic_adm.value != '*') { erros = erros + "- Somente administradores do sistema podem alterar estes dados.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+	
+	function ir_pref()
+	{
+		location.href="cad_recurso.php?u={usuario_link}&c={codigo_link}";
+	}
+	
+	function ir_work()
+	{
+		location.href="cad_recurso_workspace.php?u={usuario_link}&c={codigo_link}";
+	}
+
+//-->
+</script>
+
+{ABA_START}
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td colspan="2"> 
+            <!-- START BLOCK : mensagem -->
+            <div align="center">
+              <br>
+              <br>
+              <font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{msg}</font>
+            </div>
+            <font face="Verdana, Arial, Helvetica, sans-serif"> 
+            <!-- END BLOCK : mensagem -->
+            <!-- START BLOCK : cadastro -->
+            </font> 
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top"> 
+          <td> 
+			  <font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;              
+              </font> 
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                        <td colspan="2"><form name="form1" method="post"  onSubmit="return valida_form(this);" action="grava_recurso.php?c={codigo}">
+              <input name="codigo" type="hidden" id="codigo3" value="{codigo}">
+              <input name="formato" type="hidden" id="forma_mens" value="{forma_mens}">
+                          <table border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF">
+                            <tr bgcolor="{cor_fundo2}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Identifica&ccedil;&atilde;o</font></td>
+                              <td colspan="10" bgcolor="{cor_fundo2}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="usuario" type="text" id="usuario" value="{usuario}" size="20" {ro_adm} maxlength="20" style="font-family: Verdana; font-size: 8 pt">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Re: 
+                                {re} </font></td>
+                              <td colspan="2" align="right" bgcolor="{cor_fundo2}"><input type="image" src="img/btn_salvar.jpg"></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome</font></td>
+                              <td colspan="12"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="nome" type="text" id="nome" value="{nome}" size="60" maxlength="100" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Papel</font></td>
+                              <td colspan="12"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <select name="cbo_perfil" id="select2" style="font-family: Verdana; font-size: 8 pt">
+                                  <!-- START BLOCK : blk_perfil -->
+                                  <option value="{cod_perfil}" {sel_perfil}>{nome_perfil}</option>
+                                  <!-- END BLOCK : blk_perfil -->
+                                </select>
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cargo 
+                                / Fun&ccedil;&atilde;o:</font></td>
+                              <td colspan="12"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <select name="cbo_cargo" id="select3" style="font-family: Verdana; font-size: 8 pt">
+                                  <!-- START BLOCK : blk_cargo -->
+                                  <option value="{cod_cargo}" {sel_cargo}>{nome_cargo}</option>
+                                  <!-- END BLOCK : blk_cargo -->
+                                </select>
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Divis&atilde;o:</font></td>
+                              <td colspan="12"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="divisao" type="text" id="nome3" value="{divisao}" {ro_adm} size="5" maxlength="3" style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Grupo 
+                                de trabalho:</font></td>
+                              <td colspan="12"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <select name="cbo_grupo" id="cbo_grupo" style="font-family: Verdana; font-size: 8 pt">
+                                  <!-- START BLOCK : blk_grupo -->
+                                  <option value="{cod_grupo}" {sel_grupo}>{nome_grupo}</option>
+                                  <!-- END BLOCK : blk_grupo -->
+                                </select>
+                                </font></td>
+                            </tr>
+                            <tr align="center" bgcolor="{cor_fundo2}"> 
+                              <td colspan="13" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Indicadores 
+                                de Perfil pessoal:</strong><br>
+                                Alterações a critério dos administradores do sistema: 
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td rowspan="2" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Indicadores:
+                                <input name="indic_adm" type="hidden" id="indic_adm" value="{indic_adm}">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">1</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">2</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">3</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">4</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">5</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">6</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">7</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">8</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">9</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">10</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">11</font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">12</font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic1" type="text" id="indic1" value="{indic1}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic2" type="text" id="indic2" value="{indic2}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic3" type="text" id="indic3" value="{indic3}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic4" type="text" id="indic4" value="{indic4}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic5" type="text" id="indic5" value="{indic5}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic6" type="text" id="indic6" value="{indic6}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic7" type="text" id="indic7" value="{indic7}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic8" type="text" id="indic8" value="{indic8}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic9" type="text" id="indic9" value="{indic9}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic10" type="text" id="indic10" value="{indic10}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic11" type="text" id="indic11" value="{indic11}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                              <td align="center" bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="indic12" type="text" id="indic12" value="{indic12}" size="2" maxlength="1" {ro_adm} style="font-family: Verdana; font-size: 8 pt">
+                                </font></td>
+                            </tr>
+                            <tr bgcolor="{cor_fundo1}"> 
+                              <td colspan="13" valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Estes 
+                                indicadores s&atilde;o utilizados para controles 
+                                de acesso ao sistema.</font></td>
+                            </tr>
+                          </table>
+            </form></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+		</td>
+        </tr>
+      </table>
+	  <img src="img/img_divisoria1.gif" height="1" width="100%">
+            <!-- END BLOCK : cadastro -->
+            <!-- START BLOCK : blk_link_habilidades -->
+            <table width="80%" border="0" align="center" cellpadding="0" cellspacing="1">
+			<tr><td align="right">
+			<a href="#" onClick="winHabilidades({codigo},'')"><img src="img/btn_cad_acomp3.jpg" border="0"></a>
+			</td></tr>
+			</table>
+              <!-- END BLOCK : blk_link_habilidades -->       
+            <table width="80%" border="0" align="center" cellpadding="0" cellspacing="1">
+              <tr bgcolor="#dae9f7"> 
+                <td colspan="3" align="center"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Habilidades 
+                  deste recurso</font></td>
+              </tr>
+              <tr bgcolor="#0046ad"> 
+                <td align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;<strong>Manuten&ccedil;&atilde;o</strong></font></td>
+                <td align="center"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Habilidade</font></strong></td>
+                <td align="center"> <font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Grau</strong></font></td>
+              </tr>
+              <!-- START BLOCK : habilidade -->
+              <tr bgcolor="{cor_fundo1}"> 
+                <td> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <a href="#" onClick="winHabilidades({codigo},{cod_hab})"><img src="img/btn_manut.jpg" border="0"></a> 
+                    <!--            <a href="recurso_inc_atividade.php?r={codigo}&h={cod_hab}">A</a> -->
+                    <a href="#" onClick="excHabilidades({codigo},{cod_hab})"><img src="img/btn_excluir.jpg" border="0"></a> 
+                    </font> </div></td>
+                <td align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{habilidade}</font></td>
+                <td> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{grau_conhecimento}</font></div></td>
+              </tr>
+              <!-- END BLOCK : habilidade -->
+            </table>
+            <div align="center">              
+              <!-- START BLOCK : blk_senha -->
+              <table width="80%" border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr>
+                  <td align="center" bgcolor="#dae9f7"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Reinicializa&ccedil;&atilde;o 
+                    de Senhas:</font></td>
+                </tr>
+                <tr>
+                  <td align="center" bgcolor="#FFFF99"> <img src="img/img_divisoria1.gif" height="1" width="100%"><br> 
+                    <a href="inic_senha.php?c={codigo}" class="links2"><img src="img/btn_inicializar_senha.jpg" border="0"><br>
+                    Inicializar Senha</a> <img src="img/img_divisoria1.gif" height="1" width="100%"> 
+                  </td>
+                </tr>
+              </table>
+
+              <!-- END BLOCK : blk_senha -->
+              </div><br>
+            <table width="80%" border="0" cellspacing="1" cellpadding="0" align="center">
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  </font></strong></td>
+                <td width="12%"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Valor 
+                  ligado</font></strong></td>
+                <td width="12%"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Valor 
+                  desligado</font></strong></td>
+                <td width="60%" bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">O 
+                  que identifica:</font></strong></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  1</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font color="#009933" size="1" face="Verdana, Arial, Helvetica, sans-serif"><em>Uso 
+                  Futuro </em> </font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  2</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">S, 
+                  A </font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Atendentes 
+                  de Suporte - Processos Administrativos de Inform&aacute;tica</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  3 </font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                  *</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DCG 
+                  - Tribut&aacute;ria - Cen&aacute;rio Legal - Respons&aacute;veis 
+                  por divis&atilde;o</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  4 </font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Atualiza&ccedil;&atilde;o 
+                  Contra Cheque Funda&ccedil;&atilde;o</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  5</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Administrador 
+                  do Sistema</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  6</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Cadastros 
+                  dos documentos de acesso restrito</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  7</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Comit&ecirc; 
+                  Eleitoral</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  8</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">A, 
+                  N </font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td bgcolor="{cor_fundo1}"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DAP 
+                  Atendimento - atendentes ativos e n&atilde;o ativos</font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  9</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font color="#009933" size="1" face="Verdana, Arial, Helvetica, sans-serif"><em>RH </em></font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  10</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font color="#009933" size="1" face="Verdana, Arial, Helvetica, sans-serif"><em>Uso 
+                  Futuro </em></font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  11</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font color="#009933" size="1" face="Verdana, Arial, Helvetica, sans-serif"><em>Uso 
+                  Futuro </em></font></td>
+              </tr>
+              <tr bgcolor="{cor_fundo1}"> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Indicador 
+                  12</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Comit&ecirc; 
+                  da Qualidade</font></td>
+              </tr>
+            </table>
+            <p>&nbsp;</p></td>
+  </tr>
+</table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,281 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Biblioteca Multimídia ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+
+		<style>
+			#lightbox{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				z-index: 100;
+				text-align: center;
+				line-height: 0;
+				}
+
+			#lightbox a img{ border: none; }
+
+			#outerImageContainer{
+				position: relative;
+				background-color: #fff;
+				width: 250px;
+				height: 250px;
+				margin: 0 auto;
+			}
+
+			#imageContainer{
+				padding-top: 10px;
+				padding-left: 10px;
+				padding-right: 10px;
+				}
+
+			#caption{
+				white-space: nowrap;
+			    padding:1px;
+			    margin:0;
+				font: 14pt Verdana, Helvetica, sans-serif;
+				font-weight: bold;	
+				position:relative;
+				top:10px;
+				color:white;
+				text-align:center;
+				filter:glow(strength=4,color=black,enabled=1);
+				width:100%;
+				z-index: 10;
+			}
+
+		</style>
+	
+		<script>
+			var indexAtual = 1;
+			var indexMaximo = 1000;
+			function mostraFoto(nr_index)
+			{
+				indexAtual = nr_index;
+				document.getElementById('ob_index').innerHTML = nr_index;
+				var id_foto = "foto_" + nr_index;
+				var ds_url = document.getElementById(id_foto).src;
+				var ds_titulo = document.getElementById(id_foto).title;
+				
+				var ob_temp = new Image();
+					ob_temp.src = ds_url;
+					
+				var ob_img = document.getElementById('lightboxImage');
+					ob_img.src = ds_url;
+				
+				document.getElementById('caption').innerHTML = ds_titulo;
+				
+				var windowWidth = getPageSize()[2] - 10;
+				var windowHeight = getPageSize()[3] - 95;
+				var nr_perc = 100;
+
+				if(ob_temp.width > windowWidth)
+				{
+					nr_perc = (windowWidth * 100) /  ob_temp.width;
+					if (((nr_perc * ob_temp.height) / 100) > windowHeight)
+					{
+						nr_perc = (windowHeight * 100) /  ob_temp.height;
+					}
+				}
+				else if(ob_temp.height > windowHeight)
+				{
+					nr_perc = (windowHeight * 100) /  ob_temp.height;
+				}
+				
+				var nr_w = (nr_perc * ob_temp.width) / 100;
+				var nr_h = (nr_perc * ob_temp.height) / 100;
+				
+				ob_img.style.width = nr_w;
+				ob_img.style.height = nr_h;
+				
+				document.getElementById('outerImageContainer').style.width = nr_w + 20;
+			
+				document.getElementById('lightbox').style.top = getPageScroll()[1];
+				document.getElementById('lightbox').style.display = "";
+				
+					
+				//alert("\nob_img.style.width = "+ ob_img.style.width +"\nob_img.style.height = "+ ob_img.style.height +"\nob_temp.width = "+ ob_temp.width +"\nob_temp.height = "+ ob_temp.height +"\npageWidth = " + getPageSize()[0] +"\n pageHeight = " + getPageSize()[1] +"\n windowWidth = " + getPageSize()[2] +"\n windowHeight = " + getPageSize()[3] );	
+					
+			}
+			
+			function fechaFoto()
+			{
+				document.getElementById('lightbox').style.display = "none";
+			}
+			
+			function fotoPrev()
+			{
+				if(indexAtual > 1)
+				{
+					indexAtual = indexAtual - 1;
+					mostraFoto(indexAtual);
+				}			
+			}
+			
+			function fotoNext()
+			{
+				if(indexAtual < indexMaximo)
+				{
+					indexAtual = indexAtual + 1;
+					mostraFoto(indexAtual);
+				}			
+			}
+			
+			document.onkeydown = capturaTecla;
+			function capturaTecla(e) 
+			{
+				var keycode;
+				if (window.event)
+				{		
+					keycode = window.event.keyCode;
+				}
+				else if (e) 
+				{
+					keycode = e.which;
+				}
+				
+				if (keycode == 37)
+				{
+					fotoPrev();
+				}
+				
+				if (keycode == 39)
+				{
+					fotoNext();
+				}				
+			}			
+			
+			function getPageScroll()
+			{
+
+				var yScroll;
+
+				if (self.pageYOffset) {
+					yScroll = self.pageYOffset;
+				} else if (document.documentElement && document.documentElement.scrollTop){	 // Explorer 6 Strict
+					yScroll = document.documentElement.scrollTop;
+				} else if (document.body) {// all other Explorers
+					yScroll = document.body.scrollTop;
+				}
+
+				arrayPageScroll = new Array('',yScroll) 
+				return arrayPageScroll;
+			}		
+			
+			function getPageSize()
+			{
+				
+				var xScroll, yScroll;
+				
+				if (window.innerHeight && window.scrollMaxY) {	
+					xScroll = document.body.scrollWidth;
+					yScroll = window.innerHeight + window.scrollMaxY;
+				} else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
+					xScroll = document.body.scrollWidth;
+					yScroll = document.body.scrollHeight;
+				} else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
+					xScroll = document.body.offsetWidth;
+					yScroll = document.body.offsetHeight;
+				}
+				
+				var windowWidth, windowHeight;
+				if (self.innerHeight) {	// all except Explorer
+					windowWidth = self.innerWidth;
+					windowHeight = self.innerHeight;
+				} else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+					windowWidth = document.documentElement.clientWidth;
+					windowHeight = document.documentElement.clientHeight;
+				} else if (document.body) { // other Explorers
+					windowWidth = document.body.clientWidth;
+					windowHeight = document.body.clientHeight;
+				}	
+				
+				// for small pages with total height less then height of the viewport
+				if(yScroll < windowHeight){
+					pageHeight = windowHeight;
+				} else { 
+					pageHeight = yScroll;
+				}
+
+				// for small pages with total width less then width of the viewport
+				if(xScroll < windowWidth){	
+					pageWidth = windowWidth;
+				} else {
+					pageWidth = xScroll;
+				}
+
+				arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight) 
+				return arrayPageSize;
+			}			
+		</script>
+		
+		<div id="lightbox" style="display:none;">
+			<div id="outerImageContainer">
+				<div id="imageContainer">
+					<span id="caption"></span>
+					<img id="lightboxImage">
+				</div>
+					<table border="0" width="100%">
+						<tr>
+							<td align="left">
+								<img src="inc/fotos/images/prev.gif" onclick="fotoPrev();" style="cursor:pointer;">
+							</td>
+							<td align="center">
+								<span id="ob_index" style="text-align:center; font-family: Courier;  font-size: 8pt;"></span>
+								<div>
+								<img src="inc/fotos/images/closelabel.png" onclick="fechaFoto();" style="cursor:pointer;">
+								</div>
+							<td>
+							<td align="right">
+								<img src="inc/fotos/images/next.gif" onclick="fotoNext();" style="cursor:pointer;">
+							</td>
+						</tr>
+					</table>
+			</div>	
+		</div>		
+		
+		<div style="margin-left:50px;margin-right:50px;">
+			<table>
+				<tr>
+					<td style="width:90%; text-align:center; color:#0046ad; font-size: 18pt; font-family: Arial, Verdana,'MS Sans Serif';">
+						Fotos - {ds_titulo}
+					</td>
+					<td style="width:10%;">
+						<img src="img/btn_retorna.jpg" onclick="history.back();" style="cursor: pointer;" title="Retornar para listagem" border="0">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<SPAN style="font-family: Courier;"><B>Clique ou utilize as teclas <- e -> para visualizar as fotos</B> (Somente Internet Explorer)</SPAN>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<!-- START BLOCK : lst_fotos -->
+						<div style="text-align:center; padding-left: 10 5 5 5; float:left; width:80px; height:100px; margin-top:10px; margin-left:10px;">
+							<img id="foto_{nr_index}" style="cursor:pointer;" src="{ds_url}" width="80" height="100" border="0" onclick="mostraFoto({nr_index})" title="{ds_titulo}">
+							<span style="width:100%; text-align:center; font-family: Courier;">
+								{nr_index}
+							</span>
+							<BR>
+						</div>		
+						<!-- END BLOCK : lst_fotos -->					
+					</td>
+				</tr>
+			</table>
+		</div>
+	<script>
+		indexMaximo = {nr_index_maximo};
+	</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

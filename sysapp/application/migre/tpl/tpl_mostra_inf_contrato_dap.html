@@ -1,0 +1,294 @@
+<!-- INCLUDE BLOCK : header_simulacao_dap.html -->
+<script>
+	document.title = '..:: e-prev :: Empréstimo (Documentos) ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+
+.style2 {	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.style10 {color: #000000}
+
+</style>
+<link href="proposta_emprestimo.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="inc/pck_funcoes_ne.js"></script>
+<script language="javascript">
+	function imprime(tipo) 
+	{
+		switch(tipo) 
+		{
+			case 'CR' : url = 'pro=S&t=P'; break
+			case 'CC' : url = 'pro=S'; break;
+			case 'DEM': url = 'dem=S'; break;
+			case 'NP' : url = 'np=S'; break;
+		}
+		url = 'gera_proposta_emprestimo.php?c='+getEl('c').value+'&'+url;
+		window.open(url);
+	}
+
+	function imprimeContrato() 
+	{
+		var ds_url = "contrato_emprestimo.php";
+			ds_url += "?cd_contrato=" + getEl('c').value;
+			ds_url += "&fl_cad=S&fl_fin=S&fl_ass=S";
+		
+		var nr_width  = (screen.width - 10);
+		var nr_height = (screen.height - 80);
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		window.open(ds_url, "wViewContrato", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");
+	}
+
+	function imprimeContratoResumido() 
+	{
+		var ds_url = "contrato_emprestimo.php";
+		ds_url += "?cd_contrato=" + getEl('c').value;
+		ds_url += "&fl_cad=S&fl_fin=S&fl_ass=S&tp_imp=1";
+
+		var nr_width  = (screen.width - 10);
+		var nr_height = (screen.height - 80);
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		window.open(ds_url, "wViewContratoResumido", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 									
+	}
+
+	function imprimeDemonstrativo() 
+	{
+		var ds_url = "contrato_emprestimo.php";
+			ds_url += "?cd_contrato=" + getEl('c').value;
+			ds_url += "&fl_cad=S&fl_fin=S&fl_ass=S&tp_imp=3&fl_dem=S";
+		
+		var nr_width  = (screen.width - 10);
+		var nr_height = (screen.height - 80);
+		var nr_left = ((screen.width - 10) - nr_width) / 2;
+		var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+		window.open(ds_url, "wViewDemonstrativo", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=no,titlebar=no,toolbar=yes");		 									
+	}	
+	
+    var titulo_pagina = "";
+	function setTituloPagina()
+	{
+		if(titulo_pagina == "")
+		{
+			titulo_pagina = document.title;
+		}
+		
+		document.title = titulo_pagina + " EMP_003 ---- " + getEl('cd_empresa').value + "/" + getEl('cd_registro_empregado').value + "/" + getEl('seq_dependencia').value;
+	}
+	addEvent(window, 'load', setTituloPagina);
+
+	function addEvent(obj, evType, fn)
+	{
+		if (obj.addEventListener)
+		{
+			obj.addEventListener(evType, fn, true);
+			return true;
+		} 
+		else if (obj.attachEvent)
+		{
+			var r = obj.attachEvent("on"+evType, fn);
+			return r;
+		} 
+		else 
+		{
+			elm['on' + evType] = fn;
+		}
+	}	
+</script>
+<style type="text/css">
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+</style>
+
+<input type="hidden" name="cd_empresa"            id="cd_empresa"            value="{cd_empresa}">
+<input type="hidden" name="cd_registro_empregado" id="cd_registro_empregado" value="{cd_registro_empregado}">
+<input type="hidden" name="seq_dependencia"       id="seq_dependencia"       value="{seq_dependencia}">
+<BR>
+<table border="0" align="center" cellpadding="1" cellspacing="5">
+  <tr> 
+    <td colspan="2" bgcolor="#006633"> 
+		<div align="center">
+		<font color="#FFFFFF" size="3" face="Tahoma, Verdana, Arial"><strong>EMPRÉSTIMO CONCEDIDO COM SUCESSO</strong></font>
+		</div>
+	</td>
+  </tr>
+  <!-- START BLOCK : blk_msg_callcenter -->
+  <tr>
+		<td colspan="2">
+			<table width="100%" border="0" cellpadding="5" cellspacing="0" class="bordaCallCenter">
+				<tr>
+					<td bgcolor="#990000" align="center">
+						<strong><font color="#FFFFFF" face="Tahoma, Verdana, Arial">MensagemCall-Center</font></strong>
+					</td>
+				</tr>
+				<tr>
+					<td class="style10">
+						<span class="textoCallCenter" style="font-size: 10pt;">
+							O número do contrato é <b>{cd_contrato}</b><br><br>
+							O demonstrativo deste empréstimo contendo todas as taxas <br>
+							aplicadas no mês, será enviado para a sua residência.</span></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<!-- END BLOCK : blk_msg_callcenter -->
+	<tr>
+		<td colspan="2">
+				<table width="440" border="0" cellpadding="0" cellspacing="1" class="bordaCallCenter">
+					<tr>
+						<td height="20" bgcolor="#990000">
+							<div align="center" class="style4 style5">
+								<font color="#FFFFFF" face="Tahoma, Verdana, Arial">Opção Emprestimo</font>
+							</div>
+						</td>
+					</tr>
+					<tr>
+                     <td bgcolor="#Fafafa">
+						<table align="center" width="100%" border="0" cellpadding="1" cellspacing="0">
+						<tr>
+							<td class="style2" style="text-align:center; color: #000000;">
+								<BR><b>{tipo_emprestimo}</b><BR><BR>
+							</td>
+						</tr>
+						</table>
+					</td>
+					</tr>
+				</table>	
+		</td>
+   </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">Contrato</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial"><strong><b>{cd_contrato}</b></strong></font></td>
+  </tr>
+  <tr> 
+    <td width="160" bgcolor="#F0F0F0"><strong><font size="2" face="Tahoma, Verdana, Arial">Empresa</font></strong></td>
+    <td bgcolor="#F0F0F0"><font size="2" face="Tahoma, Verdana, Arial">{cd_empresa} 
+      - {sigla}</font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">RE</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial">{cd_registro_empregado}</font></td>
+  </tr>
+  <tr> 
+    <td width="160" bgcolor="#F0F0F0"><strong><font size="2" face="Tahoma, Verdana, Arial">Seq</font></strong></td>
+    <td bgcolor="#F0F0F0"><font size="2" face="Tahoma, Verdana, Arial">{seq_dependencia}</font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">Nome</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial">{nome}</font></td>
+  </tr>
+  <tr> 
+    <td width="160" bgcolor="#F0F0F0"><strong><font size="2" face="Tahoma, Verdana, Arial">Data 
+      Dep&oacute;sito</font></strong></td>
+    <td bgcolor="#F0F0F0"><font size="2" face="Tahoma, Verdana, Arial"><b>{dt_deposito}</b></font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">Valor Dep&oacute;sito</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial"><b>{vlr_deposito}</b></font></td>
+  </tr>
+  <tr bgcolor="#F0F0F0"> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">N&uacute;mero de 
+      Presta&ccedil;&otilde;es</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial">{nro_prestacoes}</font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+      Primeira Prest</font></strong></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_primeira_prestacao}</font></td>
+  </tr>
+  <tr bgcolor="#F0F0F0"> 
+    <td width="160"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+      &Uacute;ltima Prest</font></strong></td>
+    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_ultima_prestacao}</font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">{label_prestacao}</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial"><b>{vlr_prestacao}</b></font></td>
+  </tr>
+  <tr> 
+    <td width="160" bgcolor="#F0F0F0"><strong><font size="2" face="Tahoma, Verdana, Arial">Banco</font></strong></td>
+    <td bgcolor="#F0F0F0"><font size="2" face="Tahoma, Verdana, Arial">{cd_instituicao}</font></td>
+  </tr>
+  <tr> 
+    <td width="160"><strong><font size="2" face="Tahoma, Verdana, Arial">Ag&ecirc;ncia</font></strong></td>
+    <td><font size="2" face="Tahoma, Verdana, Arial">{cd_agencia}</font></td>
+  </tr>
+  <tr> 
+    <td width="160" bgcolor="#F0F0F0"><strong><font size="2" face="Tahoma, Verdana, Arial">Conta</font></strong></td>
+    <td bgcolor="#F0F0F0"><font size="2" face="Tahoma, Verdana, Arial">{conta}</font></td>
+  </tr>
+  <tr> 
+    <td colspan="2"><form action="gera_proposta_emprestimo.php" method="get" name="form1" target="_blank">
+       <table border="0" align="center" cellpadding="2" cellspacing="0" width="100%">
+          <tr>
+             <td bgcolor="#006633"><div align="center"><font color="#FFFFFF" size="2" face="Tahoma, Verdana, Arial"><strong>IMPRESS&Atilde;O DE DOCUMENTOS</strong></font> </div></td>
+          </tr>
+          <tr style="display:none;">
+             <td bgcolor="#F0F0F0"><div align="center"><font size="2" face="Tahoma, Verdana, Arial" class="style3">Selecione abaixo os documentos a imprimir </font>
+                <input name="c" type="hidden" id="c" value="{cd_contrato}">
+             </div></td>
+          </tr>
+		  
+          <tr> 
+            <td bgcolor="#F0F0F0">
+			<BR>
+			<div align="center">
+               <input type="button" name="Submit2" value="Contrato" onClick="imprimeContrato();"  class="botao" style="width:100px;">
+			   <input type="button" name="Submit2" value="Resumido" onClick="imprimeContratoResumido();" class="botao" style="width:100px;">
+			   <input type="button" name="Submit2" value="Demonstrativo" onClick="imprimeDemonstrativo();" class="botao" style="width:110px;">
+               <input type="button" name="Submit5" value="Nota Promiss&oacute;ria" onClick="imprime('NP');" class="botao" style="width:120px;">
+            </div>
+			<BR>
+			</td>
+          </tr>		  
+		  
+          <tr style="display:none;"> 
+            <td><table width="100%" border="0" cellpadding="0" cellspacing="4">
+                  <tr>
+                     <td valign="top" nowrap><strong><font size="2" face="Tahoma, Verdana, Arial">
+                        <input name="pro" type="checkbox" id="pro" value="S" {chkPro}>
+                        Contrato<br>
+                        <input name="t" type="checkbox" id="t" value="P" {chkResumida}> 
+                        </font></strong><font size="2" face="Tahoma, Verdana, Arial">Resumido</font></td>
+                     <td valign="top" nowrap><strong><font size="2" face="Tahoma, Verdana, Arial">
+                        <input name="dem" type="checkbox" id="dem" value="S" {chkDem}>
+                        Demonstrativo </font></strong></td>
+                     <td valign="top" nowrap><strong><font size="2" face="Tahoma, Verdana, Arial">
+                        <input name="np" type="checkbox" id="np" value="S" {chkNP}>
+Nota Promiss&oacute;ria </font></strong></td>
+                     <td valign="middle" nowrap><div align="center">
+                        <input type="submit" name="Submit" value="Imprimir" style="width:80px;height:40px;font-weight:bold;">
+                     </div></td>
+                  </tr>
+               </table></td>
+          </tr>
+          <tr style="display:none;">  
+            <td bgcolor="#F0F0F0"><div align="center" class="style3">Impress&atilde;o
+                  Direta </div></td>
+          </tr>
+          <tr style="display:none;"> 
+            <td bgcolor="#F0F0F0"><div align="center">
+               <input type="button" name="Submit2" value="Contrato Resumido" onClick="imprime('CR');" style="width:130px;">
+               <input type="button" name="Submit3" value="Contrato Completo" onClick="imprime('CC');" style="width:130px;">
+               <input type="button" name="Submit4" value="Demonstrativo" onClick="imprime('DEM');" style="width:130px;">
+               <input type="button" name="Submit5" value="Nota Promiss&oacute;ria" onClick="imprime('NP');" style="width:130px;">
+            </div>
+			</td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

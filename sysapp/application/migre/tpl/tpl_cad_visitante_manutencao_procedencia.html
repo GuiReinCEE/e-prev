@@ -1,0 +1,153 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+
+	#aba
+	{
+		width:100%;
+	}
+	.aba_definicao 
+	{
+		width:98%;
+	}
+	.aba_conteudo
+	{
+		width:98%;
+	}
+
+</style>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+	function filtrar_Click(){
+		f = document.form1;
+		f.action = "cad_visitante_manutencao_procedencia.php";
+		f.submit();		
+	}
+
+	function changeField( objSource, objChanged )
+	{
+		if ( objSource.defaultValue!=objSource.value ) {
+			
+			objChanged.value = "s";
+			
+		}
+		else{
+		
+			objChanged.value = "";
+			
+		}
+	}
+	
+	function valida_form(f) {
+	
+		f.action = "grava_visitante_origem.php";
+		f.submit();
+	}
+	
+	function fnc_onload() 
+	{
+		// do nothing 
+	}
+//-->
+</script>
+
+
+	    <!-- CADASTRO -->
+	    <table width="100%" border="0" cellpadding="0" cellspacing="1">
+
+		<!-- START BLOCK : cadastro -->
+		<tr valign="top">
+		<td>
+
+		  	<form name="form1" id="form1" method="post">
+<br>
+			<table border="0" align="center" cellpadding="0" cellspacing="1">
+
+				<tr>
+				<td>
+					<table align="center">
+						<tr bgcolor="{cor_fundo2}">
+							<td><b>Filtro:</b></td>
+						</tr>
+						<tr>
+							<td>
+								<table>
+									<tr>
+									<td class="texto1"><b>Tipo:</b></td>
+									<td><input type="text" name="filtro_ds_tipo" id="filtro_ds_tipo" value="{filtro_ds_tipo}" /></td>
+									</tr>
+									<tr>
+									<td class="texto1"><b>Procedência:</b></td>
+									<td><input type="text" name="filtro_ds_origem" id="filtro_ds_origem" value="{filtro_ds_origem}" /></td>
+									<td><input type="button" name="filtrar" id="filtrar" value="OK" onclick="filtrar_Click()" /></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				</tr>
+				
+				<tr bgcolor="{cor_fundo2}">
+					<td><span><b>Origem:</b></span></td>
+				</tr>
+
+				<tr>
+			  		<td>
+
+			  			<center>
+				  			<table>
+							<!-- START BLOCK : origens -->
+					  			<tr>
+						  			<td class="texto1"><b>{ordem}.</b></td>
+						  			<td class="texto1">
+
+								  		<input name="cd_visitante[]"
+								  			id="cd_visitante_{index}"
+								  			type="hidden"
+								  			value="{cd_visitante}"
+								  			/>
+								  		<input name="ds_origem[]"
+									  		id="ds_origem_{index}" 
+									  		type="text"
+									  		value="{ds_origem}"
+									  		size="77"
+									  		onchange="changeField( this, document.getElementById('changed_{index}') );"
+									  		/>
+								  		<input name="changed[]"
+								  			id="changed_{index}"
+								  			type="hidden"
+								  			value=""
+								  			/> {ocorrencias}
+
+						  			</td>
+					  			</tr>
+							<!-- END BLOCK : origens -->
+				  			</table>
+				  		</center>
+
+			  		</td>
+				</tr>
+
+				<tr><td><center>
+					<input class='botao' type="button" name="Submit" value="Salvar" onclick="valida_form( document.form1 )" style="width:200px;" />
+				</center></td></tr>
+
+			</table>
+
+			</form>
+
+		</td>
+		</tr>
+		<!-- END BLOCK : cadastro -->
+
+	    </table>
+	    <!-- FIM DE: CADASTRO -->
+
+<!-- INCLUDE BLOCK : footer.html -->

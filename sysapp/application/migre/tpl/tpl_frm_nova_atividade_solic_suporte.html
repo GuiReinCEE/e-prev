@@ -1,0 +1,171 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Solicitação' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+//-->
+</script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function monta_complemento(c) {
+	alert(c.value);
+}
+//-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function link1(f) {
+	alert(f.complemento.value);
+}
+//-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function link2(f,a) {
+	location='conclui_atividade.php?AT='+a+'&c={numero_os}&cp='+f.complemento.value;
+}
+//-->
+</script>
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_solicitacao' class='abaSelecionada'"><span>Solicitação</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+      <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td> 
+            <form action="grava_atividade_solic.php" method="POST" onSubmit="return valida_form(this);" name="formulario">
+                <input type="hidden" name="n" value="{n}">
+                <input type="hidden" name="aa" value="{aa}">
+                <input type="hidden" name="status_anterior" value="{status_anterior}">
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td colspan="2"><table border="0" align="center" cellpadding="0" cellspacing="1">
+                      <tr>
+                        <td><font size="1" face="Verdana">Número: {numero_os}</font></td>
+                        <td colspan="2"> <p align="left"><font size="1" face="Verdana">Data Solicita&ccedil;&atilde;o: {dt_cad}</font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Solicitante:</font></td>
+                        <td><font size="1" face="Verdana">&nbsp; </font><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_solicitante" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC" {ro_solic}>
+                            <!-- START BLOCK : cbo_solicitante -->
+                            <option value="{codsol}"{chksol}>{nomesol}</option>
+                            <!-- END BLOCK : cbo_solicitante -->
+                          </select>
+                          </font></td>
+                        <td><div align="right"> 
+                            <p><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a></p><br />
+                            <table border="0" cellpadding="0" cellspacing="0">
+                              <tr> 
+                                <td><div align="center"><em><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif">{status_atual}</font></em></div></td>
+                              </tr>
+                            </table>
+                            <p><strong><em></em></strong></p>
+                          </div></td>
+                      </tr>
+						<tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                          da atividade:</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <select name="cbo_periodicidade" id="cbo_periodicidade">
+                            <!-- START BLOCK : cbo_tipo_atividade -->
+                            <option value="{codtpativ}"{chktpativ}>{nometpativ}</option>
+                            <!-- END BLOCK : cbo_tipo_atividade -->
+                          </select>
+                          </font> </td>
+                      </tr>	
+						<tr style="display:{fl_recorrente_exibe}"> 
+							<td>
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Recorrente:</font>
+							</td>
+							<td colspan="2">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+									<select name="cbo_recorrente" id="cbo_recorrente"  {ro_solic} style="width:100px;">
+		                            <!-- START BLOCK : cbo_recorrente -->
+		                            <option value="{cd_recorrente}" {fl_seleciona}>{ds_recorrente}</option>
+		                            <!-- END BLOCK : cbo_recorrente -->
+									</select>
+									Informe se esta situação já ocorreu antes
+								</font>
+							</td>
+						</tr>					  
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Descrição 
+                          da Solicitação:</font></td>
+                        <td colspan="2"> <font size="1" face="Verdana"> 
+                          <textarea rows="10" name="txt_descricao" cols="60" >{descricao}</textarea>
+                          </font> </td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Atendente 
+                          da Atividade:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_analista"  {ro_solic}>
+                            <!-- START BLOCK : cbo_analista -->
+                            <option value="{codana}" {chkana}>{nomeana}</option>
+                            <!-- END BLOCK : cbo_analista -->
+                          </select>
+                          </font></td>
+                        <td><font size="1" face="Verdana">Indique para quem voc&ecirc; 
+                          <br>
+                          vai encaminhar esta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+                    </table></td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr> 
+                  <td colspan="2"><div align="center" style='margin-top:30px;'> 
+                      <input class='botao' type="submit" value="OK" name="B1">
+                      <input class='botao' type="reset" value="Cancelar" name="B2">
+                      </div></td>
+                  <td>&nbsp;</td>
+                </tr>
+                
+              </table>
+            </form>
+            </div>
+            </td>
+        </tr>
+      </table>
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+
+<!-- Begin: Insert DYNTAR -->
+<link rel="stylesheet" href="inc/dynamic_textarea_resizer/dyntar.css" type="text/css" />
+<script type="text/javascript" src="inc/dynamic_textarea_resizer/dyntar.js"></script>
+<!-- End: Insert DYNTAR -->	
+
+
+<!-- INCLUDE BLOCK : footer.html -->

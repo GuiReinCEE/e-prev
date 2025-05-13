@@ -1,0 +1,39 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Posições das assinaturas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right"><a href="cad_tipo_doc_assinatura.php?op=I"><img src="img/btn_novo_registro.jpg" border="0"></a> 
+        </div>
+      </blockquote>
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#0046ad"> 
+                <td colspan="2"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Documento</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">eixo 
+                  x </font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">eixo 
+                  y </font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">altura</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">largura</font></strong></td>
+              </tr>
+              <!-- START BLOCK : documento -->
+              <tr> 
+                <td height="21" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{codigo}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_tipo_doc_assinatura.php?op=A&c={codigo}">{nome_doc}</a></font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{x}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{y}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{altura}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{largura}</font></td>
+              </tr>
+              <!-- END BLOCK : documento -->
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

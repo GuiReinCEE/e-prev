@@ -1,0 +1,124 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Controle de visitantes ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+
+	#aba
+	{
+		width:100%;
+	}
+	.aba_definicao 
+	{
+		width:98%;
+	}
+	.aba_conteudo
+	{
+		width:98%;
+	}
+
+</style>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+	function changeField( objSource, objChanged )
+	{
+		if ( objSource.defaultValue!=objSource.value )
+		{
+			
+			objChanged.value = "s";
+			
+		}
+		else
+		{
+		
+			objChanged.value = "";
+			
+		}
+	}
+	
+	function valida_form(f) {
+	
+		var erros = "";
+		f.action = "grava_visitante_destino.php";
+		f.submit();
+	}
+	
+	function fnc_onload() 
+	{
+	}
+//-->
+</script>
+</head>
+
+	    <!-- CADASTRO -->
+	    <table width="100%" border="0" cellpadding="0" cellspacing="1">
+
+		<!-- START BLOCK : cadastro -->
+		<tr valign="top">
+		<td>
+
+		  	<form name="form1" id="form1" method="post">
+			<br>
+			<table border="0" align="center" cellpadding="0" cellspacing="1">
+
+				<tr bgcolor="{cor_fundo2}">
+					<td><span><b>Destino:</b></span></td>
+				</tr>
+
+				<tr>
+			  		<td>
+
+			  			<center>
+				  			<table>
+							<!-- START BLOCK : destinos -->
+					  			<tr>
+						  			<td class="texto1"><b>{ordem}.</b></td>
+						  			<td class="texto1">
+
+								  		<input name="cd_visitante[]"
+								  			id="cd_visitante_{index}"
+								  			type="hidden"
+								  			value="{cd_visitante}"
+								  			/>
+								  		<input name="ds_destino[]"
+									  		id="ds_destino_{index}" 
+									  		type="text"
+									  		value="{ds_destino}"
+									  		size="77"
+									  		onchange="changeField( this, document.getElementById('changed_{index}') );"
+									  		/>
+								  		<input name="changed[]"
+								  			id="changed_{index}"
+								  			type="hidden"
+								  			value=""
+								  			/> {ocorrencias}
+
+						  			</td>
+					  			</tr>
+							<!-- END BLOCK : destinos -->
+				  			</table>
+				  		</center>
+
+			  		</td>
+				</tr>
+
+				<tr><td><center>
+					<input class='botao' type="button" name="Submit" value="Salvar" onclick="valida_form( document.form1 )" style="width:200px;" />
+				</center></td></tr>
+
+			</table>
+
+			</form>
+
+		</td>
+		</tr>
+		<!-- END BLOCK : cadastro -->
+
+	    </table>
+	    <!-- FIM DE: CADASTRO -->
+
+<!-- INCLUDE BLOCK : footer.html -->

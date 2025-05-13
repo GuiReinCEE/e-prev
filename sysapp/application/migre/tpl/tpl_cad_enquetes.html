@@ -1,0 +1,510 @@
+<html><!-- InstanceBegin template="/Templates/menu_projetos.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>..:: e-prev :: Enquetes ::..</title>
+<script src="inc/pck_funcoes.js"></script>
+<script src="inc/mascara.js"></script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function win_graf(e,p) {
+	w = window.open("graf_pizza_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=no,resizable=no,width=580,height=300");
+}
+function win_coment(e,p) {
+	w = window.open("comentario_resp_enquete.php?cd_enquete="+e+"&cd_questao="+p, "wg1", "menubar=no,location=no,scrollbars=yes,resizable=yes,width=500,height=330");
+}
+function fnc_confirma_exclusao(f) {
+	var confirma = confirm("Confirma a exclusão deste grupo de respostas?? ATENÇÃO: Esta ação é irreversível !!!!");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_agenda(f) {
+	var confirma = confirm("Confirma a marcação desta pesquisa na agenda do Outlook de toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+function fnc_confirma_envio_emails(f) {
+	var confirma = confirm("Confirma o envio dos emails para toda a empresa??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+//-->
+</SCRIPT>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Fireworks MX Dreamweaver MX target.  Created Mon Apr 21 18:21:40 GMT-0300 (Hora padrão leste da Am. Sul) 2003-->
+<!-- ==================== Galeria de estilos ========================================== --> 
+<link href="main.css" rel="stylesheet" type="text/css">
+<!-- ==================== Scripts Java ================================================ --> 
+<script language="JavaScript" type="text/JavaScript" src="inc/menu_principal.js"></script>
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+function pre_carga_imagens() {
+<!-- INCLUDE BLOCK : inc/menu_geral1.tpl -->
+}
+</script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<!-- ==================== Corpo da Tela ==================================================== -->
+<body bgcolor="{bgcolor}" background="{c_skin}{img_fundo_pagina}" text="{text}" link="{link}" vlink="{vlink}" alink="{alink}" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="pre_carga_imagens(); chama_fnc_onload();" onbeforeunload='saida_direta(); return confirma_saida();'>
+<!-- ==================== Menus de primeiro nível ========================================================== --> 
+<!-- INCLUDE BLOCK : inc/menu_geral2.tpl -->
+<!-- ==================== Área livre ======================================================================= --> 
+<!-- INCLUDE BLOCK : inc/menu_geral3.tpl -->
+<!-- ==================== Camadas sobrepostas ============================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral4_camadas_sobrepostas.tpl -->
+<!-- ==================== Menu Principal =================================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral5_menu_principal.tpl -->
+<!-- -------------------- Mensagem individual por tela ----------------------------------------------------------------------------------- -->
+<div id="mensagem_tela" style="position:absolute; width:{larg_msgt}px; height:{alt_msgt}px; z-index:1; left: {pos_msgt}px; top: {top_msgt}px;">
+	<!-- InstanceBeginEditable name="mensagem_tela" -->{mensagem_tela}<!-- InstanceEndEditable -->
+</div>  
+<!-- -------------------- Versão e usuário atual ----------------------------------------------------------------------------------- -->
+<div id="versao" style="position:absolute; width:277px; height:28px; z-index:1; left: {pos_usuario}px; top: {top_usuario}px; visibility: {visibilidade_usuario};"><span class="{classe_usuario}">Versão 2006.7 - </span><a href="cad_recurso_workspace.php" class="{classe_usuario}" title="{dt_login}{dt_scanner}"><!-- InstanceBeginEditable name="usuario" -->{usuario} - {divsao}<!-- InstanceEndEditable --></a><br>
+</div>  
+<!-- ==================== Área principal da tela =========================================================== -->	
+<table border="0" cellpadding="0" cellspacing="0" width="{largura_tela}">
+  <!--DWLayoutTable-->
+  <!-- fwtable fwsrc="layout abertura_compacta.png" fwbase="default.jpg" fwstyle="Dreamweaver" fwdocid = "742308039" fwnested="0" -->
+  <tr> 
+    <td background="{c_menu}{img_fundo_sup}" bgcolor="{cor_sup_banner}" height="{altura_sup_banner}"><a href="http://www.e-prev.com.br/controle_projetos/index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image01','','{c_menu}logo_swap.gif',1)"><img src="{c_menu}logo.gif" alt="Página inicial" name="Image01" border="0" hspace="{espaco_superior}" vspace="{espaco_vertical}" {largura_banner}{altura_banner}></a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="{cor_fundo_banner}" background="{c_menu}img_fundo_banner.jpg" height="{altura_banner}" class="{classe_banner}"><!-- InstanceBeginEditable name="imagem" --><img src="{c_banner}banner_enquetes.jpg" {largura_banner}{altura_banner} alt="Pesquisa"><!-- InstanceEndEditable --></td>
+  </tr>
+  <tr> 
+    <td height="{altura_inf_banner}" colspan="2" bgcolor="{cor_inf_banner}" background="{c_menu}{img_fundo_menu}"><img src="{c_menu}img_inicial_menu.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+  </tr>
+  <tr> 
+    <td height="{alt_menu_principal}" valign="top" background="{c_menu}img_fundo_menu3.jpg" bgcolor="{cor_inf_banner}"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" {largura_banner}{altura_banner}>
+        <tr> 
+          <td {largura_banner}{altura_banner}><img src="{c_menu}img_paragrafo_skin.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td height="38" colspan="2"> <!-- InstanceBeginEditable name="conteudo" -->
+      <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td class="titulo_vermelho" align="center"><!--<img src="img/Construcao_homem_avisando.gif">Página em manutenção -->
+            <!-- START BLOCK : mensagem -->
+            <div class="titulo_vermelho">{msg}</div>
+            <!-- END BLOCK : mensagem -->
+            <!-- START BLOCK : cadastro -->
+            <form name="form1" method="post" action="grava_enquete.php">
+              <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Título 
+                    Enquete:</font></td>
+                  <td align="center"> <span class="titulo_verde">{codigo}</span></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="titulo" type="text" id="titulo2" value="{titulo}" size="55" {ro_responsavel}>
+                    </font></td>
+                  <td nowrap align="center" bgcolor="{cor_fundo2}"><a href="envia_email_pesquisa.php?num_pesquisa={codigo}" onClick="return fnc_confirma_envio_emails(this)"><img src="img/btn_encaminhar_grupo.jpg" border="0"></a><a href="cad_email_marketing.php?op=I&pesq={codigo}"><img src="img/btn_outlook.jpg" border="0"></a> 
+                  </td>
+                  <td nowrap align="right"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a> 
+                    <input name="image" type="image" src="img/btn_salvar.jpg" border="0"> 
+                    <a href="resp_enquetes_capa.php?c={codigo}"><img src="img/btn_view.jpg" border="0"></a><a href="exclui_enquete.php?c={codigo}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Site:</font></td>
+                  <td rowspan="4" align="center" valign="middle" class="texto1">} 
+                    ou {</td>
+                  <td> <select size="1" name="site" {dis_responsavel}>
+                      <!-- START BLOCK : site -->
+                      <option value="{cd_site}" {chk_site}>{nome_site}</option>
+                      <!-- END BLOCK : site -->
+                    </select> </td>
+                  <td colspan="3" align="right" valign="top" class="texto1"><a href="lst_sites.php" class="links2">&raquo;Cadastro 
+                    de sites</a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Evento:</td>
+                  <td><select size="1" name="evento" {dis_responsavel}>
+                      <!-- START BLOCK : evento -->
+                      <option value="{cd_evento}" {chk_evento}>{nome_evento}</option>
+                      <!-- END BLOCK : evento -->
+                    </select></td>
+                  <td colspan="3" align="right" valign="top" class="texto1"><a href="lst_eventos_institucionais.php" class="links2">&raquo;Cadastro 
+                    de eventos</a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Publica&ccedil;&atilde;o:</td>
+                  <td><select size="1" name="publicacao" {dis_responsavel}>
+                      <!-- START BLOCK : publicacao -->
+                      <option value="{cd_publicacao}" {chk_publicacao}>{nome_publicacao}</option>
+                      <!-- END BLOCK : publicacao -->
+                    </select></td>
+                  <td colspan="3" align="right" valign="top" class="texto1"><a href="lst_publicacoes.php" class="links2">&raquo;Cadastro 
+                    de publica&ccedil;&otilde;es</a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Servi&ccedil;o:</td>
+                  <td><select size="1" name="servico" {dis_responsavel}>
+                      <!-- START BLOCK : servico -->
+                      <option value="{cd_servico}" {chk_servico}>{nome_servico}</option>
+                      <!-- END BLOCK : servico -->
+                    </select></td>
+                  <td colspan="3" align="right" valign="top" class="texto1"><a href="lst_servicos.php" class="links2">&raquo;Cadastro 
+                    de servi&ccedil;os</a></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" class="texto1">Controle de preenchimento:</td>
+                  <td class="texto1"><input name="opc_preenchimento" type="radio" value="I" {chk_ip}  {dis_responsavel}>
+                    Por computador (IP)<br> <input name="opc_preenchimento" type="radio" value="U" {chk_usuario} {dis_responsavel}>
+                    Por usu&aacute;rio de rede<br> <input name="opc_preenchimento" type="radio" value="F" {chk_formulario} {dis_responsavel}>
+                    Por formul&aacute;rio<br> <input name="opc_preenchimento" type="radio" value="P" {chk_participante} {dis_responsavel}>
+                    Por participante</td>
+                  <td rowspan="6" align="right" valign="top" class="texto1">Banner:</td>
+                  <td colspan="2" rowspan="6" align="right" valign="top" class="texto1">{imagem}</td>
+                </tr>
+                      <tr bgcolor="{cor_fundo1}"> 
+                        <td colspan="2">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Início (Data - Hora):
+							</font>
+						</td>
+                        <td> 
+							<input name="dt_inicio" type="text" id="dt_inicio"  value="{dt_inicio}"  {ro_responsavel} onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10" size="10">
+							-
+							<input name="hr_inicio" type="text" id="hr_inicio"  value="{hr_inicio}"  {ro_responsavel} onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5" size="5">
+						</td>
+                      </tr>
+                      <tr bgcolor="{cor_fundo1}"> 
+                        <td colspan="2">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Fim (Data - Hora):
+							</font>
+						</td>
+                        <td>
+							<input name="dt_fim" type="text" id="dt_fim" value="{dt_fim}" {ro_responsavel} onfocus="this.select();" OnKeyDown="mascaraData(this,event);" maxlength="10" size="10">
+							-
+							<input name="hr_fim" type="text" id="hr_fim" value="{hr_fim}" {ro_responsavel} onfocus="this.select();" OnBlur="verificaHora(this);" maxlength="5" size="5">							
+						</td>
+                      </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel:</font></td>
+                  <td> <select size="1" name="cbo_responsavel" {dis_responsavel}>
+                      <!-- START BLOCK : responsavel -->
+                      <option value="{cd_responsavel}" {chk_responsavel}>{nome_responsavel}</option>
+                      <!-- END BLOCK : responsavel -->
+                    </select> </td>
+                </tr>
+                     <tr bgcolor="{cor_fundo1}"> 
+                        <td colspan="2">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Público total: 
+							</font>
+						</td>
+                        <td>
+							<input name="nr_publico_total" type="text" id="nr_publico_total"  value="{nr_publico_total}" onblur="if(trimValue(this.value)==''){ this.value = 0; }" size="18" maxlength="18" {ro_responsavel}>
+						</td>
+                      </tr>					
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" class="texto1">Lay-out a ser utilizado:</td>
+                  <td><select size="1" name="sel_layout" {dis_responsavel}>
+                      <!-- START BLOCK : layout -->
+                      <option value="{cd_tipo_layout}" {chk_tipo_layout}>{nome_tipo_layout}</option>
+                      <!-- END BLOCK : layout -->
+                    </select> <a href="#" target="_self" class="links2verde" onmouseover="MM_showHideLayers('div_layout','','show')" onmouseout="MM_showHideLayers('div_layout','','hide')">Saiba 
+                    mais &raquo;</a> </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" class="texto1">Tipo da enquete:</td>
+                  <td><select size="1" name="sel_tipo_enquete" {dis_responsavel}>
+                      <!-- START BLOCK : tipo_enquete -->
+                      <option value="{cd_tipo_enquete}" {chk_tipo_enquete}>{nome_tipo_enquete}</option>
+                      <!-- END BLOCK : tipo_enquete -->
+                    </select> <a href="#" target="_self" class="links2verde" onmouseover="MM_showHideLayers('div_saiba_mais','','show')" onmouseout="MM_showHideLayers('div_saiba_mais','','hide')">Saiba 
+                    mais &raquo;</a> </td>
+                  <div id="div_layout" style="position:absolute; width:350px; height:180px; z-index:2; left: 400px; background-color:C7C7C7; top: 230px; visibility: hidden;" onmouseover="MM_showHideLayers('div_layout','','show')" onMouseOut="MM_showHideLayers('div_layout','','hide')" class="links2grafite"> 
+                    <img src="img/img_saiba_mais.jpg" alt="&nbsp;&raquo;&nbsp;Saiba Mais">	
+                    <div id="div_layout_int" style="position:absolute; width:346px; height:150px; z-index:1; background-color:F5F5F5; left: 2px; top: 28px;" > 
+                      LAYOUT:<br>
+                      Se for em um site, provavelmente seguirá o layout deste 
+                      site.<br>
+                      Caso não seja específico para um site, provavelmente seguirá 
+                      o layout do e-prev. </div>
+                  </div>
+                  <div id="div_saiba_mais" style="position:absolute; width:350px; height:190px; z-index:2; left: 400px; background-color:C7C7C7; top: 250px; visibility: hidden;" onmouseover="MM_showHideLayers('div_saiba_mais','','show')" onMouseOut="MM_showHideLayers('div_saiba_mais','','hide')" class="links2grafite"> 
+                    <img src="img/img_saiba_mais.jpg" alt="&nbsp;&raquo;&nbsp;Saiba Mais">	
+                    <div id="div_saiba_mais_int" style="position:absolute; width:346px; height:160px; z-index:1; background-color:F5F5F5; left: 2px; top: 28px;" > 
+                      TIPO DA ENQUETE<BR>
+                      <i>Enquete:</i> Poucas perguntas, respondidas de forma rápida 
+                      como em uma tela de um site na Internet;<br>
+                      <i>Pesquisa:</i> Respostas mais completas realizadas mediante 
+                      alguma reflexão, permitindo explanação detalhada de opiniões;<br>
+                      <i>Eleições:</i> As respostas indicadas apontam para a escolha 
+                      de uma dentre as diversas opiniões disponíveis. </div>
+                  </div>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Texto 
+                    inicial:</font></td>
+                  <td colspan="4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="abertura" cols="77" rows="3" id="abertura" {ro_responsavel}>{abertura}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}">
+                  <td colspan="2" valign="top" class="texto1">Texto de encerramento:</td>
+                  <td colspan="4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+                    <textarea name="encerramento" cols="77" rows="3" id="encerramento" {ro_responsavel}>{encerramento}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Quest&atilde;o 
+                    dissertativa:</font></td>
+                  <td colspan="4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="pergunta_texto" cols="77" rows="3" id="pergunta_texto" {ro_responsavel}>{pergunta_texto}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td colspan="2" valign="top" class="texto1">Agrupamento da Quest&atilde;o 
+                    dissertativa</td>
+                  <td colspan="4" class="texto1"><select name="agrup_diss" {dis_responsavel}>
+                      <!-- START BLOCK : agrup_diss -->
+                      <option value="{cd_agrup_diss}" {sel_agrup_diss}>{nome_agrup_diss}</option>
+                      <!-- END BLOCK : agrup_diss -->
+                    </select>
+                    (obrigatório, se existir questão dissertativa) </td>
+                </tr>
+                <tr> 
+                  <td colspan="6" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr align="center"> 
+                        <td><a href="#ancora_questionamentos" class="links2">Questionamentos</a><span class="links2"> 
+                          | </span><a href="#ancora_agrupamentos" class="links2">Agrupamentos</a><span class="links2"> 
+                          | </span><a href="#ancora_escala" class="links2">Escala</a><span class="links2"> 
+                          | </span><a href="#ancora_resultados" class="links2">Resultados</a><span class="links2"> 
+                          | </span><a href="rel_pesquisa.php?c={codigo}" target="_blank">Relat&oacute;rio 
+                          (PDF)</a></td>
+                      </tr>
+                    </table>
+                    <img src="img/img_divisoria1.gif" width="100%" height="1"></td>
+                </tr>
+              </table>
+            </form>
+			<table width="80%"><tr><td align="center" valign="middle" height="50"><form action="excluir_respostas_pesquisa.php" method="post" name="form_exclui_respostas" id="form_exclui_respostas" onSubmit="return fnc_confirma_exclusao(this)"><input name="cd_enquete" type="hidden" value="{codigo}"><input name="excluir_respostas" type="submit" value="&raquo; Excluir todas as respostas desta enquete &laquo;" {dis_responsavel}></form></td></tr></table>
+			<!-- START BLOCK : componentes_pesquisa -->				  	
+            <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr> 
+                <td colspan="13"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#006633" size="5" face="Arial, Helvetica, sans-serif">Questionamentos:<a name="ancora_questionamentos"></a></font></font></td>
+                      <td align="right"><a href="cad_enquetes_perguntas.php?a=I&eq={codigo}" class="links2">&raquo; 
+                        Nova quest&atilde;o</a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td rowspan="2" bgcolor="#006633" class="cabecalho">Perguntas</td>
+                <td colspan="12" align="center" bgcolor="#006633" class="cabecalho">Respostas poss&iacute;veis:</td>
+              </tr>
+              <tr> 
+                <td bgcolor="#006633" class="cabecalho">1</td>
+                <td bgcolor="#006633" class="cabecalho">2</td>
+                <td bgcolor="#006633" class="cabecalho">3</td>
+                <td bgcolor="#006633" class="cabecalho">4</td>
+                <td bgcolor="#006633" class="cabecalho">5</td>
+                <td bgcolor="#006633" class="cabecalho">6</td>
+                <td bgcolor="#006633" class="cabecalho">7</td>
+                <td bgcolor="#006633" class="cabecalho">8</td>
+                <td bgcolor="#006633" class="cabecalho">9</td>
+                <td bgcolor="#006633" class="cabecalho">10</td>
+                <td bgcolor="#006633" class="cabecalho">11</td>
+                <td bgcolor="#006633" class="cabecalho">12</td>
+              </tr>
+              <!-- START BLOCK : grupo -->
+              <!-- END BLOCK : grupo -->
+              <!-- START BLOCK : pergunta -->
+              <tr> 
+                <td height="18" bgcolor="{cor_fundo}"><a href="cad_enquetes_perguntas.php?c={cd_pergunta}&eq={codigo}" class="links2">{titulo}</a><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{grupo}</strong></font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R1}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R2}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R3}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R4}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R5}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R6}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R7}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R8}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R9}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R10}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R11}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{R12}</font></td>
+              </tr>
+              <!-- END BLOCK : pergunta -->
+            </table>
+            <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr> 
+                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#BFA260" size="5" face="Arial, Helvetica, sans-serif">Agrupamentos:<a name="ancora_agrupamentos"></a></font></font></td>
+                      <td align="right"><a href="cad_enquetes_agrupamentos.php?a=I&eq={codigo}" class="links2">&raquo;
+                        Novo agrupamento</a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#BFA260"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></strong></td>
+              </tr>
+              <!-- START BLOCK : agrupamento -->
+              <tr> 
+                <td height="18" bgcolor="{cor_fundo}"><a href="cad_enquetes_agrupamentos.php?c={cd_agrupamento}&eq={codigo}" class="links2">{nome}</a></td>
+              </tr>
+              <!-- END BLOCK : agrupamento -->
+            </table>
+            <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr> 
+                <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif">Escala 
+                        e gradua&ccedil;&atilde;o:<a name="ancora_escala"></a></font></font></td>
+                      <td align="right"><a href="cad_enquetes_respostas.php?a=I&eq={codigo}" class="links2">&raquo;
+                        Nova resposta</a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#0066CC" class="cabecalho">Respostas poss&iacute;veis:</td>
+                <td bgcolor="#0066CC" class="cabecalho">Ordem</td>
+              </tr>
+              <!-- START BLOCK : resposta -->
+              <tr> 
+                <td height="18" bgcolor="{cor_fundo}"><a href="cad_enquetes_respostas.php?c={cd_resposta}&eq={codigo}" class="links2">{resposta}</a></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{ordem}</font></td>
+              </tr>
+              <!-- END BLOCK : resposta -->
+            </table>
+            <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr> 
+                <td colspan="5"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><font color="#990000" size="5" face="Arial, Helvetica, sans-serif">Resultados:</font><font color="#0066CC" size="5" face="Arial, Helvetica, sans-serif"><a name="ancora_resultados"></a></font></font></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td colspan="4" bgcolor="#990000" class="cabecalho">Item:</td>
+                <td bgcolor="#990000" class="cabecalho">Valor:</td>
+              </tr>
+              <!-- START BLOCK : resultados_obtidos -->
+              <tr bgcolor="#E7DECF"> 
+                <td colspan="4" class="texto2">Número de respondentes:</td>
+                <td class="texto2">{respondentes}</td>
+              </tr>
+              <tr bgcolor="#E7DECF"> 
+                <td colspan="4" class="texto2">M&eacute;dia geral entre todos 
+                  os agrupamentos, trazidos &agrave; base 10 / n&uacute;m. agrupamentos: 
+                  ({cont_agrup})</td>
+                <td class="texto2">{media}</td>
+              </tr>
+              <tr bgcolor="#E7DECF"> 
+                <td colspan="4" class="texto2">M&eacute;dia geral entre agrupamentos 
+                  de respostas({med_agrup}) e percep&ccedil;&atilde;o da &aacute;rea 
+                  ({percep})</td>
+                <td class="texto2">{media2}</td>
+              </tr>
+              <tr align="center" bgcolor="#E7DECF"> 
+                <td colspan="5" class="texto2"><a href="lst_respostas.php?cd_enquete={codigo}" class="links2vermelho">&raquo;&nbsp;&nbsp;Ver 
+                  todas as respostas&nbsp;&nbsp;&laquo;</a></td>
+              </tr>
+              <tr bgcolor="#FF3333"> 
+                <td colspan="4" class="cabecalho">Resultado por agrupamento:</td>
+                <td class="cabecalho">Valor:</td>
+              </tr>
+              <!-- END BLOCK : resultados_obtidos -->
+              <!-- START BLOCK : resultado_agrupamento -->
+              <tr> 
+                <td height="18" colspan="4" bgcolor="{cor_fundo}" class="texto1">{agrupamento}</td>
+                <td height="18" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{media_grupo}</font></td>
+              </tr>
+              <!-- END BLOCK : resultado_agrupamento -->
+              <!-- START BLOCK : questoes_optativas -->
+              <tr bgcolor="#FF6633"> 
+                <td class="cabecalho"><a name="Resultados"></a>Resultados por quest&otilde;es:</td>
+                <td align="center" class="cabecalho">Gráfico</td>
+                <td align="center" class="cabecalho">Coment&aacute;rios</td>
+                <td class="cabecalho">Soma</td>
+                <td class="cabecalho">M&eacute;dia</td>
+              </tr>
+              <!-- START BLOCK : texto_questao -->
+              <tr> 
+                <td height="18" bgcolor="{cor_fundo}" class="texto1">{texto_questao}</td>
+                <td bgcolor="{cor_fundo}" class="texto1" align="center"><a href="#Resultados" onClick="win_graf({codigo},{cd_pergunta});" class="links2verde">&raquo;Pizza</a></td>
+                <td bgcolor="{cor_fundo}" class="texto1" align="center"><a href="#Resultados" onClick="win_coment({codigo},{cd_pergunta});" class="links2azul">&raquo;Ver</a></td>
+                <td bgcolor="{cor_fundo}" class="texto1">{soma_questao}</td>
+                <td height="18" bgcolor="{cor_fundo}" class="texto1">{media_questao}</td>
+              </tr>
+              <!-- END BLOCK : texto_questao -->
+              <!-- END BLOCK : questoes_optativas -->
+              <!-- START BLOCK : questoes_dissertativas -->
+              <tr bgcolor="#FF9933"> 
+                <td height="18" colspan="5" class="cabecalho">Cr&iacute;ticas e coment&aacute;rios:</td>
+              </tr>
+              <!-- START BLOCK : texto_resp -->
+              <tr> 
+                <td height="18" colspan="5" bgcolor="{cor_fundo}" class="texto1">{texto_resp}</td>
+              </tr>
+              <!-- END BLOCK : texto_resp -->
+              <!-- END BLOCK : questoes_dissertativas -->
+              <tr bgcolor="#FF9999"> 
+                <td height="18" colspan="4" class="cabecalho">Publicar em:</td>
+                <td height="18" class="cabecalho"><a href="rel_pesquisa.php?c={codigo}" target="_blank">Relat&oacute;rio 
+                  (PDF)</a></td>
+              </tr>
+              <!-- START BLOCK : resultado -->
+              <tr> 
+                <td height="18" colspan="5" bgcolor="{cor_fundo}"><a href="cad_enquetes_respostas.php?c={cd_resposta}&eq={codigo}" class="links2">{resultado}</a></td>
+              </tr>
+              <!-- END BLOCK : resultado -->
+            </table>
+			<!-- END BLOCK : componentes_pesquisa -->
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+			  <script>
+				MaskInput(document.getElementById('nr_publico_total'), "999999999");
+				MaskInput(document.getElementById('dt_inicio'),        "99/99/9999");
+				MaskInput(document.getElementById('hr_inicio'),        "99:99");
+				MaskInput(document.getElementById('dt_fim'),           "99/99/9999");
+				MaskInput(document.getElementById('hr_fim'),           "99:99");
+				
+			  </script>
+<!-- InstanceEndEditable --> 
+    </td>
+  </tr>
+</table>
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>

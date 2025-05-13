@@ -1,0 +1,65 @@
+<?php
+class e_usuarios_controledi extends Entity
+{
+    public $codigo;
+    public $usuario;
+    public $senha;
+    public $nome;
+    public $tipo;
+    public $divisao;
+    public $observacao;
+    public $formato_mensagem;
+    public $e_mail_alternativo;
+    public $indic_01;
+    public $indic_02;
+    public $indic_03;
+    public $indic_04;
+    public $indic_05;
+    public $indic_06;
+    public $indic_07;
+    public $indic_08;
+    public $indic_09;
+    public $indic_10;
+    public $indic_11;
+    public $indic_12;
+    public $guerra;
+    public $voto;
+    public $cd_registro_empregado;
+    public $dt_troca_senha;
+    public $aeletro;
+    public $cd_patrocinadora;
+    public $skin;
+    public $diretoria;
+    public $locacao;
+    public $cidade;
+    public $opt_tarefas;
+    public $opt_workspace;
+    public $cd_cargo;
+    public $usu_email;
+    public $opt_dicas;
+    public $opt_interatividade;
+    public $tela_inicial;
+    public $estacao_trabalho;
+    public $favorito2;
+    public $favorito3;
+    public $favorito4;
+    public $favorito5;
+    public $dt_hora_confirmacao;
+    public $dt_hora_scanner_computador;
+    public $indic_msg;
+    public $texto_msg;
+    public $dash1;
+    public $dash2;
+    public $dash3;
+    public $dash4;
+    public $dash5;
+    public $dt_ult_login;
+    public $resolucao_video;
+    public $dash6;
+    public $dash7;
+    public $np_computador;
+    public $ultima_resposta_vida;
+    public $chamada_web;
+    public $senha_md5;
+}
+?>

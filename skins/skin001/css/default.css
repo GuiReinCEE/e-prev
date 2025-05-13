@@ -1,0 +1,247 @@
+@CHARSET "ISO-8859-1";
+
+body
+{
+	font-family: Arial, Verdana;
+	font-size: 10pt;
+}
+
+a
+{
+	font-family: Arial, Verdana;
+	font-size: 12px;
+	font-style: normal;
+	color: #000000;
+	font-weight: normal;
+	text-decoration:none;
+}
+a:hover
+{
+	text-decoration:underline;
+}
+
+.botao
+{
+	border: 1px solid #6FAE6F;
+	font-family: Arial, Verdana;
+	font-size: 10pt;
+	color: #000000;
+	background: url(../img/btn_bg.gif) #ecf4ec;
+	font-weight: bold;
+	vertical-align: middle;
+	/*height:25px;*/
+}
+
+.botao_disabled
+{
+	border: 1px solid #c1c1c1;
+	font-family: Arial, Verdana;
+	font-size: 10pt;
+	color: #000000;
+	font-weight: bold;
+	vertical-align: middle;
+	background: url(../img/bgBtnGray.gif) #f0f0f0;
+}
+
+.path-bar
+{
+	font-family:Arial, Verdana;
+	font-size:10pt;
+	border-bottom: dashed 1px #6FAE6F;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+.command-bar
+{
+	text-align:center;
+	background:white;
+}
+
+.filter-bar
+{
+	border-top: dashed 1px #6FAE6F;
+	text-align:center;
+	background:#D0D0D0;
+}
+.pagination-bar-top
+{
+	border-top: dashed 1px #6FAE6F;
+	text-align:center;
+	background:#EEEEEE;
+}
+.pagination-bar-bottom
+{
+	border-bottom: dashed 1px #6FAE6F;
+	text-align:center;
+	background:#EEEEEE;
+}
+
+#logindiv
+{
+	border-width:1px;
+	border-style:dashed;
+	background-color:#EEEEEE;
+	width:210px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}
+.home-modules
+{
+	border-width:1px;
+	border-style:dashed;
+	background-color:#EEEEEE;
+	width:210px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}
+
+.rodape
+{
+	/*background:url(../img/rodape.gif);*/
+	width:100%;
+	height:20px;
+}
+
+#conteudo
+{
+	width:100%;
+}
+
+#general
+{
+	background:#FFFFFF;
+	width:100%;
+		min-height:400px;
+}
+
+#login
+{
+	background:#ffffff;
+	width:500px;
+	border-width:1px;
+	border-style:solid;
+	/*height:170px;*/
+}
+
+#login input
+{
+	border-width:1px;
+	border-style:solid;
+	border-color:black;
+	/*height:170px;*/
+}
+
+.workspace-link-normal
+{
+	font-family: Arial, Verdana;
+	font-size: 10px;
+	font-style: normal;
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 20px;
+}
+
+.workspace-link-normal:hover
+{
+	text-decoration: underline;
+}
+
+.workspace-link-vermelho
+{
+	font-family: Arial, Verdana;
+	font-size: 10px;
+	font-style: normal;
+	color: #FF0000;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 20px;
+}
+.workspace-link-vermelho:hover
+{
+	text-decoration: underline;
+}
+
+.box
+{
+	font-size:normal;
+	font-weight: bold;
+	border:1px solid black;
+	margin:10 10 10 10;
+}
+
+/*.box .content label
+{
+	display: inline-block;
+	width:100px;
+	font-size: small;
+	font-weight: normal;
+}*/
+
+.box .title
+{
+	font-size:115%;
+	background:#eeeeee;
+	padding:10 10 10 10;
+	font-weight: bold;
+}
+
+.title
+{
+	background:#eeeeee;
+	padding:10 10 10 10;
+	font-weight: bold;
+}
+
+.content
+{
+	background:white;
+	padding:10 10 10 10;
+	font-weight: normal;
+}
+
+.message
+{
+	background:white;
+	padding:10 10 10 10;
+	font-weight: normal;
+}
+
+.simple-list{
+	font-family:Arial, Verdana;
+	font-size:small;
+}
+
+.simple-list div{
+	border-bottom-style:dashed;
+	border-bottom-width:1;
+	padding:3;
+}
+.simple-list div .name{
+	display: inline-block;
+	width:300px;
+}
+.simple-list div a{
+	text-decoration: underline;
+	color:red;
+	font-weight: bold;	
+}
+
+.coluna-padrao-form
+{
+	text-align:right;
+	font-family:Arial;
+	font-size:12px;
+	padding-right:5;
+	white-space:nowrap;
+	width:100px;
+}
+
+.label-padrao-form
+{
+	text-align:right;
+	font-family:arial;
+	font-size:12px;
+	white-space:nowrap;
+}

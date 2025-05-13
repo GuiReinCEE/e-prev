@@ -1,0 +1,86 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Recebimento de etiquetas manual ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.cbo_tabela.value == '') { erros = erros + "- Tabela deve ser selecionada.\n"; }
+	
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+//-->
+</script>
+<script language="JavaScript" type="text/javascript">
+function fnc_val_et(numero)
+{
+	if (numero.value.length == 19)
+	{
+		w = window.open("etiqueta.php?r="+numero.value+"&h=", "wskin2", "menubar=no,location=no,scrollbars=no,resizable=no,width=500,height=300");
+		num_etiqueta.value = '';
+		num_etiqueta.focus();
+		num_etiqueta.select();
+	}
+}; 
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+                   
+            <table border="0" align="center" cellpadding="1" cellspacing="1">
+              <tr> 
+                <td colspan="2"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Informe 
+                  abaixo a Empresa e o Re do Participante e clique em &quot;Confirma&quot;:</font></td>
+              </tr>
+              <tr> 
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa:</font></td>
+                <td> <select name="emp" size="1" id="emp">
+                    <option value="/">&nbsp;</option>
+                    <option value="0">CEEE </option>
+                    <option value="3">CGTEE</option>
+                    <option value="2">AES Sul</option>
+                    <option value="1">RGE</option>
+                    <option value="6">CRM</option>
+                    <option value="7">SENGE</option>
+                    <option value="9">Fund. CEEE</option>
+                  </select></td>
+              </tr>
+              <tr> 
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Red/seq:</font></td>
+                <td><input type="text" maxlength="16" size="16" id="re" name="re" />&nbsp;/&nbsp;
+                  <input name="seq" type="text" id="seq" value="0" size="4" maxlength="2" /></td>
+              </tr>
+              <tr align="center"> 
+                <td colspan="2"> 
+                  <input type="submit" name="Submit" value="Confirma">
+                </td>
+              </tr>
+              <tr> 
+                <td colspan="2" align="center"><img src="img/img_divisoria1.gif" width="95%" height="1"></td>
+              </tr>
+              <tr align="center"> 
+                <td colspan="2"><div id="msg"></div></td>
+              </tr>
+            </table>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

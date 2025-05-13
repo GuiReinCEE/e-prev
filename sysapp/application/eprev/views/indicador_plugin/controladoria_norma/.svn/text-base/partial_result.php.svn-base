@@ -1,0 +1,54 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Mês', 'Total de normas impl. no prazo legal', 'Qtd de normas a serem impl. no prazo legal', '% de normas impl. fora do prazo legal', ''
+);
+
+$tabela = indicador_tabela_aberta( intval( enum_indicador::CONTROLADORIA_NORMAS_IMPLEMENTADAS_FORA_PRAZO_LEGAL ) );
+
+if(sizeof($tabela)<=0)
+{
+	echo "Não foi identificado período aberto para o Indicador";
+}
+else
+{
+	$contador_ano_atual=0;
+	$contador = sizeof($collection);
+	$a_data=array(0, 0);
+	foreach( $collection as $item )
+	{
+		$a_data = explode( "/", $item['mes_referencia'] );
+
+		$link = anchor("indicador_plugin/controladoria_norma/detalhe/" . $item["cd_controladoria_norma"], "editar");
+
+		$referencia = $item['mes_referencia'];
+
+		$nr_impl_prazo = $item["nr_impl_prazo"];
+		$nr_nao_impl = $item["nr_nao_impl"];
+		$nr_impl_fora_prazo = $item["nr_impl_fora_prazo"];
+
+		if( intval($item['ano_referencia']) == intval($tabela[0]['nr_ano_referencia'])  )
+		{
+			$contador_ano_atual++;
+		}
+
+		$body[] = array(
+			 $contador--
+			, $referencia
+			, $nr_impl_prazo
+			, $nr_nao_impl
+			, number_format($nr_impl_fora_prazo,2,',','.').' %'
+			, $link 
+		);
+	}
+
+	echo "<input type='hidden' id='mes_input' name='mes_input' value='".$a_data[0]."' />";
+	echo "<input type='hidden' id='contador_input' name='contador_input' value='".$contador_ano_atual."' />";
+
+	$this->load->helper('grid');
+	$grid = new grid();
+	$grid->head = $head;
+	$grid->body = $body;
+	echo $grid->render();
+}
+?>

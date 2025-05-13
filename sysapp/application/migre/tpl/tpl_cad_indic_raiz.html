@@ -1,0 +1,212 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Indicadores ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.conteudo.value == '') { erros = erros + "- O campo 'Conteudo' deve estar preenchido.\n"; }
+	if (f.titulo.value == '') { erros = erros + "- O campo 'Título' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+function valida_form2(f) {
+	var erros = "";
+	if (f.arquivo.value == '') { erros = erros + "- Por favor, selecione o arquivo. (Botão 'Procurar').\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+//-->
+</script>
+   
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" id="form1" method="post" action="grava_indic_raiz.php" onSubmit="return valida_form(this)">
+              <table border="0" align="center" cellpadding="0" cellspacing="1">
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">C&oacute;digo 
+                    do indicador:</font></td>
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cd_indic" type="text" id="titulo" value="{cd_indic}"  size="10" maxlength="10" >
+                    </font></td>
+                  <td align="right" rowspan="3" bgcolor="#F4F4F4"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" alt="Imprime o Destaque" border="0" ></a><a href="exc_indicador.php?c={cd_indicador}&ano={ano}&mes={mes}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4">&nbsp; </td>
+                  <td bgcolor="#F4F4F4">&nbsp; </td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    indicador :</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="nome_indic" type="text" id="txt_nome_indic" value="{nome_indic}" size="50" maxlength="200" >
+                    </font> </td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ordem:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="ordem" type="text" id="ordem" value="{ordem}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Eixo 
+                    X :</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="eixox" type="text" id="eixox" value="{eixox}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Eixo 
+                    Y :</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="eixoy" type="text" id="eixoy" value="{eixoy}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;m 
+                    S&eacute;ries :</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="num_series" type="text" id="num_series" value="{num_series}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Seta:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="seta" type="text" id="seta" value="{seta}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                    Gr&aacute;fico:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="tipo_grafico" type="text" id="tipo_grafico" value="{tipo_grafico}" size="5" maxlength="20" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Possui 
+                    Meta?</font></td>
+                  <td valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="indic_meta" type="text" id="indic_meta" value="{indic_meta}" size="5" maxlength="20" >
+                    </font></td>
+                  <td valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">R&oacute;tulos 
+                    de valores:</font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="indic_rotulos" type="text" id="indic_rotulos" value="{indic_rotulos}" size="5" maxlength="20" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Meta 
+                    Hoje :</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="meta_raiz" type="text" id="meta_raiz4" value="{meta_raiz}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Imagem 
+                    1:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="imagem1" type="text" id="imagem1" value="{imagem1}" size="80" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Label 
+                    1:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="label1" type="text" id="label1" value="{label1}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Imagem 
+                    2:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="imagem2" type="text" id="imagem2" value="{imagem2}" size="80" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Label 
+                    2:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="label2" type="text" id="label2" value="{label2}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Imagem 
+                    3:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="imagem3" type="text" id="imagem3" value="{imagem3}" size="80" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Label 
+                    3:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="label3" type="text" id="label3" value="{label3}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Imagem 
+                    4:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="imagem4" type="text" id="imagem4" value="{imagem4}" size="80" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Label 
+                    4:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="label4" type="text" id="label4" value="{label4}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Imagem 
+                    5:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="imagem5" type="text" id="imagem5" value="{imagem5}" size="80" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Label 
+                    5:</font></td>
+                  <td colspan="2" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="label5" type="text" id="label5" value="{label5}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <!--          <tr bgcolor="#DCDCCC">
+            <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+              de </font></td>
+            <td><font size="2" face="Arial, Helvetica, sans-serif">
+              <select name="select" id="select2">
+                <!-- START BLOCK : diretriz --
+                <option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+                <!-- END BLOCK : diretriz --
+              </select>
+              </font></td>
+          </tr>
+-->
+                <tr> 
+                  <td colspan="3"> <div align="center"> 
+                      <input type="submit" name="Submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                    </div></td>
+                </tr>
+              </table>
+      </form>
+    <p>
+            </p></td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,221 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Pós-venda - Resposta Participante ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+	
+	<script type="text/javascript"> 
+		function exibeComplemento(cd_pergunta) 
+		{ 
+			var ob_form = document.getElementById("formPesquisa");
+			for(i = 0; i < ob_form.elements.length; i++)
+			{
+				var ob_campo = ob_form.elements[i];
+				if(ob_campo.name == cd_pergunta+"[]")
+				{
+					if((ob_campo.checked) && (document.getElementById('E_'+ob_campo.value).value == "S"))
+					{
+						document.getElementById('C_'+ob_campo.value).style.display = "";
+						if(document.getElementById('O_'+ob_campo.value).value == "S")
+						{
+							document.getElementById('A_'+ob_campo.value).style.display = "";
+						}						
+						
+					}
+					else
+					{
+						document.getElementById('C_'+ob_campo.value).style.display = "none";
+						document.getElementById('A_'+ob_campo.value).style.display = "none";
+						document.getElementById('C_'+ob_campo.value).value = "";
+					}
+				}
+			}
+		} 
+		
+		function validaObrigatorio()
+		{
+			var retorno = true;
+			var ob_form = document.getElementById("formPesquisa");
+			for(i = 0; i < ob_form.elements.length; i++)
+			{
+				var ob_campo = ob_form.elements[i];
+				if((ob_campo.checked) && (document.getElementById('E_'+ob_campo.value).value == "S") && (document.getElementById('O_'+ob_campo.value).value == "S") && (trimValue(document.getElementById('C_'+ob_campo.value).value) == ""))
+				{
+					alert("O preenchimento do complemento é obrigatório.");
+					document.getElementById('C_'+ob_campo.value).focus();
+					retorno =  false;
+				}
+			}		
+			
+			return retorno;
+		
+		}
+		
+		function salvarPosVenda()
+		{
+			var ob_form = document.getElementById("formPesquisa");
+			if(validaObrigatorio())
+			{
+				ob_form.submit();
+			}			
+		}
+		
+		function validaform()
+		{
+			var old_name='';
+			var valid = true;
+			var retorno = true;
+			var ob_form = document.getElementById("formPesquisa");
+			
+			for(i = 0; i < ob_form.elements.length; i++)
+			{
+				var ob_campo = ob_form.elements[i];
+				if (ob_campo.tagName == "INPUT")
+				{
+					if(ob_campo.name.toString().indexOf('R_') > -1)
+					{
+						if(ob_campo.name != old_name)
+						{
+							if( ! valid )
+							{
+								alert('Atenção\n\nVocê deve preencher todos os campos antes de encerrar.');
+								retorno = false;
+								break;
+							}
+							old_name = ob_campo.name;
+							valid = false;
+						}
+						if( ! valid && ob_campo.checked )
+						{
+							valid = true;
+						}
+					}
+				}
+			}
+			
+			if(!validaObrigatorio())
+			{
+				retorno = false;
+			}			
+			
+			//return retorno;
+			if(retorno)
+			{
+				document.getElementById('fl_encerra').value = "S";
+				ob_form.submit();
+			}
+		}	
+	
+	
+		function validaEnvioEmail()
+		{
+			if(confirm("ATENÇÃO: Após o envio não é possível reverter a ação.\n\nDeseja realmente enviar o Pós-Venda?"))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	</script> 
+
+
+
+	<style>
+		.pos_venda_pergunta * {
+			font-family: arial;
+		}
+		.pos_venda_pergunta {
+			padding: 2px;
+			margin-top: 0px;
+			margin-left: 20px;
+			margin-bottom: 20px;
+			margin-right: 8px;
+
+			border-width: 1px;
+			border-style: solid;
+			border-color: #ebebeb;
+			border-right-color: #ccc;
+			border-bottom-color: #ccc;
+
+			background-color: #FFFFFF;
+		}
+		.pos_venda_pergunta h2 {
+			margin: 0px;
+			padding: 4px;
+			background: #E3EFFF;
+			font-size: 16pt;
+		}
+
+		.pos_venda_resposta {
+			margin-top:3px;
+			padding: 2px;
+		}
+
+		.pos_venda_complemento_obrigatorio {
+			font-size:8pt;
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+	<BR>
+	<div class="pos_venda_pergunta" style="text-align:center;">
+		<h2>{cd_empresa}/{cd_registro_empregado}/{seq_dependencia} - {nome}</h2>
+		<span style="font-family: arial; font-size: 12pt;{cor_aviso}">{dt_ultimo}</span>
+	</div>	
+	<form action="{url_salvar}" method="post" onsubmit="return validaEnvioEmail();">
+		<div class="pos_venda_pergunta" style="text-align:center;padding:8px;">
+			<input type="hidden" name="cd_empresa" id="cd_empresa"  value="{cd_empresa}">
+			<input type="hidden" name="cd_registro_empregado" id="cd_registro_empregado"  value="{cd_registro_empregado}">
+			<input type="hidden" name="seq_dependencia" id="seq_dependencia"  value="{seq_dependencia}">
+			<input type="submit" value="Enviar por Email" class="botao" style="width: 200px;">
+		</div>
+	</form>		
+	<form id="formPesquisa" action="pos_venda_participante_resp_grava.php" method="post" onsubmit="return validaObrigatorio();">
+		<input type="hidden" name="cd_pos_venda_participante" id="cd_pos_venda_participante"  value="{cd_pos_venda_participante}">
+		<input type="hidden" name="cd_empresa" id="cd_empresa"  value="{cd_empresa}">
+		<input type="hidden" name="cd_registro_empregado" id="cd_registro_empregado"  value="{cd_registro_empregado}">
+		<input type="hidden" name="seq_dependencia" id="seq_dependencia"  value="{seq_dependencia}">
+		<input type="hidden" name="fl_encerra" id="fl_encerra"  value="N">
+		<!-- START BLOCK : pergunta -->
+		<div class="pos_venda_pergunta">
+			<h2>{nr_conta}) {ds_pergunta}</h2>
+			<div class="pos_venda_resposta">
+				<!-- START BLOCK : resposta -->
+				<table border="0">
+					<tr>
+						<td valign="top" style="width:400px;">
+							<label><input onclick="exibeComplemento('R_{cd_pos_venda_pergunta}')" {fl_respondido} type="{tp_resposta}" name="R_{cd_pos_venda_pergunta}[]" id="R_{cd_pos_venda_resposta}" value="{cd_pos_venda_resposta}" >{ds_resposta}</label>
+							<input type="hidden" name="E_{cd_pos_venda_resposta}" id="E_{cd_pos_venda_resposta}"  value="{fl_complemento}">
+							<input type="hidden" name="O_{cd_pos_venda_resposta}" id="O_{cd_pos_venda_resposta}"  value="{fl_complemento_obrigatorio}">
+						</td>
+						<td>
+							<textarea name="C_{cd_pos_venda_resposta}" id="C_{cd_pos_venda_resposta}" style="{complemento_display} width: 300px; font-size:10pt;">{complemento}</textarea>
+							<BR>
+							<span id="A_{cd_pos_venda_resposta}" class="pos_venda_complemento_obrigatorio" style="{complemento_obrigatorio_display}">* Obrigatório o preenchimento</span>
+						</td>
+					</tr>
+				</table>
+				<!-- END BLOCK : resposta -->
+			</div>
+		</div>
+		<!-- END BLOCK : pergunta -->
+		<div class="pos_venda_pergunta" style="{fl_salvar} text-align:center;padding:8px;">
+			<input type="button" value="Salvar"   name="R_salvar" onclick="salvarPosVenda()" class="botao" style="width: 100px;">
+			<input type="button" value="Encerrar" onclick="validaform()" class="botao"  style="width: 100px;">
+		</div>
+	</form>
+
+	<form id="formInicio" action="pos_venda_participante_resp.php" method="post">
+		<div class="pos_venda_pergunta" style="{fl_iniciar} text-align:center;padding:8px;">
+			<input type="hidden" name="EMP_GA" id="EMP_GA"  value="{cd_empresa}">
+			<input type="hidden" name="RE_GA" id="RE_GA"  value="{cd_registro_empregado}">
+			<input type="hidden" name="SEQ_GA" id="SEQ_GA"  value="{seq_dependencia}">
+			<input type="hidden" name="cd_atendimento" id="cd_atendimento"  value="{cd_atendimento}">
+			<input type="hidden" name="fl_iniciar" id="fl_iniciar"  value="S">				
+			<input type="submit" value="Iniciar" class="botao" style="width: 100px;">
+		</div>
+	</form>
+
+<!-- INCLUDE BLOCK : footer.html -->

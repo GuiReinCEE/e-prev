@@ -1,0 +1,653 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Formulários Prevenir ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<script>
+		function setExibicao(cd_prevenir_formulario_item,fl_exibir)
+		{
+			var ds_url = "cad_prevenir_formulario_ajax.php";
+			if((cd_prevenir_formulario_item != "") && (fl_exibir != ""))
+			{
+				var lt_param = "ds_funcao=setExibicao";
+					lt_param+= "&cd_prevenir_formulario_item="+cd_prevenir_formulario_item;
+					lt_param+= "&fl_exibir="+fl_exibir;
+				ajaxExecute(ds_url, lt_param, "setExibicaoRetorno", '', 'POST');	
+			}		
+		}
+
+		function setExibicaoRetorno(retorno)
+		{
+			if(retorno != "OK")
+			{
+				alert("Ocorreu um erro ao gravar.\n\n"+retorno);
+			}
+		}		
+		
+	</script>
+	
+	<style>
+	.verSugestao
+	{
+		position:absolute; 
+		top: 0px;
+		left: 0px;
+		width: 800px;
+		height: 2000px;
+		background-color: white;
+		display:none;
+	}
+
+	legend
+	{
+		font-size: 10pt;
+		font-weight: bold;
+		font-family: Arial,'MS Sans Serif';
+		color: #005930;
+	}
+
+	.previnir_tabela
+	{
+		border-collapse: collapse;
+		width: 100%;		
+	}
+
+	.previnir_tabela_td
+	{
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border: 1px solid #005930;
+		background-color: #D9DECF;
+		font-size: 10pt;
+		font-family: Arial,'MS Sans Serif';				
+	}	
+
+	.previnir_tabela_pergunta
+	{
+		border-collapse: collapse;
+		width: 100%;		
+	}
+
+	.previnir_tabela_pergunta_td
+	{
+		padding-top: 2px;
+		padding-bottom: 2px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border: 0px;
+		background-color: #FFFFFF;
+		font-size: 10pt;
+		font-family: Arial,'MS Sans Serif';				
+	}	
+
+	.ameaca
+	{
+		font-size: 11pt;
+		font-weight: bold;
+		font-family: Arial,'MS Sans Serif';	
+		text-align:center;
+
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border: 1px solid #005930;
+		background-color: #D9DECF;
+	}
+	
+	.causa
+	{
+		font-size: 10pt;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';	
+		text-align:center;
+
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border: 1px solid #005930;
+		background-color: #D9DECF;
+	}	
+
+	.form_prevenir_label
+	{
+		display: block;
+		width: 290px;
+		/*float: left;*/
+		color: #000;
+		/*border-bottom: 1px solid #f1f1f1;*/
+		font-size: 14px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';	
+	}
+
+	.form_prevenir_textarea {
+		width: 150px;
+		border-top: 1px solid #333;
+		border-left: 1px solid #333;
+		border-bottom: 1px solid #ccc;
+		border-right: 1px solid #ccc;
+		font-size: 13px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';			
+		margin-bottom: 10px;
+		color: #005930;
+		padding:3px;
+    }
+	
+	.form_prevenir_input {
+		width: 150px;
+		border-top: 1px solid #333;
+		border-left: 1px solid #333;
+		border-bottom: 1px solid #ccc;
+		border-right: 1px solid #ccc;
+		font-size: 13px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';			
+		/*margin-bottom: 10px;*/
+		color: #005930;
+		padding-left:4px;
+		padding-right:4px;
+    }
+
+	.form_prevenir_select {
+		width: 150px;
+		border-top: 1px solid #333;
+		border-left: 1px solid #333;
+		border-bottom: 1px solid #ccc;
+		border-right: 1px solid #ccc;
+		font-size: 13px;
+		font-weight: normal;
+		font-family: Arial,'MS Sans Serif';			
+		margin-bottom: 10px;
+		color: #005930;
+		padding-left:4px;
+    }		
+
+	.prevenir_logo {
+		background-image: url('img/prevenir_formulario.png');
+		background-repeat: no-repeat;
+		background-position: 0px 0px; 
+		font-size: 16pt;
+		font-weight: bold;
+		font-family: Arial,'MS Sans Serif';	
+		color: #FFFFFF;
+		text-align:center;
+		padding-left:105px;
+		padding-right:180px;
+		height: 75px;
+		line-height:30px;		
+    }	
+	
+	.prevenir_titulo {
+		width: 100%;
+		text-align:center;
+		font-size: 20pt;
+		font-weight: bold;
+		font-family: Arial,'MS Sans Serif';	
+		color: #005930;
+    }		
+	
+	
+	</style>
+		<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="document.location.href='lst_prevenir_formulario.php';">
+						<span>LISTA</span>
+					</li>
+					<li  class="abaSelecionada">
+						<span>FORMULÁRIO</span>
+					</li>		
+				</ul>
+			</div>                            
+			<div class="aba_conteudo">
+			<BR><BR>
+
+<div style="background-color: #FFFFFF; margin-top:10px;margin-left:10px; min-height: 300px; width:750px;" >
+	<div class="prevenir_logo">
+		Formulário 5W1H - Diálogo Institucional
+		<BR>
+		Plano de ação 5W1H
+	</div>
+	<BR>
+		<div id="form_prevenir">
+			<table border="0" width="100%">
+				<tr>
+					<td valign="middle" style="width:150px;">
+						<label class="form_prevenir_label" style="width:140px;">Nome da instituição:</label>
+					</td>
+					<td colspan="3">
+						<input type="text" name="ds_instituicao" id="ds_instituicao" value="{ds_instituicao}" class="form_prevenir_input" style="width:100%;" readonly>						
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle"style="width:150px;">
+						<label class="form_prevenir_label" style="width:140px;">Nome:</label>
+					</td>
+					<td colspan="3">
+						<input type="text" name="ds_nome" id="ds_nome" value="{ds_nome}" class="form_prevenir_input" style="width:100%;" readonly>						
+					</td>
+				</tr>		
+				<tr>
+					<td style="width:150px;">
+						<label class="form_prevenir_label" style="width:100%;">Telefone:</label>
+					</td>
+					<td style="width:110px;">
+						<input type="text" name="nr_telefone" id="nr_telefone" value="{nr_telefone}" class="form_prevenir_input" style="width:100%;" readonly>						
+					</td>
+					<td style="width:80px;">
+						<label class="form_prevenir_label" style="text-align:right; margin-right:10px; width:100%;">E-mail:</label>
+					</td>
+					<td>
+						<input type="text" name="ds_email" id="ds_email" value="{ds_email}" class="form_prevenir_input" style="width:100%;" readonly>						
+					</td>					
+				</tr>	
+				<tr>
+					<td valign="middle"style="width:150px;">
+						<label class="form_prevenir_label" style="width:100%">Data de Entrega:</label>
+					</td>
+					<td colspan="3">
+						<input type="text" name="dt_envio" id="dt_envio" value="{dt_envio}" class="form_prevenir_input" readonly>
+					</td>
+				</tr>				
+			</table>
+
+		
+		
+		
+		
+		<div id="form_prevenir">
+		
+		
+		<!-- PERGUNTA 1 -->
+		<table border="0" class="previnir_tabela">
+			<tr >
+				<td class="previnir_tabela_td" style="width: 130px;">
+					Ameaça/Problema
+				</td>
+				<td class="ameaca">
+					Elevada taxa de crescimento das ações judiciais
+				</td>
+			</tr>
+			<tr>
+				<td class="previnir_tabela_td" rowspan="2">
+					Principais causas
+				</td>
+				<td class="causa">
+					Pulverização de escritórios demandantes.
+				</td>
+			</tr>
+			<tr>
+				<td class="causa">
+					Regras do Plano
+				</td>			
+			</tr>
+			<tr >
+				<td class="previnir_tabela_td" colspan="2" style="background-color:#FFFFFF;">
+				<table class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+					<thead>
+					<tr> 
+						<td>
+							O QUE?
+						</td>					
+						<td>
+							POR QUÊ?
+						</td>
+						<td>
+							QUEM?
+						</td>
+						<td>
+							QUANDO?
+						</td>
+						<td>
+							ONDE?
+						</td>							
+						<td>
+							COMO?
+						</td>
+						<td>
+							Exibir
+						</td>						
+					</tr>
+					</thead>
+					<tbody>	
+					<!-- START BLOCK : pergunta_1 -->
+					<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+						<td>
+							{o_que}
+						</td>							
+						<td>
+							{porque}
+						</td>										
+						<td>
+							{quem}
+						</td>					
+						<td>
+							{quando}
+						</td>										
+						<td>
+							{onde}
+						</td>	
+						<td>
+							{como}
+						</td>	
+						<td>
+							<select id="fl_exibir" style="{fl_exibir_editar}" onchange="setExibicao('{cd_prevenir_formulario_item}',this.value);">
+								<option value="N" {fl_exibir_nao}>Não</option>
+								<option value="S" {fl_exibir_sim}>Sim</option>
+							</select>
+						</td>						
+					</tr>
+					<!-- END BLOCK : pergunta_1 -->					
+					</tbody>	
+				</table>
+				</td>			
+			</tr>
+		</table>
+		
+		<BR>
+		<!-- PERGUNTA 2 -->
+		<table border="0" class="previnir_tabela">
+			<tr >
+				<td class="previnir_tabela_td" style="width: 130px;">
+					Ameaça/Problema
+				</td>
+				<td class="ameaca">
+					Diminuição da rentabilidade do patrimônio
+				</td>
+			</tr>
+			<tr>
+				<td class="previnir_tabela_td" rowspan="2">
+					Principais causas
+				</td>
+				<td class="causa">
+					Perfil de investimento com baixa tolerância a riscos de mercado e crédito e investimentos prioritariamente em produtos convencionais.
+				</td>
+			</tr>
+			<tr>
+				<td class="causa">
+					Redução da taxa de juros real da economia brasileira
+				</td>			
+			</tr>
+			<tr >
+				<td class="previnir_tabela_td" colspan="2" style="background-color:#FFFFFF;">
+				<table class="sort-table" id="table-2" align="center" width="100%" cellspacing="2" cellpadding="2">
+					<thead>
+					<tr> 
+						<td>
+							O QUE?
+						</td>					
+						<td>
+							POR QUÊ?
+						</td>
+						<td>
+							QUEM?
+						</td>
+						<td>
+							QUANDO?
+						</td>
+						<td>
+							ONDE?
+						</td>							
+						<td>
+							COMO?
+						</td>
+						<td>
+							Exibir
+						</td>						
+					</tr>
+					</thead>
+					<tbody>	
+					<!-- START BLOCK : pergunta_2 -->
+					<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+						<td>
+							{o_que}
+						</td>							
+						<td>
+							{porque}
+						</td>										
+						<td>
+							{quem}
+						</td>					
+						<td>
+							{quando}
+						</td>										
+						<td>
+							{onde}
+						</td>	
+						<td>
+							{como}
+						</td>	
+						<td style="text-align:center;">
+							<select id="fl_exibir" style="{fl_exibir_editar}" onchange="setExibicao('{cd_prevenir_formulario_item}',this.value);">
+								<option value="N" {fl_exibir_nao}>Não</option>
+								<option value="S" {fl_exibir_sim}>Sim</option>
+							</select>
+						</td>						
+					</tr>
+					<!-- END BLOCK : pergunta_2 -->					
+					</tbody>	
+				</table>
+				</td>			
+			</tr>			
+		</table>
+		
+		<BR>
+		<!-- PERGUNTA 3 -->
+		<table border="0" class="previnir_tabela">
+			<tr >
+				<td class="previnir_tabela_td" style="width: 130px;">
+					Ameaça/Problema
+				</td>
+				<td class="ameaca">
+					Baixa adesão de participantes em alguns planos
+				</td>
+			</tr>
+			<tr>
+				<td class="previnir_tabela_td" rowspan="2">
+					Principais causas
+				</td>
+				<td class="causa">
+					Dificuldade de aprovação de novos planos nas patrocinadoras (AES, CGTEE)
+				</td>
+			</tr>
+			<tr>
+				<td class="causa">
+					Dificuldade de canais de distribuição de planos de Instituidores
+				</td>			
+			</tr>
+			<tr >
+				<td class="previnir_tabela_td" colspan="2" style="background-color:#FFFFFF;">
+					<table class="sort-table" id="table-3" align="center" width="100%" cellspacing="2" cellpadding="2">
+					<thead>
+					<tr> 
+						<td>
+							O QUE?
+						</td>					
+						<td>
+							POR QUÊ?
+						</td>
+						<td>
+							QUEM?
+						</td>
+						<td>
+							QUANDO?
+						</td>
+						<td>
+							ONDE?
+						</td>							
+						<td>
+							COMO?
+						</td>
+						<td>
+							Exibir
+						</td>						
+					</tr>
+					</thead>
+					<tbody>	
+					<!-- START BLOCK : pergunta_3 -->
+					<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+						<td>
+							{o_que}
+						</td>							
+						<td>
+							{porque}
+						</td>										
+						<td>
+							{quem}
+						</td>					
+						<td>
+							{quando}
+						</td>										
+						<td>
+							{onde}
+						</td>	
+						<td>
+							{como}
+						</td>		
+						<td>
+							<select id="fl_exibir" style="{fl_exibir_editar}" onchange="setExibicao('{cd_prevenir_formulario_item}',this.value);">
+								<option value="N" {fl_exibir_nao}>Não</option>
+								<option value="S" {fl_exibir_sim}>Sim</option>
+							</select>
+						</td>						
+					</tr>
+					<!-- END BLOCK : pergunta_3 -->					
+					</tbody>	
+				</table>
+				</td>			
+			</tr>			
+		</table>	
+		
+		<BR>
+		<!-- PERGUNTA 4 -->
+		<table border="0" class="previnir_tabela">
+			<tr >
+				<td class="previnir_tabela_td" style="width: 130px;">
+					Ameaça/Problema
+				</td>
+				<td class="ameaca">
+					Possibilidade da não renovação de concessão dos serviços públicos de energia elétrica do Grupo CEEE
+				</td>
+			</tr>
+			<tr >
+				<td class="previnir_tabela_td" colspan="2" style="background-color:#FFFFFF;">
+				<table class="sort-table" id="table-4" align="center" width="100%" cellspacing="2" cellpadding="2">
+					<thead>
+					<tr> 
+						<td>
+							O QUE?
+						</td>					
+						<td>
+							POR QUÊ?
+						</td>
+						<td>
+							QUEM?
+						</td>
+						<td>
+							QUANDO?
+						</td>
+						<td>
+							ONDE?
+						</td>							
+						<td>
+							COMO?
+						</td>
+						<td>
+							Exibir
+						</td>						
+					</tr>
+					</thead>
+					<tbody>	
+					<!-- START BLOCK : pergunta_4 -->
+					<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+						<td>
+							{o_que}
+						</td>							
+						<td>
+							{porque}
+						</td>										
+						<td>
+							{quem}
+						</td>					
+						<td>
+							{quando}
+						</td>										
+						<td>
+							{onde}
+						</td>	
+						<td>
+							{como}
+						</td>
+						<td>
+							<select id="fl_exibir" style="{fl_exibir_editar}" onchange="setExibicao('{cd_prevenir_formulario_item}',this.value);">
+								<option value="N" {fl_exibir_nao}>Não</option>
+								<option value="S" {fl_exibir_sim}>Sim</option>
+							</select>
+						</td>						
+					</tr>
+					<!-- END BLOCK : pergunta_4 -->					
+					</tbody>	
+				</table>
+				</td>			
+			</tr>			
+		</table>
+	<BR>
+</div>					
+			
+<script>
+	var ob_resul = new SortableTable(document.getElementById("table-1"),["CaseInsensitiveString"]);
+		ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+	ob_resul.sort(0, false);
+	
+	var ob_resul = new SortableTable(document.getElementById("table-2"),["CaseInsensitiveString"]);
+		ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+	ob_resul.sort(0, false);	
+
+	var ob_resul = new SortableTable(document.getElementById("table-3"),["CaseInsensitiveString"]);
+		ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+	ob_resul.sort(0, false);	
+	
+	var ob_resul = new SortableTable(document.getElementById("table-4"),["CaseInsensitiveString"]);
+		ob_resul.onsort = function () {
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++) {
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+	ob_resul.sort(0, false);	
+</script>			
+			
+
+			</div>
+		</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

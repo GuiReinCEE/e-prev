@@ -1,0 +1,94 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Atendimentos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+<form name="form2" method="post" action="">
+	<div class="aba_definicao">
+		<div id="aba">
+			<ul>
+				<li onclick="document.location.href='atend_pessoal_analitico.php';" class="abaSelecionada">
+					<span>ATENDENTE</span>
+				</li>				
+				<li onclick="document.location.href='atend_pessoal.php';">
+					<span>DATA</span>
+				</li>	
+				<li onclick="document.location.href='atend_pessoal_tipos.php';">
+					<span>TIPO</span>
+				</li>	
+				<li onclick="document.location.href='atend_pessoal_programa.php';">
+					<span>PROGRAMA</span>
+				</li>	
+				<li onclick="document.location.href='atend_pessoal_lista.php';" >
+					<span>TODOS</span>
+				</li>							
+			</ul>
+		</div>
+		<div class="aba_conteudo">
+			<fieldset style="background:{cor_filtro}; clear: both;" >
+				<legend><b>Filtros</b></legend>
+				<table width="100%" border="0" cellspacing="1" cellpadding="0">
+					<tr> 
+						<td rowspan="2">&nbsp;</td>
+						<td  align="left" class="texto1">
+							&nbsp;&nbsp;Per&iacute;odo: 
+						</td>
+						<td align="left" class="texto1">
+							<input name="dt_inicial" type="text" id="dt_inicial2" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+							a 
+							<input name="dt_final" type="text" id="dt_final2" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+							(dd/mm/aaaa)
+						</td>
+						<td rowspan="2" align="right" valign="top">
+							<input type="image" src="img/btn_atualizar.jpg" border="0">
+							<a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a>
+						</td>
+					</tr>
+					<tr> 
+						<td align="left" class="texto1">&nbsp;&nbsp;Tipo de atendimento: 
+					</td>
+						<td align="left" class="texto1">
+							<select name="tipo_atendimento" id="tipo_atendimento">
+								<option value="" {sel_todos}>Todos</option>
+								<option value="C" {sel_consulta}>Consulta</option>
+								<option value="P" {sel_pessoal}>Pessoal</option>
+								<option value="T" {sel_telefonico}>Telef&ocirc;nico</option>
+								<option value="E" {sel_email}>E-mail</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<BR>
+			<table align="center" width="100%" cellspacing="2" cellpadding="2" style="background:{cor_filtro}">
+				<tr> 
+					<td colspan="2" width="25%" bgcolor="#0046ad" class="cabecalho" height="30">
+						Atendente
+					</td>
+					<td width="75%" bgcolor="#0046ad" class="cabecalho" height="30">
+						Número de atendimentos no per&iacute;odo
+					</td>
+				</tr>
+				<!-- START BLOCK : default -->
+				<tr bgcolor="{cor_fundo}"> 
+					<td>
+						<a href="atend_pessoal_lista.php?atdnt={cd_atendente}" class="links2">{data}</a>
+					</td>
+					<td>
+						<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+							{numero_acessos_default}
+						</font>
+					</td>
+					<td>
+						<img src="img/azul.jpg" width="{numero_acessos_default_10}" height="20">
+					</td>
+				</tr>
+				<!-- END BLOCK : default -->
+			</table>
+		</div>
+	</div>
+</form>
+
+<!-- INCLUDE BLOCK : footer.html -->

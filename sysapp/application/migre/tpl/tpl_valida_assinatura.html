@@ -1,0 +1,101 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Validação de assinaturas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function envia_form(f) {
+	var erros = "";
+	var td = "";
+	if (f.re.value == '') { erros = erros + "- RE deve ser selecionada.\n"; }
+	if (f.todos.checked) {
+		td = "S"; 
+	}
+	
+	var intTamStr = f.re.value.length;
+	if (intTamStr <= 6){
+		var intTam = parseInt(6) - intTamStr;
+		for (i=0; i<intTam;i++) {
+			f.re.value = "0" + f.re.value;
+		}
+	}
+	w = window.open("assinatura_t.php?r="+f.emp.value+f.re.value+f.seq.value+"&h="+td+"", "wskin1", "menubar=no,location=no,scrollbars=no,resizable=no,width=1,height=1");
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return false;
+	}
+}
+//-->
+</script>
+<script language="JavaScript" type="text/javascript">
+function fnc_val_et(numero) {
+	var td = "";
+	if (numero.value.length == 19){ 
+		w = window.open("assinatura_t.php?r="+numero.value+"&E=S&h="+td+"", "wskin2", "menubar=no,location=no,scrollbars=no,resizable=no,width=1,height=1");
+		num_etiqueta.value = '';
+		num_etiqueta.focus();
+		num_etiqueta.select();
+//		pg = "etiqueta.php?r=" + numero.value;
+//		dv = document.getElementById("dyn");
+//		dv.src = pg;
+	}
+}; 
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+<script language="javascript">
+document.write ("<font color='#FF0000' size='2' face='Verdana, Arial, Helvetica, sans-serif'>Resolução de vídeo: "+screen.width+"x"+screen.height+"</font>")
+</script>
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+                   
+            <table border="0" align="center" cellpadding="2" cellspacing="0">
+              <tr> 
+                <td colspan="2" bgcolor="#0046ad"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Informe 
+                  abaixo o n&uacute;mero da etiqueta recebida:</strong></font></td>
+                <td bgcolor="#BFA260"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ou 
+                  informe abaixo a empresa, re e seq&uuml;&ecirc;ncia e clique 
+                  em OK:</strong></font></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Etiqueta:</font></td>
+                <td bgcolor="#F4F4F4"> <input name="num_etiqueta" type="password" id="num_etiqueta2" value="{num_etiqueta}" onKeyPress="fnc_val_et(this)"></td>
+                <td bgcolor="#DCDCCC">
+					<form name="form1" onSubmit="return envia_form(this)">
+                    <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa: 
+                    <input name="emp" id="emp" type="text" value="0" size="3" maxlength="1">
+                    Re 
+                    <input name="re" id="re2" type="text" size="7" maxlength="6">
+                    Seq 
+                    <input name="seq" id="seq" type="text" value="0" size="3" maxlength="1">
+                    <input name="OK" type="submit" value="OK">
+                    <input name="todos" id="todos" type="checkbox" value="S" checked>
+                    Ver todas imagens</font> 
+                  </form>
+                  </td>
+              </tr>
+              <tr> 
+                <td colspan="3" align="center"><img src="img/img_divisoria1.gif" width="95%" height="1"></td>
+              </tr>
+              <tr align="center" bgcolor="#F0E8BA"> 
+                <td colspan="3"> 
+                  <div id="msg"></div></td>
+              </tr>
+            </table>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

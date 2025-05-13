@@ -1,0 +1,254 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Evento Institucional / Inscrição';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script src="inc/mascara.js"></script>
+
+<link href="evento_institucional_inscricao.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/JavaScript" src="evento_institucional_inscricao.js"></script>
+
+<form id="only_form" name="only_form" method="POST">
+
+	<div id="mensagem_operacao" style="display:none;"></div>
+
+	<div id="conteudo">
+	
+		<div id="command_bar" class="command-bar">
+			<a href="evento_institucional_inscricao.php" class="link-comando">&lt;&lt; Voltar para lista de eventos institucionais</a>
+		</div>
+
+		<input type="hidden" id="cd_eventos_institucionais_inscricao" name="cd_eventos_institucionais_inscricao" value="{cd_eventos_institucionais_inscricao}" />
+
+		<div class="box">
+
+			<div class="title"><label for="cd_eventos_institucionais">SOBRE O EVENTO</label></div>
+			<div class="content">
+
+				<table cellpadding="10">
+
+				{eventos_dd}
+				
+				<tr><td></td><td><div id='evento_info_div'></div></td></tr>
+
+				<!--<tr>
+				<td><b><label for="cd_eventos_institucionais">Evento:</label> </b></td>
+				<td>
+					<SELECT style="font-size:16px;" name="cd_eventos_institucionais" id="cd_eventos_institucionais" onkeypress="return handleEnter(this, event);">
+					<option value="18"{evento_18}>Encontro mais vida 2008 - a arte de viver a mudança</option>
+					<option value="19"{evento_19}>Concurso Frase e Foto 2008</option>
+					<option value="20"{evento_20}>Concurso dia das mulheres</option>
+					<option value="21"{evento_21}>Encontro Mais Vida com Amyr Klink - 2009</option>
+					<option value="22"{evento_22}>30 Anos Fundação CEEE</option>
+					</SELECT>
+				</td>
+				</tr>-->
+
+				</table>
+
+			</div>
+
+		</div>
+
+		<div class="box">
+
+			<div class="title"><label for="cd_empresa">SOBRE PARTICIPANTES</label></div>
+			<div class="content">
+		
+				<table cellpadding="10">
+
+				<tr>
+				<td><label for="cd_empresa"><b>Empresa/RE/Sequência: </b></label></td>
+				<td>
+					<input name="cd_empresa" id="cd_empresa" style="width:50px;" maxlength="5" class="text" value="{cd_empresa}" onkeypress="return handleEnter(this, event);"/>
+					<input name="cd_registro_empregado" id="cd_registro_empregado" style="width:100px;" maxlength="10" class="text" value="{cd_registro_empregado}" onkeypress="return handleEnter(this, event);"/>
+					<input name="seq_dependencia" id="seq_dependencia" style="width:50px;" maxlength="1" class="text" value="{seq_dependencia}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				<td><input id="consultar" value="Consultar" onclick="eu.consultar_participante();" type="button" class="botao" style="font-size:16px;" /><span id="participante_msg"></span></td>
+				</tr>
+				</table>
+		
+			</div>
+		
+		</div>
+
+		<div class="box">
+		
+			<div class="title"><label for="nome">SOBRE O INSCRITO</label></div>
+			<div class="content">
+		
+				<table cellpadding="10">
+		
+				<tr>
+				<td><b><label for="tipo">Tipo:</label> </b></td>
+				<td>
+					<SELECT style="font-size:16px;" name="tipo" id="tipo" onkeypress="return handleEnter(this, event);">
+						<option value="I"{inscrito}>Inscrito</option>
+						<option value="A"{acompanhante}>Acompanhante</option>
+					</SELECT>
+				</td>
+				</tr>
+				<tr>
+				<td><b><label for="tp_inscrito">Identificação:</label> </b></td>
+				<td>
+					<SELECT style="font-size:16px;" name="tp_inscrito" id="tp_inscrito" onkeypress="return handleEnter(this, event);">
+						<option value="0">Não definido</option>
+						<option value="1" {tp_inscrito_1}>Ex-presidentes</option>
+						<option value="2" {tp_inscrito_2}>Colaboradores</option>
+						<option value="3" {tp_inscrito_3}>Ex conselheiros</option>
+						<option value="4" {tp_inscrito_4}>Entidades</option>
+						<option value="5" {tp_inscrito_5}>Homenageados patrocinadoras</option>
+						<option value="6" {tp_inscrito_6}>Homenageados participantes</option>
+						<option value="7" {tp_inscrito_7}>Parceiros</option>
+						<option value="8" {tp_inscrito_8}>Coral</option>
+						<option value="9" {tp_inscrito_9}>Teatro</option>
+						<option value="10" {tp_inscrito_10}>Terceiros</option>
+						<option value="11" {tp_inscrito_11}>Conselho Deliberativo</option>
+						<option value="12" {tp_inscrito_12}>Conselho Fiscal</option>
+						<option value="13" {tp_inscrito_13}>Diretoria</option>
+						<option value="14" {tp_inscrito_14}>Abrapp</option>
+					</SELECT>
+				</td>
+				</tr>
+				<tr>
+				<td><b><label for="nome">Empresa:</label> </b></td>
+				<td>
+					<input name="empresa" id="empresa" style="width:600px;" maxlength="255" class="text" value="{empresa}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>				
+				<tr>
+				<td><b><label for="nome">Nome:</label> </b></td>
+				<td>
+					<input name="nome" id="nome" style="width:600px;" maxlength="255" class="text" value="{nome}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="telefone">Telefone:</label> </b></td>
+				<td>
+					<input name="telefone" id="telefone" style="width:300px;" maxlength="20" class="text" value="{telefone}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="email">Email:</label> </b></td>
+				<td>
+					<input name="email" id="email" style="width:600px;" maxlength="255" class="text" value="{email}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="endereco">Endereço:</label> </b></td>
+				<td>
+					<input name="endereco" id="endereco" style="width:600px;" maxlength="510" class="text" value="{endereco}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="cidade">Cidade:</label> </b></td>
+				<td>
+					<input name="cidade" id="cidade" style="width:600px;" maxlength="100" class="text" value="{cidade}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="uf">UF:</label> </b></td>
+				<td>
+					<input name="uf" id="uf" style="width:50px;" maxlength="2" class="text" value="{uf}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				<tr>
+				<td><b><label for="cep">CEP:</label> </b></td>
+				<td>
+					<input name="cep" id="cep" style="width:120px;" maxlength="10" class="text" value="{cep}" onkeypress="return handleEnter(this, event);"/>
+				</td>
+				</tr>
+				
+				</table>
+		
+			</div>
+		
+		</div>
+
+		<div class="box">
+
+			<div class="title"><label for="observacao">OBSERVAÇÕES</label></div>
+
+			<div class="content">
+
+				<textarea id="observacao" name="observacao" class="text" style="width:100%;height:300px;">{observacao}</textarea>
+
+			</div>
+			
+			<div class="message">Observações é um campo não editável, as informações são preenchidas pelo <b>Inscrito</b><br />
+			Para o Concurso de frases e fotos de 2008 o campo <b>Observações</b> equivale a <b>Frase</b> que irá concorrer ao prêmio.</div>
+
+		</div>
+	
+		<div class="box">
+
+			<div class="title"><label for="anexo">ANEXOS</label></div>
+
+			<div class="content">
+
+				{anexos}
+
+			</div>
+			
+			<div class="message">Anexos são arquivos em vários formatos enviados pelos inscritos.<br />
+			Para o Concurso de frases e fotos de 2008 os anexos contém as fotos enviadas pelos inscritos.</div>
+
+		</div>
+
+		<div class="box">
+
+			<div class="title"><label>CLASSIFICAÇÃO</label></div>
+
+			<div class="content">
+
+				<input {fl_selecionado} id="fl_selecionado" name="fl_selecionado" type="checkbox" value="S" /> <label for="fl_selecionado">Selecionado</label><br />
+				<input {fl_desclassificado} id="fl_desclassificado" name="fl_desclassificado" type="checkbox" value="S" /> <label for="fl_desclassificado">Desclassificado</label><br />
+				<br>
+				<label for="ds_motivo">Motivo</label><br />
+				<input id="ds_motivo" name="ds_motivo" type="text" style="width:500px;" value="{ds_motivo}" maxlength="200" /> 
+
+			</div>
+
+			<div class="message">Você pode indicar "seleção" e "desclassificação" do participante no concurso, para desclassificação informe o motivo.</div>
+
+		</div>
+
+	</div>
+
+	<div class="savecancel">
+
+		<table width="100%">
+			<tr>
+			<td align="left"><input type="button" class="botao save" value="Salvar" onclick="eu.salvar();" /> <input type="button" class="botao save" value="Voltar" onclick="eu.cancelar_edicao();" /></td>
+			<td align="right">
+				<input type="hidden" class="botao save" name="dt_exclusao" id="dt_exclusao" value="" onclick="eu.excluir();" />
+				<input type="button" class="botao save" value="Excluir" onclick="eu.excluir();" style="{display_edicao}" />
+			</td>
+			</tr>
+		</table>
+
+	</div>
+</form>
+
+<script>
+if($('cd_eventos_institucionais').value!='')
+{
+	eu.consultar_evento($('cd_eventos_institucionais').value);
+}
+configure_result_publicacao();
+
+$("cd_empresa").focus();
+
+MaskInput( document.getElementById('cd_empresa'), "99" );
+MaskInput( document.getElementById('cd_registro_empregado'), "9999999999" );
+MaskInput( document.getElementById('seq_dependencia'), "9" );
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

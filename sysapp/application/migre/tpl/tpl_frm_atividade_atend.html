@@ -1,0 +1,1041 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = 'Atividade - Atendimento';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+{style_bootstrap}
+<style>
+	.grade
+	{
+		color: #FFFFFF;
+		font-size: 12px;
+		font-family: Verdana, Arial, Helvetica, "MS Sans Serif";
+	}
+	.botao_ok
+	{
+		width:100px;
+	}
+</style>
+<script language="JavaScript" type="text/JavaScript">
+	function adicionarCronograma(cd_atividade_cronograma,numero)
+	{
+		if(cd_atividade_cronograma != "")
+		{
+			var ds_url   = "{site_url}/atividade/atividade_cronograma/salvar_item";
+			var lt_param = "cd_atividade_cronograma_item=0";
+				lt_param+= "&cd_atividade_cronograma="+cd_atividade_cronograma;
+				lt_param+= "&cd_atividade="+numero;
+				lt_param+= "&nr_prioridade_operacional=";
+				lt_param+= "&nr_prioridade_gerente=";
+				ajaxExecute(ds_url, lt_param, "cronogramaRetorno", '', 'POST');	
+		}
+		else
+		{
+			alert("Informe o Cronograma.");
+			document.getElementById('cd_atividade_cronograma').focus();
+		}
+	}
+	
+	function removerCronograma(cd_atividade_cronograma,cd_atividade_cronograma_item)
+	{
+		if(confirm("Deseja remover do cronograma?\n\n"))
+		{
+			var ds_url   = "{site_url}/atividade/atividade_cronograma/excluir_item/" + cd_atividade_cronograma + "/" + cd_atividade_cronograma_item;
+				ajaxExecute(ds_url, "", "cronogramaRetorno", '', 'POST');		
+		}
+	}	
+
+	function cronogramaRetorno(retorno)
+	{
+		document.getElementById("result_div").innerHTML = "<center><BR><BR><h1 style='font-family: Calibri, Arial; font-size: 15pt;'>Aguarde, carregando a página...</h1></center>";
+		location.reload();
+	}
+	
+
+<!--
+function submeter_form(f)
+{
+	if( valida_form(f) )
+	{
+		if( confirm( 'Salvar?' ) )
+		{
+			document.getElementById('btn_cancelar').disabled=true;
+			document.getElementById('btn_salvar').disabled=true;
+			document.getElementById('btn_salvar').value='salvando...';
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_validateForm() { //v4.0
+  var i,p,q,nm,test,num,min,max,errors='',args=MM_validateForm.arguments;
+  for (i=0; i<(args.length-2); i+=3) { test=args[i+2]; val=MM_findObj(args[i]);
+    if (val) { nm=val.name; if ((val=val.value)!="") {
+      if (test.indexOf('isEmail')!=-1) { p=val.indexOf('@');
+        if (p<1 || p==(val.length-1)) errors+='- '+nm+' deve conter um endereço de email.\n';
+      } else if (test!='R') { num = parseFloat(val);
+        if (isNaN(val)) errors+='- '+nm+' deve conter um número.\n';
+        if (test.indexOf('inRange') != -1) { p=test.indexOf(':');
+          min=test.substring(8,p); max=test.substring(p+1);
+          if (num<min || max<num) errors+='- '+nm+' deve conter um número entre '+min+' e '+max+'.\n';
+    } } } else if (test.charAt(0) == 'R') errors += '- '+nm+' é obrigatório.\n'; }
+  } if (errors) alert('Erro(s):\n'+errors);
+  document.MM_returnValue = (errors == '');
+}
+//-->
+</script>
+
+<script language="JavaScript">
+	function checkStatus( cbo_status )
+	{
+		if((cbo_status.value == "ETES") && (document.getElementById('qt_tarefa_aberta').value > 0) && (document.getElementById('status_anterior').value != "ETES"))
+		{
+			alert("Existem "+ document.getElementById('qt_tarefa_aberta').value + " tarefas não concluídas.\nNão é possível mudar o Status atual.");
+			cbo_status.value = document.getElementById('status_anterior').value;
+		}
+		
+		if((cbo_status.value == "CANC") && (document.getElementById('qt_tarefa_aberta').value > 0) && (document.getElementById('status_anterior').value != "CANC"))
+		{
+			if (!confirm("Existem " + document.getElementById('qt_tarefa_aberta').value + " tarefas não concluídas.\nDeseja realmente mudar o Status atual?"))
+			{
+				cbo_status.value = document.getElementById('status_anterior').value;
+			}
+		}	
+
+		if((cbo_status.value == "AGDF") && (document.getElementById('qt_tarefa_aberta').value > 0) && (document.getElementById('status_anterior').value != "AGDF"))
+		{
+			if (!confirm("Existem " + document.getElementById('qt_tarefa_aberta').value + " tarefas não concluídas.\nDeseja realmente mudar o Status atual?"))
+			{
+				cbo_status.value = document.getElementById('status_anterior').value;
+			}
+		}
+
+		if((cbo_status.value == "SUSP") && (document.getElementById('qt_tarefa_aberta').value > 0) && (document.getElementById('status_anterior').value != "SUSP"))
+		{
+			if (!confirm("Existem "+ document.getElementById('qt_tarefa_aberta').value + " tarefas não concluídas.\nDeseja realmente mudar o Status atual?"))
+			{
+				cbo_status.value = document.getElementById('status_anterior').value;
+			}
+		}
+
+		if((cbo_status.value == "ADIR") && (document.getElementById('qt_tarefa_exec').value > 0) && (document.getElementById('status_anterior').value != "ADIR"))
+		{
+			if (!confirm("Existem "+ document.getElementById('qt_tarefa_exec').value + " tarefas em manutenção.\nDeseja realmente mudar o Status atual?"))
+			{
+				cbo_status.value = document.getElementById('status_anterior').value;
+			}
+		}
+		
+		if((cbo_status.value == "AUSR") && (document.getElementById('qt_tarefa_exec').value > 0) && (document.getElementById('status_anterior').value != "AUSR"))
+		{
+			if (!confirm("Existem "+ document.getElementById('qt_tarefa_exec').value + " tarefas em manutenção.\nDeseja realmente mudar o Status atual?"))
+			{
+				cbo_status.value = document.getElementById('status_anterior').value;
+			}
+		}
+	}
+
+
+<!--
+function valida_form(f)
+{
+	var erros = "";
+	
+	if ((document.formulario.aa.value != "GRI") && (document.formulario.aa.value != "GA") && (document.formulario.aa.value != "GJ") && (document.formulario.aa.value != "SG"))
+	{
+		if (f.cbo_sistema.value == '')
+		{
+			erros = erros + "- Projeto deve ser informado.\n";
+		}
+	}	
+	
+	if (f.tipo_ativ.value == 'L') {
+		if (f.pert0.checked == true) {
+			if (f.dt_prevista.value != '') {
+				erros = erros + "- Data prevista para implementação não deve ser informada, se atividade não for pertinente.\n"; 
+			}
+		} else if (f.pert1.checked == true) {
+			if (f.dt_prevista.value != '') {
+				erros = erros + "- Data prevista para implementação não deve ser informada, se atividade não alterar processo.\n"; 
+			}
+		} else if (f.pert2.checked == true) {
+			if (f.dt_prevista.value == '') {
+				erros = erros + "- Data prevista para implementação deve ser informada!\n"; 
+			}
+		} else {
+			erros = erros + "- Por favor, informe se esta norma é pertinente ou não!\n"; 
+		}
+	}
+	else {
+		// AOCS, GRI, ANALISE DO SOLICITANTE (EM TESTES)
+		if (f.cbo_status_atual.value == 'AOCS') {
+			if( f.dt_limite.value=='' )
+			{
+				erros = erros + "- A data de 'Prazo Esperado' na aba 'Solicitação' não foi informada.\n";
+			}
+		}
+		if (f.cbo_status_atual.value == 'ETES' || f.cbo_status_atual.value == 'AOCS') {
+			if (f.txt_dt_limite_teste.value == '') { erros = erros + "- Data Limite para testes deve ser informada.\n"; }
+		}
+		if (f.cbo_status_atual.value == 'CONC') {
+			erros = erros + "- Atividades CONCLUÍDAS não podem ser alteradas.\n";
+		}
+		if ((f.n.value == -1) && ((f.cbo_periodicidade.value == 'F') && (f.cbo_analista.value != f.cbo_solicitante.value))) {
+			erros = erros + "- Não é permitido incluir 'Atividades Futuras' para outras pessoas.\n ---> Solicitações para outras pessas devem ser do tipo 'Imediata'.\n";
+		}	     
+		if ((fnc_compara_datas(f.txt_dt_env_teste, f.dt_cadastro)) != true){
+			erros = erros + "- Data de envio para teste não pode ser menor do que Data de cadastro da atividade.\n";
+		}	     
+		if ((fnc_compara_datas(f.txt_dt_limite_teste, f.dt_cadastro)) != true){
+			erros = erros + "- Data de limite para teste não pode ser menor do que Data de cadastro da atividade.\n";
+		}	     
+		if ((fnc_compara_datas(f.txt_dt_limite_teste, f.txt_dt_env_teste)) != true){
+			erros = erros + "- Data de limite para teste não pode ser menor do que Data de envio para teste.\n";
+		}
+	}	     
+	
+	//CACS
+	if ( document.formulario.aa.value=="GRI" && document.formulario.cbo_status_atual.value!="CACS" ) {
+		// VALIDAR PREENCHIMENTO DOS CAMPOS DE RATEIO
+		var elem = document.formulario.elements;
+		for(var idxP = 0; idxP < elem.length; idxP++)
+		{
+			if(elem[idxP].id.indexOf("rateio_percentual_")>-1){
+				if(elem[idxP].value=="")
+				{
+					erros = erros + "- Percentual de rateio não pode ficar em branco.\n";
+				}
+			}
+		}
+		
+		if (sumPercents!=100)
+		{
+			erros = erros + "- Soma do percentual de rateio deve ser 100%.\n";
+		}
+		// VALIDAR PREENCHIMENTO DOS CAMPOS DE RATEIO
+	}
+	
+	if (erros != "") {
+		alert( "Erros:\n\n" + erros );
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function fnc_compara_datas(dt1,dt2) {
+	if (dt1.value == '') {  
+		return true;
+	}
+	else
+	{
+		dia1 = (dt1.value.substring(0,2)); 
+		mes1 = (dt1.value.substring(3,5)); 
+		ano1 = (dt1.value.substring(6,10)); 
+	}
+	if (dt2 == null) { 
+		var hoje = new Date();
+		if (hoje.getYear() <=99)
+		   {ano2 = "19"+ hoje.getYear();}
+		else  if (hoje.getYear() <=199)
+		   {ano2 = 1900 + hoje.getYear() ;}
+		else
+		   {ano2 = hoje.getYear() ;}
+		var data1 = "" + ano1 + mes1 + dia1 
+		var data2 = "" + ano2 + (((hoje.getMonth() + 1) < 10) ? "0" : "") + (hoje.getMonth() + 1) + (((hoje.getDate()) < 10) ? "0" : "") + (hoje.getDate()) 
+		if (data1 < data2) {
+			dt1.select();
+			alert("Data não pode ser menor do que Hoje.");
+			formulario.dt_limite.focus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		var data1 = "" + ano1 + mes1 + dia1 
+		dia2 = (dt2.value.substring(0,2)); 
+		mes2 = (dt2.value.substring(3,5)); 
+		ano2 = (dt2.value.substring(6,10)); 
+		var data2 = "" + ano2 + mes2 + dia2 
+		if (data1 < data2) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+}
+
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+/**
+ * Variável para controle de indices criados
+ *
+ * @var rateioCount Recebe sempre a última posição +1 de Rateios Criados em addRateio 
+ */
+var rateioCount = 0;
+function setRateioCount(v){ rateioCount=v; }
+
+/**
+ * Variável para controle de soma de percentuais
+ *
+ * @var sumPercents Recebe a somatória de todos os percentuais preenchidos 
+ */
+var sumPercents = 0;
+function setSumPercents(v){ sumPercents=v; document.getElementById( "percentualCaption" ).innerHTML = "<b>Percentual (" + sumPercents + "%)</b>"; }
+
+/**
+ * Variável para controle de percentuais não preenchidos
+ *
+ * @var idPercentualEmBranco Recebe o ID do objeto input do percentual que está em branco 
+ */
+var idPercentualEmBranco = "";
+
+function calculeSumPercents()
+{
+	var elem = document.formulario.elements;
+	sumPercents = 0;
+	for(var idxP = 0; idxP < elem.length; idxP++)
+	{
+		if(elem[idxP].id.indexOf("rateio_percentual_")>-1){
+			percent = elem[idxP].value;
+			if(percent!=""){
+				sumPercents += parseInt(percent); 
+			}
+		}
+	}
+	
+	document.getElementById( "percentualCaption" ).innerHTML = "<b>Percentual (" + sumPercents + "%)</b>";
+}
+
+var PERCENT_VALIDATE_EQUALS = 1;
+var PERCENT_VALIDATE_EQUALS_OR_MINOR = 2;
+var PERCENT_VALIDATE_MINOR = 3;
+function sumPercentsValid( type )
+{
+	var iRet = 0;
+	
+	// logica
+	if( type == PERCENT_VALIDATE_EQUALS )
+	{
+		iRet = ( parseInt( sumPercents )==100 ) ? 0 : 3;
+	}
+	else if( type == PERCENT_VALIDATE_EQUALS_OR_MINOR )
+	{
+		iRet = ( parseInt( sumPercents )<=100 ) ? 0 : 4;
+	}
+	else if( type == PERCENT_VALIDATE_MINOR )
+	{
+		iRet = ( parseInt( sumPercents )<100 ) ? 0 : 5;
+	}
+		
+	// consistencia
+	if( iRet==3 )
+	{
+		alert("Soma dos percentuais deve ser exatamente 100%.");
+	}
+	else if( iRet==4 )
+	{
+		alert("Soma dos percentuais não pode ultrapassar 100%.");
+	}
+	else if( iRet==5 )
+	{
+		alert("Já foi atingido 100%, para acrescentar mais percentuais, primeiro diminua ou remova algum já existente.");
+	}
+	
+	// retorno
+	return ( iRet==0 );
+}
+
+function addRateio()
+{
+	// VALIDAR PREENCHIMENTO DOS CAMPOS DE RATEIO
+	var elem = document.formulario.elements;
+	for(var idxP = 0; idxP < elem.length; idxP++)
+	{
+		
+		if(elem[idxP].id.indexOf("rateio_percentual_")>-1){
+			if(elem[idxP].value=="")
+			{
+				alert("Informe o percentual corretamente.");
+				elem[idxP].focus();
+				return false;
+				break;
+			}
+		}
+	}
+	// VALIDAR PREENCHIMENTO DOS CAMPOS DE RATEIO
+
+	if ( sumPercentsValid(PERCENT_VALIDATE_MINOR) )
+	{		
+	
+		var ob_detalhe = document.getElementById('ob_rateio');
+		var ob_linha   = document.createElement('tr');
+			ob_linha.style.cssText = "background-color: #F4F4F4;";
+
+		var ob_programa     = document.createElement('td');
+		
+		var ob_percentual   = document.createElement('td');
+		var ob_del     = document.createElement('td');
+			ob_del.style.cssText = "text-align:center;";
+		var ob_bt_del  = document.createElement('input');
+			ob_bt_del.type    = "button";
+			ob_bt_del.value   = "Remover";
+			ob_bt_del.onclick = function(){ delLineTable( ob_linha ); }
+
+		ob_del.appendChild(ob_bt_del);
+
+		programa_id 				= "rateio_programa_" + rateioCount;
+		
+		percentual_id 				= "rateio_percentual_" + rateioCount;
+		
+		ob_programa.innerHTML       =   "<center><select id='" + programa_id + "' " +
+										"	        name='ar_rateio_programa[]'> " +
+										"	<option value='PATD'>Atendimento</option> " +
+										"	<option value='PPCD'>Cadastro</option> " +
+										"	<option value='PEMP'>Empréstimos</option> " +
+										"	<option value='PINV'>Investimentos</option> " +
+										"	<option value='PPRV'>Previdenciário</option> " +
+										"	<option value='PSEG'>Seguros</option> " +
+										"	</select></center>";
+		
+		ob_percentual.innerHTML    	= "<center><input id='" + percentual_id + "' " +
+		                                    " type='text' " +
+		                                    " name='ar_rateio_percentual[]' " +
+		                                    " value='' " +
+		                                    " onblur='calculeSumPercents();sumPercentsValid( PERCENT_VALIDATE_EQUALS_OR_MINOR )' " +
+											" onkeypress='if( event.keyCode==13 ) { calculeSumPercents();addRateio(); }' " +
+											" style='text-align: right' " +
+		                                    "></center>";
+		rateioCount++;
+
+		ob_linha.appendChild( ob_programa );
+		
+		ob_linha.appendChild( ob_percentual );
+		ob_linha.appendChild( ob_del );
+
+		ob_detalhe.appendChild(ob_linha);
+	
+		MaskInput(document.getElementById(percentual_id), "999");
+	}
+		
+}
+
+function delLineTable(ob_linha)
+{
+	ob_linha.parentNode.removeChild(ob_linha);
+	calculeSumPercents();
+	rateioCount--;
+}
+//-->
+</script>
+
+	<script language="JavaScript">
+	<!--
+		function win_orcamento(r,h)
+		{
+			w = window.open("atividade_orcamento.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=500,height=230");
+		}
+		function win_anexo(r,h)
+		{
+			w = window.open("atividade_acompanhamento.php?r="+r+"&h="+h, "wespec", "menubar=no,location=no,scrollbars=no,resizable=no,width=450,height=230");
+		}
+	--> 
+	</script>
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/{url_lista}'"><span>Lista</span></li>
+			<li id='aba_solicitacao' class='' onclick="location.href='cad_atividade_solic.php?n={n}&a=s&TA={ta}&aa={aa}'"><span>Solicitação</span></li>
+			<li id='aba_atendimento' class='abaSelecionada' onclick="location.href='cad_atividade_atend.php?n={n}&a=a&TA={ta}&aa={aa}'"><span>Atendimento</span></li>
+			<li id='aba_anexos' class='' onclick="location.href='{link_anexo}'"><span>Anexos</span></li>
+			<li id='aba_acompanhamento' class='' onclick="location.href='{link_acompanhamento}'"><span>Acompanhamento</span></li>
+			<li id='aba_Historico' class='' onclick="location.href='{link_historico}'"><span>Histórico</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top"> 
+          <td> 
+            <form action="grava_atividade_atend.php" method="POST" onSubmit="return submeter_form(this);" name="formulario">
+                <input type="hidden" name="n" id="n" value="{n}">
+                <input type="hidden" name="status_anterior" id="status_anterior" value="{status_anterior}">
+				<input type="hidden" name="dt_cadastro" value="{dt_cad}">
+				<input type="hidden" name="cod_atendente" value="{cod_atendente}">
+				<input type="hidden" name="tipo_ativ" value="{tipo_ativ}">
+				<input type="hidden" name="num_dias_influenciados" value="{num_dias_influenciados}">
+				<input type="hidden" name="TA" value="{ta}">
+				<input type="hidden" name="cd_cenario" value="{cd_cenario}">
+				<input type="hidden" name="aa" value="{aa}">
+				<input type="hidden" name="dt_limite" type="text" id="dt_limite" value="{dt_limite}">
+				<!-- START BLOCK : qt_tarefa -->
+				<input type="hidden" name="qt_tarefa_aberta" id="qt_tarefa_aberta" value="{qt_tarefa_aberta}">
+				<input type="hidden" name="qt_tarefa_exec" id="qt_tarefa_exec" value="{qt_tarefa_exec}">
+				<!-- END BLOCK : qt_tarefa -->
+			  <font size="1" face="Verdana, Arial, Helvetica, sans-serif">              
+              </font> 
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td valign="top"></td>
+                  <td width="100%">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr> 
+                  <td colspan="2">
+					<table width="95%" border="0" align="center" cellpadding="0" cellspacing="1">
+                      <tr> 
+                        <td><font size="1" face="Verdana">Número:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"><big><b>{numero_os}</b></big></font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Dt Solicitação:</font></td>
+                        <td colspan="2"> <p align="left"><font size="1" face="Verdana">{dt_cad}</font></td>
+                      </tr>						
+                      
+					  <!-- START BLOCK : info_atividade_legal -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Pertinência:</font></td>
+                        <td colspan="2" style="font-family: arial; padding-top: 3px; padding-bottom: 5px;">{status_legal}</td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Link:</font></td>
+                        <td colspan="2" style="font-family: arial; padding-top: 3px; padding-bottom: 5px;">{link_legal}</td>
+                      </tr>					  
+					  <!-- END BLOCK : info_atividade_legal -->					  
+                      
+                      <tr>
+                        
+                        <td>
+                        	<span style="visibility:{projeto_visibility}"><font size="1" face="Verdana">Projeto</font></span>
+                    	</td>
+                        <td>
+                          
+                          <select size="1" name="cbo_sistema{cbo_sistema_not_gri_extension_name}" style="visibility:{projeto_visibility}">
+                            <!-- START BLOCK : cbo_sistemas -->
+                            <option value="{codsis}"{chksis}>{nomesis}</option>
+                            <!-- END BLOCK : cbo_sistemas -->
+                          </select>
+                          
+                        </td>
+                        
+                        <td rowspan="2" valign="top" align="right"><a 
+                        		href="imp_atividade.php?n={numero_os}"><img 
+                        		src="img/btn_impressora.jpg" border="0" alt="Imprimir"></a></td>
+                      
+                      </tr>
+                      
+					  <!-- START BLOCK : lista_status_atual -->
+                      <tr>
+                        <td><font size="1" face="Verdana">Status atual</font></td>
+                        <td> 
+                          <select size="1" name="cbo_status_atual" id="cbo_status_atual" {ro_solic} onChange="checkStatus(this)">
+                            <!-- START BLOCK : cbo_status_atual -->
+                            <option value="{codstt}"{chkstt}>{nomestt}</option>
+                            <!-- END BLOCK : cbo_status_atual -->
+                          </select>
+                          </td>
+                      </tr>
+					  <!-- END BLOCK : lista_status_atual -->
+					  <!-- START BLOCK : desc_status_atual -->
+                      <tr> 
+                        <td class="texto1">Situação:</td>
+                        <td class="texto1"><i>{situacao}</i></td>
+                      </tr>
+					  <!-- END BLOCK : desc_status_atual -->
+                      <!-- START BLOCK : datas_cronograma -->
+                      <tr> 
+                        <td> <font size="1" face="Verdana">Data de início prevista:</font> 
+                        </td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="txt_dt_inicio_prev" type="text" id="txt_dt_inicio_prev"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" value="{dt_inicio_prev}" size="12" maxlength="10" {ro_solic}>
+                          dd/mm/aaaa</font> </td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Data de término prevista:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="txt_dt_fim_prev" type="text" id="txt_dt_fim_prev"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" value="{dt_fim_prev}" size="12" maxlength="10" {ro_solic}>
+                          dd/mm/aaaa</font></td>
+                      </tr>
+                      <!-- END BLOCK : datas_cronograma -->
+					  
+					  
+					  
+					  
+                      <!-- START BLOCK : testes -->
+                      <tr bgcolor="#0046ad" style='{gf_testes_style}'>
+                        <td colspan="3" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{teste}</strong></font></td>
+                      </tr>
+					  <tr style='{gf_testes_style}'>
+                        <td><font size="1" face="Verdana">Data de envio para {teste}:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="txt_dt_env_teste" type="hidden" value="{dt_env_teste}">
+                          {dt_env_teste} </font></td>
+                      </tr>
+                      <tr style="{gi_style}"> 
+                        <td><font size="1" face="Verdana">Teste é relevante:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana">
+                          <select name="fl_teste_relevante" id="fl_teste_relevante">
+                          <option value="S" {teste_relevante_sim_selected}>Sim</option>
+                          <option value="N" {teste_relevante_nao_selected}>Não</option>
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr style='{gf_testes_style}'>
+                        <td><font size="1" face="Verdana">Data limite para {teste}:</font></td>
+                        <td colspan="2">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td>
+										<input name="txt_dt_limite_teste" type="text" id="txt_dt_limite_teste"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" value="{dt_limite_teste}" size="12" maxlength="10" {ro_solic}>
+									</td>
+									<td>
+										<img src="img/btn_sugestao.png" onclick="getDataSugestao()" border="0" style="cursor:pointer;margin-left:5px;" title="Sugestão de data">
+										<script>
+											
+											function getDataSugestao()
+											{
+												var ds_url   = "ajax_proximo_dia_util.php";
+												var lt_param = "qt_dias=5";
+												ajaxExecute(ds_url, lt_param, "returnDataSugestao", '', 'POST');
+												
+											}										
+											
+											function returnDataSugestao(dt_data)
+											{
+												if(confirm("A data sugerida é: " + dt_data + "\n\nDeseja utilizar esta data?" ))
+												{
+													document.getElementById('txt_dt_limite_teste').value = dt_data;
+												}
+											}
+										</script>
+									</td>
+								</tr>
+							</table>
+						</td>
+                      </tr>
+                      <tr style='{gf_testes_style}'> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel 
+                          pelo {teste}:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_testador"   {ro_solic}>
+                            <!-- START BLOCK : cbo_testador -->
+                            <option value="{cod_testador}" {chk_testador}>{nome_testador}</option>
+                            <!-- END BLOCK : cbo_testador -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <!-- END BLOCK : testes -->
+					  
+						<!-- START BLOCK : banco_de_solucao -->
+						<tr bgcolor="#0046ad"> 
+	                        <td colspan="3" align="center">
+								<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+									<strong>Banco de Soluções</strong>
+								</font>
+							</td>
+						</tr>
+						<tr> 
+	                        <td>
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Categoria:</font>
+							</td>
+	                        <td colspan="2">
+								<font size="1" face="Verdana">
+								<input type="hidden" name="cd_atividade_solucao" id="cd_atividade_solucao" value="{cd_atividade_solucao}" readonly>								
+								<select size="1" name="cd_solucao_categoria" {ro_solic}>
+									<option value="">Selecione</option>
+									<!-- START BLOCK : cd_solucao_categoria -->
+									<option value="{cd_solucao_categoria}" {fl_solucao_categoria}>{ds_solucao_categoria}</option>
+									<!-- END BLOCK : cd_solucao_categoria -->
+								</select>
+								</font>
+							</td>
+	                    </tr>						
+						<tr> 
+	                        <td>
+								<font size="1" face="Verdana">Assunto:</font>
+							</td>
+	                        <td colspan="2">
+								<font size="1" face="Verdana"> 
+									<input type="text" name="ds_solucao_assunto" id="ds_solucao_assunto" value="{ds_solucao_assunto}" style="width:100%;">
+								</font>
+							</td>
+						</tr>
+						<!-- END BLOCK : banco_de_solucao -->					  
+					  
+					  
+                      <!-- START BLOCK : encaminhamento -->
+                      <tr bgcolor="#0046ad" style="{style_encaminhamento}"> 
+                        <td colspan="3" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Encaminhamento</strong></font></td>
+                      </tr>
+                      <tr style="{style_encaminhamento}"> 
+                        <td><font size="1" face="Verdana">Data de in&iacute;cio 
+                          real:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="txt_dt_inicio_real" type="text" id="txt_dt_inicio_real"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" value="{dt_inicio_real}" size="12" maxlength="10" {ro_solic}>
+                          dd/mm/aaaa</font></td>
+                      </tr>
+                      <tr style="{style_encaminhamento}"> 
+                        <td><font size="1" face="Verdana">Data de fim real:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> {dt_fim_real} 
+                          </font></td>
+                      </tr>
+                      <tr style="{style_encaminhamento_descricao}"> 
+                        <td valign="top"><font size="1" face="Verdana">Descrição 
+                          da Manutenção:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <textarea name="txt_solucao" style="width: 630px" rows="4" id="txt_solucao" class="resizable" {ro_solic}>{solucao}</textarea>
+                          </font></td>
+                      </tr>
+                      
+                      
+                      <tr bgcolor="#0046ad" style="{style_cronograma}"> 
+                        <td colspan="3" align="center"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Cronograma</strong></font></td>
+                      </tr>
+                      <tr style="{style_cronograma}"> 
+							<td valign="top">
+								<font size="1" face="Verdana">Cronograma:</font>
+							</td>
+							<td colspan="2">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<select size="1" id="cd_atividade_cronograma" name="cd_atividade_cronograma" {ro_solic}>
+												<option value="" >Selecione</option>
+											<!-- START BLOCK : combo_cronograma_analista -->
+												<option value="{cd_atividade_cronograma}" >{descricao}</option>
+											<!-- END BLOCK : combo_cronograma_analista -->
+											</select>
+										</td>
+										<td style=" padding-left: 5px;">
+											<img src="img/add.png" border="0" title="Adicionar ao cronograma" style="cursor:pointer" onclick="adicionarCronograma(document.getElementById('cd_atividade_cronograma').value,document.getElementById('n').value)">
+										</td>
+									</tr>
+								</table>
+								<table border="0" cellspacing="0" cellpadding="0">
+								<!-- START BLOCK : combo_cronograma_analista_incluidos -->
+									<tr>
+										<td>
+											<font size="1" face="Verdana">
+												{descricao}
+											</font>
+										</td>
+										<td style=" padding-left: 5px; {fl_encerra_cronograma}" >
+											<img src="img/delete.png" border="0" title="Remover do cronograma" style="cursor:pointer" onclick="removerCronograma({cd_atividade_cronograma},{cd_atividade_cronograma_item})">
+										</td>										
+									</tr>
+								<!-- END BLOCK : combo_cronograma_analista_incluidos -->
+								</table>
+								<BR>
+							</td>
+                      </tr>			
+					  <tr style="{style_cronograma}"> 
+                        <td><font size="1" face="Verdana">Balanço Anual - GI:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <select size="1" name="fl_balanco_gi">
+                            <option value="S" {chkbal_sim}>Sim</option>
+							<option value="N" {chkbal_nao}>Não</option>
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr style="{style_cronograma}"> 
+                        <td><font size="1" face="Verdana">Complexidade:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_complexidade"  {ro_solic}>
+                            <!-- START BLOCK : cbo_complexidade -->
+                            <option value="{codcplx}" {chkcplx}>{nomecplx}</option>
+                            <!-- END BLOCK : cbo_complexidade -->
+                          </select>
+                          </font></td>
+                      </tr>
+					  
+                      <tr style="{style_cronograma}"> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dias 
+                          previstos para esta atividade:</font></td>
+                        <td colspan="2"><input name="dias_previstos" type="text" id="dias_previstos" value="{dias_previstos}" size="4" maxlength="4"  ></td>
+                      </tr>
+                      <tr style="{style_cronograma}">
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Periodicidade:</font></td>
+                        <td colspan="2"><input name="periodicidade" type="text" id="periodicidade" value="{periodicidade}" size="4" maxlength="4"  ></td>
+                      </tr>
+
+                      <!-- END BLOCK : encaminhamento -->
+                      <!-- START BLOCK : num_dias_adicionar -->
+                      <tr> 
+                        <td colspan="3" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                          N&uacute;mero de dias &uacute;teis do cronograma que 
+                          esta solicita&ccedil;&atilde;o ir&aacute; influenciar.<br>
+                          <em><font color="#0000FF">Somente para atividades futuras, 
+                          que possuam data de in&iacute;cio prevista maior do 
+                          que hoje e que n&atilde;o tenham sido iniciadas.</font></em></font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;m. 
+                          de dias a adicionar:</font></td>
+                        <td colspan="2"> <input name="num_dias_crono" type="text" id="num_dias_crono" value="{num_dias_crono}" size="4" maxlength="4"  > 
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">A 
+                          partir da data:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="txt_dt_start" type="text" id="txt_dt_start"  onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" value="{dt_start}" size="12" maxlength="10" {ro_solic}>
+                          data a partir da qual todas as atividades ser&atilde;o 
+                          influenciadas. </font></td>
+                      </tr>
+                      <!-- END BLOCK : num_dias_adicionar -->
+                      <!-- START BLOCK : cenario_legal -->
+                      <tr bgcolor="#0046ad"> 
+                        <td colspan="3" align="center" class="cabecalho">Implementa&ccedil;&atilde;o Legal</td>
+                      </tr>
+                      <tr bgcolor="{cor_fundo2}"> 
+                        <td class="texto1">Pertin&ecirc;ncia: </td>
+                        <td colspan="2" valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input type="radio" name="pert" value="0" id="pert0"  {check_pert0}>
+                          N&atilde;o Pertinente<br>
+                          <input type="radio" name="pert" value="1" id="pert1" {check_pert1}>
+                          Pertinente, mas n&atilde;o altera processo<br>
+                          <input type="radio" name="pert" value="2" id="pert2" {check_pert2}>
+                          Pertinente e altera processo</font></td>
+                      </tr>
+                      <tr bgcolor="{cor_fundo1}"> 
+                        <td class="texto1">Prazo previsto:</td>
+                        <td colspan="2" valign="top" class="texto1"> 
+                          <input name="dt_prevista" type="text" id="dt_prevista" size="10" maxlength="10" value="{dt_prevista}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                          Prazo previsto para a implementa&ccedil;&atilde;o das 
+                          mudan&ccedil;as <span class="texto4verde">{dt_prev}</span></td>
+                      </tr>
+                      <tr bgcolor="{cor_fundo2}"> 
+                        <td class="texto1">Data implanta&ccedil;&atilde;o:</td>
+                        <td colspan="5" valign="top" class="texto1">
+                          <input name="dt_implementacao" type="text" id="dt_implementacao" size="10" maxlength="10" value="{dt_implementacao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                          Data em que as mudan&ccedil;as foram efetivamente implementadas <span class="texto4verde">{dt_impl}</span></td>
+                      </tr>
+                      <tr bgcolor="{cor_fundo1}"> 
+                        <td class="texto1">Reencaminhar para:</td>
+                        <td colspan="5" valign="top" class="texto1"> <select name="sel_gerencia" id="sel_gerencia">
+                            <!-- START BLOCK : sel_gerencia -->
+                            <option value="{cd_gerencia}" {chk_gerencia}>{nome_gerencia}</option>
+                            <!-- END BLOCK : sel_gerencia -->
+                          </select>
+                          Ger&ecirc;ncia que dever&aacute; verificar a proced&ecirc;ncia 
+                          deste item/norma<input name="gerencia_responsavel" type="hidden" value="{gerencia_responsavel}"></td>
+                      </tr>
+                      <!-- END BLOCK : cenario_legal -->
+
+
+                      <!-- START BLOCK : prev_orcamento -->
+                      <tr bgcolor="#DAE9F7"> 
+                        <td colspan="2"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Previsão 
+                          Orçamentária</font></td>
+                        <td align="right"><a href="#" onClick="win_orcamento({ativ},'')"><img src="img/btn_liberar_cc.jpg" border="0"></a></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" align="center"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr align="center" bgcolor="#0046ad"> 
+                              <td>&nbsp;</td>
+                              <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;mero 
+                                Dias</font></strong></td>
+                              <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Sistema</font></strong></td>
+                              <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Programa</font></strong></td>
+                            </tr>
+                            <!-- START BLOCK : ativ_proj -->
+                            <tr> 
+                              <td><a href="exclui_prev_orc.php?atv={numero_os}&sist={cd_sistema}"><img src="img/btn_excluir.jpg" border="0"></a></td>
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dias}</font></td>
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{sistema}</font></td>
+                              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{programa}</font></td>
+                            </tr>
+                            <!-- END BLOCK : ativ_proj -->
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&uacute;m. 
+                          de dias adicionados:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{num_dias_influenciados}</strong> 
+                          (N&uacute;mero de dias que esta atividade j&aacute; 
+                          influenciou)</font></td>
+                      </tr>
+                      <!-- END BLOCK : prev_orcamento -->
+
+
+                      <!-- START BLOCK : sub_atividades -->
+                      <tr style="{style_tarefas}"> 
+                        <td colspan="3"> <table width="100%" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#DAE9F7">
+                            <tr> 
+                              <td colspan="2"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Tarefas: </font></td>
+                              <td colspan="3" align="right">
+								<span id="tarefas_gi" style="{link_tarefas_gi}">
+									<font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">
+										<a href="{link_cadastro}/{ativ}/0/f">
+											<img src="img/btn_tarefa_forms.jpg" border="0">
+										</a>
+										<a href="{link_cadastro}/{ativ}/0/r">
+											<img src="img/btn_tarefa_reports.jpg" border="0">
+										</a>
+										<a href="{link_cadastro}/{ativ}/0/a">
+											<img src="img/btn_tarefa_arquivo.jpg" border="0">
+										</a>
+										<a href="{link_cadastro}/{ativ}/0">
+											<img src="img/btn_tarefa_operario.jpg" border="0">
+										</a>
+									</font>
+								</span>
+								<span id="tarefas" style="{link_tarefas}">
+									<a href="frm_tarefa.php?os={ativ}">
+										<img src="img/btn_tarefa_operario.jpg" border="0">
+									</a>
+			
+								</span>
+							  </td>
+                            </tr>
+                            <tr> 
+                              <td bgcolor="#0046ad">&nbsp;</td>
+                              <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Respons&aacute;vel</font></strong></td>
+                              <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data de Início</font></strong></td>
+                              <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Status</font></strong></td>
+							  <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Tarefa</font></strong></td>
+							  </tr>
+                            <!-- START BLOCK : tarefas -->
+                            <tr> 
+                              <td bgcolor="#F4F4F4" align="center"><a href="{link_cadastro}/{ativ}/{codtarefa}"><img src="img/btn_manut.jpg" border="0"></a></td>
+                              <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{codtarefa} - {programador}</font></td>
+                              <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_inicio_prog}</font></td>
+                              <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{status}</font></td>
+                              <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{descricao}</font></td>
+                            </tr>
+                            <!-- END BLOCK : tarefas -->
+                            <tr> 
+                              <td colspan="5" align="center" bgcolor="#F4F4F4">&nbsp;</td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <!-- END BLOCK : sub_atividades -->
+                      
+                      
+					<!-- START BLOCK : atividade_rateio -->
+					<tr><td><br></td></tr>
+                    <tr bgcolor="#0046ad"> 
+                        <td colspan="3" align="center">
+                        	<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Rateio Previdenciário</strong></font>
+                    	</td>
+                    </tr>
+
+                    <tr>
+							<td colspan="4" align="center">
+								<table width="100%">
+								<tbody id='ob_rateio'>
+									<tr bgcolor="#0046ad">
+									<td class="grade" align="center"><b>Programa</b></td>
+									
+									<td><div id="percentualCaption" class="grade" align="center"><b>Percentual ({atividade_rateio_soma_percentuais_1}%)</b></div></td>
+									<td></td>
+									</tr>
+
+                            		<!-- START BLOCK : atividade_rateio_percentuais -->
+									<tr bgcolor="#DAE9F7" id="{linha_percentual_id}">
+									<td>
+											<center>
+
+												<select id='{rateio_programa_id}'
+														name='ar_rateio_programa[]'>
+													<option value='PATD'{PATD}>Atendimento</option>
+													<option value='PPCD'{PPCD}>Cadastro</option>
+													<option value='PEMP'{PEMP}>Empréstimos</option>
+													<option value='PINV'{PINV}>Investimentos</option>
+													<option value='PPRV'{PPRV}>Previdenciário</option>
+													<option value='PSEG'{PSEG}>Seguros</option> 
+												</select>
+
+											</center></td>
+									
+									<td><center><input id='{percentual_id}'  
+		                                     type='text' 
+		                                     name='ar_rateio_percentual[]'
+		                                     value='{percentual_value}' 
+		                                     onblur='calculeSumPercents();sumPercentsValid( PERCENT_VALIDATE_EQUALS_OR_MINOR )'
+											 onkeypress='if( event.keyCode==13 ) { calculeSumPercents();addRateio(); }'
+											 style='text-align: right'
+		                                    ></center></td>
+                                    <td><input type='button' value='Remover'
+		                                     onclick='delLineTable( document.getElementById("{linha_percentual_id}") );'
+		                                    ></td>
+									</tr>
+                            		<!-- END BLOCK : atividade_rateio_percentuais -->
+
+                            		<!-- START BLOCK : atividade_rateio_scripts -->
+									<script>
+										{atividade_rateio_count}
+										{atividade_rateio_soma_percentuais}
+										{atividade_rateio_add_rateio}
+									</script>
+                            		<!-- END BLOCK : atividade_rateio_scripts -->
+									
+								</tbody>
+								</table>
+								<input type="button" value="Adicionar" onclick="addRateio();">
+								<BR><BR><BR>
+							</td>
+						</tr>
+                      <!-- END BLOCK : atividade_rateio -->
+
+                    </table></td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><div align="center"><font size="1" face="Verdana">
+						<input type="submit"
+                      		 id="btn_salvar"
+                             value="Salvar"
+                             class="botao"
+                             name="B1" {object_html_salvar_extend}
+                             style='width:100;'
+							 {fl_salvar_legal}
+                             />
+						<input id="btn_cancelar" type="reset" class='botao_disabled' value="Cancelar" name="B2">	 
+                      </font></div>
+                  </td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </form>
+</td>
+        </tr>
+      </table>
+      			
+			</div>
+			<br />
+	</div>
+
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

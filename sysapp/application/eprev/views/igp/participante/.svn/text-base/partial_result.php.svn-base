@@ -1,0 +1,109 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Mês','Semestre','Meta','Peso','Result/Meta','RF Mês','Participantes Mês','Meta/Result Acum', 'RF Acum', 'Média Móvel', 'RF 12 Meses', 'Instituidor','Total Participantes',''
+);
+
+$acumular_ate=12; // meses
+
+$contador=sizeof($collection);
+
+foreach( $collection as $item )
+{
+	$link=anchor( "igp/participante/detalhe/" . $item["cd_participante"], "editar" );
+
+	$semestre = floatval($item['nr_semestre']);
+	$meta = floatval($item['nr_meta']);
+	$peso = floatval($item['nr_peso']);
+	$instituidor = floatval($item['nr_instituidor']);
+
+	$resultado_por_meta = (  floatval($semestre) / floatval($meta)  )*100;
+
+	// SE(F109>1;E109;F109*E109)
+	//		E: $peso
+	//		F: $resultado_por_meta
+	$rf_mes=0;
+	if( (floatval($resultado_por_meta)/100)>1 )
+	{
+		$rf_mes = floatval($peso);
+	}
+	else
+	{
+		$rf_mes = (floatval($resultado_por_meta)/100)*floatval($peso);
+	}
+
+	if(floatval($item['nr_partic_mes'])>0)
+	{
+		$participantes_mes = $item['nr_partic_mes'];
+	}
+	else
+	{
+		$participantes_mes = intval($item["nr_semestre"])+intval($item["nr_instituidor"]);
+	}
+
+	$participantes_mes_sem_instituidor = floatval($participantes_mes)-floatval($instituidor);
+
+	$meta_por_resultado_acumulado = ( floatval($participantes_mes_sem_instituidor) / floatval($meta) )*100;
+
+	// RF ACUM
+	// SE(I109>1;E109;I109*E109)
+	// E: $peso
+	// I: $meta_por_resultado_acumulado
+	if( (floatval($meta_por_resultado_acumulado)/100)>1 )
+	{
+		$rf_acum = floatval($peso);
+	}
+	else
+	{
+		$rf_acum = (floatval($meta_por_resultado_acumulado)/100)*floatval($peso);
+	}
+
+	// MÉDIA MÓVEL, média dos últimos 12 meses
+	$a_percentual_media_movel[]=$participantes_mes_sem_instituidor;
+	$percentual_media_movel=0;
+
+	// MÉDIA MÓVEL, média dos últimos 12 meses do "RF MES"	
+	$a_rf_mes[]=$rf_mes;
+	$media_movel=0;
+
+	$j=1;
+	for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$percentual_media_movel += $a_percentual_media_movel[$i-1];
+			$media_movel += $a_rf_mes[$i-1];
+
+			$j++;
+		}
+	}
+
+	$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+	$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+	$media_movel=floatval($media_movel)/$divisor;
+
+	$body[] = array(
+		$contador--
+		, $item['mes_referencia']
+		, $semestre
+		, $meta
+		, $peso
+		, number_format( $resultado_por_meta, 2 ).' %'
+		, number_format( $rf_mes, 2 )
+		, $participantes_mes_sem_instituidor
+		, number_format( $meta_por_resultado_acumulado, 2 ).' %'
+		, number_format( $rf_acum, 2 )
+		, number_format($percentual_media_movel,0,'','')
+		, number_format( $media_movel, 2 )
+		, $instituidor
+		, $participantes_mes
+		, $link
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

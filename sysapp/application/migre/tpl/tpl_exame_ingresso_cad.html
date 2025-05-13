@@ -1,0 +1,110 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Ingresso - Exame Médico ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+		<script>
+		function cd_empresa_event( ob )
+		{
+			if( ob.value.toString().length==2 )
+			{
+				document.getElementById('cd_registro_empregado').focus();
+			}
+		}
+		</script>
+
+		<script type='text/javascript' src='inc/exame_ingresso.js'></script>
+		<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+		<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+		<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+		<style>
+			#ob_filtro fieldset {
+				padding-top: 10px;
+				padding-left: 10px;
+				padding-right: 10px;
+				padding-bottom: 5px;
+			}
+
+			#ob_filtro legend {
+				font-size: 10px;
+				font-weight: bold;
+				font-family: Courier, Arial,'MS Sans Serif';		
+				text-transform:uppercase;
+			}
+
+			#ob_filtro label {
+				display: block;
+				width: 250px;
+				float: left;
+				color: #000;
+				border-bottom: 1px solid #f1f1f1;
+				font-weight: normal;
+				font-size: 10px;
+				font-family: Courier, Arial,'MS Sans Serif';	
+				line-height: 20px;
+			}			
+		</style>
+
+		<script>
+			function validaForm()
+			{
+				if (trimValue(document.getElementById('ds_nome').value) == "")
+				{
+					alert('Informe o nome.')
+					return false;
+				}
+				else
+				{
+					if(!document.getElementById('ds_nome').readOnly)
+					{
+						limparParticipante();
+					}
+
+					return true;
+				}
+			}
+		</script>
+		<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="document.location.href='exame_ingresso.php';">
+						<span>MOVIMENTO</span>
+					</li>
+					<li onclick="document.location.href='exame_ingresso_cad.php';"  class="abaSelecionada">
+						<span>CADASTRO</span>
+					</li>
+ 					<li onclick="document.location.href='exame_ingresso_com_retorno.php';">
+						<span>ENCERRADOS</span>
+					</li>
+				</ul>
+			</div>                            
+			<div class="aba_conteudo"><br>
+			<form id="formPesquisa" action="exame_ingresso_grava.php" method="post" onSubmit="return validaForm();">
+				<fieldset id="ob_filtro" style="margin-top:10px;">
+					<label>Emp/Red/Seq:</label>
+					<input type="text" name="cd_empresa" id="cd_empresa" value="{cd_empresa}" style="width:40px" onkeyup="cd_empresa_event(this)"> 
+					<input type="text" name="cd_registro_empregado" id="cd_registro_empregado" value="{cd_registro_empregado}" style="width:80px">
+					<input type="text" name="seq_dependencia" id="seq_dependencia" value="{seq_dependencia}" style="width:40px">
+					<input type="button" value="Busca" class="botao" onclick="buscaParticipante();" style="margin-bottom: 5px;"><br>
+					<label>Nome:</label> 
+					<input type="text" name="ds_nome" id="ds_nome" value="{ds_nome}" style="width:400px"><br>
+					<div style="clear:both; padding-top:15px; width:90%; text-align:center;">
+					<input type="submit" value="Salvar" class="botao" {fl_editar}>
+					<input type="button" value="Limpar" class="botao" {fl_editar} onclick="limparParticipante();">
+					</div>
+				</fieldset>			
+			</form>
+			</div>
+		</div>
+		<script>
+			MaskInput(document.getElementById('cd_empresa'),            "99");
+			MaskInput(document.getElementById('cd_registro_empregado'), "999999");
+			MaskInput(document.getElementById('seq_dependencia'),       "99");
+		</script>		
+<!-- Begin: Insert DYNTAR -->
+<link rel="stylesheet" href="inc/dynamic_textarea_resizer/dyntar.css" type="text/css" />
+<script type="text/javascript" src="inc/dynamic_textarea_resizer/dyntar.js"></script>
+<!-- End: Insert DYNTAR -->	
+
+<!-- INCLUDE BLOCK : footer.html -->

@@ -1,0 +1,57 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Administração do listner ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td> <br> <br> <br> <br> <p align="center"><strong><font color="#FF0000">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td align="center" class="texto1"><p align="center"><img src="img/img_divisoria1.gif" width="80%" height="1"></p>
+            <form name="form2" method="post" action="grava_estacoes.php" onSubmit="return valida_form(this)">
+              <table border="0" align="center" cellpadding="2" cellspacing="1">
+                <tr> 
+                  <td colspan="8"> <table width="100%" border="0" cellpadding="4" cellspacing="0">
+                      <tr> 
+                        <td class="titulo_verde">Esta&ccedil;&otilde;es:</td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="#0046ad"> 
+                  <td class="cabecalho">IP:</td>
+                  <td class="cabecalho">Porta:</td>
+                  <td class="cabecalho">&Uacute;ltima simula&ccedil;&atilde;o 
+                    em:</td>
+                  <td class="cabecalho">Banco:</td>
+                  <td class="cabecalho">&Uacute;ltima resposta de vida</td>
+                  <td class="cabecalho">Situa&ccedil;&atilde;o:</td>
+                  <td class="cabecalho">Tempo de resposta simula&ccedil;&atilde;o 
+                    de empr&eacute;stimo:</td>
+                  <td class="cabecalho">Cliente:</td>
+                </tr>
+                <!-- START BLOCK : equipamento -->
+                <tr bgcolor="{cor_fundo}"> 
+                  <td bgcolor="{cor_atividade}" class="texto1">{ip}</td>
+                  <td bgcolor="{cor_atividade}" class="texto1">{porta}</td>
+                  <td bgcolor="{cor_atividade}" class="texto1">{dt_hr_atividade}</td>
+                  <td class="texto1" align="center">{banco}</td>
+                  <td class="texto1" align="center">{ultima_resposta}</td>
+                  <td class="texto1" align="center">{situacao}</td>
+                  <td class="texto1" align="center">{tempo_resp}</td>
+                  <td class="texto1" align="center">{processo}</td>
+                </tr>
+                <!-- END BLOCK : equipamento -->
+              </table>
+            </form>
+            OBS. Se tempo resposta &lt; 1 segundo, aparecer&aacute; 0.</td>
+			
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

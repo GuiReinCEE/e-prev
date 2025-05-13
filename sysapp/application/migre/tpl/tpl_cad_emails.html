@@ -1,0 +1,218 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Destaques ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.conteudo.value == '') { erros = erros + "- O campo 'Conteudo' deve estar preenchido.\n"; }
+	if (f.assunto.value == '') { erros = erros + "- O campo 'Assunto do Email' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		if (confirm("ATENÇÃO: Esta ação é irreversível!\n\n Confirma o reenvio do email?\n\n"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+function valida_form2(f) {
+	var erros = "";
+	if (f.arquivo.value == '') { erros = erros + "- Por favor, selecione o arquivo. (Botão 'Procurar').\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+//-->
+</script>
+<br>
+<table width="777" border="0" cellpadding="0" cellspacing="1" align="center">
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" id="form1" method="post" action="reenvia_email.php" onSubmit="return valida_form(this)">
+              <table border="0" align="center" cellpadding="0" cellspacing="1" width="777">
+                <tr bgcolor="#dae9f7"> 
+                  <td class="links2">N&uacute;mero email:</td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cd_email" type="text" id="cd_email" value="{cd_email}" readonly size="10" maxlength="10" >
+                    </font></td>
+                  <td align="right" rowspan="3">
+				  <input type="submit" value="Reenviar Email" class="botao">
+</td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    Solic.Envio:</font></font></td>
+                  <td> <input name="dt_envio" type="text" id="dt_envio" size="10" maxlength="10" value="{dt_envio}" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" > 
+                    <input name="e" type="hidden" value="{e}"> <input name="insere" type="hidden" id="insere" value="{insere}"> 
+                  </td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    &uacute;ltimo envio:</font></td>
+                  <td><input name="dt_email_enviado" type="text" id="dt_email_enviado" size="10" maxlength="10" value="{dt_email_enviado}" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" ></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Remetente:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="de" type="text" id="de" value="{de}" size="50" maxlength="200" >
+                    </font> </td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Para:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="para" type="text" id="para" value="{para}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">CC:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cc" type="text" id="cc" value="{cc}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">CCO:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cco" type="text" id="cco" value="{cco}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Assunto:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="assunto" type="text" id="assunto" value="{assunto}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Texto 
+                    do email:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="conteudo" cols="90" rows="30" id="textarea" >{conteudo}</textarea>
+                    </font></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#F4F4F4" class="texto1">Empresa/Red/Seq:</td>
+                  <td colspan="2" bgcolor="#F4F4F4"><input name="empresa" type="text" id="empresa" value="{empresa}" size="3" maxlength="3">
+                    /
+                    <input name="red" type="text" id="red" value="{red}" size="7" maxlength="7">
+                    /
+                    <input name="seq" type="text" id="seq" value="{seq}" size="3" maxlength="3">
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="#F4F4F4" class="texto1">Evento:</td>
+                  <td colspan="2" bgcolor="#F4F4F4">
+                  	<input name="cd_evento" type="text" id="empresa" value="{cd_evento}" size="3" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="#F4F4F4" class="texto1">Divis&atilde;o resp.:</td>
+                  <td colspan="2" bgcolor="#F4F4F4"><input name="gerencia" type="text" id="gerencia" value="{gerencia}" size="4" maxlength="4"></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#F4F4F4">&nbsp;</td>
+                  <td colspan="2" bgcolor="#F4F4F4">&nbsp;</td>
+                </tr>
+                <!--          <tr bgcolor="#DCDCCC">
+            <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+              de </font></td>
+            <td><font size="2" face="Arial, Helvetica, sans-serif">
+              <select name="select" id="select2">
+                <!-- START BLOCK : diretriz --
+                <option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+                <!-- END BLOCK : diretriz --
+              </select>
+              </font></td>
+          </tr>
+-->
+                <tr> 
+                  <td colspan="3"><div align="center"></div></td>
+                </tr>
+              </table>
+
+		<style>
+			.tb_lista_resultado {
+				border-collapse: collapse;
+				width: 100%;		
+			}
+			
+			
+			.tb_lista_resultado * {
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}
+			.tb_lista_resultado caption {
+				font-size: 12pt;
+				font-weight: bold;	
+				text-align:center;
+				border: 1px solid #CCCCCC;
+				color:#FFFFFF;
+				background:#0046ad;
+			}
+			
+			.tb_lista_resultado th {
+				font-size: 10pt;
+				font-weight: bold;	
+				text-align:center;
+				border: 1px solid #CCCCCC;
+				color:#FFFFFF;
+				background:#0046ad;
+			}
+			.tb_lista_resultado td {
+				padding-left: 5px;
+				padding-right: 5px;
+				border: 1px solid #CCCCCC;
+			}		
+			
+			.tb_resultado_selecionado {
+				background:#E6E8B6;
+				border:1px #FAD163 solid;
+				cursor:pointer;
+			}
+		</style>
+			  
+			  <!-- START BLOCK : det_email_retornado -->
+			  <div>
+				<table class="tb_lista_resultado" align="center">
+					<caption>ERRO DE ENVIO</caption>
+					<tr>
+						<th>
+							Data Retorno
+						</th>		
+						<th>
+							Mensagem
+						</th>		
+					</tr>
+					<!-- START BLOCK : lst_email_retornado -->
+					<tr bgcolor="{bg_color}">
+						<td style="white-space:nowrap;" valign="top">
+							{dt_retorno}
+						</td>		
+						<td>
+							{ds_msg}
+						</td>		
+					</tr>					
+					<!-- END BLOCK : lst_email_retornado -->
+				</table>
+			  </div>
+			  <!-- END BLOCK : det_email_retornado -->
+			  
+      </form></td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

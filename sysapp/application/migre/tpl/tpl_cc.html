@@ -1,0 +1,227 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Contracheque ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<!-- START BLOCK : blk_mensagem -->
+	<div style='text-align:center; font-family:arial; font-size: 14pt; color:red;'>
+		<BR><BR>
+		<h1>Não existe contracheque disponível para o período.</h1>
+		<BR><BR>
+	</div>
+	<!-- END BLOCK : blk_mensagem -->
+
+	<form name="form_contra_cheque" id="form_contra_cheque" method="post" action="cc.php" target="">
+		<input type="hidden" name="cc_registro_empregado" id="cc_registro_empregado" value="{cc_registro_empregado}">
+		
+		<!-- START BLOCK : blk_consulta_re -->
+		<BR>
+        <table width="500" border="0" align="center" cellpadding="3" cellspacing="0">
+            <tr> 
+                <td bgcolor="#0066CC" align="center" style="padding: 2px; color:#FFFFFF; font-family: arial; font-size: 11pt;">
+					<b>Informe abaixo o RE a consultar</b>
+				</td>
+            </tr>
+            <tr> 
+                <td bgcolor="#CCCCCC" align="center" style="padding: 2px; font-family: arial; font-size: 10pt;">
+					RE: 
+                    <input type="text" name="rh_registro_empregado"  id="rh_registro_empregado" maxlength="6" value="{rh_registro_empregado}" style="width: 100px;">
+                    <input type="submit" name="Submit" value="Atualizar" class="botao" style="width: 100px;">
+				</td>
+			</tr>
+		</table>
+		<!-- END BLOCK : blk_consulta_re -->
+		
+		<BR>
+		<table width="500" border="0" align="center" cellpadding="3" cellspacing="0">
+		    <tr> 
+                <td bgcolor="#0066CC" align="center" style="padding: 2px; color:#FFFFFF; font-family: arial; font-size: 11pt;">
+					<b>Informe Mês/Ano de referência</b>
+				</td>
+            </tr>
+			<tr>
+				<td bgcolor="#CCCCCC" align="center" style="padding: 2px; font-family: arial; font-size: 10pt;">
+					Mês/Ano
+					<select name="cc_mes_ano" id="cc_mes_ano" style="width: 150px;">
+						  <!-- START BLOCK : lista_mes_ano -->
+						  <option value="{cd_mes_ano}" {ck_mes_ano}>{ds_mes_ano}</option>
+						  <!-- END BLOCK : lista_mes_ano -->							
+					</select>
+					<input type="submit" name="Submit" value="Atualizar" class="botao" style="margin-left: 10px; width: 100px;">
+				</td>
+			</tr>
+		</table>	
+		
+		<BR>  
+		<!-- START BLOCK :  blk_conteudo_cc -->
+		<table align="center">
+		  <tr> 
+			<td><font  size=2 face="Verdana, Arial, Helvetica, sans-serif"><b>Empresa:</b></font></td>
+			<td colspan="3"><font " size=2 face="Verdana, Arial, Helvetica, sans-serif">{empresa}</font></td>
+		  </tr>
+		  <tr> 
+			<td><font color="#0066CC">&nbsp;</font></td>
+			<td colspan="3"><font  size="2" face="Verdana, Arial, Helvetica, sans-serif">Rua 
+			  dos Andradas 702 - Porto Alegre - RS</font></td>
+		  </tr>
+		  <tr> 
+			<td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>CNPJ</b></font></td>
+			<td colspan="3"><font face="Verdana, Arial, Helvetica, sans-serif" size=2>90.884.412/0001-24</font></td>
+		  </tr>		  
+		  <tr> 
+			<td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>Funcion&aacute;rio</b></font></td>
+			<td colspan="3"><font face="Verdana, Arial, Helvetica, sans-serif" size=2>{nome}</font></td>
+		  </tr>
+		  <tr> 
+			<td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>Endere&ccedil;o:</b></font></td>
+			<td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{endereco} 
+			  - {bairro}</font></td>
+		  </tr>
+		  <tr> 
+			<td>&nbsp;</td>
+			<td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cep}-{complemento_cep} 
+			  - {cidade} - {uf}</font></td>
+		  </tr>
+		  <tr> 
+			<td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>Data 
+			  de Pgto</b></font></td>
+			<td colspan="3"><font face="Verdana, Arial, Helvetica, sans-serif" size=2>{dt_pagamento}</font></td>
+		  </tr>
+		  <tr> 
+			<td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><strong>Mes/Ano</strong></font></td>
+			<td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{mes_ano}</font></td>
+			<td align="right" valign="middle">
+			
+			</td>
+			<td>
+
+			</td>
+		  </tr>
+		  <tr> 
+			<td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Banco</font></strong></td>
+			<td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{banco} 
+			  <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ag&ecirc;ncia</font></strong> 
+			  {agencia} </font></td>
+		  </tr>
+		  <tr> 
+			<td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size=2>Conta</font></strong></td>
+			<td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{conta}</font></td>
+		  </tr>
+		</table>
+		<br>
+		
+		<table width="500" class="sort-table" id="table-1" align="center" cellspacing="2" cellpadding="2">
+		   	<thead>
+			<tr>
+				<td>Cód</td>
+				<td>Descrição</td>
+				<td>Ref.</td>
+				<td>Valor</td>
+				<td>Tipo</td>
+			</tr>
+		   	</thead>
+			<tbody>
+				<!-- START BLOCK : contra_cheque-->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);">
+					<td align="center">{codigo}</td>
+					<td>{descricao}</td>
+					<td align="right">{ref}</td>					
+					<td align="right">{valor}</td>
+					<td align="center" style="{tp_cor}">{tipo}</td>
+				</tr>
+				<!-- END BLOCK : contra_cheque -->
+			</tbody>
+		</table>
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),[
+													"CaseInsensitiveString"
+													, "CaseInsensitiveString"
+													, "NumberFloatBR"
+													, "NumberFloatBR"
+													, "CaseInsensitiveString"
+
+													]);
+			ob_resul.onsort = function ()
+			{
+				var rows = ob_resul.tBody.rows;
+				var l = rows.length;
+				for (var i = 0; i < l; i++)
+				{
+					removeClassName( rows[i], i % 2 ? "sort-par" : "sort-impar" );
+					addClassName( rows[i], i % 2 ? "sort-impar" : "sort-par" );
+				}
+			};
+
+		</script>
+			
+        <table width="500" class="sort-table" align="center" cellspacing="2" cellpadding="2">
+            <tr> 
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">SALÁRIO BASE</span>
+					<br>
+					<span style="font-size: 10pt; ">{sal_base}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">SAL. CONTR. INSS</span>
+					<br>
+					<span style="font-size: 10pt; ">{contrib_inss}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">FGTS DO MES</span>
+					<br>
+					<span style="font-size: 10pt; ">{fgts_mes}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">RENDIMENTOS</span>
+					<br>
+					<span style="font-size: 10pt; ">{rendimentos}</span>
+				</td>
+            </tr>
+            <tr> 
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">BASE IRRF</span>
+					<br>
+					<span style="font-size: 10pt; ">{base_irrf}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">BASE FGTS</span>
+					<br>
+					<span style="font-size: 10pt; ">{base_fgts}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; ">DESCONTOS</span>
+					<br>
+					<span style="font-size: 10pt; ">{descontos}</span>
+				</td>
+                <td nowrap align="center"> 
+					<span style="font-size: 7pt; "><b>LÍQUIDO</b></span>
+					<br>
+					<span style="font-size: 10pt;"><b>{liquido}</b></span>
+				</td>
+            </tr>
+		</table>
+		
+		<BR>	
+		<table width="500" align="center" cellspacing="2" cellpadding="2">
+            <tr> 
+				<td  align="center">
+					<script>
+						function imprimeContraCheque()
+						{
+							document.getElementById('cc_imprimir').value = 'S';
+							document.getElementById('form_contra_cheque').target = '_blank';
+							document.getElementById('form_contra_cheque').submit();
+							
+							document.getElementById('form_contra_cheque').target = '';
+							document.getElementById('cc_imprimir').value = 'N';
+						}
+					</script>
+					<input type="hidden" name="cc_imprimir" id="cc_imprimir" value="{cc_imprimir}">
+					<input type="button" name="Submit" value="Versão para impressão" onclick="imprimeContraCheque();" class="botao" style="width: 200px;">
+				</td>
+            </tr>
+        </table>
+        <!-- END BLOCK :  blk_conteudo_cc -->
+	  </form>	
+<!-- INCLUDE BLOCK : footer.html -->

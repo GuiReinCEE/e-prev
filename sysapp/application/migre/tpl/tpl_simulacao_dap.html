@@ -1,0 +1,1184 @@
+<!-- INCLUDE BLOCK : header_simulacao_dap.html -->
+<script>
+	document.title = 'Empréstimo (Concessão) - ({ip_listener})';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+
+<script type="text/javascript" src="inc/yahoo/yahoo/yahoo.js" ></script>
+<script type="text/javascript" src="inc/yahoo/event/event.js" ></script>
+<script type="text/javascript" src="inc/yahoo/dom/dom.js" ></script>
+<script type="text/javascript" src="inc/yahoo/dragdrop/dragdrop.js" ></script>
+<script type="text/javascript" src="inc/yahoo/animation/animation.js" ></script>
+<script type="text/javascript" src="inc/yahoo/container/container.js"></script>
+<script language="JavaScript" src="inc/JAjax.js"></script>
+<script language="JavaScript" src="inc/simulacao_dap.js"></script>
+<script language="JavaScript" src="inc/pck_funcoes_emp.js"></script>
+<script language="JavaScript">
+function fnc_onload() 
+{
+	maximize();
+	alternaHeight('divEndereco', 120);  
+	getEl('cd_empresa').focus(); 
+	executeQuery();
+}
+</script>
+<link href="inc/proposta_emprestimo.css" rel="stylesheet" type="text/css">
+<link href="inc/yahoo/container/css/module.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="inc/yahoo/container/assets/container.css" />
+<link href="inc/yahoo/container/css/panel-aqua.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+.style15 {font-family: Tahoma, Verdana, Arial; font-size: 12px; font-weight: bold; }
+.style17 {font-family: Tahoma, Verdana, Arial; font-size: 12px; }
+
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<div id="divAndamento" style="position:absolute; left:590px; top:4px; width:160px; height:20px; z-index:1; color: #FFFFFF; background-color: #FF0000; border: 0px none #000000; visibility: hidden; padding: 2px; font-family: calibri, arial; font-size: 12pt;"></div>
+<table width="760" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td>
+      <table width="100%" border="0" cellspacing="1" cellpadding="0">
+        <tr> 
+          <td width="120">
+			   <strong>
+			   <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa</font></strong>
+          </td>
+                <td width="89%"> 
+					<input name="cd_empresa" type="text" datatype="integer" id="cd_empresa" size="2" maxlength="2" onBlur="buscaNomeEmpresa(this);" wftype="numeric" value="{cd_empresa}">
+					<!-- <div id="divNomeEmpresa"></div> -->
+					<input type="text" id="nome_empresa" name="nome_empresa" style="width:630px;" readonly disabled>
+					<input name="data_simulacao" type="hidden" id="data_simulacao" value="{data_simulacao}"> 
+					<input name="MOSTRAR_BANNER" type="hidden" id="MOSTRAR_BANNER" value="{MOSTRAR_BANNER}"> 
+					<input name="cd_plano" type="hidden" id="cd_plano">
+					<input name="getOrigem" type="hidden" id="getOrigem" value="{getOrigem}">
+					<input name="forma_calculo" type="hidden" id="forma_calculo" value="{forma_calculo}">
+				</td>
+        </tr>
+        <tr> 
+          <td width="120"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Registro</font></strong></td>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="40">
+                  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                  <input name="cd_registro_empregado" type="text" datatype="integer" id="cd_registro_empregado" size="6" maxlength="6" WFtype="numeric" value="{cd_registro_empregado}">
+                  </font>
+                </td>
+                <td width="20">
+                  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                  <input name="seq_dependencia" type="text" datatype="integer" id="seq_dependencia" size="2" maxlength="2" WFtype="numeric" value="{seq_dependencia}">
+                  </font>
+                </td>
+                <td>
+                  &nbsp;<input name="Submit6" type="button" class="botao" style="width: 100px" onClick="buscaParticipante()" value="Buscar">&nbsp;
+                  <!-- <div id="divNomeParticipante"></div> -->
+                  <input type="text" name="nome_participante" id="nome_participante" style="width:460px;" readonly disabled>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr style="display:none;"> 
+    <td bgcolor="#006633"> 
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="20"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Informações Endereço </font></strong></td>
+          <td><div align="right"><strong><img src="setaDown.gif" width="16" height="16" border="0" onClick="alternaHeight('divEndereco', 140);" style="cursor:pointer;"></strong></div></td>
+        </tr>
+      </table>
+	</td>
+  </tr>
+  <tr style="display:none;"> 
+    <td bgcolor="#E8E8E8"> 
+	  <div id="divEndereco" style="overflow:hidden;"> 
+          
+        <table width="100%" border="0" cellspacing="1" cellpadding="0">
+          <tr>
+              
+            <td width="50%" valign="top"> 
+              <table width="100%" border="0" align="left" cellpadding="0" cellspacing="1">
+                <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Logradouro</font></strong></td>
+                    <td>&nbsp;</td>
+                    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                      <input name="logradouro" type="text" id="logradouro" size="40" maxlength="40">
+                      </font></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bairro</font></strong></td>
+                    <td>&nbsp;</td>
+                    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                      <input name="bairro" id="bairro" type="text" size="25" maxlength="25">
+                      </font></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Cidade</font></strong></td>
+                    <td>&nbsp;</td>
+                    <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                      <input name="cidade" id="cidade" type="text" size="30" maxlength="30">
+                      </font></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">CEP</font></strong></td>
+                    <td>&nbsp;</td>
+                    <td> <input name="cep" id="cep" type="text" size="5" maxlength="5"> 
+                      <input name="complemento_cep" id="complemento_cep" type="text" size="3" maxlength="3"> 
+                    </td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Estado 
+                    </font></strong></td>
+                    <td>&nbsp;</td>
+                    <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+                      <input name="unidade_federativa" type="text" id="unidade_federativa" size="2" maxlength="2">
+                      </font></strong> </td>
+                  </tr>
+                </table>
+              
+            </td>
+              
+            <td width="50%" valign="top"> 
+              <table width="100%" border="0" align="right" cellpadding="0" cellspacing="1">
+                <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Telefone</font></strong></td>
+                    <td><input name="ddd" type="text" id="ddd" size="4" maxlength="4"> 
+                      <input name="telefone" type="text" id="telefone" size="8" maxlength="8"></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Telefone 
+                    Out.</font></strong></td>
+                    <td><input name="ddd_outro" type="text" id="ddd_outro" size="4" maxlength="4"> 
+                      <input name="telefone_outro" type="text" id="telefone_outro" size="8" maxlength="8"></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Email</font></strong></td>
+                    <td><input name="email" type="text" id="email" size="45" maxlength="45"></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Email 
+                    Prof. </font></strong></td>
+                    <td><input name="email_profissional" type="text" id="email_profissional" size="45" maxlength="45"></td>
+                  </tr>
+                  <tr> 
+                    
+                  <td width="110">&nbsp;</td>
+                    <td><div align="right">
+                        
+                      <input name="brnGravarEndereco" type="button" class="botao" id="brnGravarEndereco" onClick="fncAlteraEndereco()" value="Gravar endere&ccedil;o">
+                      </div></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>          
+      </div>
+	</td>
+  </tr>
+  <tr> 
+    <td bgcolor="#006633"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Histórico</strong></font></td>
+  </tr>
+  <tr> 
+    <td>
+	  <div id="divHistorico">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Saldo  Devedor 
+                   <input name="vlr_saldo_devedor" type="text" id="vlr_saldo_devedor" size="12" maxlength="12" readonly>
+            </strong></font></td>
+          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Prestações Atrasadas 
+              <input name="vlr_prest_atrasadas" type="text" id="vlr_prest_atrasadas" size="12" maxlength="12" readonly>
+            </strong></font></td>
+          <td><div align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Empréstimo Férias 
+                <input name="vlr_emp_ferias" type="text" id="vlr_emp_ferias" size="12" maxlength="12" readonly>
+              </strong></font></div></td>
+        </tr>
+      </table>
+      </div>
+	</td>
+  </tr>
+  <tr> 
+    <td height="20" bgcolor="#006633"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Valores do Empréstimo</strong></font></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#FFFFFF">
+	  <div id="divNovoEmprestimo">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td bgcolor="#E8E8E8"> <p> <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="retorno_ferias" type="checkbox" id="retorno_ferias" value="S" onClick="realizaSimulacao(false);">
+                    Ret. Férias</font></strong></p></td>
+                <td bgcolor="#E8E8E8"><div align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Salário Emp
+                   <input name="salario_emprestimo" type="text" id="salario_emprestimo" size="12" maxlength="12" readonly>
+                           <input name="Submit3" type="button" class="botao" style="width:22px; height:22px" onClick="popDecomposicaoSalEmp();" value="+">
+                </font></strong></div></td>
+                <td bgcolor="#E8E8E8"><div align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Débito 
+                      <input name="vlr_debitos" type="text" id="vlr_debitos" size="12" maxlength="12" readonly>
+                      <input name="Submit4" type="button" class="botao" style="width:22px; height:22px" onClick="debito();" value="+">
+                      <input name="Submit8" type="button" class="botao" value="Prestações" onClick="popEmprestimoAnterior();">
+                </font></strong></div></td>
+              </tr>
+              <tr> 
+                <td colspan="3"> <table width="100%" border="0" cellpadding="0" cellspacing="1">
+                      <tr> 
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Tipo
+                          <select name="tipo_emprestimo" id="tipo_emprestimo" style="width:220px" onChange="document.getElementById('dt_deposito').value=''; setTipoEmprestimo(); realizaSimulacao(false);">
+                             <!-- START BLOCK : blk_tipo_emprestimo -->
+                             <option value="{tipo_emp_cd_tipo}" {selTipoEmprestimo}>{tipo_emp_descricao}</option>
+                             <!-- END BLOCK : blk_tipo_emprestimo -->
+                          </select>
+                          </strong></font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Pagto
+                                 <select name="forma_pgto_fundacao" id="forma_pgto_fundacao" style="width:55px" onChange="updateFormaPgtoFceee();">
+                                    <option value="BCO">BCO</option>
+                                    <option value="CXA">CXA</option>
+                                 </select>
+                          </strong> </font></td>
+                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Origem 
+                          <select name="origem" id="origem" style="width:120px" onChange="updateOrigem();">
+                            <option value="I">Internet</option>
+                            <option value="N" selected>Normal</option>
+                            <option value="C">Call Center</option>
+                          </select>
+                          </strong></font></td>
+                        <td>
+                           <div align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Risco
+                              <select name="tipo_risco" id="tipo_risco" disabled="disabled" style="width:180px" onChange="realizaSimulacao(false);">
+                                        <!-- START BLOCK : blk_tipo_risco -->
+                                        <option value="{cd_tipo_risco}" {selTipoEmprestimo}>{desc_tipo_risco}</option>
+                                        <!-- END BLOCK : blk_tipo_risco -->
+                                      </select>
+                              </strong></font>
+                              </div></td>
+                      </tr>
+                    </table></td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr> 
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                  <td nowrap>
+<!--
+                    <input name="concessao_especial" type="checkbox" id="concessao_especial" value="S" onClick="liberaTipoRisco(this);realizaSimulacao(false);">
+-->
+<!--
+                    <input name="renegociacao" type="checkbox" id="renegociacao" value="S" onClick="realizaSimulacao(false);" readonly>
+-->
+					<table width="100%" border="0">
+						<tr>
+							<td nowrap>
+								<input name="concessao_especial" type="checkbox" id="concessao_especial" value="S" onClick="concessaoEspecial(this);">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Concessão Especial</font>
+								<input name="motivo_conc_especial" type="hidden" id="motivo_conc_especial">
+							</td>
+							<td nowrap>
+								<input name="renegociacao" type="checkbox" id="renegociacao" value="S" onClick="return false;">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Renegociação</font>
+							</td>
+							<td nowrap>
+								<input type="checkbox" name="fl_recupera_credito" id="fl_recupera_credito" value="S" onClick="realizaSimulacao(false);">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Recuperação de Crédito</font>
+							</td>					
+						</tr>
+						<tr>
+							<td nowrap>
+								<input name="adiantamento13" type="checkbox" id="adiantamento13" value="S" onClick="realizaSimulacao(false);"><!-- onChange="buscaParticipante();">-->
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Adiantamento de 13º</font>
+							</td>
+							<td nowrap>
+								<input name="adequacao_salarial" type="checkbox" id="adequacao_salarial" value="S" onClick="adequacaoSalarial();">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Adequação Salarial</font>
+							</td>
+							<td nowrap>
+								<input name="ex_ctp_reduc" type="checkbox" id="ex_ctp_reduc" value="S" onClick="ExCtpReduc();">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif"> Ex-ctp reduc. </font>
+								<input type="hidden" name="motivo_adeq_salarial" id="motivo_adeq_salarial">
+								<input type="hidden" name="observacao_adeq_salarial" id="observacao_adeq_salarial">
+								<input type="hidden" name="atendente_adeq_salarial" id="atendente_adeq_salarial">
+								<input type="hidden" name="salario_adeq_salarial" id="salario_adeq_salarial">
+								<input type="hidden" name="considera_ex_ctp_reduc" id="considera_ex_ctp_reduc">
+							</td>
+						</tr>
+					</table>
+                     
+					</td>
+					<td><div align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Vlr Max Conc. 
+                      <input name="vlr_max_concessao" type="text" id="vlr_max_concessao" size="12" maxlength="12" readonly style="text-align:right;">
+                    <input name="Submit" type="button" style="width:22px; height:22px" class="botao" onClick="popReforma13();" value="+">
+                    </font></strong></div>
+                </td>
+              </tr>
+            </table>
+		  </td>
+        </tr>
+      </table>
+	  </div>
+	</td>
+  </tr>
+  <tr>
+    <td bgcolor="#006633"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td height="20"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Simulação</font></strong></td>
+          <td><div align="right"><strong><img src="setaDown.gif" width="16" height="16" border="0" onClick="alternaHeight('divSimulacao', 24);" style="cursor:pointer;"></strong></div></td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFFFCC">
+	  <div id="divSimulacao" style="display:none; height:0px;">
+	    <table width="100%" border="0" cellspacing="1" cellpadding="0">
+          <tr> 
+            <td><strong><font size="2" face="Tahoma, Verdana, Arial"> 
+              <input name="sim_pagar_emp_anterior" type="checkbox" id="sim_pagar_emp_anterior" value="S" onClick="buscaInf2(); realizaSimulacao(false);">
+              Descon. Emp. Anterior</font></strong></td>
+
+              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+              <strong> 
+              <input name="sim_pagar_1" type="checkbox" id="sim_pagar_1" value="S" onClick="realizaSimulacao(false);">
+              Descon. 1ª Prest.</strong></font></td>
+
+
+
+			  <td ><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+              <strong> 
+              <input name="sim_pagar_1_3" type="checkbox" id="sim_pagar_1_3" value="S" onClick="realizaSimulacao(false);">
+              Descon. 1/3 das Prest.</strong></font></td>
+            <td><strong><font size="2" face="Tahoma, Verdana, Arial"> 
+              <input name="sim_pagar_prestacoes_atrasadas" type="checkbox" id="sim_pagar_prestacoes_atrasadas" value="S" onClick="realizaSimulacao(false);">
+              Descon. Prest. em Atraso</font></strong></td>
+          </tr>
+        </table> 
+	  </div>
+	</td>
+  </tr>
+  <tr> 
+    <td>
+	   <div id="divErro" style="display:none; color:#FFFFFF; background-color:#FF0000; font-family:verdana; font-weight:bold; font-size:small;"></div>
+        <table width="100%" border="0" cellspacing="5" cellpadding="0">
+          <tr> 
+            <td width="40%" valign="top"> 
+				<form action="confirma_emprestimo_dap.php" method="post" onSubmit="return validaForm(this);">
+				<input type="hidden" name="usuario_emp" id="usuario_emp" value="{usuario_emp}">
+				  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+				  <tr><td>
+              <table width="100%" border="0" cellpadding="0" cellspacing="1" class="bordaParcelas">
+                <tr> 
+                  <td bgcolor="#C8C8C8"> <div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> 
+                      PARCELAS INFORMADAS</strong></font></div></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#E8E8E8"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                      <tr> 
+                        <td width="33%" id="opTCP" height="20" onMouseOver="highlightTipoCalculo(this, 'on');" onMouseOut="highlightTipoCalculo(this, 'off');" onClick="setTipoCalculo('P');" style="cursor:pointer; display:none;" nowrap> 
+                          <div  align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>Valor Prestação</strong></font></div>
+						</td>
+                        <td width="34%" id="opTCL" height="20" onMouseOver="highlightTipoCalculo(this, 'on');" onMouseOut="highlightTipoCalculo(this, 'off');" onClick="setTipoCalculo('L');" style="cursor:pointer;" nowrap> 
+                          <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>Valor Líquido </strong></font></div></td>
+                        
+                        <td width="33%" id="opTCS" height="20" onMouseOver="highlightTipoCalculo(this, 'on');" onMouseOut="highlightTipoCalculo(this, 'off');" onClick="setTipoCalculo('S');" style="cursor:pointer;"> 
+                          <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>Valor Solicitado</strong></font></div></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr> 
+                  <td> <div id="divParametrosCalculo"> 
+                      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+                        <tr> 
+                          <td width="102"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data Depósito</strong></font></td>
+                          <td width="74"><input name="dt_deposito" type="text" id="dt_deposito" size="12" maxlength="10" onChange="realizaSimulacao(false);" onKeyUp="mascara_data(this)"></td>
+                          <td width="74" rowspan="5">&nbsp;</td>
+                        </tr>
+						
+						<tr>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data Pagamento</strong></font></td>
+                          <td><input name="dt_pagamento" type="text" id="dt_pagamento" size="12" maxlength="10" onBlur="if(valida_data(document.getElementById('dt_pagamento'))){ troca_dt_pagamento(); realizaSimulacao(false); }else{ mostraAlerta('Erro','A data de pagamento informada não é válida');setFocus(getEl('dt_pagamento')); }" onKeyUp="mascara_data(this)" ></td>
+                        </tr>
+						
+                        <tr> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Prestações</strong></font></td>
+                          <td><input name="num_prestacoes" type="text" id="num_prestacoes" size="3" maxlength="3" onKeyPress="numPrestacoesChange()"></td>
+                        </tr>
+                        <tr> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Valor 
+                            
+                            </strong>
+                                <input name="opSimulacao" type="hidden" id="opSimulacao" size="3" maxlength="3" readonly>
+                                <strong>
+                                <input name="opTipoCalculo" type="hidden" id="opTipoCalculo" size="2" maxlength="2" readonly>
+                                <input name="session_id" type="hidden" id="session_id" size="35">
+                                <input name="ip_cliente" type="hidden" disabled id="ip_cliente" size="25" readonly>
+								<input name="dt_pagamento_anterior" type="hidden" id="dt_pagamento_anterior" >
+								<input name="dt_pagamento_oculta" type="hidden" id="dt_pagamento_oculta" onChange="realizaSimulacao(false);">
+                                </strong></font></td>
+                          <td><input name="valor" type="text" id="valor" size=10 maxlength=10 onKeyUp="return fmtNumber(this, '99.999.999,99')" style="text-align: right" onKeyPress="valorChange()"></td>
+                        </tr>
+                        <tr> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>
+                             <input name="btnSimValoresMaximos" id="btnSimValoresMaximos" type="button" class="botao" value="Valores M&aacute;ximos" onClick="simulacaoValoresMaximos()">
+                             </strong></font></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="Submit2" type="button" class="botao" onClick="if(valida_data(document.getElementById('dt_pagamento'))){ calculaSimulacao(); }" value="Calcular">
+                            </font></td>
+                        </tr>
+                      </table>
+                    </div></td>
+                </tr>
+              </table>
+				  </td></tr>
+				  <tr><td>
+				     <div align="center">
+				        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                       <tr>
+                          <td>
+						  <input name="Submit5" type="button" class="botao" value="Imprimir Proposta" style="width: 120px; height:40px;" onClick="popImprimir('N');"></td>
+                          <td>
+						  <input name="Submit7" type="button" class="botao" style="font-family:verdana; font-size: 14px; height:40px; width:180px; font-weight: bold;" onClick="confirmaEmprestimo();" value="Confirma Empr&eacute;stimo"></td>
+                       </tr>
+					   <!--
+                       <tr>
+                          <td>
+						  <input name="Submit9" type="button" class="botao" value="Sedex" style="width: 120px; height:20px;" onClick="popImprimir('S');">
+						  </td>
+                          </tr>
+					-->
+                    </table>
+				        </div></td></tr></table>
+              </form>
+            <td width="60%" valign="top"> 
+           <div id="divMsgIOF" style="display:none; background-color:#FF0000; color:#FFFFFF" align="center">
+			  <font face="verdana" size="2"><b>
+			  Para este tipo de cálculo, será descontado o IOF
+			  </b></font>
+			  </div>
+			  <div id="divListaSimulacoes"> </div>
+			</td>
+          </tr>
+        </table>
+     </td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+
+
+
+
+<div id="divImprimir">  
+   <div class="hd">
+	  <div class="lt">
+	  </div>
+	  <span>Imprimir</span>
+	  <div class="rt"></div>
+	</div>
+   <div class="bd">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	 <tr>
+	   <td>
+   <form action="gera_proposta_emprestimo.php" method="get" name="form1" target="_blank">
+      <table width="100%" border="0" cellspacing="2">
+         <tr>
+            <td class="label">
+				<input name="pro" type="checkbox" id="pro" value="S" checked> Proposta 
+				<input name="t" type="checkbox" id="t" value="P" >Resumida
+			</td>
+         </tr>
+         <tr>
+            <td>
+				<input name="np" type="checkbox" id="np" value="S" checked>
+				<span class="label"> Nota Promiss&oacute;ria </span>
+			</td>
+         </tr>
+         <tr>
+            <td>
+			<input name="e" type="hidden" id="e">
+               <input name="r" type="hidden" id="r">
+               <input name="s" type="hidden" id="s">
+               <input name="d" type="hidden" id="d">
+			   <input name="a" type="hidden" id="a" value="N">
+               <input name="call" type="hidden" id="call">
+				</td>
+         </tr>
+         <tr>
+            <td><div align="center">
+			
+				<input type="button" name="Submit11" value="Imprimir" onClick="imprimeProposta(); imprimeNotaPromissoria(); wPopImprimir.hide();">
+			
+            <!--   <input type="submit" name="Submit11" value="Imprimir" onClick="wPopImprimir.hide();"> -->
+            </div></td>
+         </tr>
+         <tr>
+            <td>&nbsp;</td>
+         </tr>
+      </table>
+	</form>
+	
+		</td>
+	 </tr>
+  </table>
+  </div>
+</div>
+
+
+
+
+<div id="divAdequacaoSalarial">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Adequação Salarial</span>
+		<div class="rt"></div>
+	</div>
+	<div class="bd">
+		<style>
+			.tbAdequaSalarial {
+				border-collapse:collapse;
+			}
+
+			.tbAdequaSalarial * {
+				font: Icon;
+				font-size: 10pt;
+				font-weight: normal;
+			}
+			
+			.tbAdequaSalarial tr {
+				height: 20px;
+			}
+			
+			.tbAdequaSalarial th {
+				font-weight: bold;
+			}				
+			
+			.tbAdequaSalarial td {
+				text-align: left;
+			}	
+		</style> 
+		<table width="100%" border="0" cellpadding="1" cellspacing="0">
+			<tr>
+				<td>
+					<BR>
+					<table width="90%" align="center"  class="tbAdequaSalarial" border="0">
+						<tr>
+							<th valign="top">Motivo:</th>
+							<td>
+								<input name="seMotivo" id="seMotivoV" type="radio" value="V">Vesting<BR>
+								<input name="seMotivo" id="seMotivoM" type="radio" value="M">Manutenção de Inscrição<BR>
+								<input name="seMotivo" id="seMotivoO" type="radio" value="O">Outros
+							</td>
+						</tr>
+						<tr>
+							<th>Observação:</th>
+							<td><input type="text" name="seObs"  id="seObs" maxlength="100" style="width: 100%"></td>
+						</tr>
+						<tr>
+							<th>Atendente:</th>
+							<td><input type="text" name="seAtendente"  id="seAtendente" maxlength="100" style="width: 100%"></td>
+						</tr>
+						<tr>
+							<th>Salário Empréstimo:</th>
+							<td><input name="seSalarioAdeqSalarial" type="text" id="seSalarioAdeqSalarial" size=10 maxlength=10 onKeyUp="return fmtNumber(this, '99.999.999,99')" style="text-align: right"></td>
+						</tr>						
+						<tr>
+							<td colspan="2" align="center">
+								<BR>
+								<input type="button" value="OK" onClick="alteraAdequacaoSalarial();" class="botao" style="width: 100px;">
+								<input type="button" value="Cancelar" onClick="wPopAdequacaoSalarial.hide();" class="botao_disabled" style="width: 100px;">
+							</td>
+						</tr>												
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+<div id="divReforma13">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Valor Máximo a Conceder</span>
+		<div class="rt"></div>	
+	</div>
+	<div class="bd">
+		<style>
+			.tbMaxValCondencer {
+				border-collapse:collapse;
+			}
+
+			.tbMaxValCondencer * {
+				font: Icon;
+				font-size: 10pt;
+				font-weight: normal;
+			}
+			
+			.tbMaxValCondencer tr {
+				height: 20px;
+			}
+			
+			.tbMaxValCondencer th {
+				font-weight: bold;
+			}				
+			
+			.tbMaxValCondencer td {
+				text-align: right;
+			}	
+
+			.tbMaxValCondencer td input{
+				border: 0px;
+				color: blue;
+				font-weight: bold;
+				text-align: right;
+				width: 100px;
+			}
+		</style>   
+		<table width="100%" border="0" cellpadding="1" cellspacing="0">
+			<tr>
+				<td>
+					<table align="center"  class="tbMaxValCondencer" border="0">
+						<tr>
+							<th colspan="2" align="center" style="text-align:center;">
+								Limite para Reforma antes do<BR>Pagamento de 1/3 das prestações
+								<BR>
+								<BR>
+							</th>
+						</tr>
+						<tr>
+							<th>Vlr Max Concessão</th>
+							<td><input type="text" name="lrLimiteMaximo" id="lrLimiteMaximo" readonly></td>
+						</tr>
+						<tr>
+							<th>Limite já utilizado </th>
+							<td><input type="text" name="lrLimiteUtilizado" id="lrLimiteUtilizado" readonly style="color:red"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>						
+						<tr>
+							<th>Limite atual </th>
+							<td><input type="text" name="lrLimiteDisponivel" id="lrLimiteDisponivel" readonly></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+<div id="divDecomposicaoSalEmp">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Decomposição do Salário de Empréstimo</span>
+		<div class="rt"></div>
+	</div>
+	<div class="bd">
+		<style>
+			.tbCompoSalEmp {
+				border-collapse:collapse;
+			}
+
+			.tbCompoSalEmp * {
+				font: Icon;
+				font-size: 10pt;
+				font-weight: normal;
+			}
+			
+			.tbCompoSalEmp tr {
+				height: 20px;
+			}
+			
+			.tbCompoSalEmp th {
+				font-weight: bold;
+			}				
+			
+			.tbCompoSalEmp td {
+				text-align: right;
+			}	
+
+			.tbCompoSalEmp td input{
+				border: 0px;
+				color: blue;
+				font-weight: bold;
+				text-align: right;
+				width: 100px;
+			}
+		</style>   
+		<table width="100%" border="0" cellpadding="1" cellspacing="0">
+			<tr>
+				<td>
+					<table align="center" class="tbCompoSalEmp" border="0">
+						<tr>
+							<th>Salário Bruto </th>
+							<td><input name="decSalarioBruto" type="text" id="decSalarioBruto" readonly></td>
+						</tr>
+						<tr>
+							<th>Desc Contrib. Eletro </th>
+							<td><input name="decVlrContrib" type="text" id="decVlrContrib" style="color:red;" readonly></td>
+						</tr>
+						<tr>
+							<th>Desc IR </th>
+							<td><input name="decVlrIr" type="text" id="decVlrIr" style="color:red;"  readonly></td>
+						</tr>
+						<tr>
+							<th>Desc INSS </th>
+							<td><input name="decVlrInss" type="text" id="decVlrInss" style="color:red;"  readonly></td>
+						</tr>
+						<tr>
+							<th>Desc. Pensão </th>
+							<td><input name="decVlrPensao" type="text" id="decVlrPensao" style="color:red;"  readonly></td>
+						</tr>
+						<tr>
+							<td colspan="2"><hr></th>
+						</tr>
+						<tr>
+							<th>Salário Empréstimo </th>
+							<td><input name="decSalarioEmprestimo" type="text" id="decSalarioEmprestimo" style="text-align:right" size="15" readonly></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div id="divDet">  
+	<div class="hd">
+	  <div class="lt"></div>
+	  <span>Detalhes da Simulação</span>
+	  <div class="rt"></div>
+	</div>
+	<div class="bd">
+	<table width="96%" border="0" cellpadding="1" cellspacing="0">
+	<tr> 
+		<td width="50%"  valign="top">
+			<style>
+				.tbDetalhesEmp {
+					border-collapse:collapse;
+					width: 100%;
+				}
+
+				.tbDetalhesEmp * {
+					font: Icon;
+					font-size: 10pt;
+					font-weight: normal;
+				}
+				
+				.tbDetalhesEmp tr {
+					height: 25px;
+				}
+				
+				.tbDetalhesEmp th {
+					font-weight: bold;
+				}				
+				
+				.tbDetalhesEmp td {
+					text-align: right;
+				}	
+
+				.tbDetalhesEmp td input{
+					border: 0px;
+					color: blue;
+					font-weight: bold;
+					text-align: right;
+					width: 80px;
+				}				
+			</style>
+			<!-- COLUNA 1 -->
+			<table class="tbDetalhesEmp" border="0">
+				<tr>
+					<th   >
+						Tx. de Juros (% a.m.)
+					</th>
+					<td   >
+						<input type="text" name="perc_tx_juros_mes" id="perc_tx_juros_mes" readonly>
+					</td>
+				</tr>
+				<tr id="tr_perc_tx_preservacao_patrimonia">
+					<th   >
+						Tx. de Preservação Patrimonial (a.m.)
+					</th>
+					<td  >
+						<input type="text" name="perc_tx_preservacao_patrimonia" id="perc_tx_preservacao_patrimonia" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th   >
+						Tx. Efetiva (% a.m.)
+					</th>
+					<td   >
+						<input type="text" name="perc_tx_efetiva" id="perc_tx_efetiva" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th  >
+						Tx. Efetiva Total (% a.m.)
+					</th>
+					<td  >
+						<input type="text" name="perc_tx_tir" id="perc_tx_tir" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th   >
+						Tx. de Administração (% s/VS)
+					</th>
+					<td   >
+						<input type="text" name="perc_tx_adm" id="perc_tx_adm" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th  >
+						Tx. IOF (% a.d.)
+					</th>
+					<td  >
+						<input type="text" name="perc_tx_iof" id="perc_tx_iof" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th   >
+						Tx. IOF Adicional (% s/MC)
+					</th>
+					<td   >
+						<input type="text" name="perc_tx_iof_adicional" id="perc_tx_iof_adicional" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th  >
+						Tx. Fundo Osc. Riscos Oper (% s/PMT)
+					</th>
+					<td  >
+						<input type="text" name="perc_tx_seguro" id="perc_tx_seguro" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th   >
+						Tx. Juro Atraso (Mora + Estatuto) a.m.
+					</th>
+					<td   >
+						<input type="text" name="perc_tx_atras" id="perc_tx_atras" readonly>
+					</td>
+				</tr>				
+				<tr>
+					<th  >
+						Comprometimento (%)
+					</th>
+					<td  >
+						<input type="text" name="perc_comprometimento" id="perc_comprometimento" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Limite de Comprometimento (%)
+					</th>
+					<td   >
+						<input type="text" name="perc_comprometimento_max" id="perc_comprometimento_max" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						Limite de Comprometimento (R$)
+					</th>
+					<td  >
+						<input type="text" name="limite_comprometimento" id="limite_comprometimento" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Valor do Fundo Osc. Riscos Oper
+					</th>
+					<td   >
+						<input type="text" name="vlr_seguro" id="vlr_seguro" readonly>
+					</td>
+				</tr>				
+				<tr>
+					<th>
+						Encargos (CM + Juro)
+					</th>
+					<td  >
+						<input type="text" name="encargos" id="encargos" readonly>
+					</td>
+				</tr>	
+		</table>
+		</td>
+		<td width="50%" valign="top" style="padding-left: 20px;">
+			<div style="width:100%; clear: both;">
+			<!-- COLUNA 2 -->
+			<table class="tbDetalhesEmp" border="0">
+				<tr >
+					<th>
+						(=) Valor Solicitado
+					</th>
+					<td   >
+						<input type="text" name="vlr_solicitado" id="vlr_solicitado" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th   >
+						Valor Administração
+					</th>
+					<td   >
+						<input type="text" name="vlr_adm" id="vlr_adm" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th  >
+						(=) Valor Concedido
+					</th>
+					<td  >
+						<input type="text" name="vlr_concedido" id="vlr_concedido" readonly>
+					</td>
+				</tr>				
+				<tr id="tr_cm">
+					<th>
+						Encargos (CM)
+					</th>
+					<td  >
+						<input type="text" name="cm" id="cm" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						Encargos (Juro)
+					</th>
+					<td>
+						<input type="text" name="juros" id="juros" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						(=) Montante Concedido (MC)
+					</th>
+					<td>
+						<input type="text" name="montante_concedido" id="montante_concedido" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th >
+						Valor Saldo Devedor
+					</th>
+					<td  >
+						<input type="text" name="vlr_saldo_devedor" id="vlr_saldo_devedor" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th   >
+						Prest. Em Atraso
+					</th>
+					<td   >
+						<input type="text" name="vlr_prest_atrasadas" id="vlr_prest_atrasadas" readonly>
+					</td>
+				</tr>				
+				<tr>
+					<th   >
+						Valor Débitos
+					</th>
+					<td   >
+						<input type="text" name="vlr_debitos" id="vlr_debitos" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th  >
+						Valor IOF
+					</th>
+					<td  >
+						<input type="text" name="vlr_iof" id="vlr_iof" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						(=) Valor Depósito
+					</th>
+					<td   >
+						<input type="text" name="vlr_deposito" id="vlr_deposito" readonly>
+					</td>
+				</tr>	
+				
+				<tr>
+					<th >
+						Nr. Prestações
+					</th>
+					<td  >
+						<input type="text" name="nro_prestacoes" id="nro_prestacoes" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Valor da Prestação
+					</th>
+					<td   >
+						<input type="text" name="vlr_prestacao" id="vlr_prestacao" readonly>
+					</td>
+				</tr>	
+				<tr>
+					<th>
+						Data Primeira Prestação
+					</th>
+					<td  >
+						<input type="text" name="dt_primeira_prestacao" id="dt_primeira_prestacao" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						Data Última Prestação
+					</th>
+					<td   >
+						<input type="text" name="dt_ultima_prestacao" id="dt_ultima_prestacao" readonly>
+					</td>
+				</tr>	
+
+			</table>	
+		</td>
+	</tr>			
+	</table> 
+	<BR>
+   </div>
+</div>
+
+<div id="divDebitos" style="width:700px; height: 400px;overflow: auto;">  
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Débitos</span>
+		<div class="rt"></div>	
+	</div>	
+	<div class="bd">
+      <table width="96%" border="0" cellspacing="1" cellpadding="1">
+         <tr>
+            <td width="100%"><div id="divDetalhesDebito"></div></td>
+         </tr>
+      </table>
+   </div>   
+</div>
+
+<div id="divEvolucaoPosFixado" style="width:700px; height: 400px;overflow: auto;">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Evolução Empréstimo</span>
+		<div class="rt"></div>	
+	</div>	
+	<div class="bd">
+		<table width="96%" border="0" cellspacing="1" cellpadding="1">
+			<tr>
+				<td width="100%"><div id="divEvolucaoPosFixadoLista"></div></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div id="divEmprestimoAnterior" style="width:700px; height: 400px;overflow: auto;">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Prestações</span>
+		<div class="rt"></div>	
+	</div>	
+	<div class="bd">
+		<table width="96%" border="0" cellspacing="1" cellpadding="1">
+			<tr>
+				<td width="100%"><div id="divPrestEmpAnterior"></div></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div id="divMotivoConcEspecial">
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Concessão Especial</span>
+		<div class="rt"></div>	
+	</div>	
+	<div class="bd">
+	<table width="100%" border="0">
+		<tr>
+			<td>
+				<table width="100%" border="0" cellpadding="1" cellspacing="0">
+					<tr>
+						<td align="center" class="tabTitulo">
+							Informe Motivo da Concessão Especial
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<input name="mceMotivo" type="text" id="mceMotivo" maxlength="100" style="width:100%">
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<BR>
+							<input type="button" value="OK" onClick="alteraMotivoConcEspecial()" class="botao" style="width: 100px;">
+							<input type="button" value="Cancelar" onClick="cancAlteraMotivoConcEspecial();" class="botao_disabled" style="width: 100px;">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</div>
+</div>
+
+<div id="divMsgAlerta">  
+	<div class="hd">
+		<div class="lt"></div>
+		<span id="tituloAlerta">Erro</span>
+		<div class="rt"></div>	
+	</div>   
+	<div class="bd">
+		<table width="95%">         
+			<tr>
+				<td class="label">
+					<p><span class="label" id="msgAlerta">&nbsp;</span></p>
+					<input type="hidden" name="flagAlerta" id="flagAlerta" value="false">
+				</td>
+			</tr>        
+			<tr>
+				<td align="center">
+					<BR>
+					<input type="submit" name="Submit11" value="OK" onClick="wPopMsgAlerta.hide();" class="botao" style="width: 100px;">
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>  
+<div id="divAguarde">  
+	<div class="hd">
+		<div class="lt"></div>
+		<span>Aguarde</span>
+		<div class="rt"></div>	
+	</div>  	
+	<div class="bd">
+		<table width="95%">
+			<tr>
+				<td>
+					<img src='indicator.gif'>
+				</td>
+				<td align="center">
+					<i><b>Processando a solicitação...</b></i>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script>
+	fnc_onload();
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

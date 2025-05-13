@@ -1,0 +1,323 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Cenário legal ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script type="text/javascript" src="inc/fckeditor/fckeditor.js"></script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.conteudo.value == '') { erros = erros + "- O campo 'Conteudo' deve estar preenchido.\n"; }
+	if (f.titulo.value == '') { erros = erros + "- O campo 'Título' deve estar preenchido.\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+function valida_form2(f) {
+	var erros = "";
+	if (f.arquivo.value == '') { erros = erros + "- Por favor, selecione o arquivo. (Botão 'Procurar').\n"; }
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+  <!-- START BLOCK : cadastro -->
+  <tr valign="top"> 
+    <td colspan="2"> <form name="form1" id="form1" method="post" action="grava_cenario.php" onSubmit="return valida_form(this)">
+              <table border="0" width="788" align="center" cellpadding="0" cellspacing="1">
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Edi&ccedil;&atilde;o 
+                    / Item:</font></td>
+                  <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{cd_edicao} 
+                          / 
+                          <input name="cd_cenario" type="text" id="cd_cenario" value="{cd_cenario}" readonly size="10" maxlength="10" >
+                          </font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data: 
+                          <input name="dt_inclusao" type="text" id="dt_inclusao3" size="10" maxlength="10" value="{dt_inclusao}" readonly onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                          </font></td>
+                      </tr>
+                    </table>
+                   </td>
+                  <td align="right" bgcolor="#dae9f7"><input type="image" src="img/btn_salvar.jpg" border="0"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" alt="Imprime o Registro" border="0" ></a><a href="exclui_cenario.php?c={cd_cenario}"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">T&iacute;tulo:</font></td>
+                  <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="titulo" type="text" id="txt_titulo" value="{titulo}" size="88" maxlength="200" >
+                    <input name="insere" type="hidden" id="insere" value="{insere}">
+                    <input name="cd_edicao" type="hidden" id="cd_edicao" value="{cd_edicao}">
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#0046ad" class="cabecalho">Refer&ecirc;ncia:</td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#F4F4F4" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="referencia" cols="100" rows="2" id="referencia" >{referencia}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Fonte:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="fonte" type="text" id="fonte" value="{fonte}" size="50" maxlength="200" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Se&ccedil;&atilde;o:</font></td>
+                  <td colspan="3" bgcolor="#F4F4F4"> <select size=1 name="cbo_secao"  >
+                      <!-- START BLOCK : cbo_secao -->
+                      <option value="{cod_secao}" {sel_secao}>{secao}</option>
+                      <!-- END BLOCK : cbo_secao -->
+                    </select> </td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#0046ad" class="cabecalho">&Aacute;reas 
+                    indicadas:</td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#F4F4F4" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="AA" type="checkbox" id="AA" value="S" {chk_aa}>
+                          GA</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="ACS" type="checkbox" id="ACS" value="S" {chk_acs}>
+                          GRI</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="AJ" type="checkbox" id="AJ" value="S" {chk_aj}>
+                          GJ</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DRH" type="checkbox" id="DRH" value="S" {chk_drh}>
+                          GAD</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DAP" type="checkbox" id="DAP" value="S" {chk_dap}>
+                          GAP</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DB" type="checkbox" id="DB" value="S" {chk_db}>
+                          GB</font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DCG" type="checkbox" id="DCG" value="S" {chk_dcg}>
+                          GC</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DF" type="checkbox" id="DF" value="S" {chk_df}>
+                          GF</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DI" type="checkbox" id="DI" value="S" {chk_di}>
+                          GI</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DIE" type="checkbox" id="DIE" value="S" {chk_die}>
+                          DE</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="DIN" type="checkbox" id="DIN" value="S" {chk_din}>
+                          GIN</font></td>
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="SG" type="checkbox" id="SG" value="S" {chk_sg}>
+                          SG</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr> 
+					<td colspan="4" bgcolor="#F4F4F4" align="center"> 
+						<script type="text/javascript">
+							<!--
+							// Automatically calculates the editor base path based on the _samples directory.
+							// This is usefull only for these samples. A real application should use something like this:
+							// oFCKeditor.BasePath = '/fckeditor/' ;	// '/fckeditor/' is the default value.
+							//var sBasePath = document.location.pathname.substring(0,document.location.pathname.lastIndexOf('_samples')) ;
+
+							var sBasePath = 'inc/fckeditor/';
+
+							var oFCKeditor = new FCKeditor('conteudo') ;
+							oFCKeditor.BasePath	= sBasePath ;
+							oFCKeditor.Height	= 700 ;
+							oFCKeditor.Value	= '{conteudo}';
+							oFCKeditor.Create() ;
+							//-->
+						</script>							
+
+					</td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#0046ad" class="cabecalho">Links?</td>
+                </tr>
+                <tr> 
+                  <td colspan="4" bgcolor="#F4F4F4"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td align="center">
+                          <input name="link1" type="text" id="link12" value="{link1}" size="50" maxlength="200" >
+                         </td>
+                        <td align="center"> 
+                          <input name="link2" type="text" id="link23" value="{link2}" size="50" maxlength="200" >
+                         </td>
+                      </tr>
+                      <tr> 
+                        <td align="center">
+                          <input name="link3" type="text" id="link32" value="{link3}" size="50" maxlength="200" >
+                        </td>
+                        <td align="center">
+                          <input name="link4" type="text" id="link42" value="{link4}" size="50" maxlength="200" >
+                        </td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td colspan="4" class="cabecalho" bgcolor="#0046ad">Implementa&ccedil;&atilde;o:</td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Pertin&ecirc;ncia:</font></td>
+                  <td colspan="3" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input type="radio" name="pert" value="0"  {check_pert0}>
+                    N&atilde;o Pertinente<br>
+                    <input type="radio" name="pert" value="1" {check_pert1}>
+                    Pertinente, mas n&atilde;o altera processo<br>
+                    <input type="radio" name="pert" value="2" {check_pert2}>
+                    Pertinente e altera processo</font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Prazo 
+                    previsto:</font></td>
+                  <td colspan="3" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_prevista" type="text" id="dt_prevista" size="10" maxlength="10" value="{dt_prevista}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    Prazo previsto para a implementa&ccedil;&atilde;o das mudan&ccedil;as</font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Prazo 
+                    Legal:</font></td>
+                  <td colspan="3" valign="top" bgcolor="#F4F4F4"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dt_legal" type="text" id="dt_legal" size="10" maxlength="10" value="{dt_legal}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4" bgcolorA?="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    implanta&ccedil;&atilde;o:</font></td>
+                  <td colspan="3" valign="top" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="dt_implementacao" type="text" id="dt_implementacao" size="10" maxlength="10" value="{dt_implementacao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                    Data em que as mudan&ccedil;as foram efetivamente implementadas</font></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    de Exclus&atilde;o:</font></td>
+                  <td colspan="3" valign="top" bgcolor="#F4F4F4"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dt_exclusao" type="text" id="dt_exclusao" size="10" maxlength="10" value="{dt_exclusao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" readonly >
+                    </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; 
+                    </font></td>
+                </tr>
+                <!--          <tr bgcolor="#DCDCCC">
+            <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dependente 
+              de </font></td>
+            <td><font size="2" face="Arial, Helvetica, sans-serif">
+              <select name="select" id="select2">
+                <!-- START BLOCK : diretriz --
+                <option value="{cod_diretriz}" selected {sel_diretriz}>{desc_diretriz}</option>
+                <!-- END BLOCK : diretriz --
+              </select>
+              </font></td>
+          </tr>
+-->
+                <tr> 
+                  <td colspan="4"> <div align="center"> 
+                      <input class='botao' type="submit" name="Submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                    </div></td>
+                </tr>
+              </table>
+      </form>
+    <p>
+
+
+<table border="0" align="center" cellpadding="1" cellspacing="1">
+              <form name="form2" method="post" action="grava_img_associado_cenario.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+                <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+                <input type="hidden" name="cd_cenario" value="{cd_cenario}">
+                <input type="hidden" name="cd_edicao" value="{cd_edicao}">
+                <tr align="center" bgcolor="#dae9f7"> 
+                  <td colspan="3"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Imagem 
+                    Associada:</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Esta 
+                    imagem ser&aacute; inclu&iacute;da<br>
+                    no corpo do artigo</font></td>
+                  <td align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="http://www.e-prev.com.br/upload/{imagem}" border="0"><br>
+                    {imagem}</font></td>
+                  <td align="right" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="exclui_img_cenario.php?c={cd_cenario}&ed={cd_edicao}"><img src="img/btn_exclusao.jpg" border="0"></a></font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione 
+                    o arquivo</font> </td>
+                  <td colspan="2"> <input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado"> 
+                    <br>
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: 
+                    Tamanho m&aacute;ximo do arquivo limitado a 2 MB nos formatos 
+                    JPG, PNG ou GIF.</font> </td>
+                </tr><tr> 
+                  <td colspan="3"> <div align="center"> 
+                      <input class='botao' type="submit" name="Submit" value="Incluir imagem no Registro">
+                    </div></td>
+                </tr>
+              </form>
+            </table>
+
+
+            <table border="0" align="center" cellpadding="1" cellspacing="1">
+              <form name="form2" method="post" action="grava_arq_associado_cenario.php" enctype="multipart/form-data"  onSubmit="return valida_form2(this)">
+                <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+                <input type="hidden" name="cd_cenario" value="{cd_cenario}">
+                <input type="hidden" name="cd_edicao" value="{cd_edicao}">
+                <tr align="center" bgcolor="#dae9f7"> 
+                  <td colspan="3"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Arquivo 
+                    Associado:</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Utilize 
+                    este recurso para<br>
+                    colocar um link para um<br>
+                    arquivo externo </font></td>
+                  <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{arquivo}</font></td>
+                  <td align="right" bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.e-prev.com.br/upload/{arquivo}" target="_blank"><img src="img/btn_abrir.jpg" border="0"></a><a href="exclui_arquivo_cenario.php?c={cd_cenario}&ed={cd_edicao}"><img src="img/btn_exclusao.jpg" border="0"></a></font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Selecione 
+                    o arquivo</font> </td>
+                  <td colspan="2"> <input type="file" name="arquivo" size="60" value="Selecionar o arquivo a ser anexado"> 
+                    <br>
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Obs.: 
+                    Tamanho m&aacute;ximo do arquivo limitado a 2 MB nos formatos 
+                    XLS, DOC, PDF, JPG ou GIF.</font> </td>
+                </tr>
+                <tr> 
+                  <td colspan="3"> <div align="center"> 
+                      <input class='botao' type="submit" name="Submit" value="Anexar arquivo ao Registro">
+                    </div></td>
+                </tr>
+              </form>
+            </table>
+            </p></td>
+  </tr>
+  <!-- END BLOCK : cadastro -->
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

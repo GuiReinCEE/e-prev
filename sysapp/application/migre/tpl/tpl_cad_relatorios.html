@@ -1,0 +1,256 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Relatórios ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+      <form name="form1" method="post" action="grava_relatorios.php">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">T&iacute;tulo do relat&oacute;rio:</td>
+                  <td colspan="2"><input name="titulo" type="text" id="titulo" value="{titulo}" size="30"> 
+                  </td>
+                  <td align="right" bgcolor="{cor_fundo2}"><a href="cad_relatorios.php?op=I"><img src="img/btn_novo.jpg" border="0"></a><a href="rel_pdf_dinamico.php?c={codigo}" target="_blank"><img src="img/btn_view.jpg" border="0"></a><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a><input type="image" src="img/btn_salvar.jpg" border="0"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Comando de sele&ccedil;&atilde;o<br>
+                    (select...) :</td>
+                  <td colspan="3"><textarea name="query" cols="55" rows="5" id="query">{query}</textarea></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Crit&eacute;rios<br>
+                    (where...): </td>
+                  <td colspan="3"><textarea name="clausula_where" cols="55" rows="2" id="clausula_where">{clausula_where}</textarea></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Ordem:</td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="ordem" cols="55" rows="2" id="ordem">{ordem}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Agrupamento:</td>
+                  <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="grupo" cols="55" rows="2" id="grupo">{grupo}
+</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Data cria&ccedil;&atilde;o:</td>
+                  <td colspan="3" class="texto1">{dt_criacao}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Esquema/tabela:</td>
+                  <td colspan="3"><font size="2" face="Verdana"> 
+                    <select size="1" name="cbo_tabela">
+                      <!-- START BLOCK : cbo_tabela -->
+                      <option value="{cod_tabela}" {chk_tabela}>{nome_tabela}</option>
+                      <!-- END BLOCK : cbo_tabela -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Propriet&aacute;rio:</td>
+                  <td colspan="3"><font size="2" face="Verdana"> 
+                    <select name="proprietario" size="1" id="proprietario">
+                      <!-- START BLOCK : proprietario -->
+                      <option value="{cd_proprietario}" {chk_proprietario}>{nome_proprietario}</option>
+                      <!-- END BLOCK : proprietario -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Restri&ccedil;&atilde;o de acesso:</td>
+                  <td colspan="3"><font size="2" face="Verdana"> 
+                    <select name="restricao_acesso" size="1" id="select">
+                      <!-- START BLOCK : restricao_acesso -->
+                      <option value="{cd_restricao_acesso}" {chk_restricao_acesso}>{nome_restricao_acesso}</option>
+                      <!-- END BLOCK : restricao_acesso -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}">
+                  <td height="25" valign="top" class="texto1">Projeto/Sistema:</td>
+                  <td colspan="3">
+                    <select name="sistema" size="1" id="sistema">
+                      <!-- START BLOCK : sistema -->
+                      <option value="{cd_sistema}" {chk_sistema}>{nome_sistema}</option>
+                      <!-- END BLOCK : sistema -->
+                    </select>
+                    <font size="2" face="Verdana">*opcional</font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}">
+                  <td valign="top" class="texto1">Esp&eacute;cie:</td>
+                  <td colspan="3"><input name="especie" type="text" id="especie" value="{especie}" size="5" maxlength="4"></td>
+                </tr>
+                <tr> 
+                  <td colspan="4" valign="top"><font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Lay-out:</font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Tipo:</td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="tipo_rel" size="1" id="tipo_rel">
+                      <!-- START BLOCK : tipo_rel -->
+                      <option value="{cd_tipo_rel}" {chk_tipo_rel}>{nome_tipo_rel}</option>
+                      <!-- END BLOCK : tipo_rel -->
+                    </select>
+                    </font></td>
+                  <td class="texto1">Tamanho t&iacute;tulo:</td>
+                  <td class="texto1"><input name="tam_fonte_titulo" type="text" id="tam_fonte_titulo" value="{tam_fonte_titulo}" size="5" maxlength="3"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Fonte:</td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="fonte" size="1" id="fonte">
+                      <!-- START BLOCK : fonte -->
+                      <option value="{cd_fonte}" {chk_fonte}>{nome_fonte}</option>
+                      <!-- END BLOCK : fonte -->
+                    </select>
+                    </font></td>
+                  <td class="texto1">Tamanho:</td>
+                  <td class="texto1"><input name="tam_fonte" type="text" id="colunas" value="{tam_fonte}" size="5" maxlength="3"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Margem esquerda:</td>
+                  <td class="texto1"><input name="pos_x" type="text" id="tam_fonte" value="{pos_x}" size="5" maxlength="3">
+                    pixels</td>
+                  <td class="texto1">Largura:</td>
+                  <td class="texto1"><input name="largura" type="text" id="largura" value="{largura}" size="5" maxlength="3">
+                    pixels</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Orienta&ccedil;&atilde;o:</td>
+                  <td colspan="3"><font size="2" face="Verdana"> 
+                    <select name="alin_relatorio" size="1" id="alin_relatorio">
+                      <option value="L" {alin_esq}>Esquerda</option>
+                      <option value="C" {alin_cent}>Centralizado</option>
+                      <option value="R" {alin_dir}>Direita</option>
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Mostrar:</td>
+                  <td class="texto1"><input name="mostrar_cabecalhos" type="checkbox" id="mostrar_cabecalhos" value="S" {chk_mostrar_cabecalhos}>
+                    Cabe&ccedil;alhos</td>
+                  <td class="texto1"><input name="mostrar_linhas" type="checkbox" id="mostrar_linhas" value="S" {chk_mostrar_linhas}>
+                    Linhas</td>
+                  <td class="texto1"><input name="mostrar_sombreamento" type="checkbox" id="mostrar_sombreamento" value="S" {chk_mostrar_sombreamento}>
+                    Sombreamento</td>
+                </tr>
+                <tr> 
+                  <td colspan="4" valign="top" class="texto1"><font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Colunas 
+                    e cabe&ccedil;alhos:</font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">N&uacute;mero colunas:</td>
+                  <td colspan="3" class="texto1"><input name="colunas" type="text" id="colunas2" value="{colunas}" size="5">
+                    (de 1 a 8)</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">&nbsp;</td>
+                  <td class="texto1">R&oacute;tulo</td>
+                  <td class="texto1">Alinhamento</td>
+                  <td class="texto1">Largura (pixels)</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Coluna 1:</td>
+                  <td><input name="cabec1" type="text" id="cabec1" value="{cabec1}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col1" size="1" id="alin_col1">
+                      <option value="L" {alin_esq_col1}>Esquerda</option>
+                      <option value="C" {alin_cent_col1}>Centralizado</option>
+                      <option value="R" {alin_dir_col1}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col1" type="text" id="larg_col1" value="{larg_col1}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Coluna 2:</td>
+                  <td><input name="cabec2" type="text" id="cabec2" value="{cabec2}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col2" size="1" id="alin_col2">
+                      <option value="L" {alin_esq_col2}>Esquerda</option>
+                      <option value="C" {alin_cent_col2}>Centralizado</option>
+                      <option value="R" {alin_dir_col2}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col2" type="text" id="larg_col2" value="{larg_col2}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Coluna 3:</td>
+                  <td><input name="cabec3" type="text" id="cabec3" value="{cabec3}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col3" size="1" id="alin_col3">
+                      <option value="L" {alin_esq_col3}>Esquerda</option>
+                      <option value="C" {alin_cent_col3}>Centralizado</option>
+                      <option value="R" {alin_dir_col3}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col3" type="text" id="larg_col3" value="{larg_col3}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Coluna 4:</td>
+                  <td><input name="cabec4" type="text" id="cabec4" value="{cabec4}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col4" size="1" id="alin_col4">
+                      <option value="L" {alin_esq_col4}>Esquerda</option>
+                      <option value="C" {alin_cent_col4}>Centralizado</option>
+                      <option value="R" {alin_dir_col4}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col4" type="text" id="larg_col4" value="{larg_col4}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Coluna 5:</td>
+                  <td><input name="cabec5" type="text" id="cabec5" value="{cabec5}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col5" size="1" id="alin_col5">
+                      <option value="L" {alin_esq_col5}>Esquerda</option>
+                      <option value="C" {alin_cent_col5}>Centralizado</option>
+                      <option value="R" {alin_dir_col5}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col5" type="text" id="larg_col5" value="{larg_col5}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td valign="top" class="texto1">Coluna 6:</td>
+                  <td><input name="cabec6" type="text" id="cabec6" value="{cabec6}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col6" size="1" id="alin_col6">
+                      <option value="L" {alin_esq_col6}>Esquerda</option>
+                      <option value="C" {alin_cent_col6}>Centralizado</option>
+                      <option value="R" {alin_dir_col6}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col6" type="text" id="larg_col6" value="{larg_col6}" size="15"></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Coluna 7:</td>
+                  <td><input name="cabec7" type="text" id="cabec7" value="{cabec7}" size="20"></td>
+                  <td><font size="2" face="Verdana"> 
+                    <select name="alin_col7" size="1" id="alin_col7">
+                      <option value="L" {alin_esq_col7}>Esquerda</option>
+                      <option value="C" {alin_cent_col7}>Centralizado</option>
+                      <option value="R" {alin_dir_col7}>Direita</option>
+                    </select>
+                    </font></td>
+                  <td><input name="larg_col7" type="text" id="larg_col7" value="{larg_col7}" size="15"></td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

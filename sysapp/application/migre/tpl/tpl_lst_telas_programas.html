@@ -1,0 +1,37 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Telas dos programas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right"><a href="cad_telas_programas.php?op=I&cp={cd_software}"><b>Nova tela</b></a></div>
+      </blockquote>
+            <table width="777" align="center" cellspacing="1">
+              <tr> 
+                <td colspan="4"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Telas 
+                  do Software {cd_software}</font></td>
+              </tr>
+              <tr bgcolor="#0046ad"> 
+                <td class="cabecalho" height="33">Tela</td>
+                <td class="cabecalho">Programa</td>
+                <td class="cabecalho">Descri&ccedil;&atilde;o</td>
+                <td class="cabecalho">Data cadastro</td>
+              </tr>
+              <!-- START BLOCK : telas -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td><a href="cad_telas_programas.php?op=A&cp={cd_software}&c={cd_tela}">{nome_tela}</a></td>
+                <td class="texto1">{cd_programa}</td>
+                <td class="texto1">{descricao}</td>
+                <td class="texto1">{data_cad}</td>
+              </tr>
+              <!-- END BLOCK : telas -->
+            </table>
+      <div align="center"> <font size="2" face="Arial, Helvetica, sans-serif"><a href="cad_telas_programas.php?op=I&cp={cd_software}"><b>Nova tela</b></a></font> </div>
+      <p>&nbsp; </p></td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

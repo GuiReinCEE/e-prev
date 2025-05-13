@@ -1,0 +1,72 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Eleições ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+      <form name="form1" method="post" action="grava_eleicao.php">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Ano:</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="ano" type="text" id="ano" value="{ano}" size="5" maxlength="4" style="font-family: Verdana; font-size: 8 pt">
+                    </font></td>
+                  <td align="right" bgcolor="{cor_fundo2}"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a> 
+                    <input type="image" src="img/btn_salvar.jpg" border="0"> </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    elei&ccedil;&atilde;o:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="nome" type="text" id="nome2" style="font-family: Verdana; font-size: 8 pt" value="{nome}" size="60">
+                    </font> </td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Status:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input type="radio" name="opt_eleicao" value="A" {chk_aberta}>
+                    Aberta 
+                    <input name="opt_eleicao" type="radio" value="F" {chk_fechada}>
+                    Fechada</font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Votos 
+                    recebidos: </font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="num_votos" type="text" id="num_votos" value="{num_votos}" size="10" maxlength="10" style="font-family: Verdana; font-size: 8 pt">
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Votos 
+                    apurados:</font></td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="num_apurados" type="text" id="num_apurados" value="{num_apurados}" size="10" maxlength="10" style="font-family: Verdana; font-size: 8 pt">
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                    elei&ccedil;&atilde;o:</font></td>
+                  <td colspan="2"><select name="cbo_tlei">
+                      <!-- START BLOCK : cbo_tlei -->
+                      <option value="{cd_tlei}" {chk_tlei}>{nome_tlei}</option>
+                      <!-- END BLOCK : cbo_tlei -->
+                    </select></td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

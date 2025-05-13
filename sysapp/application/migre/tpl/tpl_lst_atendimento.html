@@ -1,0 +1,141 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Atendimento ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<link href="inc/abas_verde.css" rel="stylesheet" type="text/css">
+
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li onclick="document.location.href='atend_pessoal_analitico.php';">
+							<span>ATENDENTE</span>
+						</li>				
+						<li onclick="document.location.href='atend_pessoal.php';">
+							<span>DATA</span>
+						</li>	
+						<li onclick="document.location.href='atend_pessoal_tipos.php';">
+							<span>TIPO</span>
+						</li>	
+						<li onclick="document.location.href='atend_pessoal_programa.php';">
+							<span>PROGRAMA</span>
+						</li>	
+						<li onclick="document.location.href='atend_pessoal_lista.php';" >
+							<span>TODOS</span>
+						</li>	
+						<li class="abaSelecionada">
+							<span>ATENDIMENTO</span>
+						</li>						
+					</ul>
+				</div>                            
+				<div class="aba_conteudo">
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2">
+	<form name="form1" method="post" action="atualiza_atendimento.php">
+              <table border="0" align="center" cellpadding="4" cellspacing="1" width="777">
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td colspan="3" class="cabecalho" height="33" bgcolor="#0046ad"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td class="cabecalho" height="33" >Informa&ccedil;&otilde;es do atendimento {atendimento}:</td>
+                        <td align="right"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" height="22">Atendente:</td>
+                  <td colspan="2" class="texto1">{atendente}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" height="22">Emp/re/seq</td>
+                  <td colspan="2" class="texto1">{emp} / {re} / {seq}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" height="22">Nome participante:</td>
+                  <td colspan="2" class="texto1verde">{nome_participante}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" height="22">Observa&ccedil;&otilde;es</td>
+                  <td colspan="2"> {obs} <!--<textarea name="obs" cols="55" rows="3" id="obs"></textarea> -->
+                  </td>
+                </tr>
+                <!-- START BLOCK : anotacao -->
+                <tr bgcolor="{cor_fundo}"> 
+                  <td class="texto1" height="22">{tipo_anotacao}: 
+                    <input name="cd_atendimento" type="hidden" id="cd_atendimento" value="{cd_atendimento}"> 
+                    <input name="anotacao" type="hidden" id="anotacao" value="{anotacao}"></td>
+                  <td colspan="2" class="texto1">{anotacao}</td>
+                </tr>
+                <!-- END BLOCK : anotacao -->
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" height="22">Data hor&aacute;rio do registro:</td>
+                  <td colspan="2" class="texto1">{dt_atendimento}</td>
+                </tr>
+				<!--
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" height="22">Programa Identificado:</td>
+                  <td colspan="2" class="texto1">{prog_identificado}</td>
+                </tr>
+				-->
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" height="22">Dura&ccedil;&atilde;o do Atendimento:</td>
+                  <td colspan="2" class="texto1">{duracao_atendimento}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1" height="22">In&iacute;cio:</td>
+                  <td colspan="2" class="texto1">{inicio_atendimento}</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1" height="22">Fim:</td>
+                  <td colspan="2" class="texto1">{fim_atendimento}</td>
+                </tr>
+                <tr> 
+                  <td colspan="3"  class="cabecalho" height="33"> 
+				  <!--<input type="submit" name="Submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salvar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"> -->
+                    <!-- START BLOCK : detalhamento -->
+                    <table width="100%" border="0" cellspacing="1" cellpadding="3">
+                      <tr bgcolor="#BFA260"> 
+                        <td class="cabecalho" height="22">Nome Tela</td>
+                        <td class="cabecalho">Hora acesso</td>
+                        <td class="cabecalho">Descri&ccedil;&atilde;o</td>
+                        <td class="cabecalho">Programa</td>
+                      </tr>
+                      <!-- START BLOCK : tela_acessada -->
+                      <tr bgcolor="{cor_fundo}"> 
+                        <td class="texto1">{tela}</td>
+                        <td class="texto1">{hora}</td>
+                        <td class="texto1">{descricao}</td>
+                        <td class="texto1">{programa}</td>
+                      </tr>
+                      <!-- END BLOCK : tela_acessada -->
+                    </table>
+                    <!-- END BLOCK : detalhamento -->
+                  </td>
+                </tr>
+              </table>
+            </form>
+
+			<table border="0" align="center" cellpadding="1" cellspacing="1" width="777">	
+                <tr bgcolor="#BFA260"> 
+					<td colspan="3"  class="cabecalho" height="33">Informações do atendimento</td>
+                </tr>
+				<tr bgcolor="#BFA260"> 
+					<td class="cabecalho" height="22">Nome Tela</td>
+					<td class="cabecalho">Hora acesso</td>
+					<td class="cabecalho">Programa</td>
+				</tr>
+				<!-- START BLOCK : tela_capturada -->
+				<tr bgcolor="{cor_fundo}"> 
+					<td class="texto1" height="22">{tela}</td>
+					<td class="texto1">{hora}</td>
+					<td class="texto1">{programa}</td>
+				</tr>
+				<!-- END BLOCK : tela_capturada -->				
+			</table>
+
+		  </td>
+  </tr>
+</table>
+				</div>
+			</div>	
+<!-- INCLUDE BLOCK : footer.html -->

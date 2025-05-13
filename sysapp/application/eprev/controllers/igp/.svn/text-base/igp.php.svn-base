@@ -1,0 +1,230 @@
+<?php
+class igp extends Controller
+{
+    function __construct()
+    {
+        parent::Controller();
+    }
+
+    function index()
+    {
+		if(CheckLogin())
+		{
+	        $this->load->view('igp/igp/index.php');
+		}
+    }
+
+    function listar()
+    {
+        if(CheckLogin())
+        {
+	        $this->load->model('igp/Igp_model');
+
+	        $data['collection'] = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+
+			// --------------------------
+			// listar ...
+
+	        $this->Igp_model->listar( $result, $args );
+
+			$data['collection'] = $result->result_array();
+
+	        if( $result )
+	        {
+	            $data['collection'] = $result->result_array();
+	        }
+
+	        // --------------------------
+
+	        $this->load->view('igp/igp/partial_result', $data);
+        }
+    }
+
+	function detalhe($cd=0)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Igp_model');
+			$row=$this->Igp_model->carregar( $cd );
+			if($row){ $data['row'] = $row; }
+			$this->load->view('igp/igp/detalhe', $data);
+		}
+	}
+
+	function salvar()
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Igp_model');
+
+			$args['cd_igp']=intval($this->input->post('cd_igp', TRUE));
+
+			$msg=array();
+			$retorno = $this->Igp_model->salvar( $args,$msg );
+
+			if($retorno)
+			{
+				redirect( "igp/igp", "refresh" );			
+			}
+			else
+			{
+				$mensagens = implode('<br>',$msg);
+				exibir_mensagem($msg[0]);
+			}
+		}
+	}
+
+	function excluir($id)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Igp_model');
+
+			$this->Igp_model->excluir( $id );
+
+			redirect( 'igp/igp', 'refresh' );
+		}
+	}
+
+	function atualizar_indicador()
+	{
+		if( CheckLogin() )
+		{
+			$this->load->helper('indicador');
+			$INDICADOR_TABELA_CODIGO = enum_indicador_tabela_restrito::GRAFICO_IGP;
+			
+			$sql = "SELECT *, to_char(dt_referencia,'MM/YYYY') as mes_referencia FROM igp.igp ORDER BY dt_referencia DESC LIMIT 12";
+			$query = $this->db->query($sql);
+			$rows = $query->result_array();
+
+			$idx=0;
+			foreach( $rows as $item )
+			{
+				$igp[$idx]['mes'] = $item['mes_referencia'];
+
+				$igp[$idx]['total_mes'] = 
+					floatval($item["mes_rentabilidade_ci"]) 
+					+ floatval($item["mes_recl"]) 
+					+ floatval($item["mes_liq_erro"]) 
+					+ floatval($item["mes_calc_ini"]) 
+					+ floatval($item["mes_custo"]) 
+					+ floatval($item["mes_equilibrio"]) 
+					+ floatval($item["mes_participante"]) 
+					+ floatval($item["mes_var_orc"]) 
+					+ floatval($item["mes_treinamento"]) 
+					+ floatval($item["mes_informatica"]) 
+					+ floatval($item["mes_sat_colab"]) 
+					+ floatval($item["mes_aval"]) 
+					+ floatval($item["mes_sat_part"]
+				);
+
+				$igp[$idx]['total_mm'] = 
+					floatval($item["mm_rentabilidade_ci"]) 
+					+ floatval($item["mm_recl"]) 
+					+ floatval($item["mm_liq_erro"]) 
+					+ floatval($item["mm_calc_ini"]) 
+					+ floatval($item["mm_custo"]) 
+					+ floatval($item["mm_equilibrio"]) 
+					+ floatval($item["mm_participante"]) 
+					+ floatval($item["mm_var_orc"]) 
+					+ floatval($item["mm_treinamento"]) 
+					+ floatval($item["mm_informatica"]) 
+					+ floatval($item["mm_sat_colab"]) 
+					+ floatval($item["mm_aval"]) 
+					+ floatval($item["mm_sat_part"]
+				);
+
+				$igp[$idx]['meta'] = floatval($item["nr_meta"]);
+
+				$idx++;
+			}
+
+			$sql = "delete from indicador.indicador_parametro where cd_indicador_tabela=?";
+			$this->db->query($sql,array(intval($INDICADOR_TABELA_CODIGO)));
+
+			$sql='';
+
+			// cabeçalho                                                        C  L
+			$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, 0, utf8_encode('MÊS'),'background,center');
+			$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, 0, utf8_encode('Resultado do Mês'),'background,center');
+			$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, 0, utf8_encode('Média Móvel'),'background,center');
+			$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, 0, utf8_encode('Meta'),'background,center');
+
+			$linha=1;
+			foreach($igp as $item)
+			{
+				$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, $item['mes'], 'background,center' );
+				$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, number_format($item['total_mes'],2,',','') , 'right' );
+				$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, number_format($item['total_mm'],2,',',''), 'right' );
+				$sql .= indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format($item['meta'],2,',',''), 'right' );
+
+				$linha++;
+			}
+
+			$this->db->query($sql);
+
+			echo 'IGP atualizado com sucesso!'.br(2);
+			echo anchor( 'indicador/apresentacao/detalhe/16', 'Ver apresentação' );
+
+			//echo $sql.br();
+
+			//echo 'OK !';
+
+			// parray($igp);
+		}
+	}
+
+	/**
+	 * Relação entre histórico do IGP e INDICADOR para geração de gráfico.
+	 * essa função exibe a tabela de histórico dos últimos 5 anos do IGP para o indicador enviado por parâmetro
+	 *
+	 * @param _POST $cd_indicador int
+	 */
+	function exibir_historico_ajax()
+	{
+		if(CheckLogin())
+		{
+			$cd_indicador = $this->input->post('cd_indicador');
+			if( intval($cd_indicador)>0 )
+			{
+				$query = $this->db->query("
+				SELECT * 
+				FROM igp.igp_historico 
+				WHERE cd_indicador=? AND (nr_ano)<EXTRACT(years FROM CURRENT_TIMESTAMP)-1 ORDER BY nr_ano DESC LIMIT 5
+				", array(intval($cd_indicador)));
+				$historico = $query->result_array();
+
+				if($historico)
+				{
+					$body=array();
+					$head=array( 'Ano', 'Meta', 'Resultado', 'Desvio-Meta' );
+					$coluna_1='';
+					foreach( $historico as $item )
+					{
+						if( $item["ds_descricao"]!='' ){ $coluna_1=$item["ds_descricao"]; }else{$coluna_1=$item["nr_ano"];}
+						$body[]=array(
+							array( $coluna_1, 'text-align:left;' )
+							, array( number_format($item["nr_meta"],'2',',','.'), 'text-align:right;' )
+							, array( number_format($item["nr_resultado_acumulado"],'2',',','.'), 'text-align:right;' )
+							, array( number_format($item["nr_desvio_meta"],'2',',','.'), 'text-align:right;' )
+						);
+					}
+
+					$this->load->helper('grid');
+					$grid = new grid();
+					$grid->head=$head;
+					$grid->body=$body;
+					$grid->view_count=false;
+					echo $grid->render();
+				}
+			}
+		}
+	}
+}
+?>

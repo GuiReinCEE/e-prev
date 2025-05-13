@@ -1,0 +1,418 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Ações corretivas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+			<style>
+				.estilo_nc * {
+					font-family: arial;
+				}
+				.estilo_nc {
+					padding: 2px;
+					margin-top: 0px;
+					margin-left: 4px;
+					margin-right: 4px;
+					margin-bottom: 20px;
+					
+
+					border-width: 1px;
+					border-style: solid;
+					border-color: #ebebeb;
+					border-right-color: #ccc;
+					border-bottom-color: #ccc;
+
+					background-color: #FFFFFF;
+				}
+				.estilo_nc h2 {
+					margin-top: 8px;
+					margin-bottom: 5px;
+					margin-left: 0px;
+					margin-right: 0px;
+					padding: 4px;
+					background: #E3EFFF;
+					font-size: 16pt;
+				}	
+
+				.estilo_nc a {
+					font-size: 9pt;
+				}				
+
+				.quadro-table {
+					margin-right: 30px;
+					float:left;
+					
+					font:		Icon;
+					border:		1px Solid #99BBE8;
+					background:	#FFFFFF;
+					color:		WindowText;
+					border-collapse: collapse;					
+				}				
+				
+				.quadro-table td {
+					padding-bottom: 8px;
+					padding-left: 10px;
+					padding-right: 10px;
+					padding-top: 8px;
+					border-bottom: 1px solid #CCCCCC;
+				}
+
+				.quadro-table th {
+					background: url(inc/sort_table/images/bgblue.gif) #ecf1f4;
+					color: #000000;
+					font-family: Verdana, Arial, Helvetica, sans-serif;
+					font-size: 8pt;
+					font-weight: bold;	
+					text-align:center;	
+					padding: 2px 5px;
+					cursor:	pointer;
+					border: 1px solid #99BBE8;
+					height: 25px;					
+				}	
+
+				.quadro-par{
+					background: #FFFFFF;
+				}
+				.quadro-impar{
+					background: #FFFFFF;
+				}				
+			</style>
+			<BR>
+			<div class="estilo_nc" style="padding:8px;">	
+			<!-- QUADRO RESUMO NC -->
+			<h2>Quadro Resumo</h2>
+			<DIV>
+			<table class='quadro-table' cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<th>
+						Não Conformidade
+					</th>					
+					<th>
+						Quantidade
+					</th>
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_quadro_nc -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);" class="{cor_fundo}"> 
+					<td >
+						{ds_item}
+					</td>					
+					<td style="text-align:right;">
+						{qt_item}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_quadro_nc -->
+				</tbody>	
+			</table>
+
+			<!-- QUADRO RESUMO AC -->
+			<table class='quadro-table' cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<th>
+						Ação Corretiva
+					</th>					
+					<th>
+						Quantidade
+					</th>
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_quadro_ac -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);" class="{cor_fundo}"> 
+					<td >
+						{ds_item}
+					</td>					
+					<td style="text-align:right;">
+						{qt_item}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_quadro_ac -->
+				</tbody>	
+			</table>
+			</DIV>
+			
+			
+			<div style="clear:both;"></div>
+			<!-- AC NÃO APRESENTADA -->
+			<h2>Ações Corretivas não apresentadas com prazo vencido</h2>
+			<span class="links2">&raquo; Total de registros: {qt_ac_nao_apresentada}</span>
+			<BR>
+			<table class='sort-table' id='table-4' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>
+						Núm. da NC
+					</td>					
+					<td>
+						Dt Abertura NC
+					</td>
+					<td>
+						Dt Limite<BR>Apresentar AC
+					</td>
+					<td>
+						Ger. Resp.<BR>Processo
+					</td>
+					<td>
+						Responsável<BR>pela NC
+					</td>					
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_ac_nao_apresentada -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="text-align:center; ">
+						<a href="cad_nao_conformidade.php?c={cd_nao_conformidade}&tr=U&msg=0" >{cd_nao_conformidade}</a>
+					</td>					
+					<td style="text-align:center;">
+						{dt_abertura}
+					</td>							
+					<td style="text-align:center;">
+						{dt_apresenta_limite}
+					</td>										
+					<td style="text-align:center;">
+						{area_responsavel}
+					</td>	
+					<td>
+						{ds_responsavel}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_ac_nao_apresentada -->
+				</tbody>	
+			</table>
+			<div style="text-align:center; margin-top:5px;">
+				<img src="rel_nc_ac_grafico.php?titulo=Ações Corretivas não apresentadas com prazo vencido&lb_item1=Apresentada&lb_item2=Não apresentada com Prazo Vencido&qt_item1={qt_apresentada}&qt_item2={qt_ac_nao_apresentada_fora}">
+			</div>			
+			<script>
+				var ob_resul = new SortableTable(document.getElementById("table-4"),["Number","DateBR","DateBR","DateBR","DateBR","CaseInsensitiveString","CaseInsensitiveString"]);
+					ob_resul.onsort = function () {
+						var rows = ob_resul.tBody.rows;
+						var l = rows.length;
+						for (var i = 0; i < l; i++) {
+							removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+							addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+						}
+					};
+					ob_resul.sort(0, true);				
+			</script>	
+
+			
+			<!-- AC APRESENTADA FORA DO PRAZO -->
+			<BR>
+			<h2 class="titulo_h2">Ações Corretivas apresentadas fora do prazo</h2>
+			<span class="links2">&raquo; Total de registros: {qt_ac_apresentada_atrasada}</span>
+			<BR>
+			<table class='sort-table' id='table-3' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>
+						Núm. da NC
+					</td>					
+					<td>
+						Dt Abertura NC
+					</td>
+					<td>
+						Dt Limite<BR>Apresentar AC
+					</td>
+					<td>
+						Dt Apresentada AC
+					</td>
+					<td>
+						Ger. Resp.<BR>Processo
+					</td>
+					<td>
+						Responsável<BR>pela NC
+					</td>					
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_ac_apresentada_atrasada -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="text-align:center; ">
+						<a href="cad_nao_conformidade.php?c={cd_nao_conformidade}&tr=U&msg=0" >{cd_nao_conformidade}</a>
+					</td>					
+					<td style="text-align:center;">
+						{dt_abertura}
+					</td>							
+					<td style="text-align:center;">
+						{dt_apresenta_limite}
+					</td>										
+					<td style="text-align:center;">
+						{dt_apresenta}
+					</td>					
+					<td style="text-align:center;">
+						{area_responsavel}
+					</td>	
+					<td>
+						{ds_responsavel}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_ac_apresentada_atrasada -->
+				</tbody>	
+			</table>	
+			<div style="text-align:center; margin-top:5px;">
+				<img src="rel_nc_ac_grafico.php?titulo=Ações Corretivas apresentadas&lb_item1=No Prazo&lb_item2=Fora do Prazo&qt_item1={qt_ac_apresentada_prazo}&qt_item2={qt_ac_apresentada_fora}">
+			</div>
+			<script>
+				var ob_resul = new SortableTable(document.getElementById("table-3"),["Number","DateBR","DateBR","DateBR","DateBR","CaseInsensitiveString","CaseInsensitiveString"]);
+					ob_resul.onsort = function () {
+						var rows = ob_resul.tBody.rows;
+						var l = rows.length;
+						for (var i = 0; i < l; i++) {
+							removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+							addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+						}
+					};
+					ob_resul.sort(0, true);				
+			</script>	
+
+			
+			<!-- COM IMPLEMENTAÇÃO ATRASADA -->
+			<h2 class="titulo_h2">Ações Corretivas não implementadas com prazo vencido</h2>
+			<span class="links2">&raquo; Total de registros: {qt_implementacao_atrasada}</span>
+			<BR>
+			<table class='sort-table' id='table-2' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>
+						Núm. da NC
+					</td>					
+					<td>
+						Dt Abertura NC
+					</td>
+					<td>
+						Dt Proposta AC
+					</td>
+					<td>
+						Dt Prorrogada AC
+					</td>
+					
+					<td>
+						Ger. Resp.<BR>Processo
+					</td>
+					<td>
+						Responsável<BR>pela NC
+					</td>					
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_implementacao_atrasada -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="text-align:center; ">
+						<a href="cad_nao_conformidade.php?c={cd_nao_conformidade}&tr=U&msg=0" >{cd_nao_conformidade}</a>
+					</td>						
+					<td style="text-align:center;">
+						{dt_abertura}
+					</td>							
+					<td style="text-align:center;">
+						{dt_proposta}
+					</td>										
+					<td style="text-align:center;">
+						{dt_prorrogada}
+					</td>					
+									
+					<td style="text-align:center;">
+						{area_responsavel}
+					</td>	
+					<td>
+						{ds_responsavel}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_implementacao_atrasada -->
+				</tbody>	
+			</table>
+			<div style="text-align:center; margin-top:5px;">
+				<img src="rel_nc_ac_grafico.php?titulo=Ações Corretivas não implementadas com prazo vencido&lb_item1=Implementadas&lb_item2=Não implementada com Prazo Vencido&qt_item1={qt_implementada}&qt_item2={qt_nao_implementada_fora}">
+			</div>		
+			<script>
+				var ob_resul = new SortableTable(document.getElementById("table-2"),["Number","DateBR","DateBR","DateBR","DateBR","CaseInsensitiveString","CaseInsensitiveString"]);
+					ob_resul.onsort = function () {
+						var rows = ob_resul.tBody.rows;
+						var l = rows.length;
+						for (var i = 0; i < l; i++) {
+							removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+							addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+						}
+					};
+					ob_resul.sort(0, true);				
+			</script>	
+
+			
+			<!-- IMPLEMENTAS FORA DO PRAZO -->
+			<h2 class="titulo_h2">Ações Corretivas Implementadas fora do prazo</h2>
+			<span class="links2">&raquo; Total de registros: {qt_implementada_atrasada}</span>
+			<BR>
+			<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+				<thead>
+				<tr> 
+					<td>
+						Núm. da NC
+					</td>					
+					<td>
+						Dt Abertura NC
+					</td>
+					<td>
+						Dt Proposta AC
+					</td>
+					<td>
+						Dt Prorrogada AC
+					</td>
+					<td>
+						Dt Implementada AC
+					</td>							
+					<td>
+						Ger. Resp.<BR>Processo
+					</td>
+					<td>
+						Responsável<BR>pela NC
+					</td>					
+				</tr>
+				</thead>
+				<tbody>	
+				<!-- START BLOCK : lista_implementada_atrasada -->
+				<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+					<td style="text-align:center; ">
+						<a href="cad_nao_conformidade.php?c={cd_nao_conformidade}&tr=U&msg=0">{cd_nao_conformidade}</a>
+					</td>					
+					<td style="text-align:center;">
+						{dt_abertura}
+					</td>							
+					<td style="text-align:center;">
+						{dt_proposta}
+					</td>										
+					<td style="text-align:center;">
+						{dt_prorrogada}
+					</td>					
+					<td style="text-align:center;">
+						{dt_implementacao}
+					</td>										
+					<td style="text-align:center;">
+						{area_responsavel}
+					</td>	
+					<td>
+						{ds_responsavel}
+					</td>					
+				</tr>
+				<!-- END BLOCK : lista_implementada_atrasada -->
+				</tbody>	
+			</table>
+			<div style="text-align:center; margin-top:5px;">
+				<img src="rel_nc_ac_grafico.php?titulo=Ações Corretivas Implementadas&lb_item1=No Prazo&lb_item2=Fora do Prazo&qt_item1={qt_implementada_prazo}&qt_item2={qt_implementada_fora}">
+			</div>				
+			<script>
+				var ob_resul = new SortableTable(document.getElementById("table-1"),["Number","DateBR","DateBR","DateBR","DateBR","CaseInsensitiveString","CaseInsensitiveString"]);
+					ob_resul.onsort = function () {
+						var rows = ob_resul.tBody.rows;
+						var l = rows.length;
+						for (var i = 0; i < l; i++) {
+							removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+							addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+						}
+					};
+					ob_resul.sort(0, true);				
+			</script>	
+			
+			</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

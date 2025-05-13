@@ -1,0 +1,52 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Parâmetros ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+              <div align="right"> </div>
+      </blockquote>
+            <table width="777" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr align="right"> 
+                <td colspan="7"><a href="cad_listas.php?c={codigo}&cat={cat}&op=I" class="links2">&raquo;&nbsp;Novo 
+                  registro</a></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#0046ad">&nbsp;</td>
+                <td bgcolor="#0046ad"><a href="lst_listas.php?o=C&cat={cat}" class="links1">C&oacute;digo</a></td>
+                <td bgcolor="#0046ad"><a href="lst_listas.php?o=D&cat={cat}" class="links1">Descri&ccedil;&atilde;o</a></td>
+                <td bgcolor="#0046ad"><a href="lst_listas.php?o=I&cat={cat}" class="links1">Divis&atilde;o</a></td>
+                <td bgcolor="#0046ad" class="cabecalho">Tipo</td>
+                <td bgcolor="#0046ad"><a href="lst_listas.php?o=V&cat={cat}" class="links1">Valor</a></td>
+                <td bgcolor="#0046ad" class="cabecalho">Data Exclus&atilde;o</td>
+              </tr>
+              <!-- START BLOCK : projetos -->
+              <tr bgcolor="{cor_fundo}"> 
+                <td class="texto2">{cont}</td>
+                <td><a href="cad_listas.php?c={codigo}&cat={cat}" class="links2">{codigo}</a></td>
+                <td class="texto1">{desc}</td>
+                <td class="texto1">{div}</td>
+                <td class="texto1">{tipo}</td>
+                <td class="texto1">{valor}</td>
+                <td class="texto1">{dt_exclusao}</td>
+              </tr>
+              <!-- END BLOCK : projetos -->
+              <!-- START BLOCK : total -->
+              <tr bgcolor="#CCCCCC"> 
+                <td class="texto1">&nbsp;</td>
+                <td class="texto1">Total</td>
+                <td colspan="5" class="texto1">{total} registros</td>
+              </tr>
+              <!-- END BLOCK : total -->
+            </table>
+            <div align="center"> <font size="2" face="Arial, Helvetica, sans-serif"><strong></strong></font> 
+            </div>
+      <p>&nbsp; </p></td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

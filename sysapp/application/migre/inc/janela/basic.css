@@ -1,0 +1,55 @@
+.basic-modal-content {display:none;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000000; cursor:wait;}
+
+/* Container */
+#simplemodal-container {
+	height:200px; 
+	width:200px; 
+	color:#000000; 
+	background-color:#FFFFFF; 
+	border:4px solid #444; 
+	padding:12px;
+}
+
+#simplemodal-container code {
+	background:#FFFFFF; 
+	border-left:3px solid #65B43D; 
+	color:#000000; 
+	display:block; 
+	margin-bottom:12px; 
+	padding:4px 6px 6px;
+}
+
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container .basic-modal-content {padding:8px;}
+
+
+.bate_bola_termo_titulo {
+	width: 97%;
+	height: 30px;
+	font-family: calibri, arial;
+	font-size: 14pt;
+	font-weight: bold;
+	text-align:center;		
+}	
+
+.bate_bola_termo_texto {
+	width: 97%;
+	height: 260px;
+	line-height:150%;
+	padding-right: 10px;
+	font-family: calibri, arial;
+	font-size: 10pt;	
+	text-align: justify;		
+	overflow: auto;
+	scrollbar-arrow-color:#000000;
+	scrollbar-3dlight-color:#FFFFFF;
+	scrollbar-highlight-color:#DAD4C8;
+	scrollbar-face-color:#DAD4C8;
+	scrollbar-shadow-color:#FFFFFF;
+	scrollbar-darkshadow-color:#FFFFFF;
+	scrollbar-track-color:#FFFFFF;		
+}	

@@ -1,0 +1,566 @@
+<?php
+include_once( "ePrev.DAL.DBConnection.php" );
+include_once( "ePrev.Entity.Projetos.avaliacao.php" );
+include_once( "nextval_sequence.php" );
+
+/**
+ * Classe para acesso a dados de projetos.avaliacao 
+ * 
+ * @access public
+ * @package ePrev
+ * @subpackage ADO
+ * @require ePrev.Util.Message.php
+ * @require ePrev.DAL.DBConnection.php
+ */
+class ADO_projetos_avaliacao
+{
+    // DAL
+    private $db;
+    private $dal;
+
+    function ADO_projetos_avaliacao( $_db ) {
+        $this->db = $_db;
+        $this->dal = new DBConnection();
+        $this->dal->loadConnection( $this->db );
+    }
+
+    function __destruct(){
+        $this->dal = null;
+    } 
+
+    public function fetch_by_usuario( $cd_usuario )
+    {
+        $this->dal->createQuery("
+
+                SELECT a.cd_avaliacao
+                             , a.dt_periodo
+                             , b.guerra AS guerra_avaliador
+                             , c.guerra AS guerra_avaliado
+                             , a.status
+                             , CASE WHEN a.status = 'A' THEN 'Aberto'
+                                    WHEN a.status = 'F' THEN 'Encaminhado ao Avaliador'      
+                                    WHEN a.status = 'S' THEN 'Encaminhado ao Comitê'
+                                    WHEN a.status = 'C' THEN 'Aprovado pelo Comitê'
+                               END AS nome_status
+                             , a.cd_usuario_avaliado
+                             , a.cd_usuario_avaliador
+                             , a.cd_avaliacao_pai
+                             , a.fl_tipo
+                        FROM projetos.avaliacao a
+                  INNER JOIN projetos.usuarios_controledi b
+                             ON a.cd_usuario_avaliador = b.codigo
+                  INNER JOIN projetos.usuarios_controledi c
+                             ON a.cd_usuario_avaliado = c.codigo
+                       WHERE (
+                                (
+                                    a.cd_usuario_avaliado = {cd_usuario}
+                                )
+                                OR 
+                                (
+                                    a.cd_usuario_avaliador = {cd_usuario}
+                                )
+                                OR
+                                (
+                                    ( 
+                                    SELECT count(*) 
+                                      FROM projetos.avaliacao_comite 
+                                     WHERE dt_periodo = a.dt_periodo 
+                                       AND cd_usuario_avaliado = a.cd_usuario_avaliado 
+                                       AND cd_usuario_avaliador = {cd_usuario}
+                                    ) > 0
+                                )
+                             )
+                         AND fl_tipo = 'A'
+                    ORDER BY cd_avaliacao
+        ");
+
+        $this->dal->setAttribute( "{cd_usuario}", $cd_usuario );
+        
+        $result = $this->dal->getResultset();
+
+        if ($this->dal->haveError()) {
+            throw new Exception('Erro em ADO_projetos_avaliacao.fetch_by_usuario() ao executar comando SQL de consulta. '.$this->dal->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function comite_ToString( $dt_periodo, $cd_usuario_avaliado )
+    {
+        $resultado = "";
+        
+        $this->dal->createQuery("
+                SELECT puc.guerra
+                FROM projetos.avaliacao_comite pac
+          INNER JOIN projetos.usuarios_controledi puc
+                     ON pac.cd_usuario_avaliador = puc.codigo
+               WHERE pac.dt_periodo = {dt_periodo} 
+                 AND pac.cd_usuario_avaliado = {cd_usuario_avaliado}
+            ORDER BY puc.guerra
+        ");
+
+        $this->dal->setAttribute( "{dt_periodo}", $dt_periodo );
+        $this->dal->setAttribute( "{cd_usuario_avaliado}", $cd_usuario_avaliado );
+        
+        $result = $this->dal->getResultset();
+        
+        if ($result) {
+            $virgula = "";
+            while( $row = pg_fetch_array($result) )
+            {
+                $resultado .= $virgula . $row["guerra"];
+                $virgula = ", ";
+            }
+		}
+
+        if( $this->dal->haveError() )
+        {
+            throw new Exception( 'Erro em ADO_projetos_avaliacao.comite_ToString() ao executar comando SQL de consulta. '.$this->dal->getMessage() );
+        }
+        
+        pg_free_result($result);
+        $result = null;
+        $row = null;
+
+        return $resultado;
+    }
+    
+    public function fetchByFilter( entity_projetos_atendimento_protocolo $filtro )
+    {/*
+        
+    */}
+    
+    public function load_by_PK( $entidade )
+    {
+        $this->dal->createQuery("
+
+                    SELECT a.cd_avaliacao
+                         , a.dt_periodo
+
+                         , b.codigo AS cd_usuario_avaliador
+                         , c.codigo AS cd_usuario_avaliado
+                         , cmt.codigo AS cd_usuario_comite
+
+                         , b.cd_registro_empregado AS re_avaliador
+                         , c.cd_registro_empregado AS re_avaliado
+                         , cmt.cd_registro_empregado AS re_comite
+
+                         , b.nome AS nome_avaliador
+                         , c.nome AS nome_avaliado
+                         , cmt.nome AS nome_comite
+
+                         , pc.cd_cargo
+                         , pc.desc_cargo
+                         , pc.cd_familia
+                         , pfc.nome_familia
+
+                         , a.status
+                         , a.cd_usuario_avaliado
+                         , a.cd_usuario_avaliador
+                         , a.aspectos
+                         , a.resultado
+                         , a.acoes
+                         , a.grau_escolaridade
+                         , a.cd_avaliacao_pai
+                         , a.fl_tipo
+
+                         , (SELECT MAX(cd_avaliacao) FROM projetos.avaliacao WHERE cd_avaliacao_pai=a.cd_avaliacao AND fl_tipo='S')
+                                 AS cd_avaliacao_superior
+
+                            /*
+                            AVALIAÇÃO DE COMITE PASSA A SER UMA COLEÇÃO DE AVALIAÇÕES AO INVÉS DE UMA AVALIAÇÃO PELO INTEGRANTE RESPONSÁVEL
+                            , (SELECT MAX(cd_avaliacao) FROM projetos.avaliacao WHERE cd_avaliacao_pai=a.cd_avaliacao AND fl_tipo='C')
+                                 AS cd_avaliacao_comite
+                            */
+
+                    FROM projetos.avaliacao a
+
+              INNER JOIN projetos.usuarios_controledi b
+                         ON a.cd_usuario_avaliador = b.codigo
+              INNER JOIN projetos.usuarios_controledi c
+                         ON a.cd_usuario_avaliado = c.codigo
+               LEFT JOIN projetos.usuarios_controledi cmt
+                         ON a.cd_usuario_comite = cmt.codigo
+               LEFT JOIN projetos.cargos pc
+                         ON pc.cd_cargo = c.cd_cargo
+               LEFT JOIN projetos.familias_cargos pfc
+                         ON pfc.cd_familia = pc.cd_familia
+
+                   WHERE a.cd_avaliacao = {cd_avaliacao}
+
+        ");
+
+        $this->dal->setAttribute( "{cd_avaliacao}", $entidade->get_cd_avaliacao() );
+
+        $result = $this->dal->getResultset();
+
+        if ($this->dal->haveError()) 
+        {
+            $result = null;
+            throw new Exception('Erro em ADO_projetos_avaliacao.load_by_PK() ao executar comando SQL de consulta. '.$this->dal->getMessage());
+        }
+        else 
+        {
+            $row = pg_fetch_array($result);
+            if ($row) 
+            {
+				$entidade->set_cd_avaliacao( $row["cd_avaliacao"] );
+				$entidade->set_dt_periodo( $row["dt_periodo"] );
+				$entidade->set_aspectos( $row["aspectos"] );
+				$entidade->set_resultado( $row["resultado"] );
+				$entidade->set_acoes( $row["acoes"] );
+				$entidade->set_grau_escolaridade( $row["grau_escolaridade"] );
+				$entidade->set_status( $row["status"] );
+                $entidade->set_cd_usuario_avaliador( $row["cd_usuario_avaliador"] );
+                $entidade->set_cd_usuario_avaliado( $row["cd_usuario_avaliado"] );
+                $entidade->set_cd_avaliacao_pai( $row["cd_avaliacao_pai"] );
+                $entidade->set_fl_tipo( $row["fl_tipo"] );
+
+                $entidade->set_cd_avaliacao_superior( $row["cd_avaliacao_superior"] );
+                // $entidade->set_cd_avaliacao_comite( $row["cd_avaliacao_comite"] );
+
+                // Usuário avaliado
+                $u2 = new entity_projetos_usuarios_controledi();
+                $u2->set_codigo( $row["cd_usuario_avaliado"] );
+                $u2->set_cd_registro_empregado( $row["re_avaliado"] );
+                $u2->set_nome( $row["nome_avaliado"] );
+                $cargo = new entity_projetos_cargos();
+                $cargo->set_cd_cargo( $row["cd_cargo"] );
+                $cargo->set_desc_cargo( $row["desc_cargo"] );
+                $familia = new entity_projetos_familias_cargos();
+                $familia->set_nome_familia( $row["nome_familia"] );
+                $cargo->set_familia( $familia );
+                $u2->set_cargo( $cargo );
+
+                $entidade->set_usuario_avaliado( $u2 );
+
+                // Usuário avaliador
+                $u1 = new entity_projetos_usuarios_controledi();
+                $u1->set_codigo( $row["cd_usuario_avaliador"] );
+                $u1->set_cd_registro_empregado( $row["re_avaliador"] );
+                $u1->set_nome( $row["nome_avaliador"] );
+
+                // Usuário comite
+                $u3 = new entity_projetos_usuarios_controledi();
+                $u3->set_codigo( $row["cd_usuario_comite"] );
+                $u3->set_cd_registro_empregado( $row["re_comite"] );
+                $u3->set_nome( $row["nome_comite"] );
+
+                $entidade->set_usuario_comite( $u3 );
+
+                // ROWs dos usuários integrantes do comite
+                $this->dal->createQuery("
+
+                    SELECT pac.*, puc.guerra
+                      FROM projetos.avaliacao_comite pac
+                INNER JOIN projetos.usuarios_controledi puc
+                        ON pac.cd_usuario_avaliador = puc.codigo
+                     WHERE pac.dt_periodo = {dt_periodo}
+                       AND pac.cd_usuario_avaliado = {cd_usuario_avaliado}
+                  ORDER BY fl_responsavel DESC, puc.guerra
+
+                ");
+                $this->dal->setAttribute("{dt_periodo}", $row["dt_periodo"]);
+                $this->dal->setAttribute("{cd_usuario_avaliado}", $row["cd_usuario_avaliado"]);
+                $rscomite = $this->dal->getResultset();
+
+                $entidade->set_resultset_comite( $rscomite );
+
+                $row = null;
+                $result = null;
+			}
+        }
+        return true;
+    }
+
+    public function insert_from_chield( entity_projetos_avaliacao $entidade )
+    {
+        $bReturn = false;
+
+        $root_cd_avaliacao = $entidade->get_cd_avaliacao();
+
+        $this->dal->createQuery("
+                                SELECT * 
+                                  FROM projetos.avaliacao 
+                                 WHERE cd_avaliacao = {cd_avaliacao};
+                                ");
+        $this->dal->setAttribute("{cd_avaliacao}", $root_cd_avaliacao);
+        $rst_avaliacao = $this->dal->getResultset();
+        $row_avaliacao = pg_fetch_array($rst_avaliacao);
+
+        $entidade->set_cd_avaliacao( getNextval("projetos", "avaliacao", "cd_avaliacao", $this->db) );
+
+        $this->dal->createQuery("
+
+            INSERT INTO projetos.avaliacao(
+                        cd_avaliacao
+                      , dt_ult_atualizacao
+                      , etapa
+                      , status
+                      , cd_avaliado
+                      , aspectos
+                      , resultado
+                      , acoes
+                      , dt_homologacao
+                      , usu_homologacao
+                      , grau_escolaridade
+                      , grau_final
+                      , grau_inst
+                      , grau_espec
+                      , concordo
+                      , cd_usuario_avaliador
+                      , cd_usuario_avaliado
+                      , dt_periodo
+                      , cd_avaliacao_pai
+                      , fl_tipo
+                      )
+                VALUES (
+                        {cd_avaliacao}
+                      , CURRENT_DATE
+                      , {etapa}
+                      , '{status}'
+                      , null
+                      , '{aspectos}'
+                      , '{resultado}'
+                      , '{acoes}'
+                      , null
+                      , null
+                      , {grau_escolaridade}
+                      , null
+                      , null
+                      , null
+                      , null
+                      , {cd_usuario_avaliador}
+                      , {cd_usuario_avaliado}
+                      , {dt_periodo}
+                      , {cd_avaliacao_pai}
+                      , '{fl_tipo}'
+                      );
+
+        ");
+
+        $this->dal->setAttribute( "{cd_avaliacao}", $entidade->get_cd_avaliacao() );
+        $this->dal->setAttribute( "{status}", $entidade->get_status() );
+        $this->dal->setAttribute( "{etapa}", $row_avaliacao["etapa"] );
+        $this->dal->setAttribute( "{cd_usuario_avaliador}", $row_avaliacao["cd_usuario_avaliador"] );
+        $this->dal->setAttribute( "{cd_usuario_avaliado}", $row_avaliacao["cd_usuario_avaliado"] );
+        $this->dal->setAttribute( "{dt_periodo}", $row_avaliacao["dt_periodo"] );
+        $this->dal->setAttribute( "{cd_avaliacao_pai}", $row_avaliacao["cd_avaliacao"] );
+        if ( trim($entidade->get_fl_tipo())!="" )
+        {
+            $this->dal->setAttribute( "{fl_tipo}", trim($entidade->get_fl_tipo()) );
+		}
+        else
+        {
+            $this->dal->setAttribute( "{fl_tipo}", "S" ); // SUPERIOR
+        }
+
+        $this->dal->setAttribute( "{grau_escolaridade}", $entidade->get_grau_escolaridade() );
+        $this->dal->setAttribute( "{aspectos}", $entidade->get_aspectos() );
+        $this->dal->setAttribute( "{resultado}", $entidade->get_resultado() );
+        $this->dal->setAttribute( "{acoes}", $entidade->get_acoes() );
+
+        $result = $this->dal->executeQuery();
+        
+        // Alterar status das avaliações relacionadas ao "Usuário Avaliado" no "Período"
+        $this->change_status( $row_avaliacao["cd_usuario_avaliado"], $row_avaliacao["dt_periodo"], $entidade->get_status() );
+
+        if ($this->dal->haveError())
+        {
+            throw new Exception('Erro em ADO_projetos_avaliacao.insert_from_chield() ao executar comando SQL de consulta.' . $this->dal->getMessage() . '');
+        }
+        else
+        {
+            $bReturn = true;
+        }
+        return $bReturn;
+    }
+
+    public function insert_identificacao( entity_projetos_avaliacao $entidade )
+    {
+        $bReturn = false;
+
+        $entidade->set_cd_avaliacao( getNextval("projetos", "avaliacao", "cd_avaliacao", $this->db) );
+        
+        $this->dal->createQuery("
+
+            INSERT INTO projetos.avaliacao(
+                        cd_avaliacao
+                      , dt_ult_atualizacao
+                      , etapa
+                      , status
+                      , cd_avaliado
+                      , aspectos
+                      , resultado
+                      , acoes
+                      , dt_homologacao
+                      , usu_homologacao
+                      , grau_escolaridade
+                      , grau_final
+                      , grau_inst
+                      , grau_espec
+                      , concordo
+                      , cd_usuario_avaliador
+                      , cd_usuario_avaliado
+                      , dt_periodo
+                      , fl_tipo
+                      )
+                VALUES (
+                        {cd_avaliacao}
+                      , CURRENT_DATE
+                      , 1
+                      , 'A'
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , null
+                      , {cd_usuario_avaliador}
+                      , {cd_usuario_avaliado}
+                      , {dt_periodo}
+                      , '{fl_tipo}'
+                      );
+
+        ");
+
+        $this->dal->setAttribute( "{cd_avaliacao}", $entidade->get_cd_avaliacao() );
+        $this->dal->setAttribute( "{cd_usuario_avaliador}", $entidade->get_cd_usuario_avaliador() );
+        $this->dal->setAttribute( "{cd_usuario_avaliado}", $entidade->get_cd_usuario_avaliado() );
+        $this->dal->setAttribute( "{dt_periodo}", $entidade->get_dt_periodo() );
+        $this->dal->setAttribute( "{fl_tipo}", "A" );
+
+        $result = $this->dal->executeQuery();
+        
+        if ($this->dal->haveError())
+        {
+            throw new Exception('Erro em ADO_projetos_avaliacao.insert_identificacao() ao executar comando SQL de consulta.' . $this->dal->getMessage() . '');
+        }
+        else
+        {
+            $bReturn = true;
+        }
+        return $bReturn;
+    }
+    
+    public function update( entity_projetos_avaliacao $entidade )
+    {
+        $bReturn = false;
+        $this->dal->createQuery("
+
+                 UPDATE  projetos.avaliacao SET etapa = 7, 
+                         dt_ult_atualizacao = CURRENT_DATE, 
+                         grau_escolaridade = {grau_escolaridade}, 
+                         aspectos = '{aspectos}', 
+                         resultado = '{resultado}', 
+                         acoes = '{acoes}',
+                         status = '{status}'
+                         {dt_fechamento_avaliado}
+                 WHERE   cd_avaliacao = {cd_avaliacao} 
+
+        ");
+
+        $this->dal->setAttribute( "{grau_escolaridade}", $entidade->get_grau_escolaridade() );
+        $this->dal->setAttribute( "{aspectos}", $entidade->get_aspectos() );
+        $this->dal->setAttribute( "{resultado}", $entidade->get_resultado() );
+        $this->dal->setAttribute( "{acoes}", $entidade->get_acoes() );
+        $this->dal->setAttribute( "{status}", $entidade->get_status() );
+        $this->dal->setAttribute( "{cd_avaliacao}", $entidade->get_cd_avaliacao() );
+        
+        if (trim($entidade->get_dt_fechamento_avaliado())!="")
+        {
+            $this->dal->setAttribute( "{dt_fechamento_avaliado}", ", dt_fechamento_avaliado = " . $entidade->get_dt_fechamento_avaliado() );
+		}
+        else
+        {
+            $this->dal->setAttribute( "{dt_fechamento_avaliado}", "" );
+        }
+
+        $result = $this->dal->executeQuery();
+
+        if ($this->dal->haveError())
+        {
+            throw new Exception('Erro em ADO_projetos_avaliacao.update() ao executar comando SQL de consulta.' . $this->dal->getMessage() . '');
+        }
+        else
+        {
+            $bReturn = true;
+        }
+        return $bReturn;
+    }
+    
+    public function update_close_and_send( entity_projetos_avaliacao $entidade )
+    {
+        $bReturn = false;
+        $this->dal->createQuery("
+
+                 UPDATE  projetos.avaliacao SET etapa = 7, 
+                         dt_ult_atualizacao = CURRENT_DATE, 
+                         status = '{status}'
+                         {dt_fechamento_avaliado}
+                 WHERE   cd_avaliacao = {cd_avaliacao} 
+
+        ");
+
+        $this->dal->setAttribute( "{status}", $entidade->get_status() );
+        $this->dal->setAttribute( "{cd_avaliacao}", $entidade->get_cd_avaliacao() );
+        
+        if (trim($entidade->get_dt_fechamento_avaliado())!="")
+        {
+            $this->dal->setAttribute( "{dt_fechamento_avaliado}", ", dt_fechamento_avaliado = " . $entidade->get_dt_fechamento_avaliado() );
+        }
+        else
+        {
+            $this->dal->setAttribute( "{dt_fechamento_avaliado}", "" );
+        }
+
+        $result = $this->dal->executeQuery();
+
+        if ($this->dal->haveError())
+        {
+            throw new Exception('Erro em ADO_projetos_avaliacao.update_close_and_send() ao executar comando SQL de consulta.' . $this->dal->getMessage() . '');
+        }
+        else
+        {
+            $bReturn = true;
+        }
+        return $bReturn;
+    }
+    
+    public function change_status( $cd_usuario_avaliado, $dt_periodo, $new_status )
+    {
+        $bReturn = false;
+        $this->dal->createQuery("
+
+                 UPDATE  projetos.avaliacao SET etapa = 7, 
+                         dt_ult_atualizacao = CURRENT_DATE, 
+                         status = '{status}'
+                 WHERE   cd_usuario_avaliado = {cd_usuario_avaliado}
+                   AND   dt_periodo = {dt_periodo}
+
+        ");
+
+        $this->dal->setAttribute( "{status}", $new_status );
+        $this->dal->setAttribute( "{cd_usuario_avaliado}", $cd_usuario_avaliado );
+        $this->dal->setAttribute( "{dt_periodo}", $dt_periodo );
+
+        $result = $this->dal->executeQuery();
+
+        if ($this->dal->haveError())
+        {
+            throw new Exception('Erro em ADO_projetos_avaliacao.change_status() ao executar comando SQL de consulta.' . $this->dal->getMessage() . '');
+        }
+        else
+        {
+            $bReturn = true;
+        }
+        return $bReturn;
+    }
+}
+
+?>

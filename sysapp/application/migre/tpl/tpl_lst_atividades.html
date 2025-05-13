@@ -1,0 +1,680 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lista de atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+   .botao {
+      font-family: verdana;
+	  font-weigth: normal;
+	  font-size: 10px;
+	  width: 64px;
+   }
+</style>
+
+<script language="JavaScript" type="text/JavaScript">
+	var dt_init        = new Date();
+	var dt_diff        = new Date();
+
+    function showTime()
+    {
+        var dt_now  = new Date();
+        dt_diff.setTime(Math.abs(dt_now - dt_init));
+        var dt_time_diff = dt_diff.getTime();
+
+        var dt_weeks = Math.floor(dt_time_diff / (1000 * 60 * 60 * 24 * 7));
+        dt_time_diff -= dt_weeks * (1000 * 60 * 60 * 24 * 7);
+
+        var dt_days = Math.floor(dt_time_diff / (1000 * 60 * 60 * 24));
+        dt_time_diff -= dt_days * (1000 * 60 * 60 * 24);
+
+        var dt_hours = Math.floor(dt_time_diff / (1000 * 60 * 60));
+        dt_time_diff -= dt_hours * (1000 * 60 * 60);
+
+        var dt_mins = Math.floor(dt_time_diff / (1000 * 60));
+        dt_time_diff -= dt_mins * (1000 * 60);
+
+        var dt_secs = Math.floor(dt_time_diff / 1000);
+        dt_time_diff -= dt_secs * 1000;
+
+        if (dt_weeks > 0)
+        {
+            dt_weeks = formatTime(dt_weeks) + "S ";
+        }
+        else
+        {
+            dt_weeks = "";
+        }
+
+
+        if (dt_days > 0)
+        {
+            dt_days = formatTime(dt_days) + "D ";
+        }
+        else
+        {
+            dt_days = "";
+        }
+
+        //getObject('ds_time').value = dt_weeks + dt_days + formatTime(dt_hours) + ":" + formatTime(dt_mins) + ":" + formatTime(dt_secs);
+		getObject('ds_time').value = formatTime(dt_mins) + ":" + formatTime(dt_secs);
+		
+		//TEMPO DE ESPERA PARA ATUALIZAT A LISTA
+		if(formatTime(dt_mins) == "10")
+		{
+			document.location.href = "lst_atividades.php";
+		}
+		else
+		{
+			setTimeout("showTime()",1000);
+		}
+    }
+
+    function formatTime(nr_time)
+    {
+        if (nr_time < 10)
+        {
+            return "0" + nr_time
+        }
+        else
+        {
+            return nr_time;
+        }
+    }
+
+    function getObject(ds_name_obj)
+    {
+        return document.getElementById(ds_name_obj)
+    }
+
+						
+
+
+function jumpCheck(trg, obj, v) {
+   redir=trg+".location='"+v+obj.value+"'";
+   eval(trg+".location='"+v+obj.value+"'");
+}
+
+function montaFiltroTarefas(os){
+
+	stHTML  = ' <div id="filtro_tarefas" style="z-index:1; position:absolute; top:'+tempY+'px; left:'+tempX+'px; margin-left: 20px; margin-top: -150px;">';
+	stHTML += ' <table border="0" cellpadding="0" cellspacing="0">';
+	stHTML += '   <tr align="center"> ';
+	stHTML += ' 	<td valign="center" colspan="2" bgcolor="{cor_fundo2}" class="links2"><img src="img/img_grupo_tarefas.jpg" usemap="#mapa_tarefas" border=0></td><td class="links2">&laquo;</td><td class="links2">&nbsp;Atividade:<br>'+os+'</td>';
+	stHTML += '   </tr>';
+	stHTML += ' </table>';
+	stHTML += ' <map name="mapa_tarefas">';
+	stHTML += '   <area shape="rect" coords="137,2,157,20" href="#" onClick="limpaFiltroTarefas();">';
+	stHTML += '   <area shape="rect" coords="9,25,35,52" href="frm_tarefa.php?os='+os+'&f=f">';
+	stHTML += '   <area shape="rect" coords="35,25,65,52" href="frm_tarefa.php?os='+os+'&f=r">';
+	stHTML += '   <area shape="rect" coords="65,25,93,52" href="frm_tarefa.php?os='+os+'&f=a">';
+	stHTML += '   <area shape="rect" coords="93,25,122,52" href="frm_tarefa.php?os='+os+'&f=w">';
+	stHTML += '   <area shape="rect" coords="122,25,150,52" href="frm_tarefa.php?os='+os+'">';
+	stHTML += ' </map>';
+	stHTML += ' </div>';	
+//	document.getElementById('filtro_tarefas').style.top=tempY+"px;";
+	document.getElementById('filtro_tarefas').innerHTML= stHTML;
+}
+
+function limpaFiltroTarefas(){
+	stHTML  = ' <div id="filtro_tarefas" style="z-index:1; width: 400px; top: -200px; position:absolute; left: 50%; margin-left: -200px;">';
+	stHTML += ' </div>';
+	document.getElementById('filtro_tarefas').innerHTML= stHTML;
+}
+
+</script>
+
+<script language="JavaScript1.2">
+var IE = document.all?true:false;
+if (!IE) document.captureEvents(Event.MOUSEMOVE)
+document.onmousemove = getMouseXY;
+var tempX = 0;
+var tempY = 0;
+function getMouseXY(e) {
+	if (IE) { //para IE
+		tempX = event.clientX + document.body.scrollLeft;
+		tempY = event.clientY + document.body.scrollTop;
+	}
+	else { //para netscape
+		tempX = e.pageX;
+		tempY = e.pageY;
+	}
+	if (tempX < 0){tempX = 0;}
+	if (tempY < 0){tempY = 0;}
+//	document.Show.MouseX.value = tempX;
+//	document.Show.MouseY.value = tempY;	
+	return true;
+}
+</script>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+          <td> 
+  		      <div id="filtro_tarefas" style="z-index:1; position:absolute; width: 400px;"> 
+            </div>
+
+            <!-- START BLOCK : filtro_encaminhamentos_dap -->
+            <div id="frame_filtro_dap" style="position:absolute; width:576px; left: 102px; top: 85px; display:none; height: 210px; z-index:1"> 
+              <table border="0" cellpadding="5" cellspacing="1">
+                <form name="form2" id="formFiltroDap" method="post" action="lst_atividades.php?TA={ta}">
+                  <tr align="center"> 
+                    <td valign="top" bgcolor="#999999"> 
+                      <!-- START BLOCK : filtro_dap -->
+                      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                        <tr bgcolor="#6699CC"> 
+                          <td colspan="2" align="center"><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">Encaminhamentos</font></td>
+                          <td align="right" valign="top"> <input name="image" type="image" src="img/btn_atualizar.jpg"> 
+                            <a href="#" onClick="MM_showHideLayers('frame_filtro','','hide','menu_geral','show')"><img src="img/btn_exclusao.jpg" border="0"></a></td>
+                        </tr>
+                        <tr valign="top" bgcolor="#f4f4f4"> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Status</font></td>
+                          <td colspan="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"> 
+                            <input name="chkAG" type="checkbox" id="chkAG" value="S" {chkchkag}>
+                            Aguardando<br>
+                            <input name="chkAN" type="checkbox" id="chkAN" value="S" {chkchkan}>
+                            Em andamento<br>
+                            <input name="chkEN" type="checkbox" id="chkEN" value="S" {chkchken}>
+                            Encerrados<br>
+                            <input name="chkTE" type="checkbox" id="chkTE" value="S" {chkchkte}>
+                            <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            Em testes</font></font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                            </font></td>
+                        </tr>
+                      </table>
+                      <input id="TA" name="TA" type="hidden" value="{ta}"> 
+					  <input id="o" name="o" type="hidden" value="{o}">
+                      <!-- END BLOCK : filtro_dap -->
+                      <table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#F4F4F4">
+                        <tr> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo: 
+                            (data solicita&ccedil;&atilde;o)</font></td>
+                          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="dt_inicial" type="text" id="dt_inicial4" value="{dt_inicial}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC">
+                            a 
+                            <input name="dt_final" type="text" id="dt_final5" value="{dt_final}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Atendente:</font></td>
+                          <td><font size="1" face="Verdana"> 
+                            <select size="1" name="an" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC"  {ro_solic}>
+                              <!-- START BLOCK : cbo_atendente -->
+                              <option value="{codana}" {chkana}>{nomeana}</option>
+                              <!-- END BLOCK : cbo_atendente -->
+                            </select>
+                            </font></td>
+                        </tr>
+                    </table>
+                    </td>
+                    <td valign="top"><a href="#" onClick="MM_showHideLayers('frame_filtro_dap','','hide','menu_geral','show')"><img src="img/img_filtro_verde2.gif" border="0"></a></td>
+                  </tr>
+                </form>
+              </table>  
+            </div>
+            <!-- END BLOCK : filtro_encaminhamentos_dap -->
+
+            <!-- START BLOCK : filtro_atividades_controle_projetos -->
+            <div id="frame_filtro" style="position:absolute; width:576px; left: 102px; top: 85px; display:none; height: 249px; z-index:1"> 
+			  <table border="0" cellpadding="5" cellspacing="1">
+                <form name="form2" id="formFiltroControleProjetos" method="post" action="lst_atividades.php?TA={ta}">
+                  <tr align="center"> 
+                    <td valign="top" bgcolor="#999999" style="padding:5;">
+                      <!-- START BLOCK : filtro -->
+                      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                        <tr bgcolor="#CCCCCC"> 
+							<td colspan="3" align="center" style="padding:5;">
+								<font color="#0046ad" size="5" face="Arial, Helvetica, sans-serif">Filtro</font>
+							</td>
+							<td align="right" valign="top" style="padding:5;">
+								<input name="image2" type="image" src="img/btn_atualizar.jpg" title="Aplicar filtros">
+								<img src="img/btn_filtro.jpg"     style="cursor:pointer;" border="0" title="Aplicar filtros padrão" onClick="aplicarFiltroPadrao();">
+								<a href="#" onClick="MM_showHideLayers('frame_filtro','','hide')" title="Oculta filtros"><img src="img/btn_exclusao.jpg" border="0"></a>
+								<input type="hidden" name="fl_filtro_padrao" id="fl_filtro_padrao" value="N">
+								<script>
+									function aplicarFiltroPadrao()
+									{
+										document.getElementById('fl_filtro_padrao').value="S";
+										document.getElementById('formFiltroControleProjetos').submit();
+									}
+								</script>
+							</td>
+                        </tr>
+
+                        <tr valign="top" bgcolor="#f4f4f4">
+
+                          <td style="padding:5;">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Status</font>
+						  </td>
+
+                          <td style="padding:5;">
+							<font face="Verdana, Arial, Helvetica, sans-serif" size="1"> 
+                            <input name="chkAG" type="checkbox" id="chkAG" value="S" {chkchkag}>
+                            Aguardando<br>
+                            <input name="chkAN" type="checkbox" id="chkAN" value="S" {chkchkan}>
+                            Em andamento<br>
+                            <input name="chkEN" type="checkbox" id="chkEN" value="S" {chkchken}>
+                            Encerrados<br>
+                            <input name="chkTE" type="checkbox" id="chkTE" value="S" {chkchkte}>
+                            Em testes 
+							<br>
+                            <nobr>
+							<input name="chkAD" type="checkbox" id="chkAD" value="S" {chkchkad}>
+                            Aguar. Definição
+							</nobr>
+							</font>
+						</td>
+                          <td style="padding:5;">
+							<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input type="checkbox" name="chkMS"   id="chkMS"  value="S" {chkchkms}>
+                            Solicita&ccedil;&otilde;es feitas <br>
+                            <input type="checkbox" name="chkSR"      value="S" {chkchksr}>
+                            Solicita&ccedil;&otilde;es recebidas<br>
+                            </font></td>
+                          <td style="padding:5;">
+							<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="chkIme" type="checkbox" value="S"  {chkchkime}>
+                            Imediata<br>
+                            <input name="chkFut" type="checkbox" value="S"  {chkchkfut}>
+                            Futura<br>
+                            <input name="chkRot" type="checkbox" value="S"  {chkchkrot}>
+                            Rotina<br>
+                            <input name="chkAge" type="checkbox" value="S"  {chkchkage}>
+                            Agenda</font></td>
+                        </tr>
+                      </table>
+						  <input name="TA2" type="hidden" value="{ta}"> 
+						  <input id="o" name="o" type="hidden" value="{o}">
+						<!-- END BLOCK : filtro -->
+						<table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#F4F4F4">
+                        <tr> 
+							<td style="white-space:nowrap;padding:5;" >
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Período: (Dt.Solicitação)
+								</font>
+							</td>
+							<td style="font-family: Verdana; font-size: 8pt;padding:5px;">
+								<input name="dt_inicial" type="text" id="dt_inicial" value="{dt_inicial}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+								a
+								<input name="dt_final" type="text" id="dt_final" value="{dt_final}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+							</td>
+                        </tr>
+                        <tr> 
+							<td style="white-space:nowrap;padding:5px;">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Período: (Dt.Envio Teste)
+								</font>
+							</td>
+							<td style="font-family: Verdana; font-size: 8pt;padding:5px;">
+								<input type="text" name="dt_envio_teste_ini" id="dt_envio_teste_ini" value="{dt_envio_teste_ini}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+								a
+								<input type="text" name="dt_envio_teste_fim" id="dt_envio_teste_fim" value="{dt_envio_teste_fim}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+							</td>
+                        </tr>
+                        <tr> 
+							<td style="white-space:nowrap;padding:5px;">
+								<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								Período: (Dt.Conclusão)
+								</font>
+							</td>
+							<td style="font-family: Verdana; font-size: 8pt; padding:5px;">
+								<input type="text" name="dt_concluido_ini" id="dt_concluido_ini" value="{dt_concluido_ini}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+								a
+								<input type="text" name="dt_concluido_fim" id="dt_concluido_fim" value="{dt_concluido_fim}" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:80px;">
+							</td>
+                        </tr>
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Divisão Solicitante:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                            <select size=1 name="cbo_area" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:250px;">
+                              <!-- START BLOCK : cbo_area -->
+                              <option value="{codare}"{chkare} >{nomeare}</option>
+                              <!-- END BLOCK : cbo_area -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Projeto:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                            <select size="1" name="cbo_projeto" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:250px;">
+                              <!-- START BLOCK : cbo_projeto -->
+                              <option value="{cod_proj}" {chk_proj}>{nome_proj}</option>
+                              <!-- END BLOCK : cbo_projeto -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Solicitante:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                            <select size="1" name="cbo_solicitante" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:250px;">
+                              <!-- START BLOCK : cbo_solicitante -->
+                              <option value="{cod_soli}" {chk_soli}>{nome_soli}</option>
+                              <!-- END BLOCK : cbo_solicitante -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Atendente:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                            <select size="1" name="an" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:250px;">
+                              <!-- START BLOCK : cbo_analista -->
+                              <option value="{codana}" {chkana}>{nomeana}</option>
+                              <!-- END BLOCK : cbo_analista -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descrição:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                              <!-- START BLOCK : palavra_chave -->
+                              <input type="text" name="palavra_chave" value="{palavra_chave}" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:100%;">
+                              <!-- END BLOCK : palavra_chave -->
+                            </font></td>
+                        </tr>
+
+                        <tr> 
+                          <td style="padding:5;"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Empresa/Re/Seq:</font></td>
+                          <td style="padding:5;"><font size="1" face="Verdana"> 
+                              <!-- START BLOCK : BCK_participante -->
+                              <input type="text" name="filtro_emp" value="{filtro_emp}" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:32%;">
+                              <input type="text" name="filtro_re"  value="{filtro_re}"  style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:32%;">
+                              <input type="text" name="filtro_seq" value="{filtro_seq}" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:32%;">							  
+                              <!-- END BLOCK : BCK_participante -->
+                            </font></td>
+                        </tr>						
+
+						<tr bgcolor="#F0E8BA">
+						<td align="center" style="padding:5;">
+							<strong><font color="#0046ad" size="1" face="Verdana, Arial, Helvetica, sans-serif"><input type="radio" name="prev_orc" value="S"><br>Com previs&atilde;o or&ccedil;ament&aacute;ria</font></strong>
+						</td>
+						<td align="center" bgcolor="#F0E8BA" style="padding:5;">
+							<strong>
+							<font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">
+							<input type="radio" name="prev_orc" value="N">
+							<br>
+							Sem previs&atilde;o or&ccedil;ament&aacute;ria
+							</font>
+							</strong>
+						</td>
+						</tr>
+
+                      </table>
+					  </td>
+                    <td valign="top" style="padding:5;"><a href="#" onClick="MM_showHideLayers('frame_filtro','','hide')"><img src="img/img_filtro_verde2.gif" border="0"></a></td>
+                  </tr>
+                </form>
+              </table>
+            </div> 
+            <!-- END BLOCK : filtro_atividades_controle_projetos -->
+            <!-- START BLOCK : filtro_atividades_legais -->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td colspan="3" bgcolor="#dae9f7"> 
+                  <table width="800" border="0" cellpadding="0" cellspacing="1" bgcolor="#dae9f7" >
+                    <form name="form2" id="formFiltroLegais" method="post" action="lst_atividades.php?TA={ta}">
+                      <tr> 
+                        <td rowspan="3" valign="middle"><img src="img/img_filtro.jpg" width="30" height="69"></td>
+                        <td colspan="2" valign="top"> 
+                          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input name="opt_com_refl" type="checkbox" id="opt_com_refl" value="S"  {chk_com_refl}>
+                                Pertinentes e com reflexo no processo<br>
+                                <input name="opt_sem_refl" type="checkbox" id="opt_sem_refl" value="S"  {chk_sem_refl}>
+                                Pertinentes e sem reflexo no processo<br>
+                                <input name="opt_nao_pert" type="checkbox" id="opt_nao_pert" value="S"  {chk_nao_pert}>
+                                N&atilde;o Pertinentes<br>
+                                <input name="opt_nao_verif" type="checkbox" id="opt_nao_verif" value="S"  {chk_nao_verif}>
+                                Ainda n&atilde;o verificadas</font></td>
+                            </tr>
+                          </table>
+                          <input id="TA" name="TA" type="hidden" value="{ta}"> 
+						  <input id="o" name="o" type="hidden" value="{o}">
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td height="39" valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo:<br>
+                          </font> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="dt_inic" type="text" id="dt_inic" value="{dt_inic}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC">
+                          a 
+                          <input name="dt_fim" type="text" id="dt_fim" value="{dt_fim}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" style="font-family: Verdana; font-size: 8 pt; background-color: #DCDCDC">
+                          (data de solicita&ccedil;&atilde;o - formato dd/mm/aaaa) 
+                          </font></td>
+                        <td align="center" valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="Submit2" type="submit" class="botao" value="Atualizar">
+                          </font></td>
+                      </tr>
+                    </form>
+                  </table>
+          		</td>
+        	</tr>
+      </table>
+	  <!-- END BLOCK : filtro_atividades_legais -->
+
+	  </td>
+  </tr>
+  <tr valign="top"> 
+    <td colspan="2"> 
+	<table border="0" align="center" cellpadding="1" cellspacing="1">              
+			<!-- START BLOCK : cols_tab -->
+			<script>
+				function ordenaAtividade(ds_ordem, ds_ta)
+				{
+					if ((ds_ta == "A") || (ds_ta == "R") || (ds_ta == ""))
+					{
+						document.getElementById('formFiltroControleProjetos').action+= '?TA=' + ds_ta + '&l={l}';
+						document.getElementById('o').value = ds_ordem;
+						document.getElementById('formFiltroControleProjetos').submit();
+					}
+					else if(ds_ta == "L")
+					{
+						document.getElementById('formFiltroLegais').action+= '?TA=' + ds_ta + '&l={l}';
+						document.getElementById('o').value = ds_ordem;
+						document.getElementById('formFiltroLegais').submit();						
+					}
+					else if(ds_ta == "E")
+					{
+						document.getElementById('formFiltroDap').action+= '?TA=' + ds_ta + '&l={l}';
+						document.getElementById('o').value = ds_ordem;
+						document.getElementById('formFiltroDap').submit();						
+					}					
+				}
+
+				function imprimir(ds_ta)
+				{
+					if ((ds_ta == "A") || (ds_ta == "R") || (ds_ta == ""))
+					{
+						document.getElementById('formFiltroControleProjetos').action+= '?dest=I&TA=' + ds_ta + '&l={l}';
+						document.getElementById('formFiltroControleProjetos').target = '_blank';
+						document.getElementById('formFiltroControleProjetos').submit();
+						document.getElementById('formFiltroControleProjetos').action = "";
+						document.getElementById('formFiltroControleProjetos').target = "";
+					}
+					else if(ds_ta == "L")
+					{
+						document.getElementById('formFiltroLegais').action+= '?dest=I&TA=' + ds_ta + '&l={l}';
+						document.getElementById('formFiltroLegais').target = '_blank';
+						document.getElementById('formFiltroLegais').submit();	
+						document.getElementById('formFiltroLegais').action = "";
+						document.getElementById('formFiltroLegais').target = "";
+					}
+					else if(ds_ta == "E")
+					{
+						document.getElementById('formFiltroDap').action+= '?dest=I&TA=' + ds_ta + '&l={l}';
+						document.getElementById('formFiltroDap').target = '_blank';
+						document.getElementById('formFiltroDap').submit();	
+						document.getElementById('formFiltroDap').action = "";
+						document.getElementById('formFiltroDap').target = "";						
+					}					
+				}				
+			</script>
+			<tr valign="top" bgcolor="#CCCCCC"> 
+                <td colspan="5" valign="middle" bgcolor="#F4F4F4">
+					<table width="100%" border="0">
+						<tr>
+							<td style="white-space:nowrap;">
+								<img src="img/btn_filtro.jpg"     style="cursor:pointer;" border="0" title="Exibir filtros" onClick="MM_showHideLayers('{frm_filtro}','','show','menu_geral','hide')">
+								<img src="img/btn_impressora.jpg" style="cursor:pointer;" border="0" title="Imprimir" onClick="javascript:window.print();">
+								<img src="img/btn_ajuda.jpg"      style="cursor:pointer;" border="0" title="Ajuda" onclick="document.location.href='ajuda.php#Lista%20de%20Atividades'">
+							</td>
+							<td width="20px;">
+							</td>
+							<td style="white-space:nowrap; color:#0046ad;">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+					              <!-- START BLOCK : tot -->
+					               <b>Total de Solicitações: {qt_total_solicitacoes}</b>
+					              <!-- END BLOCK : tot -->
+								</font>
+							</td>
+						</tr>
+					</table>					
+				</td>
+				<td colspan="3" valign="middle" bgcolor="#F4F4F4">
+					<table align="center" border="0">
+					<tr>
+						<td>
+							<label>
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Visualizar Atividade nº: </font>
+							</label>
+						</td>
+						<td>
+							<input type="text" id="id_ativididade" name="id_ativididade" value="" style="font-family: Verdana; font-size: 8pt; background-color: #DCDCDC; width:100px;">
+						</td>
+						<td>
+							<img src="img/bt_ver_atividade.gif" border="0" title="Clique para visualizar atividade" style="cursor:pointer;" onclick="visualzarAtividade()">				
+						</td>
+					</tr>
+					</table>
+					<script>
+						function visualzarAtividade()
+						{
+							if(document.getElementById('id_ativididade').value != "")
+							{
+								document.location.href = "cad_atividade_solic.php?n=" + document.getElementById('id_ativididade').value + "&TA={ta}";
+							}
+						}
+					</script>
+				</td>
+                <td valign="middle" bgcolor="#F4F4F4" align="center">
+					<input type="text" name="ds_time" id="ds_time" value=""	readonly style="border:0px; background-color:transparent;font-family: Verdana; font-size: 8pt;width:40px;">
+				</td>				
+                <td colspan="3" valign="middle" bgcolor="#F4F4F4" align="right">
+					<a href="cad_atividade_solic.php?aa={aa}" class="links2">&raquo;Criar nova atividade</a>
+				</td>
+            </tr>
+
+			  <TR>
+				<TD COLSPAN="12">
+				
+				
+					<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+					<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>
+					
+					<table class="sort-table" id="table-1" align="center" width="100%" cellspacing="2" cellpadding="2">
+					<thead>
+						<tr>
+							<td>Ativ.</td>
+							<td>Data</td>
+							<td>Solic/Atend</td>
+							<td>Descrição</td>
+							<td>Ger.</td>
+							<td>Status</td>
+							<td>Tarefas</td>
+							<td>Projeto</td>
+							<td>Tipo</td>
+							<td>Dt.Limite</td>
+							<td>Dt.Teste</td>
+							<td>Dt.Conclusão</td>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- START BLOCK : registro -->
+						<tr>
+							<td valign="top" align="center"><a href="cad_atividade_solic.php?n={numero}&aa={div_destino}&TA={ta}">{RE}{numero}</a></td>
+							<td valign="top" align="center">{data_solic}</td>
+							<td valign="top" align="center">{solic_atend}</td>
+							<td valign="top">
+								<div style="width:400px;">
+									<a href="cad_atividade_solic.php?n={numero}&aa={div_destino}&TA={ta}">{descricao}</a>
+								</div>
+							</td>
+							<td valign="top" align="center">{divisao}</td>							
+							<td valign="top" align="center">{status}</td>
+							<td valign="top">
+								<!-- START BLOCK : trf -->
+								<a href="frm_tarefa.php?os={numero}&c={cd_tarefa}&f={fl_tipo_grava}" title="{trf}">&raquo;{cd_tarefa}</a><br> 
+								<!-- END BLOCK : trf -->					
+							</td>
+							<td valign="top" align="center">{sistema}</td>
+							<td valign="top" align="center">{period}</td>
+							<td valign="top" align="center">{dt_limite}</td>
+							<td valign="top" align="center">{dt_limite_teste}</td>
+							<td valign="top" align="center">{dt_conclusao}</td>
+						</tr>
+						<!-- END BLOCK : registro -->
+					</tbody>
+					</table>
+					<script>
+						var ob_resul = new SortableTable(document.getElementById("table-1"),["Number", "CaseInsensitiveString", "CaseInsensitiveString", "DateBR", "CaseInsensitiveString", "CaseInsensitiveString", "CaseInsensitiveString", "CaseInsensitiveString", "CaseInsensitiveString", "DateBR", "DateBR", "DateBR"]);
+						ob_resul.onsort = function ()
+						{
+							var rows = ob_resul.tBody.rows;
+							var l = rows.length;
+							for (var i = 0; i < l; i++)
+							{
+								removeClassName( rows[i], i % 2 ? "sort-par" : "sort-impar" );
+								addClassName( rows[i], i % 2 ? "sort-impar" : "sort-par" );
+							}
+						};
+						ob_resul.sort(0, true);
+					</script>
+			
+				
+				
+				
+				
+				</TD>
+			  </TR>
+              <!-- END BLOCK : cols_tab -->
+
+            </table>
+
+			<table width="40%" align="center" border="0">
+				<tr>
+				<td style="white-space:nowrap; background:#0046ad; color:#FFFFFF; padding:3px; text-align:center; font-size: 10pt; font-weight: bold; font-family: Verdana, Arial,'MS Sans Serif';">
+					  <!-- START BLOCK : tot_fim -->
+					   Total de Solicitações: {qt_total_solicitacoes}
+					  <!-- END BLOCK : tot_fim -->
+				</td>
+				</tr>
+			</table>
+			<BR><BR>
+
+	</td>
+  </tr>
+</table>
+<script>
+	document.getElementById('id_ativididade').onkeydown = checkKeycodeVisualizaAtividade;
+	function checkKeycodeVisualizaAtividade(e) 
+	{
+		var keycode;
+		if (window.event)
+		{		
+			keycode = window.event.keyCode;
+		}
+		else if (e) 
+		{
+			keycode = e.which;
+		}
+		
+		if (keycode == 13)
+		{
+			visualzarAtividade();
+		}
+	}
+
+	MaskInput(document.getElementById('id_ativididade'), "999999999999999");
+	
+	showTime();
+</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

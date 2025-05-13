@@ -1,0 +1,704 @@
+<!-- INCLUDE BLOCK : header-jquery.html -->
+<script>
+	document.title = '..:: e-prev :: Atividades ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function submeter_form(f)
+{
+	if( valida_form(f) )
+	{
+		if( confirm( 'Salvar?' ) )
+		{
+			$('#btn_salvar').attr('value','salvando...');
+			$('#btn_salvar').attr('disabled',true);
+			$('#btn_salvar_img').hide();
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function cbo_periodicidade_change(valor)
+{
+	if((valor != '') && ($("#cbo_area").val() == "GC"))
+	{
+		$.post("ajax_proximo_dia_util.php",
+		{
+			qt_dias         : '', 
+			dt_data         : '', 
+			tipo_manutencao : valor
+		},
+		function(data)
+		{
+			if(($("#dt_limite").val() != "") && (jQuery.trim(data) == ''))
+			{
+				if(confirm("Deseja limpar a data limite?\n\nClique no botão:\n\n[Ok] para limpar\n\n[Cancelar] para manter a data limite (" + $("#dt_limite").val() + ")"))
+				{
+					$("#dt_limite").val(data);
+				}
+			}
+			else
+			{
+				$("#dt_limite").val(data);
+			}
+		});	
+		
+		$.post("ajax_consultas_gerais.php",
+		{
+			metodo  : 'get_descricao_atividade', 
+			divisao : $("#cbo_area").val(), 
+			codigo  : valor
+		},
+		function(data)
+		{
+			if(jQuery.trim(data) != "")
+			{
+				$("#txt_descricao").val(data);
+			}
+		});		
+	}
+}
+
+function cbo_tipo_manutencao_change(valor)
+{
+	if((valor != '') && ($("#cbo_area").val() != "GC"))
+	{
+		$.post("ajax_proximo_dia_util.php",
+		{
+			qt_dias: '', 
+			dt_data: '', 
+			tipo_manutencao: valor
+		},
+		function(data)
+		{
+			if(($("#dt_limite").val() != "") && (jQuery.trim(data) == ''))
+			{
+				if(confirm("Deseja limpar a data limite?\n\nClique no botão:\n\n[Ok] para limpar\n\n[Cancelar] para manter a data limite (" + $("#dt_limite").val() + ")"))
+				{
+					$("#dt_limite").val(data);
+				}
+			}
+			else
+			{
+				$("#dt_limite").val(data);
+			}
+		});
+
+		
+		$.post("ajax_consultas_gerais.php",
+		{
+			metodo  : 'get_descricao_atividade', 
+			divisao : $("#cbo_area").val(), 
+			codigo  : valor
+		},
+		function(data)
+		{
+			if(jQuery.trim(data) != "")
+			{
+				$("#txt_descricao").val(data);
+			}
+		});
+	}
+	else if ($("#cbo_area").val() == "GA")
+	{
+		$("#dt_limite").val("");
+		$("#txt_descricao").val("");
+	}
+}
+
+function valida_form(f)
+{
+	var erros = "";
+	var label_dt_limite = '';
+
+	if( f.cbo_area.value=='GRI' )
+	{
+		label_dt_limite = 'Prazo Esperado';
+	}
+	else
+	{
+		label_dt_limite = 'Data Limite';
+	}
+
+	if (f.cbo_sistema != undefined)
+	{
+		if (f.cbo_sistema.value == '')
+		{
+			erros = erros + "- O campo 'Projeto' deve estar preenchido.\n"; 
+		}
+	}
+
+	if(f.cbo_tipo_manutencao.value=='')
+	{
+		erros = erros + "- O campo 'Tipo da manutenção' deve estar preenchido.\n";
+	}
+
+	
+	if($('#fl_abrir_encerrar').val() == "S")
+	{
+		if($('#cd_usuario_abrir_ao_encerrar').val() == "0")
+		{
+			erros = erros + "- Informe para quem abrir ao atividade após encerrar.\n";
+		}
+		
+		if(jQuery.trim($('#descricao_abrir_ao_encerrar').val()) == "")
+		{
+			erros = erros + "- Informe a Descrição.\n";
+		}		
+	}	
+	
+	
+	if (f.txt_descricao.value == '') { erros = erros + "- O campo 'Descrição da Solicitação' deve estar preenchido.\n"; }
+
+	if (f.txt_problema != undefined) {
+		if (f.txt_problema.value == '') { erros = erros + "- O campo 'Justificativa da Solicitação' deve estar preenchido.\n"; }
+	}
+
+	if (f.cbo_analista.value == '')
+	{ 
+		erros = erros + "- Especifique um atendente para esta atividade.\n";
+	}
+	if( f.cbo_area.value=='GRI' )
+	{
+		/*
+		if(f.dt_limite.value=='')
+		{
+			erros = erros + "- O campo '" + label_dt_limite + "' deve estar preenchido.\n";
+		}
+		*/
+	}
+
+	if( f.cbo_area.value=='GRI' )
+	{
+		/*
+		if ((fnc_compara_datas(f.dt_limite, f.proximo_dia_util)) != true)
+		{
+			erros = erros + "- " + label_dt_limite + " não pode ser menor do que o próximo dia útil.\n";
+		}
+		*/
+	}
+	else
+	{
+		if ((fnc_compara_datas(f.dt_limite)) != true)
+		{
+			erros = erros + "- " + label_dt_limite + " não pode ser menor do que o próximo dia útil.\n";
+		}
+		if ((fnc_compara_hora(f.dt_limite)) != true)
+		{
+			erros = erros + "- " + label_dt_limite + " não pode ser Hoje para atividades abertas após às 15h.\n";
+		}
+	}
+	
+
+
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function fnc_compara_hora(dt1,dt2) {
+	if (dt1.value == '')
+	{  
+		return true;
+	}
+	else
+	{
+		dia1 = (dt1.value.substring(0,2)); 
+		mes1 = (dt1.value.substring(3,5)); 
+		ano1 = (dt1.value.substring(6,10)); 
+	}
+	var hoje = new Date();
+	if (hoje.getYear() <=99)
+	   {ano2 = "19"+ hoje.getYear();}
+	else  if (hoje.getYear() <=199)
+	   {ano2 = 1900 + hoje.getYear() ;}
+	else
+	   {ano2 = hoje.getYear() ;}
+	var data1 = "" + ano1 + mes1 + dia1 
+	var data2 = "" + ano2 + (((hoje.getMonth() + 1) < 10) ? "0" : "") + (hoje.getMonth() + 1) + (((hoje.getDate()) < 10) ? "0" : "") + (hoje.getDate()) 
+	if (data1 == data2) {
+		if (hoje.getHours() >=15) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		return true;
+	}
+}
+
+function fnc_compara_datas(dt1,dt2) {
+
+	if (dt1.value == '') {  
+		return true;
+	}
+	else
+	{
+		dia1 = (dt1.value.substring(0,2)); 
+		mes1 = (dt1.value.substring(3,5)); 
+		ano1 = (dt1.value.substring(6,10)); 
+	}
+	if (dt2 == null) { 
+		var hoje = new Date();
+		if (hoje.getYear() <=99)
+		   {ano2 = "19"+ hoje.getYear();}
+		else  if (hoje.getYear() <=199)
+		   {ano2 = 1900 + hoje.getYear() ;}
+		else
+		   {ano2 = hoje.getYear() ;}
+		var data1 = "" + ano1 + mes1 + dia1 
+		var data2 = "" + ano2 + (((hoje.getMonth() + 1) < 10) ? "0" : "") + (hoje.getMonth() + 1) + (((hoje.getDate()) < 10) ? "0" : "") + (hoje.getDate()) 
+		if (data1 < data2) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		var data1 = "" + ano1 + mes1 + dia1 
+		dia2 = (dt2.value.substring(0,2)); 
+		mes2 = (dt2.value.substring(3,5)); 
+		ano2 = (dt2.value.substring(6,10)); 
+		var data2 = "" + ano2 + mes2 + dia2 
+		if (data1 < data2) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+}
+
+function fnc_menu(cbo_area) {
+	var ds_url = "cad_atividade_solic.php?aa=" + (cbo_area.value)
+	try{
+	if(document.getElementById('cbo_patrocinadora').value != "")
+	{
+		ds_url+= "&EMP_GA=" + document.getElementById('cbo_patrocinadora').value
+	}	
+	if(document.getElementById('cd_registro_empregado').value != "")
+	{
+		ds_url+= "&RE_GA=" + document.getElementById('cd_registro_empregado').value
+	}
+	if(document.getElementById('sequencia').value != "")
+	{
+		ds_url+= "&SEQ_GA=" + document.getElementById('sequencia').value
+	}
+	if(document.getElementById('cd_atendimento').value != "")
+	{
+		ds_url+= "&CD_ATENDIMENTO_GA=" + document.getElementById('cd_atendimento').value
+	}	
+	if(document.getElementById('cbo_fdap').value != "")
+	{
+		ds_url+= "&FORMA_GA=" + document.getElementById('cbo_fdap').value
+	}	
+	} catch(e) {}
+	parent.location.href = ds_url
+}
+
+//-->
+</script>
+
+
+
+<div class='aba_definicao'>
+
+	<div id='aba'>
+		<ul>
+			<li id='aba_solicitacao' class='abaSelecionada'"><span>Solicitação</span></li>
+		</ul>
+	</div>
+
+	<div class='div_aba_content'>
+		<!--<br /><br /><br />-->
+		<div id='command_bar' class='command-bar'>
+			<br /><br />
+			<div id="result_div">
+
+      <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td>
+            <form action="grava_atividade_solic.php" method="POST" onSubmit="return submeter_form(this);" name="formulario">
+
+            	<!-- START BLOCK : hiddens -->
+
+                <input type="hidden" name="n" value="0">
+				<input type="hidden" name="aa" value="{aa}">
+                <input type="hidden" name="status_anterior" value="{status_anterior}">
+                <input type="hidden" name="proximo_dia_util" id="proximo_dia_util" value="{proximo_dia_util}">
+
+            	<!-- END BLOCK : hiddens -->
+
+              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td colspan="2"><table border="0" align="center" cellpadding="0" cellspacing="1">
+                      <tr> 
+                        <td><font size="1" face="Verdana">Número: {numero_os}</font></td>
+                        <td colspan="2"> <p align="left"><font size="1" face="Verdana">Data 
+                            Solicita&ccedil;&atilde;o: {dt_cad}</font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Gerência de destino:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size=1 name="cbo_area" id="cbo_area" target="_self" onChange="fnc_menu(this)" {ro_solic}>
+                            <!-- START BLOCK : cbo_area -->
+                            <option value="{codare}"{chkare}>{nomeare}</option>
+                            <!-- END BLOCK : cbo_area -->
+                          </select>
+                          </font></td>
+                        <td rowspan="2" align="right"></td>
+                      </tr>
+
+                      <!-- START BLOCK : tr_cbo_sistemas -->
+                      <tr>
+                        <td><font size="1" face="Verdana">Projeto:</font></td>
+                        <td>
+                          <select size="1" name="cbo_sistema" >
+                            <!-- START BLOCK : cbo_sistemas -->
+                            <option value="{codsis}"{chksis}>{nomesis}</option>
+                            <!-- END BLOCK : cbo_sistemas -->
+                          </select>
+                          </td>
+                      </tr>
+                      <!-- END BLOCK : tr_cbo_sistemas -->
+
+                      <tr {fl_exibe_solicitante}> 
+                        <td><font size="1" face="Verdana">Solicitante:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_solicitante" {ro_solic} >
+                            <!-- START BLOCK : cbo_solicitante -->
+                            <option value="{codsol}"{chksol}>{nomesol}</option>
+                            <!-- END BLOCK : cbo_solicitante -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td><font size="1" face="Verdana">Tipo da manutenção:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_tipo_manutencao" {ro_solic} onchange="cbo_tipo_manutencao_change(this.value);">
+							<option value="">Selecione</option>
+                            <!-- START BLOCK : cbo_tipo_manutencao -->
+                            <option value="{codman}"{chktpativ}>{nomeman}</option>
+                            <!-- END BLOCK : cbo_tipo_manutencao -->
+                          </select>
+                          </font>
+						</td>
+                        <td rowspan="2"> <div align="center">
+                            <table border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td><div align="center"><em><font color="#0046ad" size="2" face="Verdana, Arial, Helvetica, sans-serif">{status_atual}</font></em></div></td>
+                              </tr>
+                            </table>
+                          </div>
+						</td>
+                      </tr>
+					  
+						<!-- START BLOCK : ABRIR_AO_ENCERRAR -->
+						<tr> 
+							<td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Abrir atividade ao encerrar:</font></td>
+							<td valign="top">
+								<script>
+									function setAbrirEncerrar()
+									{
+										$('#tbParaQuem').hide();
+										if($('#fl_abrir_encerrar').val() == "S")
+										{
+											$('#tbParaQuem').show();
+										}
+									}
+								</script>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td valign="top">
+											<select name="fl_abrir_encerrar" id="fl_abrir_encerrar" onchange="setAbrirEncerrar()">
+												<option value="S">Sim</option>
+												<option value="N" selected>Não</option>
+											</select>
+										</td>
+										<td valign="top">
+											<table id="tbParaQuem" border="0" cellpadding="0" cellspacing="0" style="display:none;">
+												<tr>
+													<td valign="top" style="padding-left: 20px;">										
+														<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Para quem:</font>
+													</td>
+													<td valign="top" style="padding-left: 10px;">
+														<select name="cd_usuario_abrir_ao_encerrar" id="cd_usuario_abrir_ao_encerrar">	
+															<option value="0">Selecione</option>
+															<!-- START BLOCK : CB_USUARIO_ABRIR_AO_ENCERRAR -->
+															<option value="{cd_usuario_abrir_ao_encerrar}" {ck_usuario_abrir_ao_encerrar}>{ds_usuario_abrir_ao_encerrar}</option>
+															<!-- END BLOCK : CB_USUARIO_ABRIR_AO_ENCERRAR -->
+														</select>
+													</td>	
+												</tr>
+												<tr>
+													<td valign="top" style="padding-left: 20px;">										
+														<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Descrição:</font>
+													</td>
+													<td valign="top" style="padding-left: 10px;">
+														<textarea id="descricao_abrir_ao_encerrar" name="descricao_abrir_ao_encerrar" rows="5" cols="40" class="resizable"></textarea>
+													</td>													
+												</tr>
+											</table>														
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>	
+						<!-- END BLOCK : ABRIR_AO_ENCERRAR -->
+					  
+					  
+                      <tr {fl_exibe_cbo_periodicidade}> 
+                        <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo da atividade:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <select name="cbo_periodicidade" id="cbo_periodicidade"  {ro_solic} onchange="cbo_periodicidade_change(this.value);">
+                            <!-- START BLOCK : cbo_tipo_atividade -->
+                            <option value="{codtpativ}"{chktpativ}>{nometpativ}</option>
+                            <!-- END BLOCK : cbo_tipo_atividade -->
+                          </select>
+                          </font> </td>
+                      </tr>
+						<tr style="display:{fl_recorrente_exibe}"> 
+							<td>
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif">Recorrente:</font>
+							</td>
+							<td colspan="2">
+								<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+									<select name="cbo_recorrente" id="cbo_recorrente"  {ro_solic} style="width:100px;">
+		                            <!-- START BLOCK : cbo_recorrente -->
+		                            <option value="{cd_recorrente}" {fl_seleciona}>{ds_recorrente}</option>
+		                            <!-- END BLOCK : cbo_recorrente -->
+									</select>
+									Informe se esta situação já ocorreu antes
+								</font>
+							</td>
+						</tr>					  
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">T&iacute;tulo:</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <input name="titulo" type="text" id="titulo"  value="{titulo}" size="60" maxlength="200" {ro_solic}="{ro_solic}">
+                          </font></td>
+                      </tr>
+                      <!-- START BLOCK : acs -->
+                      <tr> 
+                        <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&atilde;o:</font></td>
+                        <td colspan="2"> <font size="1" face="Verdana"> 
+                          <textarea rows="10" id="txt_descricao" name="txt_descricao" cols="60" class="resizable">{descricao}</textarea>
+                          </font> </td>
+                      </tr>
+					  					  <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Atendente 
+                          da Atividade:</font></td>
+                        <td><font size="1" face="Verdana">
+                          <select size="1" name="cbo_analista"  {ro_solic}>
+                            <!-- START BLOCK : cbo_analista_acs -->
+                            <option value="{codana}" {chkana}>{nomeana}</option>
+                            <!-- END BLOCK : cbo_analista_acs -->
+                          </select>
+                          </font></td>
+                        <td><font size="1" face="Verdana">Indique para quem voc&ecirc; 
+                          <br>
+                          vai encaminhar esta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+                      
+					  <!-- START BLOCK : GRI_prazo_esperado -->
+                      <tr>
+                        <td valign="top"><font size="1" face="Verdana">Prazo Esperado:</font></td>
+                        <td><font size="1" face="Verdana">Entre em contato com a GRI para negociar a data adequada ao atendimento.</font></td>
+                        <td></td>
+                      </tr>
+                      <!-- tr>
+                        <td valign="top"><font size="1" face="Verdana">Prazo Esperado:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <input name="dt_limite" type="text" id="dt_limite"  onKeyUp="mascara_data(this)" onBlur="verifica_data(this)" onChange="fnc_compara_datas(this)"  value="{dt_limite}" size="12" maxlength="12" >
+                          dd/mm/aaaa</font> <font size="1" face="Verdana">&nbsp;
+                          </font></td>
+                        <td><font size="1" face="Verdana">Data m&aacute;xima para 
+                          o atendimento desta solicita&ccedil;&atilde;o</font></td>
+                      </tr -->
+                      <!-- END BLOCK : GRI_prazo_esperado -->
+
+                      <!-- END BLOCK : acs -->
+                      <!-- START BLOCK : nao_acs -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Descri&ccedil;&atilde;o<br>
+                          da Solicita&ccedil;&atilde;o:</font></td>
+                        <td colspan="2"> <font size="1" face="Verdana"> 
+                          <textarea rows="10" id="txt_descricao" name="txt_descricao" cols="60" class="resizable">{descricao}</textarea>
+                          </font> </td>
+                      </tr>
+					  <!-- START BLOCK : campo_justificativa -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Justificativa 
+                          da Solicitação</font></td>
+                        <td colspan="2"><font size="1" face="Verdana"> 
+                          <textarea name="txt_problema" cols="60" rows="2" id="txt_problema"  class="resizable">{problema}</textarea>
+                          </font></td>
+                      </tr>
+                      <!-- END BLOCK : campo_justificativa -->
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Atendente 
+                          da Atividade:</font></td>
+                        <td>
+                        	<font size="1" face="Verdana">
+								<select size="1" name="cbo_analista" {ro_solic}>
+								<!-- START BLOCK : cbo_analista -->
+								<option value="{codana}" {chkana}>{nomeana}</option>
+								<!-- END BLOCK : cbo_analista -->
+								</select>
+							</font>
+                        </td>
+                        <td>
+                        	<font size="1" face="Verdana">Indique para quem voc&ecirc; 
+							<br>
+							vai encaminhar esta solicita&ccedil;&atilde;o</font>
+						</td>
+                      </tr>
+                      <tr> 
+                        <td valign="top"><font size="1" face="Verdana">Data Limite:</font></td>
+                        <td><font size="1" face="Verdana"> 
+                          <input name="dt_limite" type="text" id="dt_limite"  onKeyUp="mascara_data(this)" onBlur="verifica_data(this)" onChange="fnc_compara_datas(this)"  value="{dt_limite}" size="12" maxlength="12" >
+                          dd/mm/aaaa</font> <font size="1" face="Verdana">&nbsp; 
+                          </font></td>
+                        <td><font size="1" face="Verdana">Data m&aacute;xima para 
+                          o atendimento desta solicita&ccedil;&atilde;o</font></td>
+                      </tr>
+					  <!-- END BLOCK : nao_acs -->
+                      <!-- START BLOCK : re_d -->
+						<tr> 
+							<td colspan="3" align="center" valign="top">
+								<BR>
+							</td>
+						</tr>					  
+						<tr align="center"> 
+							<td colspan="3" valign="top" bgcolor="#0046AD">
+								<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+								<b>Atendimento ao Participante:</b>
+								</font>
+							</td>
+						</tr>
+                      <tr> 
+                        <td valign="top" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora/Instituidor:</font></td>
+                        <td bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_patrocinadora" id="cbo_patrocinadora" {ro_solic}>
+                            <!-- START BLOCK : cbo_patrocinadora -->
+                            <option value="{cd_patr}" {chk_patr}>{nome_patr}</option>
+                            <!-- END BLOCK : cbo_patrocinadora -->
+                          </select>
+                          </font> </td>
+                        <td bgcolor="#F4F4F4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Patrocinadora/Instituidor 
+                          do participante em atendimento</font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Plano:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_plan"  {ro_solic}>
+                            <!-- START BLOCK : cbo_plan -->
+                            <option value="{cd_plan}" {chk_plan}>{nome_plan}</option>
+                            <!-- END BLOCK : cbo_plan -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">RE 
+                          / Seq:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"> <font size="1" face="Verdana"> 
+                          <input name="cd_registro_empregado" type="text" id="cd_registro_empregado"   value="{cd_registro_empregado}" size="12" maxlength="12" {ro_solic}>
+                          <input name="sequencia" type="text" id="sequencia"   value="{sequencia}" size="4" maxlength="4" {ro_solic}>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Solicitante:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_sdap"  {ro_solic}>
+                            <!-- START BLOCK : cbo_sdap -->
+                            <option value="{cd_sdap}" {chk_sdap}>{nome_sdap}</option>
+                            <!-- END BLOCK : cbo_sdap -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr> 
+                        <td valign="top" bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Forma de solicitação:</font></td>
+                        <td colspan="2" bgcolor="#F4F4F4"><font size="1" face="Verdana"> 
+                          <select size="1" name="cbo_fdap" id="cbo_fdap"  {ro_solic}>
+                            <!-- START BLOCK : cbo_fdap -->
+                            <option value="{cd_fdap}" {chk_fdap}>{nome_fdap}</option>
+                            <!-- END BLOCK : cbo_fdap -->
+                          </select>
+                          </font></td>
+                      </tr>
+                      <tr>
+
+						<td valign="top" bgcolor="#F4F4F4">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Forma de envio:</font>
+						</td>
+						<td colspan="2" bgcolor="#F4F4F4">
+							<font size="1" face="Verdana"> 
+							<select size="1" name="cbo_fedap" id="cbo_fedap" {ro_solic}>
+								<option value="0"></option>
+								<option value="1">Correio</option>
+								<option value="2">Central de atendimento</option>
+								<option value="3">Email</option>
+							</select>
+							</font>
+						</td>
+						
+                      </tr>
+                      <tr>
+
+						<td valign="top" bgcolor="#F4F4F4">
+							<font size="2" face="Verdana, Arial, Helvetica, sans-serif">Protocolo de atendimento:</font>
+						</td>
+						<td colspan="2" bgcolor="#F4F4F4">
+							<font size="1" face="Verdana"> 
+							<input id="cd_atendimento" name="cd_atendimento" value="{cd_atendimento}" style="width:80px;" />
+							</font>
+						</td>
+
+                      </tr>
+                      <!-- END BLOCK : re_d -->
+                    </table></td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                  	<td colspan="2">
+						<div align="center" style='margin-top:30px;'> 
+							<input id='btn_salvar' class='botao' type="submit" value="Salvar" name="B1">
+							<input class='botao_disabled' type="reset" value="Cancelar" name="B2">
+						</div>
+					</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </form>
+				<!-- <div align="center"><a href="imp_atividade.php?n={numero_os}" target="_blank"><img src="img/btn_versao_impressao.jpg" border="0"></a> -->
+            </div></td>
+        </tr>
+      </table>
+
+			</div>
+			<br />
+	</div>
+
+</div>
+
+<!-- INCLUDE BLOCK : footer.html -->

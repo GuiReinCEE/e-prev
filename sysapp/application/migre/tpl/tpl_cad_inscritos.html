@@ -1,0 +1,315 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Inscritos Instituidor ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function confirma_exclusao(f)
+{
+	var confirma = confirm("Confirma a exclusão deste participante??");
+	if (confirma == true) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function ir_aba_ident()
+{
+	location.href='cad_inscritos.php?c={cd_registro_empregado}&a=s';
+}
+
+function ir_aba_cont()
+{
+	location.href='cad_inscritos_contato.php?c={cd_registro_empregado}&a=a';
+}
+
+function ir_aba_anx()
+{
+	location.href='cad_inscritos_docs.php?c={cd_registro_empregado}&a=h';
+}
+
+function ir_aba_hist()
+{
+	location.href='cad_inscritos_hist.php?c={cd_registro_empregado}&a=h';
+}
+//-->
+</script>
+
+{ABA_START}
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <tr valign="top"> 
+          <td colspan="2"> 
+			<table  border="0"  cellspacing="0" cellpadding="0">
+
+              <tr> 
+                <td colspan="2"><blockquote>
+
+                      <table border="0" align="left" cellpadding="1" cellspacing="1">
+                        <tr> 
+                        <td colspan="3"> 
+							<div id="div_alerta"
+							     valign="middle"
+							     onclick="{div_alerta_click}"
+								 style="
+							            color: InfoText;
+							            background: InfoBackground;
+							            border: #000000 1px solid;
+							            border-bottom: .16em outset;
+							            padding: 5px;
+							            cursor:pointer;
+										text-align: center;
+										font-size: 18px;
+										font-weight: bold;
+										font-family: Verdana,Arial,'MS Sans Serif';
+										{div_alerta}
+							           ">
+									 A documentação já está confirmada, verifique os dados <br> através do Atendimento ao Participante, clicando aqui.
+							</div>						
+						</td>
+                        <td rowspan="2" align="right">
+							<form name="form1" method="post" action="exclui_inscrito.php" onSubmit="return confirma_exclusao(this);" style="padding-bottom:0px;">
+								<input name="emp" type="hidden" value="{cd_empresa}">
+								<input name="re" type="hidden" value="{cd_registro_empregado}">
+								<input name="seq" type="hidden" value="{seq_dependencia}">
+								<input type="image" src="img/btn_exclusao.jpg" border="0">
+							</form>
+							{img_alerta}
+						</td>
+                        </tr>
+						<form name="form1" method="post" action="grava_inscritos_internet.php">
+                        <tr>
+						<input name="insere" type="hidden" id="insere" value="{insere}"> 
+						<input name="cd_registro_empregado" type="hidden" id="cd_registro_empregado" value="{cd_registro_empregado}">
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RE:</font></b></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_registro_empregado}</font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            Nome:</font></b></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="nome" type="text" id="nome"  value="{nome}" size="80">
+                            </font> </td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CPF</font></b></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="cpf" type="text" id="cpf"  value="{cpf}" size="30">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RG</font></b></td>
+                          <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="rg" type="text" id="rg"  value="{rg}" size="12" maxlength="12">
+                            <input name="emissor" type="text" id="emissor"  value="{emissor}" size="12" maxlength="12">
+                            </font></td>
+                          <td align="right"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            Emiss&atilde;o:</font></b></font></td>
+                          <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="dt_emissao" type="text" id="dt_emissao" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)"  value="{dt_emissao}" size="12" maxlength="12">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CREA</font></b></td>
+                          <td colspan="3"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="crea" type="text" id="crea"  value="{crea}" size="30">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td valign="top"></td>
+                          <td colspan="3" valign="top" bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Informa&ccedil;&otilde;es 
+                            Banc&aacute;rias:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banco:</font></b></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size=1 name="cbo_banco"  onChange="jumpCheck('parent', this, 'inscricao_etapa_3.php?n={n}banco={cod_banco}');" >
+                              <!-- START BLOCK : cbo_banco -->
+                              <option value="{cod_banco}" {sel_banco}>{banco}</option>
+                              <!-- END BLOCK : cbo_banco -->
+                            </select>
+                            </font></td>
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia:</font></b></td>
+                          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size=1 name="cbo_agencia"  >
+                              <!-- START BLOCK : cbo_agencia -->
+                              <option value="{cod_agencia}" {sel_agencia}>{agencia}</option>
+                              <!-- END BLOCK : cbo_agencia -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="conta" type="text" id="conta" value="{conta}" size="21" maxlength="20" >
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td valign="top"></td>
+                          <td colspan="3" valign="top" bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Dados 
+                            Cadastrais:</b></font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sexo:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="sexo" type="text" id="sexo" size="2" maxlength="2" value="{sexo}" >
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            de Nascim.:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="dt_nascimento" type="text" id="dt_nascimento" size="10" maxlength="10" value="{dt_nascimento}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Estado 
+                            Civil:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size="1" name="cbo_estado_civil"    {ro_solic}>
+                              <!-- START BLOCK : cbo_estado_civil -->
+                              <option value="{cod_est_civil}" {chk_est_civil}>{nome_est_civil}</option>
+                              <!-- END BLOCK : cbo_estado_civil -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Grau 
+                            de Instru&ccedil;&atilde;o:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <select size="1" name="cbo_grau_instrucao"     {ro_solic}>
+                              <!-- START BLOCK : cbo_grau_instrucao -->
+                              <option value="{cod_grau_instrucao}" {chk_grau_instrucao}>{nome_grau_instrucao}</option>
+                              <!-- END BLOCK : cbo_grau_instrucao -->
+                            </select>
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                            M&atilde;e:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="nome_mae" type="text" id="nome_mae2"  value="{nome_mae}" size="40">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                            Pai:</font></b></td>
+                          <td colspan="3"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="nome_pai" type="text" id="nome_pai2"  value="{nome_pai}" size="40">
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td valign="top"></td>
+                          <td colspan="3" valign="top" bgcolor="#0046ad"><font color="#FFFFFF" face="Century Gothic, Verdana, Arial"><b>Outras 
+                            Informa&ccedil;&otilde;es:</b></font></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                            titular:</font></b></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><font size="1"><i>
+                            <input name="nome_titular" type="text" id="nome_titular" size="50" maxlength="100" value="{nome_titular}" >
+                            </i></font></font></td>
+                          <td rowspan="7" align="center" valign="middle"><img src="img/{autorizacao}.jpg" width="240" height="120"></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Matr&iacute;cula 
+                            titular:</font></b></td>
+                          <td colspan="2"><div align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                              <font size="1"> <i> 
+                              <input name="matricula_titular" type="text" id="matricula_titular" size="10" maxlength="10" value="{matricula_titular}" >
+                              </i></font></font><i><font size="1" face="Verdana, Arial, Helvetica, sans-serif">(somente 
+                              se dependente)</font></i></div></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Categoria 
+                            SENGE:</font></b></td>
+                          <td colspan="2"><select size="1" name="select"   {ro_solic}>
+                              <!-- START BLOCK : cbo_categoria -->
+                              <option value="{cod_categoria}" {chk_categoria}>{nome_categoria}</option>
+                              <!-- END BLOCK : cbo_categoria -->
+                            </select></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Matr&iacute;cula:</font></b></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="matricula" type="text" id="matricula" size="10" maxlength="10" value="{matricula}" >
+                            </font><font size="2" face="Arial, Helvetica, sans-serif"> 
+                            <input name="seq_senge" type="text" id="seq_senge"  value="{seq_senge}" size="3" maxlength="2">
+                            </font><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            ades&atilde;o ao Senge:</font></b></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="dt_adesao_instituidor" type="text" id="dt_adesao_instituidor" size="10" maxlength="10" value="{dt_adesao_instituidor}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                            </font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><b><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                            da nega&ccedil;&atilde;o SENGE</font></b></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="dt_negacao" type="text" id="dt_negacao" size="10" maxlength="10" value="{dt_negacao}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                            </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                        </tr>
+                        <tr> 
+                          <td align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Respons&aacute;vel 
+                            Senge:</b></font></td>
+                          <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                            <input name="resp_senge" type="text" id="resp_senge" size="20" maxlength="20" value="{resp_senge}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)" >
+                            <i><font size="1">Quem negou o pedido de inscri&ccedil;&atilde;o</font></i></font></td>
+                        </tr>
+						<tr > 
+            				<td colspan="4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>Op&ccedil;&atilde;o 
+              				de Desconto de IR:</b></font></td>
+          				</tr>
+						  <tr> 
+						  	<td>&nbsp;</td>
+							<td colspan="4">
+							  <input name="irpf" type="radio" value="2" {chk_nao_optou}>
+							  <font size="1" face="Verdana, Arial, Helvetica, sans-serif">N&Atilde;O 
+							  opto pela tabela regressiva </font><font size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+							  </font></td>
+						  </tr>
+						  <tr> 
+						  	<td>&nbsp;</td>
+							<td colspan="4">
+							  <input name="irpf" type="radio" value="1" {chk_optou}>
+							  <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Opto 
+							  pela tabela regressiva</font></td>
+						  </tr>
+                        <tr> 
+                          <td colspan="4"> <div align="center"> 
+                              <input class='botao' type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atualizar Informações&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                              <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                            </div></td>
+                        </tr></form>
+                      </table>
+
+                  </blockquote></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

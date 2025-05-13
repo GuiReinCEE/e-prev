@@ -1,0 +1,112 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lista de emails ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<style type="text/css">
+
+	#aba
+	{
+		width:100%;
+	}
+	.aba_definicao 
+	{
+		width:98%;
+		/*top:130px; left:5px;*/
+	}
+	.aba_conteudo
+	{
+		width:98%;
+	}
+	
+</style>
+
+<script language="JavaScript">
+
+	function setTAB( indexTab )
+	{
+		if (indexTab==0) 
+		{ 
+			location.href = "cad_email_marketing.php?op=A&c=" + document.form1.cd_divulgacao.value + ""; 
+		}
+		if (indexTab==1) 
+		{ 
+			location.href = "lst_envia_emails_seleciona.php?op=A&c=" + document.form1.cd_divulgacao.value + ""; 
+		}
+		if (indexTab==2) 
+		{ 
+			location.href = "lst_envia_emails.php?divulg=" + document.form1.cd_divulgacao.value + "&fl_retornado=N";  
+		}
+		if (indexTab==3) 
+		{ 
+			location.href = "lst_envia_emails.php?divulg=" + document.form1.cd_divulgacao.value + "&fl_retornado=S"; 
+		}
+		
+	}
+
+</script>
+
+	    <form name="form1"><input name="cd_divulgacao" id="cd_divulgacao" value="{cd_divulgacao}" type="hidden" /></form>
+	    
+	    <div class="aba_definicao">
+				
+			<div id="aba" style="visibility: {aba_style_visibility}">
+				<ul>
+					<li onclick="setTAB(0);" id="tab0"><span>DIVULGAÇÃO</span></li>
+					<li onclick="setTAB(2);" id="tab2" {css_emails_enviados}><span>EMAILS ENVIADOS</span></li>
+					<li onclick="setTAB(3);" id="tab3" {css_emails_retornados}><span>EMAILS RETORNADOS</span></li>
+				</ul>
+			</div>
+			<div class="aba_conteudo">
+				<div id="TAB0Content" style="width:100%; text-align:center; display:BLOCK;"><br />
+					    
+					
+
+					
+				</div>
+			</div>
+		</div>
+
+      	  {espaco_entre_abas_e_conteudo}
+	      
+  		  <div align="right"></div>
+	      <table border="0" width="100%">
+	      	<tr>
+	      	<td colspan="7">
+	      		<table width="100%" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="left" width="50%"><span class="links2">»Total de registros: {count_emails}</span></td>
+					<td align="right" width="50%"><a href="lst_envia_emails.php?e={e}&ofset={ofsetant}&divulg={divulg}" class="links2">&lt; 
+			            50 Anteriores</a>...<a href="lst_envia_emails.php?e={e}&ofset={ofset}&divulg={divulg}" class="links2">Pr&oacute;ximos 
+			            50 &gt;</a></td>
+				</tr>
+				</table>
+	      	</td>
+	      	</tr>
+	        <tr> 
+			  
+	          <td colspan="2" bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;N&uacute;mero 
+	            email </font></b></td>
+	          <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+	            Solicita&ccedil;&atilde;o </font></b></td>
+	          <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">De</font></b></td>
+	          <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Para</font></b></td>
+	          <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Assunto</font></b></td>
+	          <td bgcolor="#0046ad"><b><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+	            de envio</font></b></td>
+	        </tr>
+	        <!-- START BLOCK : email -->
+	        <tr bgcolor="{bg_color}"> 
+			  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_envia_emails.php?op=A&c={cd_email}&e={e}">{cd_email}</a></font></td>
+			  <td align="center"><a href="cad_envia_emails.php?op=A&c={cd_email}&e={e}" title="Ocorreu um erro e o email não foi enviado">{img_retorno}</a></td>
+	          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{data}</font></td>
+	          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{de}</font></td>
+	          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{para}</font></td>
+	          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{assunto}</font></td>
+	          <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_envio}</font></td>
+	        </tr>
+	        <!-- END BLOCK : email -->
+	      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

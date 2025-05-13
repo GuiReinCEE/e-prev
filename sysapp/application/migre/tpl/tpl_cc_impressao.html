@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>..:: e-prev :: Contracheque ::..</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../main.css" rel="stylesheet" type="text/css">
+<style>
+	@media print {
+		.nao_imprimir { display:none; }
+	}
+	
+</style>
+</head>
+<body bgcolor="#ffffff">
+		<div style="width: 600px; min-height:650px;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><img src="img/logo_contra_cheque.jpg"></td>
+                <td class="nao_imprimir"><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a></td>
+              </tr>
+            </table>
+            <br> 
+            <br> 
+            <!-- START BLOCK : blk_conteudo_cc -->
+            <table align="center" border="0">
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>Empresa</b></font></td>
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2>{empresa}</font></td>
+              </tr>
+              <tr> 
+                <td>&nbsp;</td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Rua 
+                  dos Andradas 702 - Porto Alegre - RS</font></td>
+              </tr>
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>CNPJ</b></font></td>
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2>90.884.412/0001-24</font></td>
+              </tr>			  
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>Funcion&aacute;rio</b></font></td>
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2>{nome}</font></td>
+              </tr>
+
+              <tr> 
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>Endere&ccedil;o:</b></font></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{endereco} 
+                  - {bairro}</font></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cep}-{complemento_cep} 
+                  - {cidade} - {uf}</font></td>
+              </tr>
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><b>Data 
+                  de Pgto</b></font></td>
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2>{dt_pagamento}</font></td>
+              </tr>
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size=2><strong>Mes/Ano</strong></font></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{mes_ano}</font></td>
+              </tr>
+              <tr> 
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Banco</font></strong></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{banco}</font></td>
+              </tr>
+              <tr> 
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia</font></strong></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{agencia}</font></td>
+              </tr>
+              <tr> 
+                <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size=2>Conta</font></strong></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{conta}</font></td>
+              </tr>
+            </table>
+            <br> 
+            <table align="center" border="0">
+
+              <tr> 
+                <th bgcolor="#0046ad"><font face="Verdana, Arial, Helvetica, sans-serif" size = 2 color=#FFFFFF>C&oacute;d.</font></th>
+                <th bgcolor="#0046ad"><font face="Verdana, Arial, Helvetica, sans-serif" size = 2 color=#FFFFFF>Descrição 
+                  Verba</font></th>
+                <th bgcolor="#0046ad"><font face="Verdana, Arial, Helvetica, sans-serif" size = 2 color=#FFFFFF>Ref.</font></th>
+                <th bgcolor="#0046ad"><font face="Verdana, Arial, Helvetica, sans-serif" size = 2 color=#FFFFFF>Valor</font></th>
+                <th bgcolor="#0046ad"><font face="Verdana, Arial, Helvetica, sans-serif" size = 2 color=#FFFFFF>Tipo</font></th>
+              </tr>
+              <!-- START BLOCK : contra_cheque -->
+              <tr> 
+                <td bgcolor="#F4F4F4"><font face="Verdana, Arial, Helvetica, sans-serif" size=2 arial"">{codigo}</font></td>
+                <td bgcolor="#F4F4F4"><font face="Verdana, Arial, Helvetica, sans-serif" size=2 arial"">{descricao}</font></td>
+                <td bgcolor="#F4F4F4"> <div align="right"><font face="Verdana, Arial, Helvetica, sans-serif" size=2 arial"">{ref}</font></div></td>
+                <td bgcolor="#F4F4F4"> <div align="right"><font face="Verdana, Arial, Helvetica, sans-serif" size=2 arial"">{valor}</font></div></td>
+                <td bgcolor="#F4F4F4"><font face="Verdana, Arial, Helvetica, sans-serif" size=2 arial"">{tipo}</font></td>
+              </tr>
+              <!-- END BLOCK : contra_cheque -->
+              <tr> 
+                <td colspan="5" bgcolor="#F4F4F4"> <table width="100%" border="0" cellspacing="5" bordercolor="#FFFFFF">
+                    <tr> 
+                      <td width="25%" nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">SAL&Aacute;RIO 
+                          BASE<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{sal_base}</font></strong> 
+                          </font></div></td>
+                      <td width="24%" nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">SAL. 
+                          CONTR. INSS<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{contrib_inss}</font></strong></font></div></td>
+                      <td width="25%" nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">FGTS 
+                          DO MES<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{fgts_mes}</font></strong></font></div></td>
+                      <td width="26%" nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RENDIMENTOS<strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                          {rendimentos}</font></strong></font></div></td>
+                    </tr>
+                    <tr> 
+                      <td nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">BASE 
+                          IRRF<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{base_irrf}</font></strong></font></div></td>
+                      <td nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">BASE 
+                          FGTS<strong><font size="2"><br>
+                          </font></strong> <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{base_fgts}</font></strong></font></div></td>
+                      <td nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DESCONTOS<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{descontos}</font></strong></font></div></td>
+                      <td nowrap bgcolor="#CCCCCC"> <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">L&Iacute;QUIDO<br>
+                          <strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{liquido}</font></strong></font></div></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table>
+		</div>
+            <!-- END BLOCK :  blk_conteudo_cc -->
+            <!-- START BLOCK : blk_mensagem -->
+            <div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+              <br>
+              Não existe contracheque disponível para este participante no momento.</font> 
+            </div>
+			<!-- END BLOCK : blk_mensagem -->
+
+</body>
+</html>

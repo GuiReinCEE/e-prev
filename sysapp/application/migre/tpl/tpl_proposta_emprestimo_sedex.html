@@ -1,0 +1,710 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+   <title>...:: Rede e-prev :: Empréstimo (Impressão Documentos Sedex) ::...</title>
+   <link href="proposta_emprestimo.css" rel="stylesheet" type="text/css" />
+   <style type="text/css">
+<!--
+.style9 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+}
+.style14 {font-size: 12px}
+.style15 {font-size: 14px}
+.style16 {color: #000000}
+-->
+   </style>
+</head>
+<script>
+    var titulo_pagina = "";
+	function setTituloPagina()
+	{
+		if(titulo_pagina == "")
+		{
+			titulo_pagina = document.title;
+		}
+		
+		//document.title = titulo_pagina + " EMP_005 ---- " + getEl('cd_empresa').value + "/" + getEl('cd_registro_empregado').value + "/" + getEl('seq_dependencia').value;
+		document.title = titulo_pagina + " EMP_005 ---- "
+	}
+	addEvent(window, 'load', setTituloPagina);
+
+	function addEvent(obj, evType, fn)
+	{
+		if (obj.addEventListener)
+		{
+			obj.addEventListener(evType, fn, true);
+			return true;
+		} 
+		else if (obj.attachEvent)
+		{
+			var r = obj.attachEvent("on"+evType, fn);
+			return r;
+		} 
+		else 
+		{
+			elm['on' + evType] = fn;
+		}
+	}	
+</script>
+<body>
+<div id="divRelatorio" class="relatorio">
+	<!-- START BLOCK : blk_proposta -->
+	{proposta}
+	<!-- END BLOCK : blk_proposta -->
+	<!-- START BLOCK : blk_np_autorizacao -->
+	<div class="pagina">
+	   <!-- START BLOCK : blk_nota_promissoria -->
+	   <table width="100%" border="0" cellspacing="0">
+         <tr>
+            <td><table width="100%" border="0" cellpadding="2" cellspacing="2" style="visibility:hidden;">
+               <tr>
+                  <td width="250" valign="middle" class="style6"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                           <td><img src="icone_eletro.jpg" alt="1" width="44" height="36" /></td>
+                           <td>FUNDA&Ccedil;&Atilde;O CEEE</td>
+                        </tr>
+                  </table></td>
+                  <td><div align="center" class="style5">NOTA PROMISS&Oacute;RIA </div></td>
+                  </tr>
+            </table></td>
+         </tr>
+         
+         <tr>
+            <td><table width="100%" border="0" cellspacing="2">
+               <tr>
+                  <td><table width="100%" border="0" cellspacing="2">
+                     <tr>
+                        <td width="200"><table width="100%" border="0" cellspacing="5">
+                              <tr>
+                                 <td><span class="dados16bold" style="visibility:hidden;">N&ordm; </span><span class="dadosVisiveis16bold">{cd_contrato} </span></td>
+                              </tr>
+                           </table></td>
+                        <td width="100">&nbsp;</td>
+                        <td><table width="100%" border="0" cellpadding="0" cellspacing="5">
+                           <tr class="dados16bold">
+                              <td><span class="dados16bold" style="visibility:hidden;">R$</span> <span class="dadosVisiveis16bold">{montante_concedido}</span> </td>
+                           </tr>
+                        </table>
+                           </td>
+                     </tr>
+                  </table></td>
+               </tr>
+               <tr>
+                  <td><table width="100%" border="0" cellspacing="2">
+                     <tr>
+                        <td><span style="visibility:hidden;">
+								   </span>
+                           <table width="100%" border="0" cellpadding="1" cellspacing="8">
+                              <tr>
+                                 <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">No
+                                          dia _____ de ______________________
+                                          de ________ pagarei por esta NOTA PROMISS&Oacute;RIA
+                                       a</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">FUNDA&Ccedil;&Atilde;O
+                                          CEEE DE SEGURIDADE SOCIAL - ELETROCEEE,
+                                       CGC N&ordm; 90.884.412/0001-24 ou &agrave; sua </span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">ordem,
+                                          na cidade de _______________________________________________
+                                       a quantia de:</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td >&nbsp;{montante_concedido_extenso} </td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">em
+                                          moeda corrente do pa&iacute;s, e por
+                                          qualquer atraso que ocorrer pagarei
+                                          mais juro de mora </span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">de
+                                       ______% ao ano.</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td><div align="right"><span style="visibility:hidden;">_______________________
+                                    , ______ de ____________________ de __________.</span></div></td>
+                              </tr>
+                           </table>
+                           <span style="visibility:hidden;">
+                           <p class="dados">                              Avalistas:</p>
+                           </span>
+                           <table width="100%" border="0" cellspacing="5" style="visibility:hidden;">
+                              <tr>
+                                 <td width="50%" valign="top"><table width="100%" border="0" cellspacing="6">
+                                    <tr>
+                                       <td colspan="2" class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                       </tr>
+                                    <tr>
+                                       <td width="60" class="dados"><span class="dados">CGC/CIC</span></td>
+                                       <td class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                       <td colspan="2" class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                       </tr>
+                                    <tr>
+                                       <td class="dados"><span class="dados">CGC/CIC</span></td>
+                                       <td class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                    </tr>
+                                 </table>
+                                 </td>
+                                 <td width="50%">
+                                       <table width="100%" border="0" cellspacing="6">
+                                          <tr>
+                                             <td width="85" class="dados">Emitente</td>
+                                             <td class="dadosVisiveis">{nome}</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">Assinatura</td>
+                                             <td class="dados">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">CGC/CIC</td>
+                                             <td class="dadosVisiveis">{cpf_mf}</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">Endere&ccedil;o</td>
+                                             <td class="dadosVisiveis">{logradouro}</td>
+                                          </tr>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td class="dadosVisiveis">{bairro}</td>
+                                          </tr>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td class="dadosVisiveis"> {cidade}
+                                                - {unidade_federativa} </td>
+                                          </tr>
+                                    </table></td>
+                              </tr>
+                           </table></td>
+                     </tr>
+                  </table>                     </td>
+               </tr>
+               <tr>
+                  <td><p class="labelPequeno" style="visibility:hidden;">C&oacute;d. 283 fl 05/99 </p>
+                     </td>
+               </tr>
+            </table></td>
+         </tr>
+      </table>
+	   <!-- END BLOCK : blk_nota_promissoria -->
+		<!-- START BLOCK : blk_np_valores_sedex -->
+<table width="100%" border="0" cellspacing="0">
+         <tr>
+            <td><table width="100%" border="0" cellpadding="2" cellspacing="2" style="visibility:hidden;">
+               <tr>
+                  <td width="250" valign="middle" class="style6"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                           <td><img src="icone_eletro.jpg" alt="1" width="44" height="36" /></td>
+                           <td>FUNDA&Ccedil;&Atilde;O CEEE</td>
+                        </tr>
+                  </table></td>
+                  <td><div align="center" class="style5">NOTA PROMISS&Oacute;RIA </div></td>
+                  </tr>
+            </table></td>
+         </tr>
+         
+         <tr>
+            <td><table width="100%" border="0" cellspacing="2">
+               <tr>
+                  <td><table width="100%" border="0" cellspacing="2">
+                     <tr>
+                        <td width="200"><table width="100%" border="0" cellspacing="5">
+                              <tr>
+                                 <td><span class="dados16bold" style="visibility:hidden;">N&ordm; </span><span class="dadosVisiveis16bold">{cd_contrato} </span></td>
+                              </tr>
+                           </table></td>
+                        <td width="100">&nbsp;</td>
+                        <td><table width="100%" border="0" cellpadding="0" cellspacing="5">
+                           <tr class="dados16bold">
+                              <td><span class="dados16bold" style="visibility:hidden;">R$</span> <span class="dadosVisiveis16bold">{montante_concedido}</span> </td>
+                           </tr>
+                        </table>
+                           </td>
+                     </tr>
+                  </table></td>
+               </tr>
+               <tr>
+                  <td><table width="100%" border="0" cellspacing="2">
+                     <tr>
+                        <td><span style="visibility:hidden;">
+								   </span>
+                           <table width="100%" border="0" cellpadding="1" cellspacing="8">
+                              <tr>
+                                 <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">No
+                                          dia _____ de ______________________
+                                          de ________ pagarei por esta NOTA PROMISS&Oacute;RIA
+                                       a</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">FUNDA&Ccedil;&Atilde;O
+                                          CEEE DE SEGURIDADE SOCIAL - ELETROCEEE,
+                                       CGC N&ordm; 90.884.412/0001-24 ou &agrave; sua </span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">ordem,
+                                          na cidade de _______________________________________________
+                                       a quantia de:</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td >&nbsp;{montante_concedido_extenso} </td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">em
+                                          moeda corrente do pa&iacute;s, e por
+                                          qualquer atraso que ocorrer pagarei
+                                          mais juro de mora </span></span></td>
+                              </tr>
+                              <tr>
+                                 <td><span style="visibility:hidden;"><span class="dados">de
+                                       ______% ao ano.</span></span></td>
+                              </tr>
+                              <tr>
+                                 <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td><div align="right"><span style="visibility:hidden;">_______________________
+                                    , ______ de ____________________ de __________.</span></div></td>
+                              </tr>
+                           </table>
+                           <span style="visibility:hidden;">
+                           <p class="dados">                              Avalistas:</p>
+                           </span>
+                           <table width="100%" border="0" cellspacing="5" style="visibility:hidden;">
+                              <tr>
+                                 <td width="50%" valign="top"><table width="100%" border="0" cellspacing="6">
+                                    <tr>
+                                       <td colspan="2" class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                       </tr>
+                                    <tr>
+                                       <td width="60" class="dados"><span class="dados">CGC/CIC</span></td>
+                                       <td class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                       <td colspan="2" class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                       </tr>
+                                    <tr>
+                                       <td class="dados"><span class="dados">CGC/CIC</span></td>
+                                       <td class="dados" style="border-bottom: 1px solid #000000">&nbsp;</td>
+                                    </tr>
+                                 </table>
+                                 </td>
+                                 <td width="50%">
+                                       <table width="100%" border="0" cellspacing="6">
+                                          <tr>
+                                             <td width="85" class="dados">Emitente</td>
+                                             <td class="dadosVisiveis">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">Assinatura</td>
+                                             <td class="dados">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">CGC/CIC</td>
+                                             <td class="dadosVisiveis">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td class="dados">Endere&ccedil;o</td>
+                                             <td class="dadosVisiveis">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td class="dadosVisiveis">&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td class="dadosVisiveis">&nbsp;</td>
+                                          </tr>
+                                    </table></td>
+                              </tr>
+                           </table></td>
+                     </tr>
+                  </table>                     </td>
+               </tr>
+               <tr>
+                  <td><p class="labelPequeno" style="visibility:hidden;">C&oacute;d. 283 fl 05/99 </p>
+                     </td>
+               </tr>
+            </table></td>
+         </tr>
+      </table>
+		<!-- END BLOCK : blk_np_valores_sedex -->
+		<!-- START BLOCK : blk_autorizacao -->
+	   <table width="100%" border="0" cellpadding="0" cellspacing="0" style="visibility:hidden;">
+         <tr>
+            <td><table width="100%" border="0" cellspacing="4" class="tabBorda">
+               <tr>
+                  <td><table width="100%" border="0" cellpadding="2" cellspacing="2">
+                     <tr>
+                        <td width="250" valign="middle" class="style6"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                 <td><img src="icone_eletro.jpg" width="44" height="36" /></td>
+                                 <td>FUNDA&Ccedil;&Atilde;O CEEE</td>
+                              </tr>
+                        </table>								</td>
+								<td><div align="right">
+								   <table width="400" border="0" cellspacing="3" class="tabBorda">
+                                    <tr>
+                                       <td class="style5"><div align="center">AUTORIZA&Ccedil;&Atilde;O
+                                          PARA D&Eacute;BITO C/C BANRISUL </div></td>
+                                    </tr>
+                                    </table>
+								   </div></td>
+                        </tr>
+                  </table></td>
+               </tr>
+               
+               <tr>
+                  <td>                     <span class="dados">Ao</span><span class="style7"><br />
+                     BANCO DO ESTADO DO RIO GRANDE DO
+                     SUL, S.A </span></td>
+               </tr>
+               <tr>
+                  <td>Ag&ecirc;ncia: </td>
+               </tr>
+               <tr>
+                  <td><p><span class="style7">AUTORIZA&Ccedil;&Atilde;O PARA PAGAMENTO E D&Eacute;BITO EM CONTA</span><br />
+                        <span class="labelPequeno">Solicito(amos) efetuarem o pagamento, ao(s) benefici&aacute;rio(s),
+                     do(s) encargo(s) a seguir relacionado(s), no(s) respectivo(s)
+                     vencimento(s):</span></p>
+                     <table width="100%" border="0" cellspacing="0">
+                        <tr>
+                           <td width="50%" style="border-left:1px solid #000000; border-top:1px solid #000000; border-bottom:1px solid #000000; border-right:1px solid #000000"><div align="center" class="dados">ENCARGO</div></td>
+                           <td width="50%" style="border-top:1px solid #000000; border-bottom:1px solid #000000; border-right:1px solid #000000"><div align="center" class="dados">ENCARGO EM NOME DE:</div></td>
+                        </tr>
+                        <tr>
+                           <td style="border-left:1px solid #000000; border-bottom:1px solid #000000; border-right:1px solid #000000"><p><br />
+                              <br />
+                           </p>
+                              </td>
+                           <td style="border-bottom:1px solid #000000; border-right:1px solid #000000"><br />
+                              <br /></td>
+                        </tr>
+                     </table>
+                     <span class="labelPequeno">Fica, desde j&aacute;, este Banco
+                        autorizado a debitar a(s) import&acirc;ncia(s) paga(s),
+                        bem como as despesas banc&aacute;rias
+                        devidas as esta Institui&ccedil;&atilde;o, na minha/nossa
+                        conta corrente que mantenho(emos) junto a esta Ag&ecirc;ncia.<br />
+                        Outrossim, asseguro(amos) que n&atilde;o haver&aacute; nenhum &ocirc;nus
+                        a esse Banco por eventual n&atilde;o atendimento do(s)
+                        compromisso(s) na(s) data(s) de vencimento, em caso de
+                        falta de fundos em minha/nossa conta corrente, na data
+                        em que deveria ocorrer o pagamento ao(s) benefici&aacute;rio(s).</span>
+                     <table width="100%" border="0" cellspacing="2">
+                        <tr>
+                           <td width="180" class="dados">Nome:</td>
+                           <td width="400">&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td width="180" class="dados"> Endere&ccedil;o:</td>
+                           <td width="400">&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td width="180" class="dados">Telefone:</td>
+                           <td width="400">&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td width="180" class="dados">N&uacute;mero Conta Corrente:</td>
+                           <td width="400">&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td colspan="2"><table width="100%" border="0" cellspacing="2">
+                                 <tr>
+                                    <td width="50%" class="dados">Empresa:</td>
+                                    <td width="25%" class="dados">Re.D:</td>
+                                    <td width="25%" class="dados">Data:</td>
+                                 </tr>
+                                                         </table></td>
+                           </tr>
+                        <tr>
+                           <td width="180">&nbsp;</td>
+                           <td width="400">&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td colspan="2"><div align="center">Assinatura: _____________________________________________________________ </div></td>
+                           </tr>
+                     </table>						</td>
+               </tr>
+            </table></td>
+         </tr>
+      </table>
+		<!-- END BLOCK : blk_autorizacao -->
+	</div>
+   <br class="pageBreak"/>	
+	<!-- END BLOCK : blk_np_autorizacao -->
+	<!-- START BLOCK : blk_demontrativo -->
+	<div class="pagina">
+	   <br /><br />
+	   <table width="100%" border="0" cellspacing="4">
+            <tr>
+               <td><table width="100%" border="0" cellspacing="0">
+                  <tr>
+                     <td><table width="100%" border="0" cellspacing="2">
+                           <tr>
+                              <td width="44" rowspan="2"><img src="icone_eletro.jpg" width="44" height="36" /></td>
+                              <td class="style1 style14">ELETROCEEE</td>
+                           </tr>
+                           <tr>
+                              <td class="style1 style14">Funda&ccedil;&atilde;o CEEE de Seguridade Social </td>
+                           </tr>
+                        </table></td>
+                     <td><table width="100%" border="0" cellspacing="2">
+                        <tr>
+                           <td><div align="right" class="style1 style14">{usu_criacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td><div align="right" class="style1 style14">Gerência de Atendimento
+                              ao Participante - GAP </div></td>
+                        </tr>
+                     </table></td>
+                  </tr>
+                  <tr>
+                     <td colspan="2"><table width="100%" border="0" cellspacing="0">
+                        <tr>
+                           <td width="30%" class="style5">EMPR&Eacute;STIMO </td>
+                           <td width="40%" class="style6"><div align="center">DEMONSTRATIVO</div></td>
+                           <td width="30%">&nbsp;</td>
+                        </tr>
+                     </table></td>
+                  </tr>
+               </table></td>
+            </tr>
+            
+            <tr>
+               <td>
+					  <table width="100%" class="tabBorda">
+					     <tr><td>
+					  <table width="100%" border="0" cellspacing="4">
+                  <tr>
+                     <td width="33%"><span class="texto style14">Num Contrato:
+                           {cd_contrato} </span></td>
+                     <td width="34%"><span class="texto style14">Usu&aacute;rio:
+                           {usu_criacao} </span></td>
+                     <td width="33%"><span class="texto style14">Data Digita&ccedil;&atilde;o:
+                           {dt_criacao} </span></td>
+                  </tr>
+                  <tr>
+                     <td colspan="3"><span class="texto style14">Tipo Empr&eacute;stimo:
+                           {tipo_emprestimo_desc} </span></td>
+                  </tr>
+                  <tr>
+                     <td colspan="3"><span class="texto style14">Emitente: FUNDA&Ccedil;&Atilde;O
+                           CEEE </span></td>
+                  </tr>
+               </table></td>
+            </tr>
+            <tr>
+               <td><table width="100%" border="0" cellspacing="4" style="border-top:1px solid #000000; border-bottom:1px solid #000000">
+                  <tr>
+                     <td colspan="3"><span class="texto style14">Titular: {cd_empresa}
+                           {cd_registro_empregado} {seq_dependencia} {nome} </span></td>
+                     <td><span class="texto style14">CIC/CPF: {cpf_mf} </span></td>
+                  </tr>
+                  <tr>
+                     <td colspan="4"><span class="texto style14">Endere&ccedil;o:
+                           {logradouro} </span></td>
+                  </tr>
+                  <tr>
+                     <td colspan="2"><span class="texto style14">Bairro: {bairro} </span></td>
+                     <td colspan="2"><span class="texto style14">Cidade: {cidade} </span></td>
+                  </tr>
+                  <tr>
+                     <td><span class="texto style14">Cep: {cep}-{complemento_cep}</span></td>
+                     <td><span class="texto style14">Banco: {cd_instituicao} </span></td>
+                     <td><span class="texto style14">Ag&ecirc;ncia: {cd_agencia} </span></td>
+                     <td><span class="texto style14">Conta: {conta} </span></td>
+                  </tr>
+               </table></td>
+            </tr>
+            <tr>
+               <td><table width="100%" border="0" cellspacing="0">
+                  <tr>
+                     <td width="47%" valign="top"><table width="100%" border="0" cellspacing="2">
+                        <tr>
+                           <td width="70%" class="style1 style15" style="border-bottom:1px solid #000000;">Parcelas Informadas </td>
+                           <td width="30%" class="style1 style15" style="border-bottom:1px solid #000000;"><div align="right">Valor</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">NRO DE PRESTA&Ccedil;&Otilde;ES </td>
+                           <td class="style1 style14"><div align="right">{nro_prestacoes}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">DATA DE DEP&Oacute;SITO </td>
+                           <td class="style1 style14"><div align="right">{dt_deposito}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR SOLICITADO </td>
+                           <td class="style1 style14"><div align="right">{vlr_solicitado}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">CONCESS&Atilde;O ESPECIAL </td>
+                           <td class="style1 style14"><div align="right">{concessao_especial}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">CONCESS&Atilde;O RENEGOCIADA </td>
+                           <td class="style1 style14"><div align="right">{renegociacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR D&Eacute;BITO </td>
+                           <td class="style1 style14"><div align="right">{vlr_debitos_descontados}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR SAL&Aacute;RIO EMPR&Eacute;STIMO </td>
+                           <td class="style1 style14"><div align="right">{salario_emprestimo}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">DATA DE SOLICITA&Ccedil;&Atilde;O </td>
+                           <td class="style1 style14"><div align="right">{dt_solicitacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;</td>
+                           <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;</td>
+                           <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;</td>
+                           <td>&nbsp;</td>
+                        </tr>
+                     </table></td>
+                     <td width="6%" valign="top">&nbsp;</td>
+                     <td width="47%" valign="top"><table width="100%" border="0" cellspacing="2">
+                        <tr>
+                           <td width="70%" class="dadosDemonstr" style="border-bottom:1px solid #000000;">Parcelas Informadas </td>
+                           <td width="30%" style="border-bottom:1px solid #000000;"><div align="right" class="dadosDemonstr">Valor</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR CONCEDIDO </td>
+                           <td class="style1 style14"><div align="right">{vlr_concedido}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR DEP&Oacute;SITO </td>
+                           <td class="style1 style14"><div align="right">{vlr_deposito}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR DA PRESTA&Ccedil;&Atilde;O PR&Oacute;-FORMA </td>
+                           <td class="style1 style14"><div align="right">{vlr_prestacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">DATA PRIMEIRA PRESTA&Ccedil;&Atilde;O </td>
+                           <td class="style1 style14"><div align="right">{dt_primeira_prestacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">DATA &Uacute;LTIMA PRESTA&Ccedil;&Atilde;O </td>
+                           <td class="style1 style14"><div align="right">{dt_ultima_prestacao}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">TX. ADMINISTRA&Ccedil;&Atilde;O (%) </td>
+                           <td class="style1 style14"><div align="right">{perc_tx_adm}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">TX. DE PRESERVA&Ccedil;&Atilde;O
+                              PATRIM.(%) </td>
+                           <td class="style1 style14"><div align="right">{perc_tx_preservacao_patrimonia}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1"><p class="style14">TX. JUROS (ANO %) </p>                              </td>
+                           <td class="style1 style14"><div align="right">{perc_tx_juros_ano}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">TX. FUNDO OSC. RISCOS OPER.(%) </td>
+                           <td class="style1 style14"><div align="right">{perc_tx_seguro}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">TAXA EFETIVA(%) </td>
+                           <td class="style1 style14"><div align="right">{perc_tx_efetiva}</div></td>
+                        </tr>
+                        <tr>
+                           <td class="style1 style14">VALOR IOF </td>
+                           <td class="style1 style14"><div align="right">{vlr_iof}</div></td>
+                        </tr>
+                     </table></td>
+                  </tr>
+               </table></td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+            </tr>
+				<!-- START BLOCK : dem_call_center -->
+            <tr>
+               <td>
+					   <table width="100%" border="0" cellspacing="2">
+                  <tr>
+                     <td width="50%"><table width="100%" border="0" cellspacing="4">
+                        <tr>
+                           <td><img src="ass_Magda.jpg" width="155" height="70" style="position:relative; top:20px"/><br />
+                              <span class="labelPequeno" style="z-index:20; position:relative; top:-20px; width:180px;">Magdarlize Dal Fiume Germany<br />
+                              CIC 444017600-34 </span></td>
+                           <td><img src="ass_tortorelli.jpg" width="147" height="70" /><br />
+                              <span class="labelPequeno" style="z-index:32; position:relative; top:-20px; width:150px;">Ricardo Costa Tortorelli<br />
+                              CIC 509666930-00</span> </td>
+                        </tr>
+                        <tr>
+                           <td colspan="2" class="dados" style="border-top:1px solid #000000">Funda&ccedil;&atilde;o CEEE / <br />
+                              Representante da Funda&ccedil;&atilde;o CEEE </td>
+                           </tr>
+                     </table></td>
+                     <td valign="bottom"><table width="100%" border="0" cellspacing="4">
+                           <tr>
+                              <td class="dados"><strong>Testemunhas:</strong></td>
+                           </tr>
+                           <tr>
+                              <td class="dados">&nbsp;</td>
+                           </tr>
+                           <tr>
+                              <td style="border-bottom:1px solid #000000"><br />
+                                 <span class="dados">1.</span></td>
+                           </tr>
+                           <tr>
+                              <td style="border-bottom:1px solid #000000"><br />
+                                 <span class="dados">2.</span></td>
+                           </tr>
+                        </table></td>
+                  </tr>
+                  
+
+                  <tr>
+                     <td colspan="2"><div align="justify" class="style1 style14"><br />
+                        Este demonstrativo &eacute; parte integrante do
+                        contrato de presta&ccedil;&atilde;o de servi&ccedil;o Call Center e Empr&eacute;stimo
+                        Pessoal firmado pelo participante/Benefici&aacute;rio acima
+                        identificado e a Funda&ccedil;ao CEEE, conforme disp&otilde;e a cl&aacute;usula
+                        10 e encontra-se registrado no Servi&ccedil;o de Registro de
+                        T&iacute;tulos e Documentos de Porto Alegre - RS, sob n&ordm; 1235451. </div></td>
+                  </tr>
+               </table>
+					</td>
+				</tr>
+            <!-- END BLOCK : dem_call_center -->
+					</table>
+					</td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+            </tr>
+      </table>
+	<br class="pageBreak" />
+	</div>
+	<!-- END BLOCK : blk_demontrativo -->
+</div>
+</body>
+</html>

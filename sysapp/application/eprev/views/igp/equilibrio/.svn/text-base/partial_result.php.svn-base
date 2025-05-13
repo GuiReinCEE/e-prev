@@ -1,0 +1,156 @@
+<?php
+$body=array();
+$head = array( 
+	'#', 'Mês','Técnica (TEM)','Matemática<br>(PRECISA)','Tec/Mat','Meta','Peso', 'Acum tec', 'Acum mat', 'Acum tec / mat', '', 'Peso obtido<br>no mês','', 'Peso obtido<br>12 meses', 'Média móvel', '', '', ''
+);
+
+$acum_tec=0;
+$acum_mat=0;
+$acumular_ate=12; // meses
+
+$contador=sizeof($collection);
+
+foreach( $collection as $item )
+{
+	$link = anchor("igp/equilibrio/detalhe/" . $item["cd_equilibrio"], "editar"); 
+
+	$tecnica = floatval($item["nr_tecnica"]);
+	$matematica = floatval($item["nr_matematica"]);
+	$meta = floatval($item["nr_meta"]);
+	$peso = floatval($item["nr_peso"]);
+
+	$tecnica_matematica=( floatval($tecnica)/floatval($matematica) )*100;
+	if($acum_tec=='')
+	{
+		$acum_tec=floatval($tecnica);
+	}
+	else
+	{
+		$acum_tec=( floatval($tecnica) + floatval($acum_tec) )/2;
+	}
+	if($acum_mat=='')
+	{
+		$acum_mat=floatval($matematica);
+	}
+	else
+	{
+		$acum_mat=( floatval($matematica) + floatval($acum_mat) )/2;
+	}
+	$acum_tec_mat=(floatval($acum_tec)/floatval($acum_mat))*100;
+
+	// =SE(D178>E214????;F178;(D178*F178)/E214???)
+	// D: TECNICA / MATEMATICA
+	// E: META
+	// F: PESO
+	if( floatval($tecnica_matematica)>floatval($meta) )
+	{
+		$rf_mes_aux=floatval($peso);
+	}
+	else
+	{
+		$rf_mes_aux = ( (  floatval($tecnica_matematica) * floatval($peso)  ) / floatval($meta/100) ) / 100;
+	}
+	
+	if( floatval($tecnica_matematica)>floatval($meta) )
+	{
+		$rf_mes = floatval($peso);
+	}
+	else
+	{
+		$rf_mes = ( (  floatval($tecnica_matematica) * floatval($peso)  ) / floatval($meta/100) ) / 100;
+	}
+
+	// =SE(I177>E177;F177;(I177*F177)/E177)
+	// I: ACUM TEC / MAT
+	// E: META
+	// F: PESO
+	if( floatval($acum_tec_mat)>floatval($meta) )
+	{
+		$rf_acum_aux = floatval($peso);
+	}
+	else
+	{
+		$rf_acum_aux = ( (  floatval($acum_tec_mat) * floatval($peso)  ) / floatval($meta/100) ) / 100;
+	}
+
+	if( floatval($acum_tec_mat)>floatval($meta) )
+	{
+		$rf_acum = floatval($peso);
+	}
+	else
+	{
+		$rf_acum = ( (  floatval($acum_tec_mat) * floatval($peso)  ) / floatval($meta/100) ) / 100;
+	}
+
+	// % MÉDIA MÓVEL
+	$a_percentual_media_movel[]=$tecnica_matematica;
+	$percentual_media_movel=0;
+
+	$j=1;
+	for( $i=sizeof($a_percentual_media_movel);$i>0;$i-- )
+	{
+		if( $j<=$acumular_ate )
+		{
+			$percentual_media_movel+=$a_percentual_media_movel[$i-1];
+
+			$j++;
+		}
+	}
+
+	$divisor=(sizeof($a_percentual_media_movel)<$acumular_ate)?sizeof($a_percentual_media_movel):$acumular_ate;
+	$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+
+	// = SE(N178>E214;F178;(N178*F178)/E214)
+	// N: PERCENTUAL DE MÉDIA MÓVEL
+	// E: META
+	// F: PESO
+	if( floatval($percentual_media_movel)>floatval($meta) )
+	{
+		$media_movel = floatval( $peso );
+	}
+	else
+	{
+		$media_movel = ( ( floatval($percentual_media_movel)*floatval($peso) ) / floatval($meta) ) / 100;
+	}
+
+	// =SE(N183>E183;F183;(N183*F183)/E183)
+	// N: PERCENTUAL DE MÉDIA MÓVEL
+	// E: META
+	// F: PESO
+	if( floatval($percentual_media_movel)>floatval($meta) )
+	{
+		$media_movel2 = floatval( $peso );
+	}
+	else
+	{
+		$media_movel2 = ( ( floatval($percentual_media_movel)*floatval($peso) ) / floatval($meta) ) / 100;
+	}
+
+	$body[] = array(
+		$contador--
+		, $item['mes_referencia']
+		, number_format( $tecnica, 2, ',', '.' )
+		, number_format( $matematica, 2, ',', '.' )
+		, "<div style='width:50px;'>".number_format( $tecnica_matematica, 2, ',', '.' ).' %</div>'
+		, "<div style='width:50px;'>".number_format( $meta, 2, ',', '.' ).' %</div>'
+		, number_format( $peso, 2, ',', '.' )
+		, number_format( $acum_tec, 2, ',', '.' )
+		, number_format( $acum_mat, 2, ',', '.' )
+		, number_format( $acum_tec_mat, 2, ',', '.' ).' %'
+		, number_format( $rf_mes_aux, 2, ',', '.' )
+		, number_format( $rf_mes, 2, ',', '.' )
+		, number_format( $rf_acum_aux, 2, ',', '.' )
+		, number_format( $rf_acum, 2, ',', '.' )
+		, number_format( $percentual_media_movel, 2, ',', '.' ).' %'
+		, number_format( $media_movel, 2, ',', '.' )
+		, number_format( $media_movel2, 2, ',', '.' )
+		, $link 
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

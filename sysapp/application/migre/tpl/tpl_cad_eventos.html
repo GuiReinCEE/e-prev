@@ -1,0 +1,127 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Eventos do sistema ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top"> 
+          <td colspan="2"> <form name="form1" method="post" action="grava_evento.php">
+              <table border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF">
+                <tr> 
+                  <td bgcolor="#FFFFFF"> <div align="left"></div></td>
+                  <td bgcolor="#FFFFFF">
+                    <font size="2" face="Arial, Helvetica, sans-serif"><strong> 
+                    <input name="insere" type="hidden" id="insere" value="{insere}">
+                    <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+                    &nbsp; </strong> </font> </td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Projeto:</font></td>
+                  <td bgcolor="#dae9f7"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="projeto"  >
+                      <!-- START BLOCK : projeto -->
+                      <option value="{cd_projeto}" {sel_projeto}>{nome_projeto}</option>
+                      <!-- END BLOCK : projeto -->
+                    </select>
+                    Campo obrigat&oacute;rio</font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    Evento: {codigo}</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="nome" type="text" id="nome"  value="{nome}" size="80">
+                    </font> </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                    do Evento:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="tipo_evento"  id="tipo_evento"  >
+                      <!-- START BLOCK : tipo_evento -->
+                      <option value="{cd_tipo_evento}" {sel_tipo_evento}>{nome_tipo_evento}</option>
+                      <!-- END BLOCK : tipo_evento -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    refer&ecirc;ncia para o evento:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <select name="data_referencia"  id="data_referencia"  >
+                      <!-- START BLOCK : data_referencia -->
+                      <option value="{cd_data_referencia}" {sel_data_referencia}>{nome_data_referencia}</option>
+                      <!-- END BLOCK : data_referencia -->
+                    </select>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Dias 
+                    a partir da data de refer&ecirc;ncia:</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <input name="dias" type="text" id="dias"  value="{dias}" size="5" maxlength="3">
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Considerar 
+                    no hist&oacute;rico?</font></td>
+                  <td><input name="chk_historico" type="checkbox" id="chk_historico" value="S" {historico_checked}></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Enviar 
+                    email? </font></td>
+                  <td><input name="chk_email" type="checkbox" id="chk_email" value="S" {email_checked}></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Destino 
+                    principal do email:</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+					<!-- START BLOCK : instancia -->
+                    <input name="chk_instancia_{cd_instancia}" type="checkbox" id="chk_instancia_{cd_instancia}" value="{cd_instancia}" {instancia_checked}>
+                    {nome_instancia}<br>
+					<!-- END BLOCK : instancia -->
+					 </font></td>
+                </tr>
+                <tr bgcolor="#dae9f7"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Destino 
+                    alternativo do email:<br>
+                    (na aus&ecirc;ncia do principal, envia-se para o alternativo)</font></td>
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- START BLOCK : instancia2 -->
+                    <input name="chk_instancia2_{cd_instancia2}" type="checkbox" id="chk_instancia2_{cd_instancia2}" value="{cd_instancia2}" {instancia2_checked}>{nome_instancia2}<br>
+					<!-- END BLOCK : instancia2 -->
+					 </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Texto 
+                    do email:</font></td>
+                  <td><font size="2" face="Arial, Helvetica, sans-serif"> 
+                    <textarea name="texto_email" cols="60" rows="4" id="texto_email" >{texto_email}</textarea>
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td colspan="2"> <div align="center"> 
+                      <input type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                      <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;">
+                    </div></td>
+                </tr>
+              </table>
+            </form>
+            <p align="center">&nbsp;</p></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

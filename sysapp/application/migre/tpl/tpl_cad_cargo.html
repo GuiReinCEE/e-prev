@@ -1,0 +1,119 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Cargos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+<script language="JavaScript">
+   <!--
+function win_comp_inst(r,h) {
+	     w = window.open("cargo_inc_comp_inst.php?r="+r+"&h="+h, "whabilidades", "menubar=no,location=no,scrollbars=no,resizable=no,width=380,height=230");
+	  }
+function win_comp_espec(r,h) {
+	     w = window.open("cargo_inc_comp_espec.php?r="+r+"&h="+h, "wespec", "menubar=no,location=no,scrollbars=no,resizable=no,width=450,height=230");
+	  }
+function win_responsabilidade(r,h) {
+	     w = window.open("cargo_inc_responsabilidade.php?r="+r+"&h="+h, "wresponsabilidade", "menubar=no,location=no,scrollbars=no,resizable=no,width=575,height=230");
+	  }
+	function aba_lista_click(o)
+	{
+		location.href='{link_lista}';
+	}
+
+   --> </script>
+
+{ABA_START}
+
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+      <form name="form1" method="post" action="grava_cargo.php">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr bgcolor="F4F4F4"> 
+                  <td colspan="2" align="right" bgcolor="F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="image" type="image" src="img/btn_salvar.jpg" border="0">
+                    </font></td>
+                </tr>
+                <tr bgcolor="F4F4F4"> 
+                  <td bgcolor="#dae9f7"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome 
+                    Cargo: </font></td>
+                  <td bgcolor="#dae9f7"> <input name="codigo" type="hidden" id="codigo" value="{codigo}"> 
+                    <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="nome" type="text" id="nome" value="{nome}" size="60" maxlength="100" >
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Compet&ecirc;ncias<br>
+                    Institucionais:</font> <br> <a href="#" onClick="win_comp_inst({codigo},'')"><img src="img/btn_anexo.jpg" border="0"></a></td>
+                  <td colspan="2" bgcolor="#F4F4F4" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- START BLOCK : comp_inst -->
+                    <input name="chk_comp_inst_{cd_comp_inst}" type="checkbox" id="chk_comp_inst_{cd_comp_inst}" value="{cd_comp_inst}" {comp_inst_checked}>
+                    {nome_comp_inst}<br>
+                    <!-- END BLOCK : comp_inst -->
+                    </font> </td>
+                </tr>
+                <tr bgcolor="#F4F4F4"> 
+                  <td align="center" bgcolor="#dae9f7"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif">Competências<br>
+                    Específicas:</font><br> <a href="#" onClick="win_comp_espec({codigo},'')"><img src="img/btn_anexo.jpg" border="0"></a></td>
+                  <td colspan="2" bgcolor="#dae9f7" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- START BLOCK : comp_espec -->
+                    <input name="chk_comp_espec_{cd_comp_espec}" type="checkbox" id="chk_comp_espec_{cd_comp_espec}" value="{cd_comp_espec}" {comp_espec_checked}>
+                    {nome_comp_espec}<br>
+                    <!-- END BLOCK : comp_espec -->
+                    </font></td>
+                </tr>
+                <tr bgcolor="#F4F4F4">
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Fam&iacute;lia escolaridade:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4" ><select name="cbo_familia" id="cbo_familia">
+				  		<!-- START BLOCK : cbo_familia -->
+                      <option value="{cd_familia}" {sel_familia}>{nome_familia}</option>
+					  	<!-- END BLOCK : cbo_familia -->
+                    </select></td>
+                </tr><!--
+                <tr bgcolor="#F4F4F4"> 
+                  <td bgcolor="#F4F4F4"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Escolaridade:</font></td>
+                  <td colspan="2" bgcolor="#F4F4F4" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> -->
+                    <!-- START BLOCK : escolaridade -->
+                    <!--<input name="chk_escolaridade_{cd_escolaridade}" type="checkbox" id="chk_escolaridade_{cd_escolaridade}" value="{cd_escolaridade}" {escolaridade_checked}>
+                    {nome_escolaridade}<br>-->
+                    <!-- END BLOCK : escolaridade -->
+                    <!--</font> </td>
+                </tr>-->
+                <tr bgcolor="#dae9f7"> 
+                  <td align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Responsabilidades:</font> 
+                    <br> <a href="#" onClick="win_responsabilidade({codigo},'')"><img src="img/btn_anexo.jpg" border="0"></a></td>
+                  <td colspan="2" > <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- START BLOCK : responsabilidade -->
+                    <input name="chk_responsabilidade_{cd_responsabilidade}" type="checkbox" id="chk_responsabilidade_{cd_responsabilidade}" value="{cd_responsabilidade}" {responsabilidade_checked}>
+                    {nome_responsabilidade}<br>
+                    <!-- END BLOCK : responsabilidade -->
+                    </font> </td>
+                </tr>
+                <tr bgcolor="F4F4F4"> 
+                  <td valign="top"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o</font></td>
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="descricao" cols="60" rows="8" id="descricao" >{descricao}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="2"> <div align="center"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                      <input class='botao' type="submit" name="Submit" value="Gravar ">
+                      </font></div></td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+
+{ABA_END}
+
+<!-- INCLUDE BLOCK : footer.html -->

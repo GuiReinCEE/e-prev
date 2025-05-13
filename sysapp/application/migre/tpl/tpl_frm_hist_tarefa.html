@@ -1,0 +1,113 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Tarefa - Histórico';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<!-- START BLOCK : cadastro -->
+
+<script>
+<!--
+	function ir_definicao()
+	{
+		location.href = "frm_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_execucao()
+	{
+		location.href = "frm_exec_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_historico()
+	{
+		location.href = "frm_hist_tarefa.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+	function ir_checklist()
+	{
+		location.href = "frm_tarefa_checklist.php?os={origem}&c={cd_tarefa}&f={fl_tipo_grava}";
+	}
+-->
+</script>
+
+<!-- 
+  --
+  --  ABAS INICIO
+  --
+  -->
+			<div class="aba_definicao">
+				<div id="aba">
+					<ul>
+						<li id='aba_lista' class='' onclick="location.href='{site_url}/atividade/tarefa'"><span>Lista</span></li>
+						<li id='aba_atividade' class='' onclick="location.href='cad_atividade_atend.php?n={origem}&a=h&aa={aa}'"><span>Atividade</span></li>						
+						<li id="aba_definicao" class="" onclick="ir_definicao();">
+							<span>Definição</span>
+						</li>
+						<li id="aba_execucao" class="" onclick="ir_execucao();">
+							<span>Execução</span>
+						</li>
+						<li id="aba_historico" class="abaSelecionada" onclick="ir_historico();">
+							<span>Histórico</span>
+						</li>
+						<li id="aba_checklist" class="" onclick="ir_checklist();" style="{ver_checklist}">
+							<span>Checklist</span>
+						</li>
+					</ul>
+				</div>
+				<div class="div_aba_content">
+					<br><br>
+					<div id="div_content">
+
+<!-- 
+  --
+  --  ABAS CONTEUDO
+  --
+  -->
+
+     <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr valign="top"> 
+          <td> 
+            <form action="grava_atividade.php" method="POST" onSubmit="return valida_form(this);" name="formulario">
+              <input type="hidden" name="n" value="{n}">
+                <input type="hidden" name="status_anterior" value="{status_anterior}">
+              <table width="95%" border="0" cellspacing="0" cellpadding="0" align="center">
+
+                <tr> 
+                  <td valign="top"></td>
+                  <td width="100%">&nbsp;</td>
+                  <td></td>
+                </tr>
+                <tr> 
+                  <td colspan="2">{GRID_HISTORICO}</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2"><div align="center"><font size="1" face="Verdana"> 
+                      </font></div></td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2"></td>
+                  <td></td>
+                </tr>
+              </table>
+            </form>
+            <div align="center"></div></td>
+        </tr>
+      </table>
+
+<!-- 
+  --
+  --  ABAS FIM CONTEUDO
+  --
+  -->
+					</div>
+				</div>
+			</div>
+
+<!-- 
+  --
+  --  ABAS FIM
+  --
+  -->
+
+    <!-- END BLOCK : cadastro -->
+
+<!-- INCLUDE BLOCK : footer.html -->

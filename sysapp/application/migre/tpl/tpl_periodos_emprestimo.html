@@ -1,0 +1,106 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Período empréstimo ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+<!--
+   function getEl(objName) {
+      if (document.all) {
+	     return document.all(objName);
+	  } else {
+	     return document.getElementById(objName);
+	  }
+   }
+   
+   function window_copia(emp, ano) {
+      vEmp = getEl(emp).value;
+	  vAno = getEl(ano).value;
+	  url = 'frm_periodos_emprestimo_copia_ano.php?e='+vEmp+'&a='+vAno;
+      o = window.open(url, 'Cópia de períodos de empréstimo', 'toolbar=no,width=300,height=180');
+      o.unload = function () {
+         opener.frmPesquisa.submit();
+      }
+   }
+   
+   function abreExtrato() {
+      url = "extrato_periodos_emprestimo.php";
+      oExtrato = window.open(url, 'Períodos de funcionamento do empréstimo', 'toolbar=no,width=800,height=600');
+   }
+   
+-->
+</script>
+
+<div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>CONTROLE 
+  DE PERÍODOS DO EMPRÉSTIMO</strong></font><br>
+  <br>
+  <form action="cad_periodos_emprestimo.php" method="post" name="frmPesquisa">
+          <table border="0" cellspacing="2" cellpadding="0">
+            <tr> 
+              <td><strong>Empresa</strong></td>
+              <td>
+			    <select name="empresa_consulta" id="empresa_consulta">
+				  <!-- START BLOCK : blk_empresa -->
+				  <option value="{empresa}" {chkEmp}>{nome_empresa}</option>
+				  <!-- END BLOCK : blk_empresa -->
+                </select>
+			  </td>
+            </tr>
+            <tr> 
+              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ano</strong></font></td>
+              <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> 
+                <input name="ano_consulta" type="text" id="ano_consulta" size="5" maxlength="4" value="{ano_consulta}">
+                </strong></font></td>
+            </tr>
+            <tr> 
+              <td colspan="2"><div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> 
+                  <input type="submit" name="Submit" value="Consultar">
+                  <input type="button" name="Submit3" value="Copiar" onClick="window_copia('empresa_consulta', 'ano_consulta');">
+                  <input type="button" name="Submit2" value="Extrato" onClick="abreExtrato();">
+                  </strong></font></div></td>
+            </tr>
+          </table>
+  </form>
+</div>
+<form name="form1" method="post" action="grava_periodos_emprestimo.php">
+  <table border="0" align="center" cellpadding="0" cellspacing="1">
+    <tr bgcolor="#0046ad"> 
+      <td>&nbsp;<font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong> 
+        Mes&nbsp;</strong></font></td>
+      <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;Abertura&nbsp;</font></strong></td>
+            <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;Fechamento&nbsp;</font></strong></td>
+    </tr>
+    <!-- START BLOCK : blk_periodos -->
+    <tr> 
+      <td><div align="center"> 
+          <input name="mes[]" type="text" id="mes[]" size="3" maxlength="2" value="{mes}" readonly>
+        </div></td>
+      <td><div align="center"> 
+          <input name="dt_abertura[]" type="text" id="dt_abertura[]" size="11" maxlength="10" value="{dt_abertura}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+        </div></td>
+      <td><div align="center"> 
+          <input name="dt_fechamento[]" type="text" id="dt_fechamento[]" size="11" maxlength="10" value="{dt_fechamento}" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+        </div></td>
+    </tr>
+    <!-- END BLOCK : blk_periodos -->
+    <tr> 
+      <td colspan="3"> <div align="center"> 
+	      <!-- START BLOCK : blk_param_form -->
+          <input name="ano" type="hidden" id="ano" value="{ano}">
+          <input name="empresa" type="hidden" id="empresa" value="{empresa}">
+	      <!--  BLOCK : blk_param_form -->
+          <input type="submit" value="Gravar">
+        </div></td>
+    </tr>
+  </table>
+      </form>
+	  <!-- InstanceEndEditable --> 
+    </td>
+  </tr>
+</table>
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>
+
+<!-- INCLUDE BLOCK : footer.html -->

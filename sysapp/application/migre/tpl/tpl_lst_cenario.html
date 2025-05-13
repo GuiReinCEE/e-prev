@@ -1,0 +1,42 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Cenário legal ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <!-- START BLOCK : edicao -->
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right"><a href="cad_cenario.php?op=I&ed={cd_edicao}"><img src="img/btn_novo_registro.jpg" border="0"></a> 
+        </div>
+      </blockquote>
+            <table width="80%" align="center" cellspacing="1" bgcolor="#FFFFFF">
+              <tr bgcolor="#FFFFFF"> 
+                <td colspan="3"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Conte&uacute;do 
+                  da Edi&ccedil;&atilde;o n&ordm; {cd_edicao} - {tit_capa}</font></td>
+              </tr>
+			  
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Registro</font></strong></td>
+                <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Data 
+                  Cadastro</strong></font></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                  Exclus&atilde;o </font></strong></td>
+              </tr>
+              <!-- START BLOCK : projetos -->
+              <tr bgcolor="#F4F4F4"> 
+                <td height="18"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="cad_cenario.php?op=A&c={cd_cenario}&ed={cd_edicao}">{cd_cenario}&nbsp;-&nbsp;{cenario}</a></font></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_cadastro}</font></td>
+                <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{dt_exclusao}</font></td>
+              </tr>
+              <!-- END BLOCK : projetos -->
+            </table>
+            <div align="center"> <font size="2" face="Arial, Helvetica, sans-serif"><strong><a href="cad_cenario.php?op=I&ed={cd_edicao}"><img src="img/btn_novo_registro.jpg" border="0"></a></strong></font> 
+            </div>
+			<!-- END BLOCK : edicao -->
+      <p>&nbsp; </p></td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

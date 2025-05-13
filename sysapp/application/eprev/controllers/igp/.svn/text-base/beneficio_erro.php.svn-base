@@ -1,0 +1,339 @@
+<?php
+class beneficio_erro extends Controller
+{
+    function __construct()
+    {
+        parent::Controller();
+    }
+
+    function index()
+    {
+		if(CheckLogin())
+		{
+	        $this->load->view( 'igp/beneficio_erro/index.php' );
+		}
+    }
+
+    function listar()
+    {
+        if(CheckLogin())
+        {
+	        $this->load->model('igp/Beneficio_erro_model');
+
+	        $data['collection'] = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+
+			// --------------------------
+			// listar ...
+
+	        $this->Beneficio_erro_model->listar( $result, $args );
+
+			$data['collection']=$result->result_array();
+
+	        if( $result )
+	        {
+	            $data['collection'] = $result->result_array();
+	        }
+
+	        // --------------------------
+
+	        $this->load->view('igp/beneficio_erro/partial_result', $data);
+        }
+    }
+
+	function detalhe($cd=0)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Beneficio_erro_model');
+			$row=$this->Beneficio_erro_model->carregar( $cd );
+			if($row)
+			{
+				if($cd==0)
+				{
+					$sql = "SELECT to_char(dt_referencia + '1 month'::interval,'DD/MM/YYYY') AS mes_referencia, dt_referencia, nr_meta, nr_peso FROM igp.beneficio_erro WHERE dt_exclusao IS NULL ORDER BY dt_referencia DESC LIMIT 1";
+					$query = $this->db->query($sql);
+					$row_atual = $query->row_array();
+					
+					$row['dt_referencia'] = $row_atual['mes_referencia'];
+					$row['nr_meta'] = $row_atual['nr_meta'];
+					$row['nr_peso'] = $row_atual['nr_peso'];
+				}
+				 
+				$data['row'] = $row; 
+			}
+
+			$this->load->view('igp/beneficio_erro/detalhe', $data);
+		}
+	}
+
+	function salvar()
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Beneficio_erro_model');
+
+			$args['cd_beneficio_erro']=intval($this->input->post('cd_beneficio_erro',true));
+
+			$args["cd_beneficio_erro"] = $this->input->post("cd_beneficio_erro",true);
+			$args["dt_referencia"] = $this->input->post("dt_referencia",true);
+			$args["nr_concedido"] = app_decimal_para_db( $this->input->post("nr_concedido",true) );
+			$args["nr_erro"] = app_decimal_para_db( $this->input->post("nr_erro",true) );
+			$args["nr_meta"] = app_decimal_para_db( $this->input->post("nr_meta",true) );
+			$args["nr_peso"] = app_decimal_para_db( $this->input->post("nr_peso",true) );
+			$args["cd_usuario_inclusao"] = usuario_id();
+
+
+			$msg=array();
+			$retorno=$this->Beneficio_erro_model->salvar( $args, $msg );
+
+			if($retorno)
+			{
+				echo 'true';
+			}
+			else
+			{
+				$mensagens = implode('\n',$msg);
+				echo $mensagens;
+				exibir_mensagem($msg[0]);
+			}
+		}
+	}
+
+	function excluir($id)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Beneficio_erro_model');
+
+			$this->Beneficio_erro_model->excluir( $id );
+
+			redirect( 'igp/beneficio_erro', 'refresh' );
+		}
+	}
+
+	function criar_indicador()
+	{
+		if( CheckLogin() )
+		{
+			$INDICADOR_TABELA_CODIGO = enum_indicador_tabela_restrito::GRAFICO_IGP_BENEFICIO_ERRO;
+
+			$this->load->helper(array('igp','indicador'));
+			$indicador=array();
+
+			$this->load->model('igp/Beneficio_erro_model', 'dbmodel');
+
+	        $collection = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+	        $this->dbmodel->listar( $result, $args );
+
+			$collection=$result->result_array();
+
+			$atendimento_acumulado=0;
+			$reclamacao_acumulado=0;
+			$acumular_ate=12;
+
+			$acumular_ate=12;
+
+			igp_limpar_historico(enum_indicador::BENEFICIO);
+
+			foreach( $collection as $item )
+			{
+				$beneficio_concedido = intval($item['nr_concedido']);
+				$beneficio_com_erro = $item['nr_erro'];
+				$percentual_incorrecoes = ( $beneficio_com_erro / $beneficio_concedido )*100;
+				$meta_acertos = $item['nr_meta'];
+
+				// BENEF CONC ACUMULADO: ultimos 12 meses
+				$a_benef_conc_acumulado[]=intval($beneficio_concedido);
+				$benef_conc_acumulado=0;
+				$j=1;
+				for( $i=sizeof($a_benef_conc_acumulado);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$benef_conc_acumulado+=intval($a_benef_conc_acumulado[$i-1]);
+						$j++;
+					}
+				}
+
+				// BENEF C ERRO ACUMULADO: ultimos 12 meses
+				$a_benef_com_erro_acumulado[]=intval($beneficio_com_erro);
+				$benef_com_erro_acumulado=0;
+				$j=1;
+				for( $i=sizeof($a_benef_com_erro_acumulado);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$benef_com_erro_acumulado+=intval($a_benef_com_erro_acumulado[$i-1]);
+						$j++;
+					}
+				}
+
+				$incorrecao_acumulada = ( intval($benef_com_erro_acumulado) / intval($benef_conc_acumulado) )*100;
+
+				$peso=floatval($item['nr_peso']);
+				$meta_por_resultado=(  ( floatval($meta_acertos)-floatval($percentual_incorrecoes) )/floatval($meta_acertos)  )*100;
+
+				// RF MÊS = SE(K65>1;J65;J65*K65) K = $meta_por_resultado J = $peso
+				$rf_mes=($meta_por_resultado>100)?$peso:(  ($peso*$meta_por_resultado)/100  );
+
+				$meta_por_acumulado=(  ( $meta_acertos-$incorrecao_acumulada )/$meta_acertos  )*100;
+
+				// RF ACUM = SE(N64<100;N64*J64;J64)  N = $meta_por_acumulado  J = $peso
+				$rf_acum = (floatval($meta_por_acumulado)<100)?floatval(($meta_por_acumulado*$peso))/100:floatval($peso);
+
+				// % MÉDIA MÓVEL, média dos últimos 12 meses do "% INCORRECOES"
+				$a_percentual_incorrecoes[]=$percentual_incorrecoes;
+				$percentual_media_movel=0;
+
+				// % MÉDIA MÓVEL, média dos últimos 12 meses do "RF MES"	
+				$a_rf_mes[]=$rf_mes;
+				$media_movel=0;
+
+				$j=1;
+				for( $i=sizeof($a_percentual_incorrecoes);$i>0;$i-- )
+				{
+					if( $j<=$acumular_ate )
+					{
+						$percentual_media_movel+=$a_percentual_incorrecoes[$i-1];
+						$media_movel+=$a_rf_mes[$i-1];
+
+						$j++;
+					}
+				}
+
+				$divisor = (sizeof($a_percentual_incorrecoes)<$acumular_ate)?sizeof($a_percentual_incorrecoes):$acumular_ate;
+				$percentual_media_movel=floatval($percentual_media_movel)/$divisor;
+				$media_movel=floatval($media_movel)/$divisor;
+
+				$row['mes_ano'] = $item['mes_referencia'];
+				$row['total_concedido'] = floatval($beneficio_concedido);
+				$row['total_erro'] = floatval($beneficio_com_erro);
+				$row['benef_mes'] = floatval($percentual_incorrecoes);
+				$row['benef_acu'] = floatval($incorrecao_acumulada);
+				$row['benef_meta'] = (  100 -  floatval($meta_acertos)  );
+				$row['benef_media'] = floatval( $percentual_media_movel );
+
+				$row['igp_mes'] = $rf_mes;
+				$row['igp_acum'] = $rf_acum;
+				$row['igp_media'] = $media_movel;
+
+				$indicador[] = $row;
+
+				// coleta de dados para histórico dos anos anteriores
+				if( strpos($item['mes_referencia'],"12/")>-1 )
+				{
+					$hst_meta = 100-floatval($meta_acertos);
+					$hst_resultado = floatval($incorrecao_acumulada);
+					$mr = explode( '/', $item['mes_referencia'] );
+					$desvio_meta = floatval($hst_meta)-floatval($hst_resultado);
+
+					igp_gravar_historico( intval($mr[1]), floatval($hst_meta), floatval($hst_resultado), floatval($desvio_meta), enum_indicador::BENEFICIO );
+				}
+			}
+
+			$sql = " DELETE FROM indicador.indicador_parametro WHERE cd_indicador_tabela=? ";
+			$this->db->query( $sql, array(intval($INDICADOR_TABELA_CODIGO)) );
+
+			$sql='';
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0,0, utf8_encode('Mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1,0, utf8_encode('Nº Benef'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2,0, utf8_encode('Benef c/ erro'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3,0, utf8_encode('% Incorr'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4,0, utf8_encode('Acumul'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5,0, utf8_encode('Meta'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 6,0, utf8_encode('Média'), 'background,center');
+
+			$linha=1;
+			$contador_media=0;
+			$contador_media_ano=0;
+			$media=0;
+			$media_ano=0;
+			for( $i=sizeof($indicador)-$acumular_ate;$i<sizeof($indicador);$i++ )
+			{
+				// IGP
+				$sql1 = " SELECT * FROM igp.igp WHERE to_char( dt_referencia, 'MM/YYYY' )='".$indicador[$i]['mes_ano']."'; ";
+				$query = $this->db->query( $sql1 );
+
+				$igp = $query->row_array();
+
+				$prefixo_tabela="liq_erro";
+				if(sizeof($igp)>0)
+				{
+					$sql .= "UPDATE igp.igp set acu_$prefixo_tabela=".floatval($indicador[$i]['igp_acum']).", mes_$prefixo_tabela=".floatval($indicador[$i]['igp_mes']).", mm_$prefixo_tabela=".floatval($indicador[$i]['igp_media'])." where cd_igp=".intval($igp['cd_igp'])."; ";
+				}
+				else
+				{
+					$sql .= "INSERT INTO igp.igp (acu_$prefixo_tabela, mes_$prefixo_tabela, mm_$prefixo_tabela, dt_referencia) VALUES (".floatval($indicador[$i]['igp_acum']).",".floatval($indicador[$i]['igp_mes']).",".floatval($indicador[$i]['igp_media']).", to_date( '01/".$indicador[$i]['mes_ano']."', 'DD/MM/YYYY' )); ";
+				}
+
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, $indicador[$i]['mes_ano'], 'background,center');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, $indicador[$i]['total_concedido'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, $indicador[$i]['total_erro'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format( $indicador[$i]['benef_mes'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, number_format( $indicador[$i]['benef_acu'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, number_format( $indicador[$i]['benef_meta'], 2, ',', '' ), 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 6, $linha, number_format( $indicador[$i]['benef_media'], 2, ',', '' ), 'right');
+
+				$media += floatval(app_decimal_para_db($indicador[$i]['benef_mes']));
+				$contador_media++;
+				
+				if( strpos($indicador[$i]['mes_ano'],"/".date('Y'))>-1 )
+				{
+					$media_ano += floatval(app_decimal_para_db($indicador[$i]['benef_mes']));
+					$contador_media_ano++;
+				}
+
+				$linha++;
+			}
+
+			$media = floatval($media) / $contador_media;
+			$media_ano = floatval($media_ano) / $contador_media_ano;
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, '', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format($media,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media '.date('Y'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, number_format($media_ano,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+
+			$this->db->query($sql);
+
+			// resgatar codigo do indicador
+			$sql = "SELECT cd_indicador FROM indicador.indicador_tabela where cd_indicador_tabela=?";
+			$query = $this->db->query($sql, array(intval($INDICADOR_TABELA_CODIGO)));
+			$res = $query->row_array();
+
+			echo 'Indicador atualizado com sucesso!'.br();
+			echo 'IGP atualizado com sucesso!'.br(2);
+			echo anchor( 'indicador/apresentacao/detalhe/'.$res['cd_indicador'], 'Ver apresentação' );
+		}
+	}
+}
+?>

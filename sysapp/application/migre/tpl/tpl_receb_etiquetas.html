@@ -1,0 +1,75 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Recebimento de etiquetas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function valida_form(f) {
+	var erros = "";
+	if (f.cbo_tabela.value == '') { erros = erros + "- Tabela deve ser selecionada.\n"; }
+	
+	if (erros != "") {
+		alert("Erros:\n\n"+erros);
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+//-->
+</script>
+<script language="JavaScript" type="text/javascript">
+function fnc_val_et(numero) {
+	if (numero.value.length == 19){ 
+		w = window.open("etiqueta2.php?r="+numero.value+"&h=", "wskin2", "menubar=no,location=no,scrollbars=no,resizable=no,width=500,height=300");
+		num_etiqueta.value = '';
+		num_etiqueta.focus();
+		num_etiqueta.select();
+//		pg = "etiqueta.php?r=" + numero.value;
+//		dv = document.getElementById("dyn");
+//		dv.src = pg;
+	}
+}; 
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+	  <!-- START BLOCK : cadastro -->
+                   <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr> 
+                  
+                <td colspan="2"><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">Leia 
+                  a etiqueta recebida com o leitor:</font></td>
+                </tr>
+                <tr> 
+                  <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Etiqueta:</font></td>
+                  <td> <input name="num_etiqueta" type="password" id="num_etiqueta" value="{num_etiqueta}" onKeyPress="fnc_val_et(this)"></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" align="center"><img src="img/img_divisoria1.gif" width="95%" height="1"></td>
+                </tr>
+                <tr align="center"> 
+                  <td colspan="2"><div id="msg"></div></td>
+                </tr>
+              </table>
+	  <!-- END BLOCK : cadastro -->
+    </td>
+  </tr>
+</table>
+<!-- InstanceEndEditable --> 
+    </td>
+  </tr>
+</table>
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>
+
+<!-- INCLUDE BLOCK : footer.html -->

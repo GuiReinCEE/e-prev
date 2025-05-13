@@ -1,0 +1,67 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Links quebrados ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<br>
+	<form name="form2" method="post" action="log_link_quebrado.php">
+		<!-- START BLOCK : LOG_FILTRO -->
+		<table width="600px" align="center">
+			<tr>
+				<td>
+					<font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+						Período: 
+						<input type="text" name="dt_ini" value="{dt_ini}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+						a
+						<input type="text" name="dt_fim" value="{dt_fim}" size="12" maxlength="10" onBlur="verifica_data(this)" onKeyUp="mascara_data(this)">
+						(datas no formato dd/mm/aaaa)
+					</font>
+				</td>
+				<td align="right">
+					<input type="image" src="img/btn_atualizar.jpg" border="0"> 
+					<a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0"></a>
+					<a href="ajuda.php"><img src="img/btn_ajuda.jpg" border="0">
+				</td>
+			</tr>
+		</table>
+		<!-- START BLOCK : LOG_FILTRO -->
+	</form>
+	</td>
+	</tr>
+	<tr>
+	<td colspan="2">
+	<table align="center" width="80%">
+		<tr bgcolor="#0046ad" style="text-align:center;color:#FFFFFF; font-family: Verdana, Arial, Helvetica, sans-serif; font-size:10pt; font-weight:bold;">
+			<td width="20%">
+				Data
+			</td>
+			<td width="20%">
+				Origem
+			</td>
+			<td width="20%">
+				Link Quebrado
+			</td>	
+			<td width="20%">
+				Página
+			</td>
+		</tr>
+		<!-- START BLOCK : LOG_LIST -->
+			<tr bgcolor="{bg_color}" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size:8pt;">
+				<td align="center">
+					{dt_erro}
+				</td>
+				<td align="center">
+					<a href="http://www.geoiptool.com/pt/?IP={nr_ip}" target="_blank" class="links2">{nr_ip}</a>
+				</td>
+				<td>
+					{ds_link_quebrado}
+				</td>			
+				<td>
+					{ds_link_pagina}
+				</td>
+			</tr>
+		<!-- END BLOCK : LOG_LIST -->
+	</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

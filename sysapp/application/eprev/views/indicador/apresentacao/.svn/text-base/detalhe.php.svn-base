@@ -1,0 +1,202 @@
+<?php
+$data['topo_titulo'] = 'Apresentação dos Indicadores de Desempenho';
+$this->load->view( get_header_sem_topo(), $data );
+?>
+<style>
+	body{ background:#F5FAFD; }
+
+	.div-apr{
+		border-style:solid;
+		border-width:1px;
+		padding:10px;
+		background:white;
+		margin-left:50px;
+		margin-right:50px;
+		margin-top:10;
+		font-size:20px;
+		font-weight:bold;
+		text-align:center;
+	}
+
+</style>
+<script>
+	var CODIGO_INDICADOR_TABELA = <?php echo $codigo; ?>;
+
+	var tamanho_grafico=0;
+
+	function cd_indicador_event(ob)
+	{
+		$('#ds_range_tick').val('');
+		$('#ds_range_legenda').val('');
+		$('#ds_range_valor').val('');
+
+		selecionado='';
+
+		if( CODIGO_INDICADOR_TABELA!='' )
+		{
+			url = "<?php echo site_url('indicador/grafico_config/carregar_grafico_config_ajax'); ?>";
+			$.post( url, {cd: CODIGO_INDICADOR_TABELA }, function(data)
+			{ 
+				if(data.erro=='')
+				{
+					gerar_grafico();
+
+					exibir_tabela();
+					exibir_tabela_anos_anteriores();
+				}
+				else
+				{
+					alert( 'erro aqui' );
+					alert( data.erro );
+				}
+			}, 'json' );
+		}
+		else
+		{
+		}
+	}
+
+	function gerar_grafico()
+	{
+		url="<?php echo site_url('indicador/grafico_config/grafico_ajax/'); ?>";
+		$.post( url, {cd:CODIGO_INDICADOR_TABELA},function(data)
+		{
+			$('#img_gra_div').html( "<img src='"+data+"' id='img_gra' />" );
+		} );
+	}
+
+	function exibir_tabela()
+	{
+		url="<?php echo site_url('indicador/grafico_config/tabela'); ?>";
+		$.post( url, { cd_indicador_tabela: CODIGO_INDICADOR_TABELA }, 
+		function(data)
+		{
+			// im anos anteriores
+			im = '';
+			$('#tabela_div').html( im+''+data );
+		} );
+	}
+
+	function exibir_tabela_anos_anteriores()
+	{
+		url="<?php echo site_url('igp/igp/exibir_historico_ajax'); ?>";
+		$.post( url, { cd_indicador_tabela: CODIGO_INDICADOR_TABELA }, 
+		function(data)
+		{
+			$('#historico_div').html( data );
+		} );
+	}
+
+	// compatibilidade
+	function escolher_celula_na_tabela(v)
+	{
+	}
+
+	function dimi()
+	{
+		if( tamanho_grafico==0 ){tamanho_grafico=$('#img_gra').attr('height');}
+		$('#img_gra').attr('height',$('#img_gra').attr('height')-100);
+	}
+
+	function aumen()
+	{
+		if( tamanho_grafico==0 ){tamanho_grafico=$('#img_gra').attr('height');}
+		$('#img_gra').attr('height',$('#img_gra').attr('height')+100);
+	}
+
+	function tamnorm()
+	{
+		if( tamanho_grafico==0 ){tamanho_grafico=$('#img_gra').attr('height');}
+
+		$('#img_gra').attr('height',tamanho_grafico);
+	}
+
+	function exibir_lista_indicador()
+	{
+		$('#lista_indicador_table').show();
+	}
+
+</script>
+
+<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr>
+<td width="100px"><img src="<?php echo base_url(); ?>/img/logo-eprev-transp.png" /></td>
+<td>
+	<div class='div-apr' style='text-align:center;'><?php echo "<span style='font-size:12px;'>".$row['ds_indicador_grupo'] . ' - ' .$row['ds_indicador'] . ' - ' . $row['ds_periodo']."</span>"; ?></div>
+</td>
+</tr></table>
+
+<?php 
+if( sizeof($apresentacao)>1 )
+{
+	for( $i=0;$i<sizeof($apresentacao);$i++ )
+	{
+		if( $apresentacao[$i]['cd_indicador_tabela']==$codigo )
+		{
+			break;
+		}
+	}
+
+	if( $i==0 ){ $anterior=0; }else{ $anterior =  $apresentacao[$i-1]['cd_indicador_tabela']; }
+	if(	sizeof($apresentacao)==($i+1) ){ $proximo=0; }else{ $proximo = $apresentacao[$i+1]['cd_indicador_tabela']; }
+
+	echo "<CENTER>";
+	if( $anterior>0 )
+	{
+		echo anchor( "indicador/apresentacao/detalhe/$anterior/$cd_apresentacao", "<< ANTERIOR" );
+	}
+	else
+	{
+		echo "<< ANTERIOR";
+	}
+	echo " | ";
+	if($proximo>0)
+	{
+		echo anchor( "indicador/apresentacao/detalhe/$proximo/$cd_apresentacao", "PRÓXIMO >>" );
+	}
+	else
+	{
+		echo "PROXIMO >>";
+	}
+	echo "</CENTER>";
+}
+?>
+
+<div class='div-apr'>
+	<a href='javascript:void(0);' onclick='dimi();'>menos zoom</a> | <a href='javascript:void(0);' onclick='aumen();'>mais zoom</a> | <a href='javascript:void(0);' onclick='tamnorm();'>100%</a>
+	<div id='img_gra_div'></div>
+</div>
+
+<center>
+<?php echo form_open(); ?>
+
+<div id='historico_div'></div><div class="div-apr"><table align='center'><tr><td><div id="tabela_div"></div></td></tr></table></div>
+
+<div id='output-div'></div><br>
+
+<?php if(sizeof($apresentacao)>0): ?>
+
+	<table id='lista_indicador_table' class='div-apr' style='display:none;'><tr><td>
+	<ul>
+	<?php
+		foreach($apresentacao as $item)
+		{
+			$st="";if($item['cd_indicador_tabela']==$codigo){ $st="background-color:#efefef;"; }
+			echo "<li style='width:150px;float:left;font-size:10;$st;padding:5px;'>".anchor("indicador/apresentacao/detalhe/".$item['cd_indicador_tabela']."/".$item['cd_indicador_apresentacao'],"<img src='".base_url()."/img/ico_grafico_apresentacao_indicador.jpg' border='0' />".br().$item['ds_indicador_grupo'].br().$item['ds_indicador'].br().$item['ds_periodo'])."</li>";
+			echo "";
+		}
+	?>
+	</ul>
+	</td></tr></table>
+
+	<a href='javascript:void(0);' onclick='exibir_lista_indicador();'>Exibir lista de indicadores da apresentação</a>
+
+<?php endif;?>
+
+<?php echo form_close(); ?>
+</center>
+
+<script>
+cd_indicador_event();
+</script>
+<?
+$this->load->view('footer.php');

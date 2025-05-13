@@ -1,0 +1,146 @@
+<?php
+class Reclamacao_model extends Model
+{
+	function __construct()
+	{
+		parent::Model();
+	}
+
+	function listar( &$result, $args=array() )
+	{
+		// mount query
+		$sql = "
+		SELECT cd_reclamacao
+		, to_char(dt_referencia,'MM/YYYY') as mes_referencia
+		, nr_atendimento
+		, nr_reclamacao
+		, nr_meta
+		, nr_peso
+		, TO_CHAR(dt_inclusao,'DD/MM/YYYY') as dt_inclusao
+		, u.nome as nome_usuario_inclusao
+		FROM igp.reclamacao r
+		JOIN projetos.usuarios_controledi u ON u.codigo=r.cd_usuario_inclusao
+		WHERE (dt_exclusao is null)
+		ORDER BY dt_referencia
+		";
+
+		// parse query ...
+		//esc( "{ano}", $args["ano"], $sql, "int" );
+
+		// return result ...
+		$result = $this->db->query($sql);
+	}
+
+	function carregar($cd)
+	{
+		$sql = "SELECT cd_reclamacao
+			, to_char(dt_referencia,'DD/MM/YYYY') AS dt_referencia
+			, nr_atendimento
+			, nr_reclamacao
+			, nr_meta
+			, nr_peso
+			, TO_CHAR(dt_inclusao,'DD/MM/YYYY') as dt_inclusao
+			, cd_usuario_inclusao
+			FROM igp.reclamacao ";
+
+		$row=array();
+		$query = $this->db->query( $sql . ' LIMIT 1 ' );
+		$fields = $query->field_data();
+		foreach( $fields as $field )
+		{
+			$row[$field->name] = '';
+		}
+
+		if( intval($cd)>0 )
+		{
+			$sql .= " WHERE cd_reclamacao={cd_reclamacao} ";
+			esc( "{cd_reclamacao}", intval($cd), $sql );
+			$query=$this->db->query($sql);
+
+			if($query->row_array())
+			{
+				$row=$query->row_array();
+			}
+		}
+
+		return $row;
+	}
+
+	function salvar($args, &$msg=array())
+	{
+		if(intval($args['cd_reclamacao'])==0)
+		{
+			$sql="
+			INSERT INTO igp.reclamacao ( 
+
+			dt_referencia 
+			, nr_atendimento 
+			, nr_reclamacao 
+			, nr_meta 
+			, nr_peso 
+			, dt_inclusao 
+			, cd_usuario_inclusao
+
+			) VALUES ( 
+
+			date_trunc('month', TO_DATE('{dt_referencia}', 'DD/MM/YYYY')) 
+			, {nr_atendimento} 
+			, {nr_reclamacao} 
+			, {nr_meta} 
+			, {nr_peso} 
+			, CURRENT_TIMESTAMP 
+			, {cd_usuario_inclusao}
+ 
+			)
+			";
+		}
+		else
+		{
+			$sql="
+			UPDATE igp.reclamacao SET
+			cd_reclamacao = {cd_reclamacao}
+			, dt_referencia = date_trunc('month', TO_DATE('{dt_referencia}','DD/MM/YYYY'))
+			, nr_atendimento = {nr_atendimento}
+			, nr_reclamacao = {nr_reclamacao}
+			, nr_meta = {nr_meta}
+			, nr_peso = {nr_peso}
+			WHERE
+			cd_reclamacao = {cd_reclamacao}
+			";
+		}
+		
+		esc("{cd_reclamacao}", $args["cd_reclamacao"], $sql, "int", false);
+		esc("{dt_referencia}", $args["dt_referencia"], $sql, "str", false);
+		esc("{nr_atendimento}", $args["nr_atendimento"], $sql, "int", false);
+		esc("{nr_reclamacao}", $args["nr_reclamacao"], $sql, "int", false);
+		esc("{nr_meta}", $args["nr_meta"], $sql, "str", false);
+		esc("{nr_peso}", $args["nr_peso"], $sql, "int", false);
+		esc("{cd_usuario_inclusao}", $args["cd_usuario_inclusao"], $sql, "int", false);
+
+		try
+		{
+			$query = $this->db->query($sql);
+			return true;
+		}
+		catch(Exception $e)
+		{
+			$msg[]=$e->getMessage();
+			return false;
+		}
+	}
+
+	function excluir($id)
+	{
+		$sql = "
+			UPDATE igp.reclamacao
+			SET dt_exclusao=current_timestamp, cd_usuario_exclusao={cd_usuario_exclusao} 
+			WHERE md5(cd_reclamacao::varchar)='{cd_reclamacao}' 
+		";
+
+		esc('{cd_usuario_exclusao}', usuario_id(), $sql, 'int');
+		esc('{cd_reclamacao}', $id, $sql, 'str');
+
+		$query=$this->db->query($sql);
+	}
+}
+?>

@@ -1,0 +1,393 @@
+<?php
+class Rentabilidade_ci extends Controller
+{
+    function __construct()
+    {
+        parent::Controller();
+    }
+
+    function index()
+    {
+		if(CheckLogin())
+		{
+	        $this->load->view('igp/rentabilidade_ci/index.php');
+		}
+    }
+
+    function listar()
+    {
+        if(CheckLogin())
+        {
+	        $this->load->model('igp/Rentabilidade_ci_model');
+	
+	        $data['collection'] = array();
+	        $result = null;
+	
+	        // --------------------------
+			// filtros ...
+	
+			$args=array();
+	
+			// --------------------------
+			// listar ...
+	
+	        $this->Rentabilidade_ci_model->listar( $result, $args );
+	
+			$data['collection'] = $result->result_array();
+	
+	        if( $result )
+	        {
+	            $data['collection'] = $result->result_array();
+	        }
+	
+	        // --------------------------
+	
+	        $this->load->view('igp/rentabilidade_ci/partial_result', $data);
+        }
+    }
+
+	function detalhe($cd=0)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Rentabilidade_ci_model');
+			$row=$this->Rentabilidade_ci_model->carregar( $cd );
+			if($row)
+			{
+				if($cd==0)
+				{
+					/*$sql="SELECT to_char(dt_referencia + '1 month'::interval,'DD/MM/YYYY') AS mes_referencia, dt_referencia, nr_peso_igp FROM igp.rentabilidade_ci WHERE dt_exclusao IS NULL ORDER BY dt_referencia DESC LIMIT 1";
+					$query = $this->db->query($sql);
+					$row_atual = $query->row_array();
+
+					$row['dt_referencia'] = $row_atual['mes_referencia'];
+					$row['nr_meta'] = $row_atual['nr_meta'];
+					$row['nr_peso'] = $row_atual['nr_peso'];*/
+				}
+				 
+				$data['row'] = $row; 
+			}
+			$this->load->view('igp/rentabilidade_ci/detalhe', $data);
+		}
+	}
+
+	function salvar()
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Rentabilidade_ci_model');
+			
+			$args['cd_rentabilidade_ci']=intval($this->input->post('cd_rentabilidade_ci', TRUE));
+			$args["dt_referencia"] = $this->input->post("dt_referencia",TRUE);
+			$args["cd_usuario_inclusao"] = usuario_id();
+
+			$args["nr_rentabilidade"] = app_decimal_para_db( $this->input->post("nr_rentabilidade",TRUE) );
+			$args["nr_benchmark"] = app_decimal_para_db( $this->input->post("nr_benchmark",TRUE));
+			$args["nr_peso_igp"] = app_decimal_para_db( $this->input->post("nr_peso_igp",TRUE));
+
+			$msg=array();
+			$retorno = $this->Rentabilidade_ci_model->salvar( $args,$msg );
+			
+			if($retorno)
+			{
+				redirect( "igp/rentabilidade_ci", "refresh" );
+			}
+			else
+			{
+				$mensagens = implode('<br>',$msg);
+				exibir_mensagem($msg[0]);
+			}
+		}
+	}
+
+	function excluir($id)
+	{
+		if(CheckLogin())
+		{
+			$this->load->model('igp/Rentabilidade_ci_model');
+
+			$this->Rentabilidade_ci_model->excluir( $id );
+
+			redirect( 'igp/rentabilidade_ci', 'refresh' );
+		}
+	}
+
+	function criar_indicador()
+	{
+		if( CheckLogin() )
+		{
+			$INDICADOR_TABELA_CODIGO = enum_indicador_tabela_restrito::GRAFICO_IGP_RENTABILIDADE_CI;
+
+			$this->load->helper(array('igp','indicador'));
+			$indicador=array();
+
+			$this->load->model('igp/Rentabilidade_ci_model', 'dbmodel');
+
+	        $collection = array();
+	        $result = null;
+
+	        // --------------------------
+			// filtros ...
+
+			$args=array();
+	        $this->dbmodel->listar( $result, $args );
+
+			$collection=$result->result_array();
+
+			igp_limpar_historico(enum_indicador::RENTABILIDADE_CI);
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+			$acumular_ate=12; // meses
+			$contador=sizeof($collection);$i=0;
+			$rentabilidade_indice_f = 100;
+			$benchmark_indice_f = 100;
+			$a_rentabilidade_indice_f = array();
+			$a_benchmark_indice_f = array();
+
+			$te = 1.660133353;
+
+			foreach( $collection as $item )
+			{
+				$i++;
+				$link=anchor("igp/rentabilidade_ci/detalhe/" . $item["cd_rentabilidade_ci"], "editar");
+
+				$rentabilidade = floatval($item['nr_rentabilidade']);
+				$benchmark = floatval($item['nr_benchmark']);
+				$diferenca_rentabilidade_benchmark = floatval( $rentabilidade ) - floatval( $benchmark );
+				$rentabilidade_fator_f = floatval($rentabilidade)/100+1;
+				$benchmark_fator_f = floatval($benchmark)/100+1;
+				
+				$a_rentabilidade_indice_f[] = floatval($rentabilidade_indice_f);
+				$a_benchmark_indice_f[] = floatval($benchmark_indice_f);
+				$rentabilidade_indice_f = floatval($rentabilidade_indice_f)*floatval($rentabilidade_fator_f);
+				$benchmark_indice_f = floatval($benchmark_indice_f)*floatval($benchmark_fator_f);
+
+				$rentabilidade_acu_f = '';
+				$benchmark_acu_f = '';
+				$minimo_f = 0;
+				$maximo_f = 0;
+				$poder_f = 0;
+
+				if($i>=12)
+				{
+					$rentabilidade_acu_f = (  floatval($rentabilidade_indice_f) / floatval($a_rentabilidade_indice_f[sizeof($a_rentabilidade_indice_f)-12])-1  )*100;
+					$benchmark_acu_f = (  floatval($benchmark_indice_f) / floatval($a_benchmark_indice_f[sizeof($a_benchmark_indice_f)-12])-1  ) * 100;
+
+					$minimo_f = floatval($benchmark_acu_f) - (2*$te);
+					$maximo_f = floatval($benchmark_acu_f) + (2*$te);
+
+					//=J57-(K57-1)
+					$poder_f = floatval($rentabilidade_acu_f)-(floatval($benchmark_acu_f)-1);
+				}
+				
+				$peso_igp = floatval($item['nr_peso_igp']);
+				$igp_mes_f = floatval($rentabilidade);
+				$igp_acumulado_f = floatval($rentabilidade_acu_f);
+
+				$igp_media_f = 0;
+				$a_igp_media_f[]=$rentabilidade;
+				if($i>=12)
+				{
+					$j=1;
+					for( $k=sizeof($a_igp_media_f);$k>0;$k-- )
+					{
+						if( $j<=$acumular_ate )
+						{
+							$igp_media_f+=$a_igp_media_f[$k-1];
+
+							$j++;
+						}
+					}
+					$divisor=(sizeof($a_igp_media_f)<$acumular_ate)?sizeof($a_igp_media_f):$acumular_ate;
+					$igp_media_f=floatval($igp_media_f)/$divisor;
+				}
+				
+				$diferenca_acumulado_f = floatval($rentabilidade_acu_f)-floatval($benchmark_acu_f);
+				
+				$peso_f='';
+				$peso_acumulado_f='';
+				if($i>=12)
+				{
+					$peso_f=0;
+					$peso_acumulado_f=0;
+
+					//=SE(E58>=0;O58;SE(C58<0;SE(D58<0;(1-(E58/D58))*O58);(C58/D58*O58)))
+					if(   floatval($diferenca_rentabilidade_benchmark)>=0   )
+					{
+						$peso_f = floatval($peso_igp);
+					}
+					else
+					{
+						if( floatval($rentabilidade)<0 )
+						{
+							if(floatval($benchmark)<0)
+							{
+								$peso_f = (1-(floatval($diferenca_rentabilidade_benchmark))/floatval($benchmark))*floatval($peso_igp);
+							}
+						}
+						else
+						{
+							$peso_f = ( floatval($rentabilidade) / floatval($benchmark)*floatval($peso_igp) );
+						}
+					}
+
+					//=SE(S57>=0;O57;SE(J57<0;SE(K57<0;(1-(S57/K57))*O57);(J57/K57*O57)))
+					$peso_acumulado_f = 0;
+					if(   floatval($diferenca_acumulado_f)>=0   )
+					{
+						$peso_acumulado_f = floatval($peso_igp);
+					}
+					else
+					{
+						if( floatval($rentabilidade_acu_f)<0 )
+						{
+							if(floatval($benchmark_acu_f)<0)
+							{
+								$peso_acumulado_f = (1-(floatval($diferenca_acumulado_f))/floatval($benchmark_acu_f))*floatval($peso_igp);
+							}
+						}
+						else
+						{
+							$peso_acumulado_f = ( floatval($rentabilidade_acu_f) / floatval($benchmark_acu_f)*floatval($peso_igp) );
+						}
+					}
+				}
+
+				$peso_media_f = 0;
+				$a_peso_media_f[]=$peso_f;
+				if($i>=24)
+				{
+					$j=1;
+					for( $k=sizeof($a_peso_media_f);$k>0;$k-- )
+					{
+						if( $j<=$acumular_ate )
+						{
+							$peso_media_f+=$a_peso_media_f[$k-1];
+
+							$j++;
+						}
+					}
+					$divisor=(sizeof($a_peso_media_f)<$acumular_ate)?sizeof($a_peso_media_f):$acumular_ate;
+					$peso_media_f=floatval($peso_media_f)/$divisor;
+				}
+
+				$row['mes_ano'] = $item['mes_referencia'];
+				$row['VALOR_1'] = number_format($rentabilidade,4,',','');
+				$row['VALOR_2'] = number_format($rentabilidade_acu_f,4,',','');
+				$row['VALOR_3'] = number_format($benchmark_acu_f,4,',','');
+				$row['VALOR_4'] = number_format($igp_media_f,4,',','');
+				$row['VALOR_5'] = number_format($benchmark,4,',','');
+
+				$row['igp_mes'] = floatval($peso_f);
+				$row['igp_acum'] = floatval($peso_acumulado_f);
+				$row['igp_media'] = floatval($peso_media_f);
+
+				$indicador[] = $row;
+
+				// coleta de dados para histórico dos anos anteriores
+				if( strpos($item['mes_referencia'],"12/")>-1 )
+				{
+					/* $hst_meta = floatval($meta);
+					$hst_resultado = floatval($tecnica_matematica);
+					$mr = explode( '/', $item['mes_referencia'] );
+					$desvio_meta = floatval($hst_resultado)-floatval($hst_meta);
+
+					igp_gravar_historico( intval($mr[1]), floatval($hst_meta), floatval($hst_resultado), floatval($desvio_meta), enum_indicador::RENTABILIDADE_CI ); */
+				}
+			}
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+			$sql = " DELETE FROM indicador.indicador_parametro WHERE cd_indicador_tabela=? ";
+			$this->db->query( $sql, array(intval($INDICADOR_TABELA_CODIGO)) );
+
+			$sql='';
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0,0, utf8_encode('Mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1,0, utf8_encode('Rentab no mês'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2,0, utf8_encode('Rentab acum 12 meses'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3,0, utf8_encode('Meta Acum 12 meses'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4,0, utf8_encode('Média Móvel 12 meses'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5,0, utf8_encode('Meta 12 meses'), 'background,center');
+
+			$linha=1;
+			$contador_media=0;
+			$contador_media_ano=0;
+			$media=0;
+			$media_ano=0;
+			for( $i=sizeof($indicador)-$acumular_ate;$i<sizeof($indicador);$i++ )
+			{
+				// IGP
+				$sql1 = " SELECT * FROM igp.igp WHERE to_char( dt_referencia, 'MM/YYYY' )='".$indicador[$i]['mes_ano']."'; ";
+				$query = $this->db->query( $sql1 );
+
+				$igp = $query->row_array();
+
+				$prefixo_tabela="rentabilidade_ci";
+				if(sizeof($igp)>0)
+				{
+					$sql .= "UPDATE igp.igp set acu_$prefixo_tabela=".floatval($indicador[$i]['igp_acum']).", mes_$prefixo_tabela=".floatval($indicador[$i]['igp_mes']).", mm_$prefixo_tabela=".floatval($indicador[$i]['igp_media'])." where cd_igp=".intval($igp['cd_igp'])."; ";
+				}
+				else
+				{
+					$sql .= "INSERT INTO igp.igp (acu_$prefixo_tabela, mes_$prefixo_tabela, mm_$prefixo_tabela, dt_referencia) VALUES (".floatval($indicador[$i]['igp_acum']).",".floatval($indicador[$i]['igp_mes']).",".floatval($indicador[$i]['igp_media']).", to_date( '01/".$indicador[$i]['mes_ano']."', 'DD/MM/YYYY' )); ";
+				}
+
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, $indicador[$i]['mes_ano'], 'background,center');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, $indicador[$i]['VALOR_1'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, $indicador[$i]['VALOR_2'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, $indicador[$i]['VALOR_3'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, $indicador[$i]['VALOR_4'], 'right');
+				$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, $indicador[$i]['VALOR_5'], 'right');
+
+				$media += floatval(app_decimal_para_db($indicador[$i]['VALOR_1']));
+				$contador_media++;
+				
+				if( strpos($indicador[$i]['mes_ano'],"/".date('Y'))>-1 )
+				{
+					$media_ano += floatval(app_decimal_para_db($indicador[$i]['VALOR_1']));
+					$contador_media_ano++;
+				}
+
+				$linha++;
+			}
+
+			$media = floatval($media) / $contador_media;
+			$media_ano = floatval($media_ano) / $contador_media_ano;
+
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, '', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media', 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, number_format($media,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+			$linha++;
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 0, $linha, 'Media '.date('Y'), 'background,center');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 1, $linha, number_format($media_ano,2,',','.'), 'right');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 2, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 3, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 4, $linha, '', '');
+			$sql.=indicador_db::sql_inserir_celula( $INDICADOR_TABELA_CODIGO, 5, $linha, '', '');
+
+			$this->db->query($sql);
+
+			// resgatar codigo do indicador
+			$sql = "SELECT cd_indicador FROM indicador.indicador_tabela where cd_indicador_tabela=?";
+			$query = $this->db->query($sql, array(intval($INDICADOR_TABELA_CODIGO)));
+			$res = $query->row_array();
+
+			echo 'Indicador atualizado com sucesso!'.br();
+			echo 'IGP atualizado com sucesso!'.br(2);
+			echo anchor( 'indicador/apresentacao/detalhe/'.$res['cd_indicador'], 'Ver apresentação' );
+		}
+	}
+}
+?>

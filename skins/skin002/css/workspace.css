@@ -1,0 +1,129 @@
+body
+{
+	background:white;
+}
+.work_gestao
+{
+	background: url('../img/workspace/work_gestao.png') no-repeat;
+	width: 280px;
+	padding-top: 50px;
+}
+.work_gestao label
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: bold;
+	margin-left: 40px;
+}			
+.work_gestao ul
+{
+	margin: 2px 0px 15px 40px;
+	list-style-image: url('../img/workspace/work_seta.png');
+}
+.work_gestao li
+{
+	margin-top: 8px;
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}
+.work_gestao li a
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+.work_intranet
+{
+	background: url('../img/workspace/work_intranet.png') no-repeat;
+	width: 280px;
+	padding-top: 50px;
+}
+.work_intranet label
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: bold;
+	margin-left: 40px;
+}			
+.work_intranet ul
+{
+	margin: 2px 0px 15px 40px;
+	list-style-image: url('../img/workspace/work_seta.png');
+}
+.work_intranet li
+{
+	margin-top: 8px;
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}
+.work_intranet li a
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}
+.work_eprev
+{
+	background: url('../img/workspace/work_eprev.png') no-repeat;
+	width: 280px;
+	padding-top: 50px;
+}
+.work_eprev label
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: bold;
+	margin-left: 40px;
+}			
+.work_eprev ul
+{
+	margin: 2px 0px 15px 40px;
+	list-style-image: url('../img/workspace/work_seta.png');
+}
+.work_eprev li
+{
+	margin-top: 8px;
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}	
+.work_eprev li a
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}		
+.work_internet
+{
+	background: url('../img/workspace/work_internet.png') no-repeat;
+	width: 300px;
+	padding-top: 50px;
+}
+.work_internet label
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: bold;
+	margin-left: 40px;
+}			
+.work_internet ul
+{
+	margin: 2px 0px 15px 40px;
+	list-style-image: url('../img/workspace/work_seta.png');
+}
+.work_internet li
+{
+	margin-top: 8px;
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}
+.work_internet li a
+{
+	font-family: arial;
+	font-size: 10pt;
+	font-weight: normal;
+}

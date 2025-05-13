@@ -1,0 +1,140 @@
+<html><!-- InstanceBegin template="/Templates/menu_projetos.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>..:: e-prev :: Eleitores por município ::..</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Fireworks MX Dreamweaver MX target.  Created Mon Apr 21 18:21:40 GMT-0300 (Hora padrão leste da Am. Sul) 2003-->
+<!-- ==================== Galeria de estilos ========================================== --> 
+<link href="main.css" rel="stylesheet" type="text/css">
+<!-- ==================== Scripts Java ================================================ --> 
+<script language="JavaScript" type="text/JavaScript" src="inc/menu_principal.js"></script>
+<script language="JavaScript">
+// ---------------------------------- Carrega as imagens dos menus suspensos
+function pre_carga_imagens() {
+<!-- INCLUDE BLOCK : inc/menu_geral1.tpl -->
+}
+</script>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+<!-- ==================== Corpo da Tela ==================================================== -->
+<body bgcolor="{bgcolor}" background="{c_skin}{img_fundo_pagina}" text="{text}" link="{link}" vlink="{vlink}" alink="{alink}" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="pre_carga_imagens(); chama_fnc_onload();" onbeforeunload='saida_direta(); return confirma_saida();'>
+<!-- ==================== Menus de primeiro nível ========================================================== --> 
+<!-- INCLUDE BLOCK : inc/menu_geral2.tpl -->
+<!-- ==================== Área livre ======================================================================= --> 
+<!-- INCLUDE BLOCK : inc/menu_geral3.tpl -->
+<!-- ==================== Camadas sobrepostas ============================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral4_camadas_sobrepostas.tpl -->
+<!-- ==================== Menu Principal =================================================================== -->
+<!-- INCLUDE BLOCK : inc/menu_geral5_menu_principal.tpl -->
+<!-- -------------------- Mensagem individual por tela ----------------------------------------------------------------------------------- -->
+<div id="mensagem_tela" style="position:absolute; width:{larg_msgt}px; height:{alt_msgt}px; z-index:1; left: {pos_msgt}px; top: {top_msgt}px;">
+	<!-- InstanceBeginEditable name="mensagem_tela" -->{mensagem_tela}<!-- InstanceEndEditable -->
+</div>  
+<!-- -------------------- Versão e usuário atual ----------------------------------------------------------------------------------- -->
+<div id="versao" style="position:absolute; width:277px; height:28px; z-index:1; left: {pos_usuario}px; top: {top_usuario}px; visibility: {visibilidade_usuario};"><span class="{classe_usuario}">Versão 2006.7 - </span><a href="cad_recurso_workspace.php" class="{classe_usuario}" title="{dt_login}{dt_scanner}"><!-- InstanceBeginEditable name="usuario" -->{usuario} - {divsao}<!-- InstanceEndEditable --></a><br>
+</div>  
+<!-- ==================== Área principal da tela =========================================================== -->	
+<table border="0" cellpadding="0" cellspacing="0" width="{largura_tela}">
+  <!--DWLayoutTable-->
+  <!-- fwtable fwsrc="layout abertura_compacta.png" fwbase="default.jpg" fwstyle="Dreamweaver" fwdocid = "742308039" fwnested="0" -->
+  <tr> 
+    <td background="{c_menu}{img_fundo_sup}" bgcolor="{cor_sup_banner}" height="{altura_sup_banner}"><a href="http://www.e-prev.com.br/controle_projetos/index.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image01','','{c_menu}logo_swap.gif',1)"><img src="{c_menu}logo.gif" alt="Página inicial" name="Image01" border="0" hspace="{espaco_superior}" vspace="{espaco_vertical}" {largura_banner}{altura_banner}></a></td>
+  </tr>
+  <tr> 
+    <td bgcolor="{cor_fundo_banner}" background="{c_menu}img_fundo_banner.jpg" height="{altura_banner}" class="{classe_banner}"><!-- InstanceBeginEditable name="imagem" --><img src="{c_banner}banner_eleitores.jpg" {titulo_tela}{largura_banner}{altura_banner}><!-- InstanceEndEditable --></td>
+  </tr>
+  <tr> 
+    <td height="{altura_inf_banner}" colspan="2" bgcolor="{cor_inf_banner}" background="{c_menu}{img_fundo_menu}"><img src="{c_menu}img_inicial_menu.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+  </tr>
+  <tr> 
+    <td height="{alt_menu_principal}" valign="top" background="{c_menu}img_fundo_menu3.jpg" bgcolor="{cor_inf_banner}"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" {largura_banner}{altura_banner}>
+        <tr> 
+          <td {largura_banner}{altura_banner}><img src="{c_menu}img_paragrafo_skin.jpg" border="0" alt="" {largura_banner}{altura_banner}></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td height="38" colspan="2"> <!-- InstanceBeginEditable name="conteudo" -->
+   
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> <blockquote>
+        <div align="right">
+        </div>
+      </blockquote>
+	  		<!-- START BLOCK : lst_estado -->
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#0046ad"> 
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Município</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Eleitores</font></strong></td>
+              </tr>
+              <!-- START BLOCK : municipio -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="lst_eleitores_municipio.php?mun={municipio}">{municipio}</a></font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{num_eleitores}</font></td>
+              </tr>
+              <!-- END BLOCK : municipio -->
+			  <!-- START BLOCK : tot_estado -->
+              <tr bgcolor="#CCCCCC"> 
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Total</font></strong></td>
+                <td align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tot_eleitores}</font></strong></td>
+              </tr>
+			  <!-- END BLOCK : tot_estado -->
+            </table>
+			<!-- END BLOCK : lst_estado -->
+            
+			<!-- START BLOCK : lst_municipio -->
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr bgcolor="#dae9f7"> 
+                <td colspan="13"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr> 
+                      <td><font  color="#0046ad"  size="5" face="Arial, Helvetica, sans-serif">{mun}</font></td>
+                      <td align="right"><a href="lst_eleitores.php?ofset={ofsetant}" class="links2">&lt;&lt; 
+                        50 anteriores</a> - <a href="lst_eleitores.php?ofset={ofset}" class="links2">pr&oacute;ximos 
+                        50&gt;&gt; </a><a href="javascript:history.back()"><img src="img/btn_retorna.jpg" border="0"></a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr bgcolor="#0046ad">
+                <td><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>P&aacute;g.</strong></font></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">E</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">REd</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Seq</font></strong></td>
+                <td colspan="6"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Nome</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Logradouro</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Length</font></strong></td>
+                <td><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Pixels</font></strong></td>
+              </tr>
+              <!-- START BLOCK : mun_municipio -->
+              <tr>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{pag}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_empresa}</font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{cd_registro_empregado}</font></td>
+                <td align="center" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{seq_dependencia}</font></td>
+                <td colspan="6" bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{nome}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Arial, Helvetica, sans-serif">{logradouro}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{length}</font></td>
+                <td bgcolor="{cor_fundo}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{pixels}</font></td>
+              </tr>
+              <!-- END BLOCK : mun_municipio -->
+              <!-- START BLOCK : tot_municipio -->
+              <tr bgcolor="#CCCCCC">
+                <td>&nbsp;</td>
+                <td><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Total</font></strong></td>
+                <td colspan="11" align="center"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{tot_eleitores}</font></strong></td>
+              </tr>
+              <!-- END BLOCK : tot_municipio -->
+            </table>
+			<!-- END BLOCK : lst_municipio -->
+            <p>&nbsp;</p></td>
+  </tr>
+</table>
+<!-- InstanceEndEditable --> 
+    </td>
+  </tr>
+</table>
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>

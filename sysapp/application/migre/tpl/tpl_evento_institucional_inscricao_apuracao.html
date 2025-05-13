@@ -1,0 +1,277 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Apuração ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+	<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+	<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>	
+	<script type="text/javascript"> 
+		var ds_url    = "evento_institucional_inscricao_apuracao_ajax.php";
+		var ob_window = "";
+
+		function gravaVoto()
+		{
+			if((getApuracao() > 0) && (trimValue(document.getElementById("cd_inscricao").value) != ""))
+			{
+				var lt_param = "ds_funcao=gravaVoto";
+					lt_param+= "&cd_apuracao="+getApuracao();
+					lt_param+= "&cd_inscricao="+document.getElementById("cd_inscricao").value;
+				ajaxExecute(ds_url, lt_param, "retornoGravaVoto", '', 'POST');			
+			}
+			else
+			{
+				alert("Informe a Apuração e o Código.");
+			}
+		}
+		
+		function delVoto(cd_apuracao, cd_inscricao)
+		{
+			if((cd_apuracao != "") && (cd_inscricao != ""))
+			{
+				var lt_param = "ds_funcao=delVoto";
+					lt_param+= "&cd_apuracao="+cd_apuracao;
+					lt_param+= "&cd_inscricao="+cd_inscricao;
+				ajaxExecute(ds_url, lt_param, "retornoGravaVoto", '', 'POST');			
+			}
+			else
+			{
+				alert("Informe a Apuração e o Código.");
+			}
+		}		
+		
+		function retornoGravaVoto(retorno)
+		{
+			if(retorno == "OK")
+			{
+				buscaVoto()	
+			}
+			else
+			{
+				alert("Ocorreu um erro!");
+			}
+		}		
+		
+		function buscaVoto()
+		{
+			if(getApuracao() > 0)
+			{
+				var lt_param = "ds_funcao=buscaVoto";
+					lt_param+= "&cd_apuracao="+getApuracao();
+				ajaxExecute(ds_url, lt_param, "retornoBuscaVoto", '', 'POST');			
+			}
+			else
+			{
+				alert("Informe a Apuração.");
+			}
+		}
+		
+		function retornoBuscaVoto(retorno)
+		{
+			if(retorno != "")
+			{
+				document.getElementById('obTabelaVoto').innerHTML = retorno;
+				ordena();
+			}
+			else
+			{
+				alert("Ocorreu um erro!");
+			}
+		}		
+		
+		function getApuracao()
+		{
+			var ob_form = document.getElementById("formApuracao");
+			for(i = 0; i < ob_form.elements.length; i++)
+			{
+				var ob_campo = ob_form.elements[i];
+				if(ob_campo.name == "apuracao")
+				{
+					if(ob_campo.checked)
+					{
+						return (ob_campo.value);
+					}
+				}
+			}		
+			return 0;
+		}
+	
+		function ordena()
+		{
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["Number", "Number"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(0, false);		
+		}
+		
+		
+		function relFinal()
+		{
+			if(getApuracao() > 0)
+			{
+				if(ob_window != "")
+				{
+					ob_window.close();
+				}
+
+				var ds_url = "evento_institucional_inscricao_apuracao_rel.php";
+					ds_url += "?cd_apuracao=" + getApuracao();
+				
+				var nr_width  = 480;
+				var nr_height = 260;
+				var nr_left = ((screen.width - 10) - nr_width) / 2;
+				var nr_top = ((screen.height - 80) - nr_height) / 2;
+
+				ob_window = window.open(ds_url, "wEdtVisitante", "left="+nr_left+",top="+nr_top+",width="+nr_width+",height="+nr_height+",scrollbars=yes,resizable=yes,directories=no,location=no,menubar=yes,status=yes,titlebar=yes,toolbar=yes");		 					
+						
+			}
+			else
+			{
+				alert("Informe a Apuração.");
+			}
+		}
+		
+		function validaObrigatorio(f)
+		{
+			if( f.ds_nome.value=='' )
+			{
+				alert( 'Informe o nome!' );
+				f.ds_nome.focus();
+				return false;
+			}
+		}
+	</script> 
+
+	<style>
+		.pos_venda_pergunta * {
+			font-family: arial;
+		}
+		.pos_venda_pergunta {
+			padding: 2px;
+			margin-top: 0px;
+			margin-left: 20px;
+			margin-bottom: 20px;
+			margin-right: 8px;
+
+			border-width: 1px;
+			border-style: solid;
+			border-color: #ebebeb;
+			border-right-color: #ccc;
+			border-bottom-color: #ccc;
+
+			background-color: #FFFFFF;
+		}
+		.pos_venda_pergunta h2 {
+			margin: 0px;
+			padding: 4px;
+			/*background-color: #E4EDD5;*/
+			background: url(img/posvenda.gif) #ecf4ec;
+			font-size: 16pt;
+		}
+
+		.pos_venda_resposta {
+			margin-top:3px;
+			padding: 2px;
+		}
+
+		.pos_venda_complemento_obrigatorio {
+			font-size:8pt;
+			color: red;
+			font-weight: bold;
+		}
+		
+		.pos_venda_pergunta label {
+			font-family:arial;
+			font-size:10pt;
+			font-weight: bold;		
+		}
+	</style>
+	<BR>
+	<form action="evento_institucional_inscricao_apuracao_grava.php" method="post" onsubmit="return validaObrigatorio(this);">
+		<div class="pos_venda_pergunta" style="text-align:center;padding:8px;">
+			<h2>CADASTRO</h2>
+			<table align="center" border="0" cellspacing="2">
+				<tr>
+					<td>
+						<label>Nome Apuração:</label>
+					</td>
+					<td>
+						<input type="text" name="ds_nome" id="ds_nome">	
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2">
+						<input type="submit" value="Salvar" class="botao" style="width: 100px;">
+						
+					</td>
+				</tr>
+			</table>			
+		</div>
+	</form>
+
+	
+	<form id="formApuracao" method="post" onsubmit="return false;">
+		<div class="pos_venda_pergunta" style="text-align:center;padding:8px;">
+			<h2>APURAÇÃO</h2>
+			<BR>
+			<table align="center" border="0" cellspacing="2">
+				<tr>
+					<td valign="top">
+						<label>Apuração:</label>
+					</td>
+					<td>
+						<!-- START BLOCK : lista_codigo -->
+						<input type="radio" name="apuracao" value="{cd_apuracao}" onclick="buscaVoto();"><label>{ds_apuracao}</label>
+						<BR>
+						<!-- START BLOCK : lista_codigo -->
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>Código:</label>
+					</td>
+					<td>
+						<input type="text" name="cd_inscricao" id="cd_inscricao">		
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2">
+						<input type="button" value="Lançar" onclick="gravaVoto();"  class="botao" style="width: 100px;">
+						<input type="button" value="Resultado" class="botao" style="width: 100px;" onclick="relFinal();">
+					</td>
+				</tr>
+			</table>
+			<BR>
+			<div id="obTabelaVoto">
+			</div>
+		</div>
+	</form>	
+	
+	<script>
+		document.getElementById('cd_inscricao').onkeydown = checkKeycodeVoto;
+		function checkKeycodeVoto(e) 
+		{
+			var keycode;
+			if (window.event)
+			{		
+				keycode = window.event.keyCode;
+			}
+			else if (e) 
+			{
+				keycode = e.which;
+			}
+			
+			if (keycode == 13)
+			{
+				gravaVoto();		
+			}
+		}	
+	</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

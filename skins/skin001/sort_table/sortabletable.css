@@ -1,0 +1,85 @@
+.sort-table {
+	font:		Icon;
+	border:		1px Solid ThreeDShadow;
+	background:	Window;
+	color:		WindowText;
+}
+
+.sort-table tbody {
+	font-size: 12px;
+	font-style: normal;
+}
+
+.sort-table thead {
+	/*background:	ButtonFace;*/
+	
+	background: #4E7A4E;
+	font-family: Arial, Verdana;
+	font-size: 12px;
+	font-style: normal;
+	color: #FFFFFF;
+	text-align:center;
+	text-decoration: bold;
+	font-weight: bold;	
+}
+
+.sort-table td {
+	padding:	2px 5px;
+}
+
+.sort-table a {
+	background-image: url('../sort_table/images/link.gif');
+	background-repeat: no-repeat;
+	background-position: 0px 0px; 	
+	padding-left: 15px;
+	font-size:12px;
+}
+
+.sort-table thead td {
+	border:			1px solid;
+	border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;
+	cursor:			pointer;
+	font-size: 12px;
+}
+
+.sort-table thead td:active {
+	border-color:	ButtonShadow ButtonHighlight
+					ButtonHighlight ButtonShadow;
+	padding:		3px 4px 1px 6px;
+}
+
+.sort-table thead td[_sortType=None]:active {
+	border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;
+	padding:		2px 5px;
+}
+
+.sort-arrow {
+	width:					11px;
+	height:					11px;
+	background-position:	center center;
+	background-repeat:		no-repeat;
+	margin:					0 2px;
+}
+
+.sort-arrow.descending {
+	background-image:		url("../sort_table/images/downsimple.gif");
+
+}
+
+.sort-arrow.ascending {
+	background-image:		url("../sort_table/images/upsimple.gif");
+}
+
+.sort-par{
+	background: #C8D0C8;
+}
+.sort-impar{
+	background: #F4F4F4;
+}
+
+.sort-selecionado {
+	background:#E6E8B6;
+	border:1px #FAD163 solid;
+}

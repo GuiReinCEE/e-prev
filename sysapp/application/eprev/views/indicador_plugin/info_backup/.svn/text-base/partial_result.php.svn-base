@@ -1,0 +1,90 @@
+<?php
+$body=array();
+
+$head = array( 
+	'#', 'Mês', 'Somatório dos<br>Percentuais', 'Processos de <br>Backup', '% de backups<br>não feitos', 'Meta', ''
+);
+
+$tabela = indicador_tabela_aberta( intval( enum_indicador::INFO_BACKUP ) );
+
+if(sizeof($tabela)<=0)
+{
+	echo "Não foi identificado período aberto para o Indicador";
+}
+else
+{
+	$contador_ano_atual=0;
+	$contador = sizeof($collection);
+	$media_ano=array();
+	$a_data=array(0,0);
+	foreach( $collection as $item )
+	{
+		$a_data = explode( "/", $item['mes_referencia'] );
+
+		$nr_percentual=$item["nr_percentual"];
+		$nr_meta=$item["nr_meta"];
+
+		//if( intval($item['ano_referencia'])<2010 )
+		if( $item['fl_media']=='S' )
+		{
+			$link=''; 
+
+			$referencia = "Média de ".$item['ano_referencia'];
+			$nr_soma='';
+			$nr_processo='';
+		}
+		else
+		{
+			$link=anchor("indicador_plugin/info_backup/detalhe/" . $item["cd_info_backup"], "editar"); 
+
+			$referencia = $item["mes_referencia"];
+			$nr_soma = $item["nr_soma"];
+			$nr_processo=$item["nr_processo"];
+		}
+
+		if(intval($item['ano_referencia']) == intval($tabela[0]['nr_ano_referencia']) && $item['fl_media']!='S' )
+		{
+			$contador_ano_atual++;
+			$media_ano[] = $nr_percentual;
+		}
+
+		$body[] = array(
+		 $contador--
+		, $referencia
+		, number_format($nr_soma,2,',','.')
+		, $nr_processo
+		, number_format($nr_percentual,2,',','.')
+		, number_format($nr_meta,2,',','.')
+		, $link );
+	}
+
+	if(sizeof($media_ano)>0)
+	{
+		$media = 0;
+		foreach( $media_ano as $valor )
+		{
+			$media += $valor;
+		}
+
+		$media = number_format(( $media / sizeof($media_ano) ),2 );
+
+		$body[] = array(
+		 0
+		, '<b>Média de '.intval($tabela[0]['nr_ano_referencia']).'</b>'
+		, ''
+		, ''
+		, '<big><b>'.app_decimal_para_php($media).'</b></big>'
+		, ''
+		, '' );
+	}
+
+	echo "<input type='hidden' id='mes_input' name='mes_input' value='".$a_data[0]."' />";
+	echo "<input type='hidden' id='contador_input' name='contador_input' value='".$contador_ano_atual."' />";
+
+	$this->load->helper('grid');
+	$grid = new grid();
+	$grid->head = $head;
+	$grid->body = $body;
+	echo $grid->render();
+}
+?>

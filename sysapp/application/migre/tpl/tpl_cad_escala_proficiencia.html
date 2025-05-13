@@ -1,0 +1,50 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Escala de Proficiência ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+
+      <!-- START BLOCK : mensagem -->
+      <div align="center">
+	  <strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+      </div>
+      <!-- END BLOCK : mensagem -->
+
+	  <!-- START BLOCK : cadastro -->
+      <form name="form1" method="post" action="grava_grau_escala_competencia.php">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+		<input name="origem" type="hidden" id="origem" value="{origem}">
+              <table border="0" align="center" cellpadding="1" cellspacing="1">
+                <tr> 
+                  <td>&nbsp;</td>
+                  <td align="right"><a href="exclui_grau.php?cd_origem={origem}&cd_escala={cd_escala}"><img src="img/btn_exclusao.jpg" border="0"></a><input type="image" src="img/btn_salvar.jpg"></td>
+                </tr>
+                <tr> 
+                  <td bgcolor="{cor_fundo1}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Grau:</font></td>
+                  <td bgcolor="{cor_fundo1}"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="cd_escala" type="text" id="cd_escala" value="{cd_escala}" size="60" maxlength="100" style="font-family: Verdana; font-size: 8 pt; background-color: #F4F4F4">
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td valign="top" bgcolor="{cor_fundo2}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Descri&ccedil;&atilde;o</font></td>
+                  <td bgcolor="{cor_fundo2}"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <textarea name="descricao" cols="60" rows="8" id="descricao" >{descricao}</textarea>
+                    </font></td>
+                </tr>
+                <tr> 
+                  <td colspan="2"> <div align="center"><font size="2" face="Arial, Helvetica, sans-serif"> 
+                      <input class='botao' type="submit" name="Submit" value="Gravar ">
+                      </font></div></td>
+                </tr>
+              </table>
+      </form>
+	  <!-- END BLOCK : cadastro -->
+
+    </td>
+  </tr>
+</table>
+<!-- INCLUDE BLOCK : footer.html -->

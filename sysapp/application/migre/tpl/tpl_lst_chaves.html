@@ -1,0 +1,89 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Lista chaves ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+		<style>
+			.tb_cadastro_saida{
+				border-collapse: collapse;
+				width: 60%;
+				background:#F4F4F4;
+			}
+			
+			.tb_cadastro_saida *{
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}
+
+			.tb_cadastro_saida th{
+				border: 1px solid gray;
+				padding-left:5px;
+				padding-right:5px;
+				text-align:center;	
+				font-weight: bold;
+				color:#000000;
+				background:#dae9f7;
+			}
+			
+			.tb_cadastro_saida td{
+				border: 1px solid gray;
+				padding-left:5px;
+				padding-right:5px;	
+			}
+		
+			.tb_lista_resultado {
+				border-collapse: collapse;
+				width: 90%;		
+			}
+			
+			.tb_lista_resultado * {
+				font-size: 10pt;
+				font-weight: normal;
+				font-family: Arial,'MS Sans Serif';			
+			}
+			
+			.tb_lista_resultado th {
+				font-size: 10pt;
+				font-weight: bold;	
+				text-align:center;
+				border: 1px solid #CCCCCC;
+				color:#FFFFFF;
+				background:#0046ad;
+			}
+			.tb_lista_resultado td {
+				padding-left: 5px;
+				padding-right: 5px;
+				border: 1px solid #CCCCCC;
+			}		
+			
+			.tb_resultado_selecionado {
+				background:#E6E8B6;
+				border:1px #FAD163 solid;
+				cursor:pointer;
+			}
+		</style>
+		<BR>
+		<div style="position: absolute; left: 85%;">
+			<a href="cad_chaves.php" class="links2">&raquo;Criar nova chave</a>
+		</div>
+		<br>
+		<table class="tb_lista_resultado" align="center">
+			<tr style="cursor:pointer;">
+				<th>
+					Chave
+				</th>
+			</tr>
+			<!-- START BLOCK : lst_chave -->
+			<tr bgcolor="{bg_color}" onmouseover="this.className='tb_resultado_selecionado';" onmouseout="this.className='';">
+				<td style="white-space:nowrap;" title="Clique para editar" onclick="document.location.href='cad_chaves.php?cd_chave={cd_chave}'">
+					{ds_chave}
+				</td>
+			</tr>
+			<!-- END BLOCK : lst_chave -->
+		</table>
+		<BR>
+		<BR>
+
+<!-- INCLUDE BLOCK : footer.html -->

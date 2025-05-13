@@ -1,0 +1,266 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Mailing ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript">
+   <!--
+function fnc_inclui_email(cd_mailing, cor_fundo1, cor_fundo2)
+	{
+		var ds_url    = "lst_emails_pessoa_ajax.php";
+		var lt_param  = "email="+ document.getElementById('email').value+"&cd_mailing="+cd_mailing+"&cor_fundo1="+cor_fundo1+"&cor_fundo2="+cor_fundo2;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('lista_emails')", '.innerHTML=', 'POST');		
+	}
+function win_empresa(r,h) {
+	     w = window.open("mailing_empresa.php?r="+r+"&h="+h, "wemp", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+	  }
+function win_cargo(r,h) {
+	     w = window.open("mailing_cargo.php?r="+r+"&h="+h, "wcar", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+	  }
+function selectCidade()
+	{
+		var ds_url    = "lst_cidades_uf_ajax.php";
+		var lt_param  = "cd_estado="+ document.getElementById('lista_estados').value;
+		ajaxExecute(ds_url, lt_param, "document.getElementById('div_cidades')", '.innerHTML=', 'POST');		
+	}
+function win_email(r,h) {
+	     w = window.open("mailing_email_pessoa.php?r="+r+"&h="+h, "wespec", "menubar=no,location=no,scrollbars=no,resizable=no,width=600,height=280");
+	  }
+--> </script>
+   <script Language="JavaScript">
+   <!--
+      function valida_caracteres(txt, caracteres) 
+      { 
+         saida = true;
+         for (i = 0; i < txt.length; i++) 
+         {
+            achei = true;
+            if (caracteres.indexOf(txt.charAt(i)) < 0) 
+            {  
+               achei = false; 
+            }
+            saida = saida && achei;
+         }
+         return saida;
+      }
+
+      function valida_form(f) { 
+         if (f.nome.value == "") 
+         {
+            alert("Você não preencheu o campo Nome.");
+            return false;
+         }
+         else
+         {
+            if (valida_caracteres(f.cnpj.value,"0123456789") && valida_caracteres(f.telefone.value,"0123456789") && valida_caracteres(f.celular.value,"0123456789") && valida_caracteres(f.fax.value,"0123456789")) 
+            {
+               return true;
+            }
+            else
+            {
+               alert("Preencha os campos CNPJ, Telefone, Celular e Fax apenas com números. Letras e símbolos não são aceitos");
+               return false;
+            }
+         }
+      }
+   -->
+   </script>
+
+      <table width="100%" border="0" cellpadding="0" cellspacing="1">
+        <!-- START BLOCK : mensagem -->
+        <tr> 
+          <td colspan="2"> <p align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif">{msg}</font></strong></p></td>
+        </tr>
+        <!-- END BLOCK : mensagem -->
+        <!-- START BLOCK : cadastro -->
+        <tr valign="top">
+          <td colspan="2"><table width="777" border="0"  cellspacing="0" cellpadding="0" align="center">
+                <tr> 
+                  <td background="img/img_fundo_atividade.jpg" valign="top">
+				  <img src="img/img_menu_pessoas_cadastro.jpg" border="0" usemap="#Map"> 
+                    <map name="Map">
+                      <area shape="rect" coords="2,0,232,37" href="cad_mailing.php?c={codigo}&tr={tr}&cac={cac}">
+                      <area shape="rect" coords="233,0,455,37" href="cad_mailing_relacionamento.php?c={codigo}&tr={tr}&cac={cac}">
+                    </map> </td>
+                  
+                <td width="430" background="img/img_fundo_ativ_sup.jpg">&nbsp;</td>
+                  <td><img src="img/img_canto_sup_dir_ativ.jpg"></td>
+                </tr>
+                <tr> 
+                  
+                <td colspan="2" background="img/img_fundo_atividade.jpg" align="center"><form name="form1" method="post" action="grava_mailing.php" onsubmit="return valida_form(this)">
+                    <table border="0" align="center" cellpadding="1" cellspacing="1">
+                      <tr> 
+                        <td class="texto1">Nome da pessoa:</td>
+                        <td class="texto1"><input name="insere" type="hidden" id="insere" value="{insere}">
+                          <input name="codigo" type="hidden" id="codigo" value="{codigo}"> 
+                          <input name="nome" type="text" id="nome"  value="{nome}" size="66"></td>
+                        <td class="texto1"><a href="cad_mailing.php?tr=I&cac=&cd_emp_inst={cd_emp_inst}"><img src="img/btn_novo.jpg" border="0" title="Cadastrar nova pessoa"></a><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0" title="Imprime o registro atual"></a><input name="image" type="image" src="img/btn_salvar.jpg" border="0" title="Salva os dados"><a href="exclui_contato.php?c={codigo}&chkconf={chkconf}&cac={cac}"><img src="img/btn_exclusao.jpg" border="0" title="Exclui este registro"></a></td>
+                      </tr>
+                      <tr> 
+                        <td class="texto1">CPF:</td>
+                        <td colspan="2"  class="texto1"><input name="cnpj" type="text" id="cnpj"  value="{cnpj}" size="25"></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1"><table width="95%" bgcolor="#999999" align="center" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td colspan="3" height="33"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+                                  <tr> 
+                                    <td class="cabecalho">Informa&ccedil;&otilde;es profissionais:</td>
+                                    <td align="right"><a href="cad_empresas_pessoas.php?c={cd_emp_inst}" class="links2"><img src="img/btn_empresa.jpg" border="0" title="Vai para o cadastro da empresa"></a></td>
+                                  </tr>
+                                </table></td>
+                            </tr>
+                            <tr bgcolor="#F5F5F5"> 
+                              <td class="texto1">Empresa/Institui&ccedil;&atilde;o:</td>
+                              <td class="texto1">{cd_emp_inst} - {empresa}</td>
+                              <td class="texto1" align="center"> <input name="cd_emp_inst" type="hidden" id="cd_emp_inst3" value="{cd_emp_inst}"> 
+                                <a href="#" onClick="win_empresa({codigo},'')" class="links2">{me}</a></td>
+                            </tr>
+                            <tr bgcolor="#F5F5F5"> 
+                              <td class="texto1">Cargo/Fun&ccedil;&atilde;o:</td>
+                              <td class="texto1">{cargo} 
+                                <input name="cd_cargo" type="hidden" id="cd_cargo2" value="{cd_cargo}"> 
+                              </td>
+                              <td class="texto1" align="center"><a href="#" onClick="win_cargo({codigo},'')" class="links2">{tc}</a><span class="links2"> 
+                                | </span><a href="cad_cargo_mailing.php?c={cd_cargo}&cd_mailing={codigo}" class="links2">{ec}</a></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1"><table width="95%" align="center" bgcolor="#0099CC" border="0" cellspacing="1" cellpadding="0"> 
+<tr> <td colspan="3" height="33"> <table width="100%" border="0" cellspacing="0" cellpadding="3"> 
+<tr> <td class="cabecalho">Informa&ccedil;&otilde;es de contato: </td><td align="right">&nbsp;</td></tr> 
+</table></td></tr> <tr bgcolor="#D5F4FF"> <td class="texto1">&nbsp;</td><td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; 
+</font></td></tr> <tr bgcolor="#D5F4FF"> <td class="texto1">Site pessoal:</td><td colspan="2"> 
+<input name="site" type="text" id="site2"  value="{site}" size="77"></td></tr> 
+<tr bgcolor="#D5F4FF"> <td class="texto1">Telefone:</td><td colspan="2" class="texto1"> 
+<input name="ddd" type="text" id="ddd2"  value="{ddd}" size="2"> <input name="telefone" type="text" id="telefone2"  value="{telefone}" size="20" maxlength="20"> 
+Ramal: <input name="ramal" type="text" id="ramal"  value="{ramal}" size="10"></td></tr> 
+<tr bgcolor="#D5F4FF"> <td class="texto1">Celular:</td><td colspan="2"> <input name="celular" type="text" id="celular2"  value="{celular}" size="20" maxlength="20"> 
+</td></tr> <tr bgcolor="#D5F4FF"> <td class="texto1">Fax:</td><td colspan="2"> 
+<input name="fax" type="text" id="fax2"  value="{fax}" size="20" maxlength="20"> 
+</td></tr></table>
+ <div id="lista_emails"> 
+<table width="95%" align="center" bgcolor="#009933" border="0" cellspacing="1" cellpadding="0"> 
+<tr> <td colspan="3" height="33"><table width="100%" border="0" cellspacing="0" cellpadding="3"> 
+<tr> <td class="cabecalho">Emails cadastrados: </td><td align="right">&nbsp;</td></tr> 
+</table></td></tr> <tr bgcolor="#D5F4FF"> <td class="texto1">Email:</td><td class="links2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+<input name="email" type="text" id="email"  value="{email}" size="55"> 
+</font></td><td class="links2" align="right"><font size="2" face="Arial, Helvetica, sans-serif"><img src="img/btn_inclui_email.jpg" onClick="fnc_inclui_email({codigo},'{cor_fundo1}','{cor_fundo2}');" title="Inclui um novo email para esta pessoa"></font></td></tr> 
+<!-- START BLOCK : email_cadastrado -->
+<tr bgcolor="#D5F4FF"> <td class="texto1">Email </td><td class="links2" align="center">{email}</td><td align="right" class="texto1"><a href="mailto:{email}"><img src="img/btn_linha_envia_email.jpg" border="0"></a><a href='exclui_email_mailing.php?cd_email={cd_email}&cd_mailing={codigo}'><img src="img/btn_linha_lixeira.jpg" border="0"></a></td></tr> 
+<!-- END BLOCK : email_cadastrado -->
+</table>
+</div>
+</td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1"><table width="95%" bgcolor="#BFA260" align="center" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td colspan="4" height="33" class="cabecalho">Informa&ccedil;&otilde;es 
+                                de endere&ccedil;amento:</td>
+                            </tr>
+                            <tr bgcolor="#F0E0C7"> 
+                              <td class="texto1">Estado:</td>
+                              <td> 
+                                <select name="lista_estados" id="lista_estados" onChange="selectCidade();">
+									<!-- START BLOCK : estado -->
+									<option value="{cd_estado}" {sel_estado}>{estado}</option>
+									<!-- END BLOCK : estado -->
+                                </select></td>
+                              <td class="texto1">Cidade:</td>
+                              <td><div id="div_cidades">
+							  <select name="lista_cidades" id="lista_cidades">
+                                  <!-- START BLOCK : cidade -->
+                                  <option value="{cd_cidade}" {sel_cidade}>{nome_cidade}</option>
+                                  <!-- END BLOCK : cidade -->
+                              </select>
+							</div></td>
+                            </tr>
+                            <tr bgcolor="#F0E0C7"> 
+                              <td class="texto1">Logradouro:</td>
+                              <td colspan="3"> <input name="logradouro" type="text" id="logradouro2"  value="{logradouro}" size="77"></td>
+                            </tr>
+                            <tr bgcolor="#F0E0C7"> 
+                              <td class="texto1">Complemento:</td>
+                              <td colspan="3"> <input name="complemento" type="text" id="complemento2"  value="{complemento}"  size="20" maxlength="200"><a href="http://maps.google.com/?q={nome_cidade},{logradouro},{numero}" target="_blank">&raquo;&nbsp;Ver 
+                                mapa</a></td>
+                            </tr>
+                            <tr bgcolor="#F0E0C7"> 
+                              <td class="texto1">N&uacute;mero:</td>
+                              <td> <input name="numero" type="text" id="numero"  value="{numero}"  size="3" maxlength="5"></td>
+                              <td class="texto1">Bairro:</td>
+                              <td> <input name="bairro" type="text" id="bairro2"  value="{bairro}" size="30" maxlength="100"> 
+                              </td>
+                            </tr>
+                            <tr bgcolor="#F0E0C7"> 
+                              <td class="texto1">CEP:</td>
+                              <td> <input name="cep" type="text" id="cep"  value="{cep}" size="10" maxlength="20"><a href="http://maps.google.com/?q={cep1}-{cep2} - {nome_cidade}" target="_blank">&raquo;&nbsp;Ver 
+                                mapa</a></td>
+                              <td colspan="2" class="texto1" align="center"> <a href="http://www.correios.com.br/servicos/cep/cep_default.cfm" target="_blank" class="links2">&raquo;&nbsp;Consulta 
+                                CEP</a> <input name="scep" type="hidden" id="scep3" value="{scep}"></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" class="texto1"><table width="95%" align="center" border="0" cellspacing="1" cellpadding="0" bgcolor="#006633">
+                            <tr> 
+                              <td colspan="4" class="cabecalho" bgcolor="#006633" height="33">Informa&ccedil;&otilde;es 
+                                somente se for participante:</td>
+                            </tr>
+                            <tr align="center" bgcolor="#CFE8D9"> 
+                              <td class="texto1">Empresa 
+                                <select name="patrocinadora" id="patrocinadora">
+                                  <!-- START BLOCK : patrocinadora -->
+                                  <option value="{cd_patrocinadora}" {sel_patrocinadora}>{nome_patrocinadora}</option>
+                                  <!-- END BLOCK : patrocinadora -->
+                                </select> </td>
+                              <td class="texto1">Red: 
+                                <input name="cd_registro_empregado" type="text" id="cd_registro_empregado2"  value="{cd_registro_empregado}" size="25"></td>
+                              <td class="texto1">Seq.: 
+                                <input name="seq_dependencia" type="text" id="seq_dependencia2"  value="{seq_dependencia}" size="2" maxlength="20"></td>
+                              <td><a href="login_part.php?emp={cd_empresa}&re={cd_registro_empregado}&seq={seq_dependencia}" class="links2">&raquo;&nbsp;Ver 
+                                Cadastro</a></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" align="center"> <input type="submit" name="Submit2" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"> 
+                          <input type="hidden" name="Submit" value="Pr&oacute;ximo -&gt;"> 
+                        </td>
+                      </tr>
+                    </table>
+            </form>
+                </td>
+                  <td background="img/img_fundo_dir.jpg">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2" background="img/img_fundo_atividade.jpg"><div align="center"><font size="1" face="Verdana">
+                    
+                    </font></div></td>
+                  <td background="img/img_fundo_dir.jpg">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2" background="img/img_fundo_ativ_cel5.jpg"><img src="img/img_canto_inf_esq.jpg"></td>
+                  <td background="img/img_fundo_dir.jpg"><img src="img/img_canto_inf_dir.jpg"></td>
+                </tr>
+              </table></td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <!-- END BLOCK : cadastro -->
+      </table>
+
+<!-- INCLUDE BLOCK : footer.html -->

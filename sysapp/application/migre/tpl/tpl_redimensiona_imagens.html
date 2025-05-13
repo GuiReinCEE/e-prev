@@ -1,0 +1,31 @@
+<html>
+<head>
+   <title>Redimensiona</title>
+   <script type="text/javascript" src="inc/yui/yahoo/yahoo.js"></script>
+   <script type="text/javascript" src="inc/yui/dom/dom.js"></script>
+   <script language="JavaScript">
+      function getEl(objID) {
+         if (document.getElementById) {
+            return document.getElementById(objID);
+         } else {
+            return document.all(objID);
+         }
+      }
+      
+      function redimensiona() {
+         o  = getEl('img1');
+         sW = YAHOO.util.Dom.getViewportWidth();
+         sH = YAHOO.util.Dom.getViewportHeight();
+         iW = o.width;
+         iH = o.height;
+         prop = iH / iW;
+         nW = sW;
+         nH = sW * prop;
+         o.width = nW;
+         o.height = nH;
+      }
+   </script>
+</head>
+<body onLoad="redimensiona()">
+   <img src="{imagem}" id="img1">
+</body>

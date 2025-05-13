@@ -1,0 +1,101 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Empresas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script>
+<!--
+function win_une() 
+{
+	w = window.open("une_empresas.php", "we", "menubar=no,location=no,scrollbars=no,resizable=yes,width=450,height=200");
+}
+
+function jumpCheck(alvo, obj, v) 
+{
+	if (obj.checked == true)
+	{
+		redir=alvo+".location='"+v+"S'";
+		eval(alvo+".location='"+v+"S'");
+	}
+	else
+	{
+		redir=alvo+".location='"+v+"N'";
+		eval(alvo+".location='"+v+"N'");
+	}	
+}
+-->
+</script>
+
+<table align="center" width="700" border="0" cellspacing="0" cellpadding="3">
+	<tr> 
+		<td>
+			<font color="#006633" size="5" face="Arial, Helvetica, sans-serif">Empresas / Institui&ccedil;&otilde;es</font>
+		</td>
+		<td align="center">
+			<a href="cad_empresas.php?tr=I&cac={cac}" class="links2">&raquo;&nbsp;Nova Empresa</a><span class="links2"> | </span><a href="#" class="links2" onClick="win_une()">&raquo;&nbsp;Unificar empresas</a>
+		</td>
+		<td align="center">
+			<input type="checkbox" name="chk_rel" value="S" onClick="jumpCheck('parent', this, 'lst_empresas.php?chk_rel=');" {chk_rel_checked}>
+			<span class="links2">Relacionadas</span>
+		</td>
+	</tr>
+</table>	
+
+<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>		
+	<BR><BR>
+	<span class="links2">&raquo; Total de registro: {qt_registro}</span>
+	<BR>
+	<table class='sort-table' id='table-1' align="center" width="100%" cellspacing="2" cellpadding="2">
+		<thead>
+		<tr> 
+			<td>
+				Código
+			</td>					
+			<td>
+				Nome
+			</td>
+			<td>
+				Relacionamento
+			</td>
+			<td>
+				Segmento
+			</td>
+		</tr>
+		</thead>
+		<tbody>	
+		<!-- START BLOCK : lista -->
+		<tr onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+			<td>
+				<a href="cad_empresas.php?c={cd_emp_inst}&tr={tr}&cac={cac}" class="links2">{cd_emp_inst}</a>
+			</td>					
+			<td>
+				<a href="cad_empresas.php?c={cd_emp_inst}&tr={tr}&cac={cac}">{nome_empresa_entidade}</a>
+			</td>							
+			<td>
+				{relacionamento}
+			</td>										
+			<td>
+				{segmento}
+			</td>					
+		</tr>
+		<!-- END BLOCK : lista -->
+		</tbody>	
+	</table>	
+	<script>
+		var ob_resul = new SortableTable(document.getElementById("table-1"),["Number", "CaseInsensitiveString", "CaseInsensitiveString", "CaseInsensitiveString"]);
+		ob_resul.onsort = function ()
+		{
+			var rows = ob_resul.tBody.rows;
+			var l = rows.length;
+			for (var i = 0; i < l; i++)
+			{
+				removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+				addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+			}
+		};
+		ob_resul.sort(0, true);				
+	</script>
+
+<!-- INCLUDE BLOCK : footer.html -->

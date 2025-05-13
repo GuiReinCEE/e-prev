@@ -1,0 +1,80 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Acompanhamento de Projetos ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+
+
+		<BR style="clear:both;">
+		<form method="get" action="grava_acomp_projeto.php" style="margin-left:30px;">			
+			<input type="hidden" name="tr" value="I">
+			<input type="submit" value="Novo acompanhamento" class="botao">
+		</form>
+	 
+		<script type='text/javascript' src='inc/sort_table/sortabletable.js'></script>
+		<link type='text/css' rel='StyleSheet' href='inc/sort_table/sortabletable.css'>		  
+	  
+            <table class='sort-table' id='table-1' width="95%" align="center" cellpadding="1" cellspacing="1">
+				<thead>			
+				<tr> 
+	                <td>
+						#
+					</td>				
+	                <td>
+						Acompanhamento
+					</td>
+	                <td>
+						Data Acompanhamento
+					</td>
+	                <td>
+						Data Encerramento
+					</td>					
+	                <td>
+						Dt Prevista próximo mês
+					</td>
+					<td>
+						Responsáveis
+					</td>
+				</tr>
+				</thead>
+				<tbody>					
+				<!-- START BLOCK : acomp-->
+				<tr bgcolor="{cor_fundo}" onmouseover="sortSetClassOver(this);" onmouseout="sortSetClassOut(this);"> 
+	                <td>
+						<a href="cad_acomp_projetos.php?c={cd_acomp}&tr=U" class="links2">{cd_acomp}</a>
+					</td>				
+	                <td>
+						<a href="cad_acomp_projetos.php?c={cd_acomp}&tr=U" class="links2">{projeto}</a>
+					</td>
+	                <td class="texto1" align="center">
+						{dt_acomp}
+					</td>
+	                <td class="texto1" align="center">
+						{dt_encerramento}
+					</td>					
+	                <td class="texto1" align="center" style="text-transform: uppercase;">
+						{dt_previsto}
+					</td>
+					<td class="texto1" align="center">
+						{responsaveis}
+					</td>
+				</tr>
+				<!-- END BLOCK : acomp -->
+				</tbody>
+            </table>
+		<script>
+			var ob_resul = new SortableTable(document.getElementById("table-1"),["Number","CaseInsensitiveString", "DateBR", "DateBR", "CaseInsensitiveString", "CaseInsensitiveString"]);
+				ob_resul.onsort = function () {
+					var rows = ob_resul.tBody.rows;
+					var l = rows.length;
+					for (var i = 0; i < l; i++) {
+						removeClassName(rows[i], i % 2 ? "sort-par" : "sort-impar");
+						addClassName(rows[i], i % 2 ? "sort-impar" : "sort-par");
+					}
+				};
+				ob_resul.sort(1, true);				
+		</script>			
+
+
+<!-- INCLUDE BLOCK : footer.html -->

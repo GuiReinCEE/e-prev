@@ -1,0 +1,24 @@
+<?php
+$body=array();
+$head = array( 
+	'Grupo','Indicador','Período',''
+);
+
+foreach( $collection as $item )
+{
+	$link=anchor("indicador/apresentacao/detalhe/" . $item["cd_indicador_tabela"], "ver");
+
+	$body[] = array(
+	 $item["ds_indicador_grupo"]
+	, array($item["ds_indicador"],'text-align:left;')
+	, $item["ds_periodo"]
+	, $link 
+	);
+}
+
+$this->load->helper('grid');
+$grid = new grid();
+$grid->head = $head;
+$grid->body = $body;
+echo $grid->render();
+?>

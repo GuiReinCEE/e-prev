@@ -1,0 +1,386 @@
+<html>
+<head>
+	<title>..:: e-prev :: Tarefa ::..</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	 <!-- START BLOCK : cadastro -->
+	<style>
+		* {
+			font-family: "Courier New", Courier, mono;
+			font-size: 9pt;
+			font-weight: normal;
+			line-height: normal;
+		}
+		
+		label{
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.titulo {
+			width:100%;
+			font-weight: bold;
+			font-size: 18pt;
+			text-align:center;
+			text-transform: uppercase;			
+		}		
+		
+		table {
+			border-collapse: collapse;
+			width: 100%;	
+		}	
+
+		caption{
+			font-weight: bold;
+			border: 1px solid #CCCCCC;
+			background:#CCCCCC;
+		}		
+	
+		th {
+			font-weight: bold;
+			text-align:center;
+			
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}
+
+		td {
+			padding-top: 2px;
+			padding-bottom: 2px;
+			padding-left: 5px;
+			padding-right: 5px;
+			border: 1px solid #CCCCCC;
+		}	
+	
+		.tarefa_forms{
+			display: {fl_tarefa_forms};
+		}
+		
+		.tarefa_reports{
+			display: {fl_tarefa_reports};
+		}		
+		
+		.tarefa_arquivos{
+			display: {fl_tarefa_arquivos};
+		}
+		
+		
+	</style>
+</head>
+<body>
+
+
+	<div class="titulo">
+		Tarefa 
+	</div>	
+	<br>
+	<div style="width: 100%; height: 200px;">
+		<div style="width:50%; float:left;text-align:left;margin-left:5px;"> 
+		<label>Atividade Origem:</label>
+		<br>
+	    {origem} / {codigo}
+		
+		<br><br>
+	    <label>Projeto:</label>
+		<br>
+		{projeto}
+
+
+		<br><br>
+	    <label>Nome do programa:</label>
+		<br>
+		<!-- START BLOCK : programa -->
+		{rel_programa}
+		<!-- END BLOCK : programa -->
+
+		<br><br>
+	    <label>Tipo da tarefa:</label>
+		<br>
+		<!-- START BLOCK : tarefa -->
+		{rel_nome_cad_tarefa}
+		<!-- END BLOCK : tarefa -->
+
+		<br><br>
+		<label>Analista:</label>
+		<br>
+		<!-- START BLOCK : mandante -->
+		{rel_nome_analista}
+		<!-- END BLOCK : mandante -->
+
+		<br><br>
+		<label>Programador:</label>
+		<br>
+		<!-- START BLOCK : atendente -->
+		{rel_nome_atendente}
+		<!-- END BLOCK : atendente -->
+		</div>
+		
+		<div style="width:48%; float:left; text-align:left;margin-left:5px;"> 
+		<label>Prioridade:</label>
+		<br>
+		{rel_prioridade}
+		
+		<br><br>
+		<label>Data de Início Prevista:</label>
+		<br>
+		{dt_inicio}
+		
+		<br><br> 
+		<label>Data de Término Prevista:</label>
+		<br>
+		{dt_fim}
+
+		<br><br> 
+		<label>Data de início da tarefa:</label>
+		<br>
+		{dt_inicio_prog}
+		
+		<br><br> 
+		<label>Data de fim da tarefa:</label>
+		<br>
+		{dt_fim_prog}
+
+		<br><br> 
+		<label>Data de Acordo:</label>
+		<br>
+		{dt_ok_anal}
+		</div>
+	</div>
+	<br>
+	<div style="clear:both; margin-left:5px;">
+		<br>
+		<label>Resumo:</label>
+		<br>
+		{resumo}
+
+		<br><br> 
+		<label>Objetivo:</label>
+		<br>
+		{descricao}
+
+		<br><br> 
+		<label>Funcionalidades/restrições da seleção (regras):</label>
+		<br>
+		{casos_testes}
+
+		<br><br> 
+		<label>Funções ou procedimentos a serem utilizados:</label>
+		<br>
+		{tabs_envolv}
+		
+		
+		<div class="tarefa_forms">
+		<!-- FORMS -->
+		<br><br>
+		<label>Nome da Tela (Forms):</label>
+		<br>
+		{ds_nome_tela}
+
+		<br><br>
+		<label>Menu:</label>
+		<br>
+		{ds_menu}
+			
+		<br><br>
+		<label>LOVS:</label>
+		<br>
+		<table>
+			<tr>
+				<th>Seq</th>
+				<th>Tabela</th>
+				<th>Campo Origem</th>
+				<th>Campo Destino</th>
+			</tr>
+			<!-- START BLOCK : lovs-->
+			<tr> 
+				<td>{ds_lovs_seq}</td>
+				<td>{ds_lovs_tabela}</td>
+				<td>{ds_lovs_campo_ori}</td>
+				<td>{ds_lovs_campo_des}</td>						
+			</tr>
+			<!-- END BLOCK : lovs -->
+		</table>
+		
+		<br><br>
+		<label>Detalhes da tela:</label>
+		<br>
+		<table>
+			<tr>
+				<th>Banco.Tabela</th>
+				<th>Campo</th>
+				<th>Tipo Campo</th>
+				<th>Val. de Domínio</th>
+				<th>Ds/En</th>
+				<th>Prompt</th>									
+			</tr>
+			<!-- START BLOCK : detalhe_tabelas-->
+			<tr> 
+				<td>{ds_tabela}</td>
+				<td>{ds_campo}</td>
+				<td>{fl_campo}</td>
+				<td>{ds_vl_dominio}</td>
+				<td>{fl_campo_de}</td>
+				<td>{ds_label}</td>
+			</tr>
+			<!-- END BLOCK : detalhe_tabelas -->									
+		</table>
+
+		<br><br>
+		<label>Ordenado por:</label>
+		<br>		
+		<table>
+			<tr>
+				<th>Banco</th>
+				<th>Tabela</th>
+				<th>Campo</th>
+			</tr>
+			<!-- START BLOCK : ordem_tabelas-->
+			<tr> 
+				<td>{ds_ordem_db}</td>
+				<td>{ds_ordem_tabela}</td>
+				<td>{ds_ordem_campo}</td>
+			</tr>
+			<!-- END BLOCK : ordem_tabelas -->									
+		</table>
+		<!-- FIM FORMS -->		
+		</div>
+	
+
+		<!-- REPORTS -->
+		<div class="tarefa_reports"> 
+			<label>Menu:</label>
+			<br>
+			{ds_menu}
+
+			<br><br>
+			<label>Orientação:</label>
+			<br>
+			{rel_orientacao}
+			
+			<br><br>
+			<label>Parâmetros:</label>
+			<br>
+			<table>
+				<tr>
+					<th>Nome Campo</th>
+					<th>Tipo Campo</th>
+					<th>Ordem</th>
+				</tr>
+				<!-- START BLOCK : parametros-->
+				<tr> 
+					<td>{ds_campo}</td>
+					<td>{ds_campo_tipo}</td>
+					<td>{nr_campo_ordem}</td>
+				</tr>
+				<!-- END BLOCK : parametros -->									
+			</table>
+			
+			<br><br>
+			<label>Detalhes do relatório:</label>
+			<table>
+				<tr>
+					<th>Banco</th>
+					<th>Tabela</th>
+					<th>Campo</th>
+					<th>Label</th>
+				</tr>
+				<!-- START BLOCK : detalhe_tabelas_report-->
+				<tr> 
+					<td>{ds_banco}</td>
+					<td>{ds_tabela}</td>
+					<td>{ds_campo}</td>
+					<td>{ds_label}</td>
+				</tr>
+				<!-- END BLOCK : detalhe_tabelas_report -->									
+			</table>
+		<!-- FIM REPORTS -->
+		</div>
+		
+		<div class="tarefa_arquivos">
+			<!-- ARQUIVO -->
+			<br><br>
+			<label>Nome do Processo:</label>
+			<br>
+			{ds_processo}
+
+			<br><br>
+			<label>Diretório:</label>
+			<br>
+			{ds_dir}
+
+			<br><br>
+			<label>Nome:</label>
+			<br>
+			{ds_nome}
+			
+			<br><br>
+			<label>Delimitador:</label>
+			<br>
+			{ds_delimitador}
+			
+			<br><br>
+			<label>Largura Fixa:</label>
+			<br>
+			{rel_largura}
+			
+			
+			<br><br>
+			<label>Tipos:</label>
+			<br>
+			<!-- START BLOCK : tipo_layout -->
+			<table width='100%' class="tb_resultado">
+				<caption class="tb_resultado_caption">Tipo: {ds_tipo_arq}</caption>
+				<tr>
+					<th>Nome Campo</th>
+					<th>Tamanho Campo</th>
+					<th>Característica</th>
+					<th>Formato Campo</th>
+					<th>Definição</th>
+				</tr>
+				<!-- START BLOCK : tipo_layout_campo-->
+				<tr> 
+					<td>{ds_tipo_nome}</td>
+					<td>{ds_tamanho}</td>
+					<td>{ds_caracteristica}</td>
+					<td>{ds_formato}</td>
+					<td>{ds_definicao}</td>
+				</tr>
+				<!-- END BLOCK : tipo_layout_campo -->									
+			</table>
+			<!-- END BLOCK : tipo_layout -->
+					
+			<br><br>
+			<label>Ordenado por:</label>
+			<br>
+			{ds_ordem}						
+			<!-- FIM ARQUIVO -->
+		</div>
+		
+		<br><br>
+		<label>Considerações gerais e complementos:</label>
+		<br>		
+        {obs}		
+	</div>
+	
+	<BR><BR><BR>
+	<br>
+    <table border="1" align="center" width="100%" class="tb_resultado">
+        <caption>Arquivos ou documentos anexos:</caption>
+        <tr> 
+			<th >Nome documento</th>
+            <th width="20%">Tipo de anexo</th>
+        </tr>
+        <!-- START BLOCK : anexo-->
+        <tr> 
+			<td>{nome_doc}</td>
+            <td>{tipo_doc}</td>
+        </tr>
+        <!-- END BLOCK : anexo -->
+		
+		
+    </table>
+
+</body>
+</html>

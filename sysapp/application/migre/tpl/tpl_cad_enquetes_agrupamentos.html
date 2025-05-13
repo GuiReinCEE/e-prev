@@ -1,0 +1,188 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = 'Pesquisa';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+function fnc_confirma_exclusao(codigo,eq) 
+{
+	var confirma = confirm("Confirma a exclusão deste agrupamento?");
+	if (confirma == true) 
+	{
+		document.location.href='exclui_enquete_agrupamento.php?a='+codigo+'&c='+eq;
+	}
+}
+
+function fnc_valida_form(f)
+{
+	var smsg;
+	smsg = "";
+
+	if(f.agrupamento.value=="")
+	{
+		smsg = "Informe o agrupamento.";
+		sid = "agrupamento";
+	}
+
+	if(smsg!="")
+	{
+		alert(smsg);
+		f.elements[sid].focus();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+</SCRIPT>
+
+
+<!-- START BLOCK : mensagem -->
+<div align="center">
+<strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong> 
+</div>
+<!-- END BLOCK : mensagem -->
+
+<!-- START BLOCK : cadastro -->
+<div class="aba_definicao">
+	<div id="aba">
+		<ul>
+			<li onclick="location.href='lst_enquetes.php'">
+				<span>LISTA</span>
+			</li>						
+			<li onclick="location.href='cad_enquetes_definicao.php?c={eq}'">
+				<span>DEFINIÇÃO</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_estrutura.php?c={eq}'" >
+				<span>ESTRUTURA</span>
+			</li>
+			<li onclick="location.href='cad_enquetes_agrupamentos.php?c={codigo}&eq={eq}'" class="abaSelecionada">
+				<span>AGRUPAMENTO</span>
+			</li>			
+			<li onclick="location.href='cad_enquetes_resultados.php?c={eq}'">
+				<span>RESULTADOS</span>
+			</li>
+		</ul>
+	</div>
+	<div class="aba_conteudo">	  
+	  
+	  
+	  
+    <form name="form1" method="post" action="grava_enquete_agrupamento.php" onsubmit="return fnc_valida_form(this);">
+        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+		<input name="eq" type="hidden" id="eq" value="{eq}">
+		<table border="0" align="center" width="100%" cellspacing="1" cellpadding="1">
+			<tr> 
+				<td colspan="2" height="30" valign="middle" align="center" bgcolor="#0066CC">
+					<h2 style="color:#FFFFFF;">{eq} - {titulo}</h2>
+				</td>
+			</tr>
+		</table>		
+		<br>
+		
+		<style>
+			.tab_opcao {
+				border-collapse:collapse;
+				border: 1px solid #0066CC;
+			}
+			
+			.tab_opcao th {
+				padding: 3px;
+				font-family:Arial;
+				font-size:10pt; 
+				color:#FFFFFF;
+				text-align:center;
+				background: #0066CC;
+				border: 1px solid #FFFFFF;
+			}
+			
+			.tab_opcao td {
+				padding: 4px;
+				font-family:Arial;
+				font-size:8pt; 			
+			}				
+		</style>		
+		
+        <table border="0" align="center" width="100%" class="tab_opcao">
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Agrupamento:</td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="agrupamento" type="text" id="agrupamento" value="{agrupamento}" style="width:100%" {dis_responsavel}>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Ordem:</td>
+                  <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <input name="ordem" type="text" id="ordem" value="{ordem}" style="width:50px; text-align:right;" {dis_responsavel}>
+                    </font></td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Considerar escala de valores:</td>
+					<td colspan="2" class="texto1" >
+						<table border="0">
+							<tr>
+								<td><input name="opc_escala" type="radio" value="S" {chk_escala_s} {dis_responsavel}></td>
+								<td>Sim</td>
+								<td><input name="opc_escala" type="radio" value="N" {chk_escala_n} {dis_responsavel}></td>
+								<td>Não</td>
+							</tr>
+						</table>
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td class="texto1">Mostrar valores junto &agrave; op&ccedil;&atilde;o:</td>
+                  <td colspan="2" class="texto1">
+						<table border="0">
+							<tr>
+								<td><input name="opc_valores" type="radio" value="S" {chk_valores_s} {dis_responsavel}></td>
+								<td>Sim</td>
+								<td><input name="opc_valores" type="radio" value="N" {chk_valores_n} {dis_responsavel}></td>
+								<td>Não</td>
+							</tr>
+						</table>				  
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo1}"> 
+                  <td class="texto1">Disposi&ccedil;&atilde;o das quest&otilde;es:</td>
+					<td colspan="2" class="texto1">
+						<table border="0">
+							<tr>
+								<td><input name="opc_disposicao" id="opc_disposicao" type="radio" value="V" {chk_disp_vertical} {dis_responsavel}></td>
+								<td>Vertical</td>
+								<td><input name="opc_disposicao" id="opc_disposicao" type="radio" value="H" {chk_disp_horizontal} {dis_responsavel}></td>
+								<td>Horizontal</td>
+							</tr>
+						</table>					
+					</td>
+                </tr>
+                <tr bgcolor="{cor_fundo2}"> 
+                  <td valign="top" class="texto1">Nota de rodap&eacute;:</td>
+                  <td colspan="2" class="texto1">
+					<textarea name="nota_rodape" id="nota_rodape" cols="55" rows="3" style="width:100%" {dis_responsavel}>{nota_rodape}</textarea>
+					</td>
+                </tr>
+              </table>
+			  
+			  
+		<BR>
+		
+		<table border="0" align="center" width="100%" cellspacing="1" cellpadding="1">
+			<tr> 
+				<td colspan="2" height="30" valign="middle" align="center">
+					<input type="button" value="Voltar" style="width: 100px;" class="botao_disabled" onclick="document.location.href='cad_enquetes_estrutura.php?c={eq}';">
+					<input type="submit" value="Salvar" style="width: 100px;" class="botao" {dis_responsavel}>
+					<input type="button" value="Excluir" style="width: 100px;" class="botao_vermelho" onclick="fnc_confirma_exclusao({codigo},{eq})" {dis_responsavel}>
+				</td>
+			</tr>
+		</table>			  
+    </form>
+	</div>        
+</div>
+
+<script>
+	document.getElementById( "agrupamento" ).focus();
+</script>	
+
+<!-- INCLUDE BLOCK : footer.html -->

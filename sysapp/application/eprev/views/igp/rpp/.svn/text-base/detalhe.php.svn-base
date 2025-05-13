@@ -1,0 +1,91 @@
+<?php 
+set_title('IGP -  RPP Rentabilidade Ponderada do Patrimônio');
+$this->load->view('header'); 
+?>
+<script>
+	<?php echo form_default_js_submit(array(
+		array("mes_referencia", "int")
+		, array("ano_referencia", "int")
+		, array("nr_inpc", "float")
+		, array("nr_indice_mes", "float")
+		, array("nr_indice_ano", "float")
+		, array("nr_wacc", "float")
+		, array("nr_peso", "float")	), 'salvar_ajax(form)' ); ?>
+
+	function salvar_ajax(form)
+	{
+		$('#dt_referencia').val(  '01/'+$('#mes_referencia').val()+'/'+$('#ano_referencia').val() );
+
+		if(confirm('Salvar?'))
+		{
+			url="<?php echo site_url('igp/rpp/salvar'); ?>";
+			$.post(url,{ 
+				cd_rpp:$('#cd_rpp').val()
+				, dt_referencia:$('#dt_referencia').val()
+				, nr_inpc:$('#nr_inpc').val()
+				, nr_indice_mes:$('#nr_indice_mes').val()
+				, nr_indice_ano:$('#nr_indice_ano').val()
+				, nr_wacc:$('#nr_wacc').val()
+				, nr_peso:$('#nr_peso').val()
+			}, function(data) {	alert(data); ir_lista(); });
+		}
+	}
+
+	function ir_lista()
+	{
+		location.href='<?php echo site_url("igp/rpp"); ?>';
+	}
+</script>
+<?php
+$abas[] = array('aba_lista', 'Lista', false, 'ir_lista();');
+$abas[] = array('aba_detalhe', 'Cadastro', true, 'location.reload();');
+echo aba_start( $abas );
+
+if( intval($row['cd_rpp'])==0)
+{
+	$sql = "SELECT to_char(dt_referencia + '1 month'::interval,'DD/MM/YYYY') AS mes_referencia, nr_peso, nr_indice_ano FROM igp.rpp WHERE dt_exclusao IS NULL ORDER BY dt_referencia DESC LIMIT 1";
+	$query = $this->db->query( $sql );
+	$anterior = $query->row_array();
+
+	$row['dt_referencia'] = $anterior['mes_referencia'];
+	$row['nr_peso'] = $anterior['nr_peso'];
+	$row['nr_indice_ano'] = $anterior['nr_indice_ano'];
+}
+
+echo form_open('igp/rpp/salvar');
+echo form_hidden( 'cd_rpp', intval($row['cd_rpp']) );
+
+// Registros da tabela principal ...
+echo form_start_box( "default_box", "IGP - RPP" );
+
+// echo form_default_dropdown('mes_referencia', 'Mês', $meses );
+echo form_default_mes_ano( 'mes_referencia', 'ano_referencia', 'Mês *', $row['dt_referencia'] ); 
+echo form_default_hidden('dt_referencia', 'Mês', $row); 
+echo form_default_float("nr_inpc", "INPC *", $row, ""); 
+echo form_default_float("nr_indice_mes", "Índice do Mês *", $row, ""); 
+echo form_default_float("nr_indice_ano", "Índice do Ano *", $row, ""); 
+echo form_default_text("nr_wacc", "WACC *", $row, "");
+echo form_default_float("nr_peso", "Peso *", $row, ""); 
+echo form_end_box("default_box");
+
+// Barra de comandos ...
+echo form_command_bar_detail_start();
+echo button_save();
+
+if( intval($row['cd_rpp'])>0  )
+{
+	echo button_delete("igp/rpp/excluir",$row["cd_rpp"]);
+}
+
+echo form_command_bar_detail_button("Voltar para lista", "if( confirm('Voltar?') ){ location.href='".site_url('igp/rpp')."'; }");
+echo form_command_bar_detail_end();
+?>
+<script>
+	$('#nr_inpc').focus();
+</script>
+<?php
+echo aba_end();
+echo form_close();
+
+$this->load->view('footer_interna');
+?>

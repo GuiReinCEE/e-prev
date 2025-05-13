@@ -1,0 +1,36 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Relatórios ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2">
+            <table align="center" cellpadding="1" cellspacing="1">
+              <tr align="right"> 
+                <td colspan="4"><a href="cad_relatorios.php?op=I" class="links2">&gt;&gt;Criar 
+                  novo relatorio</a></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Relatorio</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                  criacao</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Titulo</font></strong></td>
+                <td bgcolor="#0046ad"><strong><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">Divisao</font></strong></td>
+              </tr>
+              <!-- START BLOCK : relatorio -->
+              <tr> 
+                <td bgcolor="{cor_fundo}"><a href="cad_relatorios.php?c={cd_relatorio}" class="links2">{cd_relatorio} - {titulo}</a></td>
+                <td bgcolor="{cor_fundo}" class="texto1">{dt_criacao}</td>
+                <td bgcolor="{cor_fundo}" align="center"><a href="cad_relatorios.php?c={cd_relatorio}" class="links2">{esquema}.{tabela}</a></td>
+                <td bgcolor="{cor_fundo}" align="center" class="texto1">{divisao}</td>
+              </tr>
+              <!-- END BLOCK : relatorio -->
+            </table>
+      <div align="center"></div>
+      </td>
+  </tr>
+</table>
+
+<!-- INCLUDE BLOCK : footer.html -->

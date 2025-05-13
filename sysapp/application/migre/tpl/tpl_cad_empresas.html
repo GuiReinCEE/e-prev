@@ -1,0 +1,536 @@
+<!-- INCLUDE BLOCK : header.html -->
+<script>
+	document.title = '..:: e-prev :: Empresas ::..';
+	document.getElementById("titulo_pagina").innerHTML = document.title;
+</script>
+
+<script language="JavaScript" type="text/JavaScript" src="cad_empresas.js"></script>
+<script language="JavaScript">
+   
+	function winramo(r,h)
+	{
+    	w = window.open("ramo_empresa.php?r=" + r + "&h=" + h, "wramo", "menubar=no,location=no,scrollbars=no,resizable=no,width=577,height=277");
+	}
+	function selectCidade()
+	{
+		var ds_url    = "lst_cidades_uf_ajax.php";
+		var lt_param  = "cd_estado=" + document.getElementById('lista_estados').value;
+		ajaxExecute( ds_url, lt_param, "document.getElementById( 'div_cidades' )", '.innerHTML=', 'POST' );		
+	}
+	function win_anexo(r,h)
+	{
+		w = window.open( "cad_contatos_empresa.php?r=" + r + "&h=" + h, "wespec", "menubar=no,location=no,scrollbars=no,resizable=no,width=450,height=255" );
+	}
+	
+	
+	function validaForm()
+	{
+	
+		if(trimValue(document.getElementById("nome_empresa_entidade").value) == "")
+		{
+			alert("Informe o Nome da empresa/instituição");
+			document.getElementById("nome_empresa_entidade").value = "";
+			document.getElementById("nome_empresa_entidade").focus();
+			return false;
+		}
+		else if(trimValue(document.getElementById("porte").value) == "")
+		{
+			alert("Informe o Porte");
+			document.getElementById("porte").focus();
+			return false;
+		}			
+		else if(trimValue(document.getElementById("segmento").value) == "")
+		{
+			alert("Informe o Segmento");
+			document.getElementById("segmento").focus();
+			return false;
+		}		
+		else if(trimValue(document.getElementById("relacionamento").value) == "")
+		{
+			alert("Informe o Relacionamento");
+			document.getElementById("relacionamento").focus();
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+</script>
+<style>
+#myDialogId .myButtonClass 
+{
+	padding:3px;
+	font-size:20px;
+	width:100px;
+}
+#myDialogId .ok_button 
+{
+	color:#2F2;
+}
+#myDialogId .cancel_button 
+{
+	color:#F88;
+}
+
+#confirm_cancel
+{
+	margin-top: -50px;
+	margin-left: -50px;
+	left: 50%;
+	top: 50%;
+	position: fixed;
+}
+@media screen
+{
+	div#confirm_cancel
+	{
+		position: fixed;
+	}
+	* html
+	{
+		overflow-y: hidden;
+	}
+	* html body
+	{
+		overflow-y: auto;
+		height: 100%;
+	}
+	* html div#confirm_cancel
+	{
+		position: absolute;
+	}
+}
+input.normal, textarea.normal {
+	border: 1px solid #000000;
+}
+input.required, textarea.required {
+	border: 1px solid #CCCCCC;
+}
+input.failed, textarea.failed {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.failed_custom, textarea.failed_custom {
+	border: 1px solid #FF3300;
+	color : #FF3300;
+}
+input.passed, textarea.passed {
+	border: 1px solid #000000;
+	color : #000;
+}
+
+.error
+{
+	color: #FFFFFF;
+	border-width:1px;
+	border-style:solid;
+	border-color:#FF0000;
+	background-color:#FF0000;
+	font-weight:bold;
+}
+
+.resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_resultado * {
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_resultado th {
+    font-weight: bold;  
+    text-align:center;
+    border: 1px #C8D0C8 solid;
+    background:#C8D0C8;
+}
+.tb_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px #C8D0C8 solid;
+}       
+
+.tb_resultado_selecionado {
+    background:#E6E8B6;
+    border:1px #FAD163 solid;
+}
+
+.tb_lista_resultado {
+    border-collapse: collapse;
+    width: 100%;        
+}
+
+.tb_lista_resultado * {
+    font-size: 10pt;
+    font-weight: normal;
+    font-family: Arial,'MS Sans Serif';         
+}
+
+.tb_lista_resultado th {
+    font-size: 10pt;
+    font-weight: bold;  
+    text-align:center;
+    /* border: 1px solid #CCCCCC; */
+    color:#FFFFFF;
+    background:#006633;
+}
+.tb_lista_resultado td {
+    padding-left: 5px;
+    padding-right: 5px;
+    /* border: 1px solid #CCCCCC; */
+}
+
+.td_border
+{
+    border: 1px solid #CCCCCC;
+}
+
+.tb_cadastro_saida {
+	border-collapse: collapse;
+	width: 60%;
+	background:#F4F4F4;
+}
+
+.tb_cadastro_saida * {
+	font-size: 10pt;
+	font-weight: normal;
+	font-family: Arial,'MS Sans Serif';			
+}
+
+.tb_cadastro_saida th {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;
+	background:#C8D0C8;
+}
+
+.tb_cadastro_saida td {
+	border: 1px solid gray;
+	padding-left:5px;
+	padding-right:5px;	
+}	
+
+.exibeRevisao {
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}	
+.exibeRevisao th{
+	background:#FAD163;
+	border:1px #FAD163 solid;
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;	
+	font-weight: bold;
+	color:#000000;	
+	
+}
+.exibeRevisao td{
+	background:#FFF7D7;
+	border:1px #FAD163 solid;
+}			
+
+.font_table_title
+{
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Arial, 'MS Sans Serif';
+    color: white;
+}
+</style>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+  <tr valign="top"> 
+    <td colspan="2"> 
+    
+      <!-- START BLOCK : mensagem -->
+      <div align="center"><strong><font color="#FF0000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br><br><br>{msg}</font></strong></div>
+      <!-- END BLOCK : mensagem -->
+	   </td>
+  </tr>
+</table>
+
+	  <!-- START BLOCK : cadastro -->
+	  
+		<!-- START BLOCK : dados_cadastrais -->
+        <form name="form1" method="post" action="grava_empresa.php" onsubmit="return validaForm();">
+	        <input name="codigo" type="hidden" id="codigo" value="{codigo}">
+			<input name="insere" type="hidden" id="insere" value="{insere}">
+
+  			<div class="aba_definicao">
+			<div id="aba">
+				<ul>
+					<li onclick="location.href='cad_empresas.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_identificacao" 
+							class="abaSelecionada"
+							>
+						<span><U>I</U>DENTIFICAÇÃO</span>
+					</li>
+					<li onclick="location.href='cad_empresas_pessoas.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_pessoas" 
+        					style="{exibir_aba_pessoas}"
+							class="{class_aba_pessoas}"
+        					>
+						<span><U>P</U>ESSOAS</span>
+					</li>
+					<li onclick="location.href='cad_empresas_contatos.php?c={codigo}&tr={tr}&cac={cac}'" 
+							id="aba_contatos" 
+        					style="{exibir_aba_contatos}"
+							class="{class_aba_contatos}"
+        					>
+						<span><U>C</U>ONTATOS</span>
+					</li>
+					<li onclick="cad_empresas.aba_comunidades_Click();" 
+							id="aba_comunidades" 
+        					style="{exibir_aba_comunidades}"
+							class="{class_aba_comunidades}"
+        					>
+						<span>C<U>O</U>MUNIDADES</span>
+					</li>
+				</ul>
+			</div>
+			<div class="div_aba_content">
+				<br><br>
+				<div id="div_content">
+
+	                    <table border="0" align="center" cellpadding="1" cellspacing="1" width="90%">
+	                      <tr bgcolor="{cor_fundo2}"> 
+	                        <td class="texto1">CNPJ:</td>
+	                        <td class="texto1"><input name="cnpj" type="text" id="cnpj" value="{cnpj}" size="20" maxlength="20"> (somente n&uacute;meros)&nbsp;&nbsp;&nbsp;<a href="http://www.receita.fazenda.gov.br/PessoaJuridica/CNPJ/cnpjreva/cnpjreva_solicitacao2.asp?cnpj={cnpj}" class="links2" target="_blank">&raquo; SRF</a></td>
+	                        <td align="right" bgcolor="{cor_fundo2}"><a href="cad_empresas.php?tr=I&cac="><img src="img/btn_novo.jpg" border="0" title="Nova Empresa"></a><a href="http://{url}" target="_blank"><img src="img/btn_internet.jpg" border="0" title="Acessa o site da empresa"></a><a href="javaScript:window.print()"><img src="img/btn_impressora.jpg" border="0" title="Imprime esta tela"></a> 
+	                          <input type="image" src="img/btn_salvar.jpg" border="0" title="Salva o registro desta empresa"> 
+	                          <a href="exclui_empresa.php?c={codigo}"><img src="img/btn_exclusao.jpg" border="0" title="Exclui o registro desta empresa"></a></td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td class="texto1">Nome empresa/institui&ccedil;&atilde;o:</td>
+	                        <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+	                          <input name="nome_empresa_entidade" type="text" id="nome_empresa_entidade" style="font-family: Verdana; font-size: 8 pt" value="{nome_empresa_entidade}" size="60">
+	                          </font> </td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1">&nbsp;</td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}">
+	                        <td colspan="3" class="texto1"><table width="95%" bgcolor="#999999" align="center" border="0" cellspacing="1" cellpadding="0">
+	                            <tr> 
+	                              <td colspan="2" height="33"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+	                                  <tr> 
+	                                    <td class="cabecalho">Informa&ccedil;&otilde;es estrat&eacute;gicas:</td>
+	                                  </tr>
+	                                </table></td>
+	                            </tr>
+	                            <tr bgcolor="#F5F5F5"> 
+	                              <td class="texto1">Possui plano de previd&ecirc;ncia?</td>
+	                              <td class="texto1"> 
+	                                <input type="radio" name="possui_plano" value="S" {chk_possui}><span class="links2verde">
+	                                Sim </span>
+	                                <input name="possui_plano" type="radio" value="N" {chk_nao_possui}><span class="links2vermelho">
+	                                N&atilde;o</span>
+	                                <input name="possui_plano" type="radio" value="D" {chk_nao_sei}>
+	                                <span class="links2grafite"> Informa&ccedil;&atilde;o 
+	                                indispon&iacute;vel (n&atilde;o sabemos)</span></td>
+	                            </tr>
+	                            <tr bgcolor="#F5F5F5"> 
+	                              <td class="texto1">Com quem?</td>
+	                              <td class="texto1"> <input name="plano_previdencia" type="text" id="plano_previdencia" value="{plano_previdencia}" size="50" maxlength="50"> 
+	                              </td>
+	                            </tr>
+	                          </table></td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1">&nbsp;</td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1"><table width="95%" bgcolor="#BFA260" align="center" border="0" cellspacing="1" cellpadding="0">
+	                            <tr> 
+	                              <td colspan="4" height="33" class="cabecalho">Informa&ccedil;&otilde;es 
+	                                de endere&ccedil;amento:</td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7"> 
+	                              <td class="texto1">Estado:</td>
+	                              <td> <select name="lista_estados" id="lista_estados" onChange="selectCidade();">
+	                                  <!-- START BLOCK : estado -->
+	                                  <option value="{cd_estado}" {sel_estado}>{estado}</option>
+	                                  <!-- END BLOCK : estado -->
+	                                </select></td>
+	                              <td class="texto1">Cidade:</td>
+	                              <td><div id="div_cidades"> 
+	                                  <select name="lista_cidades" id="lista_cidades">
+	                                    <!-- START BLOCK : cidade -->
+	                                    <option value="{cd_cidade}" {sel_cidade}>{nome_cidade}</option>
+	                                    <!-- END BLOCK : cidade -->
+	                                  </select>
+	                                </div></td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7"> 
+	                              <td class="texto1">Endere&ccedil;o:</td>
+	                              <td colspan="3"> <textarea name="endereco" cols="55" rows="2" id="endereco">{endereco}</textarea> 
+	                                <a href="http://maps.google.com/?q={nome_cidade},{endereco}" target="_blank">&raquo;&nbsp;Ver 
+	                                mapa</a> </td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7">
+	                              <td class="texto1">Complemento:</td>
+	                              <td colspan="3"><input name="complemento" type="text" id="complemento"  value="{complemento}" size="50" maxlength="100"></td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7"> 
+	                              <td class="texto1">Bairro:</td>
+	                              <td colspan="3"> <input name="bairro" type="text" id="bairro"  value="{bairro}" size="30" maxlength="100"> 
+	                              </td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7"> 
+	                              <td class="texto1">CEP:</td>
+	                              <td> <input name="cep" type="text" id="cep"  value="{cep}" size="10" maxlength="20"> 
+	                              </td>
+	                              <td colspan="2" class="texto1" align="center"> <a href="http://www.correios.com.br/servicos/cep/cep_default.cfm" target="_blank" class="links2">&raquo;&nbsp;Consulta 
+	                                CEP</a> <input name="scep" type="hidden" id="scep3" value="{scep}"></td>
+	                            </tr>
+	                            <tr bgcolor="#F0E0C7"> 
+	                              <td colspan="4" class="texto1" align="center"><span class="links2">&nbsp;&raquo;&nbsp;Consulta&nbsp;</span><a href="http://www.fee.rs.gov.br/sitefee/pt/content/resumo/pg_municipios_detalhe.php?municipio={municipio}" target="_blank" class="links2">cidade</a> 
+	                                <span class="links2">&nbsp;/&nbsp;</span><a href="cad_microregioes.php?op=A&mac={cd_macroregiao}&c={cd_microregiao}" class="links2">microregi&atilde;o</a> 
+	                                <span class="links2">&nbsp;/&nbsp;</span><a href="cad_macroregioes.php?op=A&c={cd_macroregiao}" class="links2">macroregi&atilde;o</a> 
+	                                <span class="links2">&nbsp;/&nbsp;</span><a href="http://www.fee.tche.br/sitefee/pt/content/resumo/pg_coredes_detalhe.php?corede={corede}" target="_blank" class="links2">corede</a></td>
+	                            </tr>
+	                          </table></td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1">&nbsp;</td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1"><table width="95%" align="center" bgcolor="#0099CC" border="0" cellspacing="1" cellpadding="0">
+	                            <tr> 
+	                              <td colspan="3" height="33"> <table width="100%" border="0" cellspacing="0" cellpadding="3">
+	                                  <tr> 
+	                                    <td class="cabecalho">Informa&ccedil;&otilde;es 
+	                                      de contato: </td>
+	                                    <td align="right">&nbsp;</td>
+	                                  </tr>
+	                                </table></td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">&nbsp;</td>
+	                              <td colspan="2"><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; 
+	                                </font></td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Site Institucional:</td>
+	                              <td colspan="2"> <input name="url" type="text" id="url" value="{url}"></td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Telefone:</td>
+	                              <td colspan="2" class="texto1"> <input name="ddd" type="text" id="ddd2" value="{ddd}" size="3" maxlength="3"> 
+	                                <input name="telefone" type="text" id="telefone3" value="{telefone}" size="10" maxlength="10">
+	                                Ramal: 
+	                                <input name="ramal" type="text" id="ramal"  value="{ramal}" size="10"></td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Celular:</td>
+	                              <td colspan="2"> <input name="celular" type="text" id="celular2"  value="{celular}" size="20" maxlength="20"> 
+	                              </td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Fax:</td>
+	                              <td colspan="2"> <input name="fax" type="text" id="fax" value="{fax}" size="10" maxlength="10"> 
+	                              </td>
+	                            </tr>
+	                            <tr> 
+	                              <td colspan="3" height="33"><table width="100%" border="0" cellspacing="0" cellpadding="3">
+	                                  <tr> 
+	                                    <td class="cabecalho">Emails cadastrados: 
+	                                    </td>
+	                                    <td align="right"><img src="img/btn_inclui_email.jpg"></td>
+	                                  </tr>
+	                                </table></td>
+	                            </tr>
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Email corporativo:</td>
+	                              <td colspan="2" class="links2"><font size="2" face="Arial, Helvetica, sans-serif"> 
+	                                <input name="email" type="text" id="email" value="{email}" size="55">
+	                                </font></td>
+	                            </tr>
+	                            <!-- START BLOCK : email_cadastrado -->
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td class="texto1">Email ({ne})</td>
+	                              <td class="links2" align="center">{email}</td>
+	                              <td align="right">{dt_inclusao}<img src="img/btn_linha_envia_email.jpg"><img src="img/btn_linha_edicao.jpg" onClick="win_email({codigo},{cd_email})" style="cursor:pointer;"><img src="img/btn_linha_lixeira.jpg"></td>
+	                            </tr>
+	                            <!-- END BLOCK : email_cadastrado -->
+	                            <tr bgcolor="#D5F4FF"> 
+	                              <td colspan="3" class="texto1" align="center"><a href="mailto:{email}" class="links2">Escrever 
+	                                email</a><span class="links2"> | </span><a href="http://{url}" target="_blank" class="links2">Link 
+	                                para site</a></td>
+	                            </tr>
+	                          </table></td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1">&nbsp;</td>
+	                      </tr>
+	                      <tr bgcolor="{cor_fundo1}"> 
+	                        <td colspan="3" class="texto1"><table width="95%" align="center" border="0" cellspacing="1" cellpadding="0" bgcolor="#006633">
+	                            <tr> 
+	                              <td colspan="4" class="cabecalho" bgcolor="#006633" height="33">Classifica&ccedil;&otilde;es 
+	                                desta empresa:</td>
+	                            </tr>
+	                            <tr bgcolor="#CFE8D9"> 
+	                              <td class="texto1">Ramo: </td>
+	                              <td colspan="2" class="texto1">{cd_ramo} - {ramo} 
+	                                <input name="cd_ramo" type="hidden" id="cd_ramo2" value="{cd_ramo}"></td>
+	                              <td align="center"><a href="#" onClick="winramo({codigo},'')" class="links2">Modificar 
+	                                ramo empresarial</a></td>
+	                            </tr>
+	                            <tr bgcolor="#CFE8D9"> 
+	                              <td class="texto1">Porte:</td>
+	                              <td class="texto1"> <select name="porte" id="porte">
+	                                  <!-- START BLOCK : porte -->
+	                                  <option value="{cd_porte}" {sel_porte}>{desc_porte}</option>
+	                                  <!-- END BLOCK : porte -->
+	                                </select></td>
+	                              <td class="texto1">N&uacute;m Func.:</td>
+	                              <td> <input name="num_func" type="text" id="num_func" value="{num_func}" size="10"></td>
+	                            </tr>
+	                            <tr bgcolor="#CFE8D9"> 
+	                              <td class="texto1">Segmento:</td>
+	                              <td colspan="3" class="texto1"> <select name="segmento" id="segmento">
+	                                  <!-- START BLOCK : segmento -->
+	                                  <option value="{cd_segmento}" {sel_segmento}>{desc_segmento}</option>
+	                                  <!-- END BLOCK : segmento -->
+	                                </select></td>
+	                            </tr>
+	                            <tr bgcolor="#CFE8D9"> 
+	                              <td class="texto1">Relacionamento:</td>
+	                              <td colspan="2" class="texto1"> <select name="relacionamento" id="relacionamento">
+	                                  <!-- START BLOCK : relacionamento -->
+	                                  <option value="{cd_relacionamento}" {sel_relacionamento}>{desc_relacionamento}</option>
+	                                  <!-- END BLOCK : relacionamento -->
+	                                </select></td>
+	                              <td align="center"><a href="lst_listas.php?cat=RREL" class="links2">&raquo;&nbsp;Editar</a></td>
+	                            </tr>
+	                          </table></td>
+	                      </tr>
+	                    </table>
+						<br><br><br>&nbsp
+
+				</div>
+			</div>
+		</div>
+
+		</form>
+
+
+		<!-- END BLOCK : dados_cadastrais -->
+
+		<!-- END BLOCK : cadastro -->
+
+
+<!-- INCLUDE BLOCK : footer.html -->

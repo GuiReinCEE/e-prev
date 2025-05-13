@@ -1,0 +1,304 @@
+<html>
+<title>Atividade [{numero_os}] - impressão</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="main.css" rel="stylesheet" type="text/css">
+<link href="inc/print.css" rel="stylesheet" type="text/css">
+<style>
+	body * {
+		font-family: "Courier New", Courier, mono;
+		font-size: 10pt;
+		font-weight: normal;
+	}
+	
+	th {
+		font-weight: bold;
+		text-align:left;
+		white-space: nowrap;
+
+	}
+	
+	input {
+		border: 1px solid gray;
+		background-color: white;
+		color: #000000;
+	}
+	
+	select {
+		border: 1px solid gray;
+		background-color: white;
+		color: #000000;
+	}	
+</style>
+</head>
+<!-- InstanceBeginEditable name="conteudo" -->
+<table width="100%" border="0" cellpadding="3" cellspacing="2">
+	<tr> 
+		<th colspan="2" style="text-align:center; font-size:14pt;">ATIVIDADE</th>
+	</tr>
+	<tr> 
+		<th>Número:</th>
+		<th>{numero_os}</th>
+	</tr>
+	<tr> 
+		<th>Data Solicita&ccedil;&atilde;o:</th>
+		<td>{dt_cad}</td>
+	</tr>	
+	<tr> 
+		<th>Status:</th>
+		<td><i>{status_atual}</i></td>
+	</tr>	
+	<tr> 
+		<th>Anexo:</th>
+		<td>
+			<!-- START BLOCK : fl_possui_anexo -->
+			<i><span style="margin:0 px;">Esta atividade possui anexo(s)</span></i>
+			<!-- END BLOCK : fl_possui_anexo -->
+		</td>
+	</tr>						
+	<tr> 
+		<th>Gerência de destino:</th>
+		<td>
+			<select size=1 name="cbo_area" {fl_transferir} {dis_solic} disabled>
+				<!-- START BLOCK : cbo_area -->
+				<option value="{codare}"{chkare}>{nomeare}</option>
+				<!-- END BLOCK : cbo_area -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>Solicitante:</th>
+		<td> 
+			<select  name="cbo_solicitante" {dis_solic} {dis_cbo_solic} {dis_solic} disabled>
+				<!-- START BLOCK : cbo_solicitante -->
+				<option value="{codsol}"{chksol}>{nomesol}</option>
+				<!-- END BLOCK : cbo_solicitante -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>Tipo da manutenção:</th>
+		<td> 
+			<select  name="cbo_tipo_manutencao" {dis_solic} disabled>
+				<!-- START BLOCK : cbo_tipo_manutencao -->
+				<option value="{codman}"{chktpativ}>{nomeman}</option>
+				<!-- END BLOCK : cbo_tipo_manutencao -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>Tipo da atividade:</th>
+		<td>
+			<select name="cbo_periodicidade" id="cbo_periodicidade"  {dis_solic} disabled>
+				<!-- START BLOCK : cbo_tipo_atividade -->
+				<option value="{codtpativ}"{chktpativ}>{nometpativ}</option>
+				<!-- END BLOCK : cbo_tipo_atividade -->
+			</select>
+		</td>
+	</tr>
+	<tr style="display:{fl_recorrente_exibe}"> 
+		<th>Recorrente:</th>
+		<td>
+			<select name="cbo_recorrente" id="cbo_recorrente"  style="width:100px;" {dis_solic} disabled>
+				<!-- START BLOCK : cbo_recorrente -->
+				<option value="{cd_recorrente}" {fl_seleciona}>{ds_recorrente}</option>
+				<!-- END BLOCK : cbo_recorrente -->
+			</select>
+		</td>
+	</tr>					  
+	<tr> 
+		<th>Título:</th>
+		<td style="text-align:justify;">{titulo}</td>
+	</tr>
+	
+	<!-- START BLOCK : acs -->
+	<tr> 
+		<th>Observa&ccedil;&atilde;o:</th>
+		<td>{descricao}</td>
+	</tr>
+	<tr> 
+		<th>Atendente da Atividade:</th>
+		<td>
+			<select  name="cbo_analista"  {dis_solic} {gi_mesmo_mes_extension} disabled>
+				<!-- START BLOCK : cbo_analista_acs -->
+				<option value="{codana}" {chkana}>{nomeana}</option>
+				<!-- END BLOCK : cbo_analista_acs -->
+			</select>
+		</td>
+	</tr>
+  
+	<!-- START BLOCK : GRI_prazo_esperado -->
+	<tr style="display:{mensagem_prazo_gri_data_preenchida};">
+		<th>Prazo Esperado:</th>
+		<td> 
+			<input name="dt_limite" 
+			type="text" 
+			id="dt_limite"
+			onKeyUp="mascara_data(this)"
+			onBlur="verifica_data(this)"
+			onChange="fnc_compara_datas(this)"
+			value="{dt_limite}"
+			size="12"
+			maxlength="12"
+			{ro_solic}
+			{readonly_dt_limite_gri}
+			disabled
+			>
+		</td>
+	</tr>
+	<tr style="display:{mensagem_prazo_gri_data_nao_preenchida};">
+		<th>Prazo Esperado:</th>
+		<td>Entre em contato com a GRI para negociar a data adequada ao atendimento.</td>
+	</tr>
+	<!-- END BLOCK : GRI_prazo_esperado -->
+
+	<!-- END BLOCK : acs -->
+	
+	<!-- START BLOCK : nao_acs -->
+	<tr> 
+		<th>Descrição da Solicitação:</th>
+		<td style="text-align:justify;">{descricao}</td>
+	</tr>
+	
+	<!-- START BLOCK : campo_justificativa -->
+	<tr> 
+		<th>Justificativa da Solicitação:</th>
+		<td style="text-align:justify;">{problema}</td>
+	</tr>
+	<!-- END BLOCK : campo_justificativa -->
+	<tr> 
+		<th>Atendente da Atividade:</th>
+		<td>
+			<select  name="cbo_analista" {dis_solic} {gi_mesmo_mes_extension} disabled>
+				<!-- START BLOCK : cbo_analista -->
+				<option value="{codana}" {chkana}>{nomeana}</option>
+				<!-- END BLOCK : cbo_analista -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>Data Limite:</th>
+		<td><input disabled name="dt_limite" type="text" id="dt_limite"  onKeyUp="mascara_data(this)" onBlur="verifica_data(this)" onChange="fnc_compara_datas(this)"   value="{dt_limite}" size="12" maxlength="12" {ro_solic}></td>
+	</tr>
+	<!-- END BLOCK : nao_acs -->
+	<tr> 
+		<th colspan="2" style="text-align:center">ATENDIMENTO DA OS</th>
+	</tr>
+	<!-- START BLOCK : atendimento_os -->
+	<tr> 
+		<th>Descrição da Manutenção:</th>
+		<td style="text-align:justify;">{descricao_manutencao}</td>
+	</tr>
+	<tr> 
+		<th>Data de envio para Teste:</th>
+		<td style="text-align:justify;">{dt_envio_teste}</td>
+	</tr>
+	<tr> 
+		<th>Data limite para Teste:</th>
+		<td style="text-align:justify;">{dt_limite_teste}</td>
+	</tr>
+	<tr> 
+		<th>Data de início real:</th>
+		<td style="text-align:justify;">{dt_inicio_real}</td>
+	</tr>
+	<tr> 
+		<th>Data de fim real:</th>
+		<td style="text-align:justify;">{dt_fim_real}</td>
+	</tr>
+	<!-- END BLOCK : atendimento_os -->
+	<!-- START BLOCK : re_d -->
+	<tr> 
+		<th colspan="2" style="text-align:center">ATENDIMENTO AO PARTICIPANTE</th>
+	</tr>
+	<tr> 
+		<th>Patrocinadora:</th>
+		<td> 
+			<select  disabled name="cbo_patrocinadora" {dis_solic}>
+				<!-- START BLOCK : cbo_patrocinadora -->
+				<option value="{cd_patr}" {chk_patr}>{nome_patr}</option>
+				<!-- END BLOCK : cbo_patrocinadora -->
+			</select>
+	   </td>
+	</tr>
+	<tr> 
+		<th>Plano:</th>
+		<td> 
+			<select  disabled name="cbo_plan" {dis_solic}>
+				<!-- START BLOCK : cbo_plan -->
+				<option value="{cd_plan}" {chk_plan}>{nome_plan}</option>
+				<!-- END BLOCK : cbo_plan -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>RE / Seq:</th>
+		<td>
+			<input disabled name="cd_registro_empregado" type="text" id="cd_registro_empregado"   value="{cd_registro_empregado}" size="12" maxlength="12" {ro_solic}>
+			<input disabled name="sequencia" type="text" id="sequencia"   value="{sequencia}" size="4" maxlength="4" {ro_solic}>
+		</td>
+	</tr>
+  
+	<!-- START BLOCK : dados_participante -->
+	<tr> 
+		<th>Nome:</th>
+		<td>{nome_participante}</td>
+	</tr>					  
+	<tr> 
+		<th>Endereço:</th>
+		<td>{endereco_participante}</td>
+	</tr>						  
+	<tr> 
+		<th>Telefone:</th>
+		<td>{telefone_participante}</td>
+	</tr>	
+	<tr> 
+		<th>Email:</th>
+		<td>{email_participante}</td>
+	</tr>	
+	<!-- END BLOCK : dados_participante -->
+  
+	<tr> 
+		<th>Solicitante:</th>
+		<td> 
+			<select  disabled name="cbo_sdap" {dis_solic} {dis_cbo_solic}>
+				<!-- START BLOCK : cbo_sdap -->
+				<option value="{cd_sdap}" {chk_sdap}>{nome_sdap}</option>
+				<!-- END BLOCK : cbo_sdap -->
+			</select>
+		</td>
+	</tr>
+	<tr> 
+		<th>Forma de solicitação:</th>
+		<td> 
+			<select  disabled name="cbo_fdap" {dis_solic}>
+			<!-- START BLOCK : cbo_fdap -->
+			<option value="{cd_fdap}" {chk_fdap}>{nome_fdap}</option>
+			<!-- END BLOCK : cbo_fdap -->
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>Forma de envio:</th>
+		<td>
+			<select  disabled name="cbo_fedap" id="cbo_fedap" {ro_solic}>
+				<option value="0"></option>
+				<option value="1" {fe_correio}>Correio</option>
+				<option value="2" {fe_central}>Central de atendimento</option>
+				<option value="3" {fe_email}>Email</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>Protocolo de atendimento:</th>
+		<td><input disabled id="cd_atendimento" name="cd_atendimento" value="{cd_atendimento}" style="width:80px;" {ro_solic} /></td>
+	</tr>
+	<!-- END BLOCK : re_d -->
+	<tr class="nao_imprimir">
+		<td colspan="2"><input type="button" value="imprimir" onclick="javaScript:window.print();" class="botao_disabled"></td>
+	</tr>
+</table>
+
+<!-- InstanceEndEditable --> 
+<!-- ==================== Fim da área principal da tela =========================================================== -->	
+</body>
+<!-- InstanceEnd --></html>
