@@ -33,6 +33,10 @@ class reuniao_sg extends Controller
         {
             $this->fl_acesso = true;
         }
+        elseif ($this->session->userdata('codigo') == 516) #GUILHERME REINHEIMER(GS-TI)
+        {
+            $this->fl_acesso = true;
+        }
         elseif ($this->session->userdata('codigo') == 474) #Roberta Bittencourt da Costa (GC)
         {
             $this->fl_acesso = true;
@@ -1155,7 +1159,7 @@ class reuniao_sg extends Controller
 			}
 
             $ob_pdf->Text(30,$linha2+23, trim('Fernando Rea Amorim'));
-            $ob_pdf->Text(25,$linha2+27, trim('Consultor de Investimentos'));
+            $ob_pdf->Text(25,$linha2+27, trim('Supervisor de Investimentos'));
             
             $ob_pdf->SetY($ob_pdf->GetY() + 30);
             $linha3 = $ob_pdf->GetY();
@@ -1191,6 +1195,9 @@ class reuniao_sg extends Controller
             }
             */
 
+/*
+			#### (90934) - DESATIVADO PELA AUSENCIA DE GERENTE - 16/05/2025 - REATIVAR AO CONTRATAR UM NOVO GERENTE ####
+			
             $this->reuniao_sg_model->gerente_gin($result, $args);
             $row = $result->row_array();
             
@@ -1200,6 +1207,7 @@ class reuniao_sg extends Controller
                       
             $ob_pdf->Text(125,$linha2+27, trim('Rafael Rocha Luzardo'));
             $ob_pdf->Text(120,$linha2+31, trim('Gerente de Investimentos'));
+*/
   
             $ob_pdf->Output();
             exit;
