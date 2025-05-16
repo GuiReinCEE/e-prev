@@ -77,11 +77,15 @@ class Controladoria_obrigacoes_legais extends Controller
 			$data['label_13'] = $this->label_13;
 			$data['label_14'] = $this->label_14;
 			$data['label_15'] = $this->label_15;
+			$data['label_16'] = $this->label_16;
+			$data['label_17'] = $this->label_17;
+			$data['label_18'] = $this->label_18;
+			$data['label_19'] = $this->label_19;
 
 			$data['tabela'] = indicador_tabela_aberta($this->enum_indicador);
 
 			$data['collection'] = $this->controladoria_obrigacoes_legais_model->listar($data['tabela'][0]['cd_indicador_tabela']);
-
+			//die(print_r($data['collection']));
 			$this->load->view('indicador_plugin/controladoria_obrigacoes_legais/index_result', $data);
 		}
         else
@@ -109,6 +113,10 @@ class Controladoria_obrigacoes_legais extends Controller
 			$data['label_13'] = $this->label_13;
             $data['label_14'] = $this->label_14;
             $data['label_15'] = $this->label_15;
+            $data['label_16'] = $this->label_16;
+            $data['label_17'] = $this->label_17;
+            $data['label_18'] = $this->label_18;
+            $data['label_19'] = $this->label_19;
 		
 			$data['tabela'] = indicador_tabela_aberta(intval($this->enum_indicador));
 
@@ -131,6 +139,10 @@ class Controladoria_obrigacoes_legais extends Controller
 					'nr_dirf'                            => '',
                     'nr_caged'                           => '',
                     'nr_tce'                             => '',
+                    'nr_decweb'                          => '',
+                    'nr_efd_contribuicoes'                          => '',
+                    'nr_e_financeira'                          => '',
+                    'nr_efd_reinf'                          => '',
 					'nr_meta'                            => (isset($row['nr_meta']) ? $row['nr_meta'] : 0),
 					'observacao'                         => '',
 				    'qt_ano'                                    => (isset($row['qt_ano']) ? $row['qt_ano'] : 0) 
@@ -168,8 +180,12 @@ class Controladoria_obrigacoes_legais extends Controller
 				'nr_di'               => $this->input->post('nr_di', true),
 				'nr_raiz'             => $this->input->post('nr_raiz', true),
 				'nr_dirf'             => $this->input->post('nr_dirf', true),
-                'nr_caged'            => $this->input->post('nr_caged', true),
-                'nr_tce'              => $this->input->post('nr_tce', true),
+                'nr_caged'            => $this->input->post('nr_caged', true),                
+				'nr_decweb'            => $this->input->post('nr_decweb', true),
+				'nr_efd_contribuicoes'  => $this->input->post('nr_efd_contribuicoes', true),
+				'nr_e_financeira'            => $this->input->post('nr_e_financeira', true),
+				'nr_efd_reinf'            => $this->input->post('nr_efd_reinf', true),                
+				'nr_tce'              => $this->input->post('nr_tce', true),
 				'nr_meta'             => app_decimal_para_db($this->input->post('nr_meta', true)),
 				'observacao'          => $this->input->post('observacao', true),
 				'cd_usuario'          => $this->cd_usuario
@@ -234,6 +250,10 @@ class Controladoria_obrigacoes_legais extends Controller
 			$data['label_13'] = $this->label_13;
             $data['label_14'] = $this->label_14;
             $data['label_15'] = $this->label_15;
+			$data['label_16'] = $this->label_16;
+            $data['label_17'] = $this->label_17;
+            $data['label_18'] = $this->label_18;
+            $data['label_19'] = $this->label_19;
 
 			$tabela = indicador_tabela_aberta(intval($this->enum_indicador));
 
@@ -250,11 +270,20 @@ class Controladoria_obrigacoes_legais extends Controller
 			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 8, 0, utf8_encode($data['label_13']), 'background,center');
 			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 9, 0, utf8_encode($data['label_14']), 'background,center');
 			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 10, 0, utf8_encode($data['label_15']), 'background,center');
-			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 11, 0, utf8_encode($data['label_7']), 'background,center');
-			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 12, 0, utf8_encode($data['label_8']), 'background,center');
-			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 13, 0, utf8_encode($data['label_9']), 'background,center');
-			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 14, 0, utf8_encode($data['label_10']), 'background,center');
-			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 15, 0, utf8_encode($data['label_11']), 'background,center');
+
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 11, 0, utf8_encode($data['label_16']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 12, 0, utf8_encode($data['label_17']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 13, 0, utf8_encode($data['label_18']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 14, 0, utf8_encode($data['label_19']), 'background,center');
+
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 15, 0, utf8_encode($data['label_7']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 16, 0, utf8_encode($data['label_8']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 17, 0, utf8_encode($data['label_9']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 18, 0, utf8_encode($data['label_10']), 'background,center');
+			$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 19, 0, utf8_encode($data['label_11']), 'background,center');
+			
+
+
 
 			$collection = $this->controladoria_obrigacoes_legais_model->listar($tabela[0]['cd_indicador_tabela']);
 
@@ -305,9 +334,12 @@ class Controladoria_obrigacoes_legais extends Controller
 					$indicador[$linha][12] = intval($item['nr_obr_cumpridas']);
 					$indicador[$linha][13] = $item['nr_resultado'];
 					$indicador[$linha][14] = $item['nr_meta'];
-					$indicador[$linha][15] = $item['observacao'];
-
-
+					$indicador[$linha][15] = $item['observacao'];					
+					$indicador[$linha][16] = $item['nr_decweb'];
+					$indicador[$linha][17] = $item['nr_efd_contribuicoes'];
+					$indicador[$linha][18] = $item['nr_e_financeira'];
+					$indicador[$linha][19] = $item['nr_efd_reinf'];
+					
 					$linha++;
 				}
 			}
@@ -332,6 +364,10 @@ class Controladoria_obrigacoes_legais extends Controller
 				$indicador[$linha][13] = '';
 				$indicador[$linha][14] = '';
 				$indicador[$linha][15] = '';
+				$indicador[$linha][16] = '';
+				$indicador[$linha][17] = '';
+				$indicador[$linha][18] = '';
+				$indicador[$linha][19] = '';
 
 				$linha++;
 
@@ -351,6 +387,10 @@ class Controladoria_obrigacoes_legais extends Controller
 				$indicador[$linha][13] = ($obrigacoes_previstas_total > 0 ? (($obrigacoes_cumpridas_total/$obrigacoes_previstas_total) * 100) : 0);
 				$indicador[$linha][14] = $nr_meta;
 				$indicador[$linha][15] = '';
+				$indicador[$linha][16] = '';
+				$indicador[$linha][17] = '';
+				$indicador[$linha][18] = '';
+				$indicador[$linha][19] = '';
 			}
 
 			$linha = 1;
@@ -369,11 +409,17 @@ class Controladoria_obrigacoes_legais extends Controller
 				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 9, $linha, utf8_encode($indicador[$i][9]), 'center');
 				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 10, $linha, utf8_encode($indicador[$i][10]), 'center');
 
-				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 11, $linha, app_decimal_para_php($indicador[$i][11]), 'center', 'S');
-				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 12, $linha, app_decimal_para_php($indicador[$i][12]), 'center', 'S');
-				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 13, $linha, app_decimal_para_php($indicador[$i][13]), 'center', 'S', 2, 'S');
-				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 14, $linha, app_decimal_para_php($indicador[$i][14]), 'center', 'S', 2, 'S');
-				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 15, $linha, utf8_encode($indicador[$i][15]), 'left');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 11, $linha, utf8_encode($indicador[$i][16]), 'center');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 12, $linha, utf8_encode($indicador[$i][17]), 'center');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 13, $linha, utf8_encode($indicador[$i][18]), 'center');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 14, $linha, utf8_encode($indicador[$i][19]), 'center');
+
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 15, $linha, app_decimal_para_php($indicador[$i][11]), 'center', 'S');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 16, $linha, app_decimal_para_php($indicador[$i][12]), 'center', 'S');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 17, $linha, app_decimal_para_php($indicador[$i][13]), 'center', 'S', 2, 'S');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 18, $linha, app_decimal_para_php($indicador[$i][14]), 'center', 'S', 2, 'S');
+				$sql .= indicador_db::sql_inserir_celula($tabela[0]['cd_indicador_tabela'], 19, $linha, utf8_encode($indicador[$i][15]), 'left');
+
 
 				$linha++;
 			}

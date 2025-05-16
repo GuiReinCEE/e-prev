@@ -2,7 +2,7 @@
 <?= $this->load->view('header') ?>
 
 <script>
-	<?= form_default_js_submit(array('cd_indicador_tabela', 'mes_referencia', 'ano_referencia', 'nr_fgts', 'nr_inss', 'nr_balancete', 'nr_demostracoes', 'nr_dctf', 'nr_di', 'nr_raiz', 'nr_dirf', 'nr_caged', 'nr_meta'), 'validacao(form);') ?>
+	<?= form_default_js_submit(array('cd_indicador_tabela', 'mes_referencia', 'ano_referencia', 'nr_fgts', 'nr_inss', 'nr_balancete', 'nr_demostracoes', 'nr_dctf', 'nr_di', 'nr_decweb','nr_efd_contribuicoes','nr_e_financeira','nr_efd_reinf', 'nr_raiz', 'nr_dirf', 'nr_caged', 'nr_meta'), 'validacao(form);') ?>
 	
 	function validacao(form)
 	{
@@ -119,12 +119,16 @@
 			<?= ''//form_default_numeric('nr_orcado', $label_1.' (*) :', number_format($row['nr_orcado'], 2, ',', '.'), 'class="indicador_text"') ?>
 			<?= ''//form_default_numeric('nr_realizado', $label_2.' (*) :', number_format($row['nr_realizado'], 2, ',', '.'), 'class="indicador_text"') ?>
 			<?= form_default_dropdown('nr_fgts', $label_1.' :', $drop, $row['nr_fgts']) ?>
-			<?= form_default_dropdown('nr_inss', $label_2.' :', $drop, $row['nr_inss']) ?>
+			<?= ''//form_default_dropdown('nr_inss', $label_2.' :', $drop, $row['nr_inss']) ?>
 			<?= form_default_dropdown('nr_balancete', $label_3.' :', $drop, $row['nr_balancete']) ?>
 			<?= form_default_dropdown('nr_demostracoes', $label_4.' :', $drop, $row['nr_demostracoes']) ?>
 			<?= form_default_dropdown('nr_dctf', $label_5.' :', $drop, $row['nr_dctf']) ?>
 			<?= form_default_dropdown('nr_di', $label_6.' :', $drop, $row['nr_di']) ?>
-			<?= form_default_dropdown('nr_raiz', $label_12.' :', $drop, $row['nr_raiz']) ?>
+			<?= ''//form_default_dropdown('nr_raiz', $label_12.' :', $drop, $row['nr_raiz']) ?>
+			<?= form_default_dropdown('nr_decweb', $label_16.' :', $drop, $row['nr_decweb']) ?>
+			<?= form_default_dropdown('nr_efd_contribuicoes', $label_17.' :', $drop, $row['nr_efd_contribuicoes']) ?>
+			<?= form_default_dropdown('nr_e_financeira', $label_18.' :', $drop, $row['nr_e_financeira']) ?>
+			<?= form_default_dropdown('nr_efd_reinf', $label_19.' :', $drop, $row['nr_efd_reinf']) ?>
 			<?= form_default_dropdown('nr_dirf', $label_13.' :', $drop, $row['nr_dirf']) ?>
 			<?= form_default_dropdown('nr_caged', $label_14.' :', $drop, $row['nr_caged']) ?>
 			<?= form_default_dropdown('nr_tce', $label_15.' :', $drop, $row['nr_tce']) ?>

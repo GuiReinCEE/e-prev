@@ -1,7 +1,7 @@
 <?php
 $body = array();
 $head = array( 
-	'#', $label_0, $label_1, $label_2, $label_3, $label_4, $label_5, $label_6, $label_12, $label_13, $label_14, $label_15, $label_7, $label_8, $label_9, $label_10, $label_11, ''
+	'#', $label_0, $label_1, /*[INSS]$label_2,*/ $label_3, $label_4, $label_5, $label_6, /*[RAIS]$label_12,*/ $label_13, $label_14, $label_15, $label_16, $label_17, $label_18, $label_19, $label_7, $label_8, $label_9, $label_10, $label_11, ''
 );
 
 $ar_janela = array(
@@ -53,15 +53,19 @@ foreach($collection as $key => $item)
 		$contador--,
 		$referencia,
 		$item['fgts'],
-		$item['inss'],
+		//$item['inss'],
 		$item['balancete'],
 		$item['demostracoes'],
 		$item['dctf'],
 		$item['di'],
-		$item['raiz'],
+		//$item['raiz'],
 		$item['dirf'],
 		$item['caged'],
-		$item['nr_tce'],
+		$item['nr_tce'],		
+		$item['nr_decweb'],
+		$item['nr_efd_contribuicoes'],
+		$item['nr_e_financeira'],
+		$item['nr_efd_reinf'],
 		intval($item['nr_obr_previstas']),
 		intval($item['nr_obr_cumpridas']),
 		number_format($item['nr_resultado'], 2, ',' ,'.').' %',
@@ -76,6 +80,8 @@ if(intval($contador_ano_atual) > 0)
 	$body[] = array(
 		0,
 		'<b>Resultado de '.intval($tabela[0]['nr_ano_referencia']).'</b>',
+		'',
+		'',
 		'',
 		'',
 		'',

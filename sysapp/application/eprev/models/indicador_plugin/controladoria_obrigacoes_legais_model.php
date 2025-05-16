@@ -66,6 +66,28 @@ class Controladoria_obrigacoes_legais_model extends Model
 				        WHEN nr_tce = 2 THEN 'Sim'
 				        ELSE 'Não se aplica'
                    END AS nr_tce,
+
+					CASE WHEN fl_media = 'S' THEN ''
+				        WHEN nr_decweb = 1 THEN 'Não'
+				        WHEN nr_decweb = 2 THEN 'Sim'
+				        ELSE 'Não se aplica'
+                   END AS nr_decweb,
+					CASE WHEN fl_media = 'S' THEN ''
+				        WHEN nr_efd_contribuicoes = 1 THEN 'Não'
+				        WHEN nr_efd_contribuicoes = 2 THEN 'Sim'
+				        ELSE 'Não se aplica'
+                   END AS nr_efd_contribuicoes,
+					CASE WHEN fl_media = 'S' THEN ''
+				        WHEN nr_e_financeira = 1 THEN 'Não'
+				        WHEN nr_e_financeira = 2 THEN 'Sim'
+				        ELSE 'Não se aplica'
+                   END AS nr_e_financeira,
+					CASE WHEN fl_media = 'S' THEN ''
+				        WHEN nr_efd_reinf = 1 THEN 'Não'
+				        WHEN nr_efd_reinf = 2 THEN 'Sim'
+				        ELSE 'Não se aplica'
+                   END AS nr_efd_reinf,
+
 				   nr_resultado,
 				   nr_meta,
 				   nr_obr_previstas,
@@ -78,7 +100,7 @@ class Controladoria_obrigacoes_legais_model extends Model
 			 WHERE dt_exclusao IS NULL
 			   AND (fl_media = 'S' OR cd_indicador_tabela = ".intval($cd_indicador_tabela).")
 			 ORDER BY dt_referencia ASC;";
-			 
+				
 		return $this->db->query($qr_sql)->result_array();
 	}
 
@@ -117,6 +139,10 @@ class Controladoria_obrigacoes_legais_model extends Model
 				   nr_raiz,
 				   nr_dirf,
                    nr_caged,
+				   nr_decweb,
+				   nr_efd_contribuicoes,
+				   nr_e_financeira,
+				   nr_efd_reinf,
                    nr_tce,
 				   observacao
 			  FROM indicador_plugin.controladoria_obrigacoes_legais 
@@ -145,6 +171,10 @@ class Controladoria_obrigacoes_legais_model extends Model
 				   nr_dirf,
                    nr_caged,
                    nr_tce, 
+				   nr_decweb,
+				   nr_efd_contribuicoes,
+				   nr_e_financeira,
+				   nr_efd_reinf,
 				   nr_meta, 
                    observacao,
 				   cd_usuario_inclusao,
@@ -163,8 +193,13 @@ class Controladoria_obrigacoes_legais_model extends Model
 				   ".(trim($args['nr_di']) != '' ? intval($args['nr_di']) : "DEFAULT").",
 				   ".(trim($args['nr_raiz']) != '' ? intval($args['nr_raiz']) : "DEFAULT").",
 				   ".(trim($args['nr_dirf']) != '' ? intval($args['nr_dirf']) : "DEFAULT").",
-                   ".(trim($args['nr_caged']) != '' ? intval($args['nr_caged']) : "DEFAULT").",
-                   ".(trim($args['nr_tce']) != '' ? intval($args['nr_tce']) : "DEFAULT").",
+                   ".(trim($args['nr_caged']) != '' ? intval($args['nr_caged']) : "DEFAULT").",                   
+				   ".(trim($args['nr_tce']) != '' ? intval($args['nr_tce']) : "DEFAULT").",
+                   ".(trim($args['nr_decweb']) != '' ? intval($args['nr_decweb']) : "DEFAULT").",
+                   ".(trim($args['nr_efd_contribuicoes']) != '' ? intval($args['nr_efd_contribuicoes']) : "DEFAULT").",
+                   ".(trim($args['nr_e_financeira']) != '' ? intval($args['nr_e_financeira']) : "DEFAULT").",
+                   ".(trim($args['nr_efd_reinf']) != '' ? intval($args['nr_efd_reinf']) : "DEFAULT").",
+
 				   ".(trim($args['nr_meta']) != '' ? floatval($args['nr_meta']) : "DEFAULT").",
 				   ".(trim($args['observacao']) != '' ?  str_escape(trim($args["observacao"])) : "DEFAULT").",
 				   ".intval($args['cd_usuario']).",
@@ -192,6 +227,10 @@ class Controladoria_obrigacoes_legais_model extends Model
 				   nr_dirf              = ".(trim($args['nr_dirf']) != '' ? intval($args['nr_dirf']) : "DEFAULT").",
                    nr_caged             = ".(trim($args['nr_caged']) != '' ? intval($args['nr_caged']) : "DEFAULT").", 
                    nr_tce               = ".(trim($args['nr_tce']) != '' ? intval($args['nr_tce']) : "DEFAULT").",
+				   nr_decweb 			= ".(trim($args['nr_decweb']) != '' ? intval($args['nr_decweb']) : "DEFAULT").",
+                   nr_efd_contribuicoes = ".(trim($args['nr_efd_contribuicoes']) != '' ? intval($args['nr_efd_contribuicoes']) : "DEFAULT").",
+                   nr_e_financeira 		= ".(trim($args['nr_e_financeira']) != '' ? intval($args['nr_e_financeira']) : "DEFAULT").",
+                   nr_efd_reinf 		= ".(trim($args['nr_efd_reinf']) != '' ? intval($args['nr_efd_reinf']) : "DEFAULT").",
 				   nr_meta              = ".(trim($args['nr_meta']) != '' ? floatval($args['nr_meta']) : "DEFAULT").",
 				   observacao           = ".(trim($args['observacao']) != '' ?  str_escape(trim($args["observacao"])) : "DEFAULT").",
 				   cd_usuario_alteracao = ".intval($args['cd_usuario']).",
