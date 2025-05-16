@@ -29,6 +29,11 @@ class Certificado_participante extends Controller
         {
             return TRUE;
         }		
+        #GUILHERME REINHEIMER
+        else if($this->session->userdata('codigo') == 516)
+        {
+            return TRUE;
+        }		
         #Julia Graciely Goncalves dos Santos
         else if($this->session->userdata('codigo') == 384)
         {
