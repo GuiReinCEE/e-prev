@@ -72,8 +72,15 @@ class Edicao_model extends Model
     		   ".(trim($args['cd_plano']) != '' ? "AND e.cd_plano = ".intval($args['cd_plano']) : "")."
     		   ".(trim($args['nr_extrato']) != '' ? "AND e.nr_extrato = ".intval($args['nr_extrato']) : "")."
     		   ".(trim($args['dt_base_extrato']) != '' ? "AND e.dt_base_extrato = '".trim($args['dt_base_extrato'])."'" : "")."
-           ".(trim($args['cd_gerencia']) != 'GS' ? "AND e.dt_liberacao_informatica IS NOT NULL" : "")."
-           ".(trim($args['tp_participante']) != '' ? "AND e.tp_participante = '".trim($args['tp_participante'])."'" : "")."
+			   ".(((trim($args['dt_ini']) != '') and (trim($args['dt_fim']) != ''))? "AND e.dt_base_extrato BETWEEN TO_DATE('".trim($args['dt_ini'])."','DD/MM/YYYY') AND TO_DATE('".trim($args['dt_fim'])."','DD/MM/YYYY')" : "")."
+			   ".(trim($args['cd_gerencia']) != 'GS' ? "AND e.dt_liberacao_informatica IS NOT NULL" : "")."
+			   ".(trim($args['fl_liberado_ti']) == 'S' ? "AND e.dt_liberacao_informatica IS NOT NULL" : "")."
+			   ".(trim($args['fl_liberado_ti']) == 'N' ? "AND e.dt_liberacao_informatica IS NULL" : "")."
+			   ".(trim($args['fl_liberado_prev']) == 'S' ? "AND e.dt_liberacao_atuarial IS NOT NULL" : "")."
+			   ".(trim($args['fl_liberado_prev']) == 'N' ? "AND e.dt_liberacao_atuarial IS NULL" : "")."
+			   ".(trim($args['fl_liberado_com']) == 'S' ? "AND e.dt_liberacao IS NOT NULL" : "")."
+			   ".(trim($args['fl_liberado_com']) == 'N' ? "AND e.dt_liberacao IS NULL" : "")."			   
+               ".(trim($args['tp_participante']) != '' ? "AND e.tp_participante = '".trim($args['tp_participante'])."'" : "")."
     		 ORDER BY e.dt_base_extrato DESC, plano DESC";
 
     	return $this->db->query($qr_sql)->result_array();
@@ -1051,7 +1058,11 @@ class Edicao_model extends Model
                    (SELECT REPLACE (epd.vl_valor::text, '.', ',') 
                       FROM meu_retrato.edicao_participante_dado epd
                      WHERE epd.cd_edicao_participante = ep.cd_edicao_participante
-                       AND epd.cd_linha = 'BEN_INICIAL_3') AS ben_inicial_3
+                       AND epd.cd_linha = 'BEN_INICIAL_3') AS ben_inicial_3,
+                   (SELECT REPLACE (epd.vl_valor::text, '.', ',') 
+                      FROM meu_retrato.edicao_participante_dado epd
+                     WHERE epd.cd_edicao_participante = ep.cd_edicao_participante
+                       AND epd.cd_linha = 'PERCENTUAL_CONTRIB_SALARIO') AS percentual_contrib_salario
 
               FROM meu_retrato.edicao_participante ep
              WHERE ep.cd_edicao = ".intval($cd_edicao).";";
@@ -1099,7 +1110,11 @@ class Edicao_model extends Model
                    (SELECT REPLACE (epd.vl_valor::text, '.', ',') 
                       FROM meu_retrato.edicao_participante_dado epd
                      WHERE epd.cd_edicao_participante = ep.cd_edicao_participante
-                       AND epd.cd_linha = 'BEN_INICIAL_3') AS ben_inicial_3
+                       AND epd.cd_linha = 'BEN_INICIAL_3') AS ben_inicial_3,
+                   (SELECT REPLACE (epd.vl_valor::text, '.', ',') 
+                      FROM meu_retrato.edicao_participante_dado epd
+                     WHERE epd.cd_edicao_participante = ep.cd_edicao_participante
+                       AND epd.cd_linha = 'PERCENTUAL_CONTRIB_SALARIO') AS percentual_contrib_salario
 
               FROM meu_retrato.edicao_participante ep
              WHERE ep.cd_edicao = ".intval($cd_edicao).";";

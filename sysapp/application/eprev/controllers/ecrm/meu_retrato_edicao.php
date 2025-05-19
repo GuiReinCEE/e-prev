@@ -378,12 +378,17 @@ class Meu_retrato_edicao extends Controller
 		$data = array();
 
         $args = array(
-            'cd_empresa'      => $this->input->post('cd_plano_empresa', TRUE),
-            'cd_plano'        => $this->input->post('cd_plano', TRUE),
-            'nr_extrato'      => $this->input->post('nr_extrato', TRUE),
-            'dt_base_extrato' => $this->input->post('dt_base_extrato', TRUE),
-            'tp_participante' => $this->input->post('tp_participante', TRUE),
-            'cd_gerencia'     => ($this->session->userdata('codigo') == 1 ? 'GTI' : $this->session->userdata('divisao'))
+            'cd_empresa'       => $this->input->post('cd_plano_empresa', TRUE),
+            'cd_plano'         => $this->input->post('cd_plano', TRUE),
+            'nr_extrato'       => $this->input->post('nr_extrato', TRUE),
+            'dt_base_extrato'  => $this->input->post('dt_base_extrato', TRUE),
+            'dt_ini'           => $this->input->post('dt_ini', TRUE),
+            'dt_fim'           => $this->input->post('dt_fim', TRUE),
+            'tp_participante'  => $this->input->post('tp_participante', TRUE),
+            'fl_liberado_ti'   => $this->input->post('fl_liberado_ti', TRUE),
+            'fl_liberado_prev' => $this->input->post('fl_liberado_prev', TRUE),
+            'fl_liberado_com'  => $this->input->post('fl_liberado_com', TRUE),
+            'cd_gerencia'      => ($this->session->userdata('codigo') == 1 ? 'GTI' : $this->session->userdata('divisao'))
         ); 
 		
 		manter_filtros($args);
