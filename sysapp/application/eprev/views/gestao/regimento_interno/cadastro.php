@@ -3,7 +3,7 @@
 	$this->load->view('header');
 ?>
 <script>
-	<?= form_default_js_submit(array('nr_versao', 'cd_regimento_interno', 'ds_regimento_interno_tipo', 'dt_referencia'), 'valida_arquivo(form)') ?>
+	<?= form_default_js_submit(array('tempo_vencimento', 'nr_versao', 'cd_regimento_interno', 'ds_regimento_interno_tipo', 'dt_referencia'), 'valida_arquivo(form)') ?>
 
 	function ir_lista()
     {
@@ -85,6 +85,7 @@
                 echo form_default_dropdown('cd_regimento_interno_tipo', 'Regimento Interno: (*)', $regimento_interno, $row['cd_regimento_interno_tipo'], 'onchange="get_versao($(this).val())"');
                 echo form_default_text('nr_versao', 'Versão: (*)', $row['nr_versao']);  
 				echo form_default_date('dt_referencia', 'Dt. Aprovação: (*)', $row['dt_referencia']);
+				echo form_default_text('tempo_vencimento', 'Tempo Vencimento: (*)', $row['tempo_vencimento'], 'placeholder="anos"');
 		        echo form_default_upload_iframe('arquivo', 'regimento_interno', 'Arquivo: (*)', array($row['arquivo'], $row['arquivo_nome']), 'regimento_interno', (gerencia_in(array('GRC')) ? true : false));
                 if(trim($row['dt_envio']) != '')
                 {

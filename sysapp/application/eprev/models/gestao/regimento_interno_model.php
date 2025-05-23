@@ -14,6 +14,7 @@ class Regimento_interno_model extends Model
                    ri.nr_versao, 
                    ri.arquivo,
                    ri.arquivo_nome,
+				   ri.tempo_vencimento,
                    rit.ds_regimento_interno_tipo,
                    rit.cd_gerencia_responsavel,
                    CASE WHEN rit.fl_publicado_site = 'S'
@@ -63,6 +64,7 @@ class Regimento_interno_model extends Model
 			SELECT ri.cd_regimento_interno,
 			       TO_CHAR(ri.dt_referencia, 'DD/MM/YYYY') AS dt_referencia,
 			       TO_CHAR(ri.dt_envio, 'DD/MM/YYYY HH24:MI:SS') AS dt_envio,
+			       ri.tempo_vencimento,
 			       ri.nr_versao,
 			       ri.arquivo,
 			       ri.arquivo_nome,
@@ -83,6 +85,7 @@ class Regimento_interno_model extends Model
 			INSERT INTO gestao.regimento_interno
 			     (
 			       dt_referencia,
+			       tempo_vencimento,
 			       nr_versao,
 			       cd_regimento_interno_tipo,
 			       arquivo,
@@ -94,6 +97,7 @@ class Regimento_interno_model extends Model
 			VALUES
 			     (
 				    ".(trim($args['dt_referencia']) != '' ? "TO_DATE('".$args['dt_referencia']."', 'DD/MM/YYYY')" : "DEFAULT").",
+				    ".(trim($args['tempo_vencimento']) != '' ? intval($args['tempo_vencimento']) : "DEFAULT").",
                     ".(trim($args['nr_versao']) != '' ? intval($args['nr_versao']) : "DEFAULT").",			        
 			     	".(trim($args['cd_regimento_interno_tipo']) != '' ? intval($args['cd_regimento_interno_tipo']) : "DEFAULT").",
 				    ".(trim($args['arquivo']) != '' ? "'".$args['arquivo']."'" : "DEFAULT").",
@@ -110,6 +114,7 @@ class Regimento_interno_model extends Model
 		$qr_sql = "
 			UPDATE gestao.regimento_interno
                SET dt_referencia             = ".(trim($args['dt_referencia']) != '' ? "TO_DATE('".$args['dt_referencia']."', 'DD/MM/YYYY')" : "DEFAULT").",
+ 	               tempo_vencimento          = ".(trim($args['tempo_vencimento']) != '' ? intval($args['tempo_vencimento']) : "DEFAULT").",               
  	               nr_versao                 = ".(trim($args['nr_versao']) != '' ? intval($args['nr_versao']) : "DEFAULT").",               
                    cd_regimento_interno_tipo = ".(trim($args['cd_regimento_interno_tipo']) != '' ? intval($args['cd_regimento_interno_tipo']) : "DEFAULT").",
                    arquivo_nome              = ".(trim($args['arquivo_nome']) != '' ? "'".$args['arquivo_nome']."'" : "DEFAULT" ).",

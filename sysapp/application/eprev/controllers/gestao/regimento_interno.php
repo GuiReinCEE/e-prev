@@ -47,6 +47,11 @@ class Regimento_interno extends Controller
             {
                 return true;
             }
+			#GUI
+            else if($this->session->userdata('codigo') == 251)
+            {
+                return true;
+            }
 			else
 			{
 				return FALSE;
@@ -145,7 +150,8 @@ class Regimento_interno extends Controller
                 'arquivo'                   => '',
                 'arquivo_nome'              => '',
                 'nr_versao'                 => '',
-                'dt_envio'                  => ''
+                'dt_envio'                  => '',
+                'tempo_vencimento'          => ''
             );
         }
         else
@@ -172,6 +178,7 @@ class Regimento_interno extends Controller
                 'arquivo'                   => $this->input->post('arquivo', TRUE),
                 'arquivo_nome'              => $this->input->post('arquivo_nome', TRUE),
                 'nr_versao'                 => $this->input->post('nr_versao', TRUE),
+                'tempo_vencimento'          => $this->input->post('tempo_vencimento', TRUE),
                 'cd_usuario'                => $this->session->userdata('codigo')
             );
 
