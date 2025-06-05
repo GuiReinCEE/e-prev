@@ -128,9 +128,11 @@ $this->load->view('header');
 				echo form_default_text('envolvidos', "Envolvidos no processo:", $row, "style='width:100%;border: 0px;' readonly" );
 			}			
 			
-			echo form_default_dropdown('cd_responsavel', 'Responsável:'.((in_array("cd_responsavel", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_responsavel']));
+			echo form_default_dropdown('cd_responsavel', 'Gerente:'.((in_array("cd_responsavel", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_responsavel']));
 
-			echo form_default_dropdown('cd_substituto', 'Substituto:'.((in_array("cd_substituto", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_substituto']));
+			echo form_default_dropdown('cd_substituto', 'Supervisor:'.((in_array("cd_substituto", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_substituto']));
+			echo form_default_dropdown('cd_substituto_1', 'Substituto 1:'.((in_array("cd_substituto_1", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_substituto_1']));
+			echo form_default_dropdown('cd_substituto_2', 'Substituto 2:'.((in_array("cd_substituto_2", $ar_obrigatorio)) ? "*" : ""), $ar_responsavel, Array($row['cd_substituto_2']));
 
 			echo form_default_dropdown_db("cd_nao_conformidade_origem_evento", 'Origem Evento:'.((in_array("cd_nao_conformidade_origem_evento", $ar_obrigatorio)) ? "*" : ""), Array('projetos.nao_conformidade_origem_evento', 'cd_nao_conformidade_origem_evento', 'ds_nao_conformidade_origem_evento'), Array($row['cd_nao_conformidade_origem_evento']), "", "", TRUE);
 			
@@ -147,11 +149,17 @@ $this->load->view('header');
 			
 			echo form_default_text('envolvidos', "Envolvidos no processo:", $row, "style='width:100%;border: 0px;' readonly" );
 			
-			echo form_default_hidden('cd_responsavel', 'Responsável:', $row, "style='width:100%;border: 0px;' readonly" );
-			echo form_default_row('ds_responsavel', "Responsável:", '<span class="label">'.$row["ds_responsavel"].'</span>');
+			echo form_default_hidden('cd_responsavel', 'Gerente:', $row, "style='width:100%;border: 0px;' readonly" );
+			echo form_default_row('ds_responsavel', "Gerente:", '<span class="label">'.$row["ds_responsavel"].'</span>');
 			
-			echo form_default_hidden('cd_substituto', 'Substituto:', $row, "style='width:100%;border: 0px;' readonly" );
-			echo form_default_text('ds_substituto', 'Substituto:', $row, "style='width:100%;border: 0px;' readonly" );
+			echo form_default_hidden('cd_substituto', 'Supervisor:', $row, "style='width:100%;border: 0px;' readonly" );
+			echo form_default_text('ds_substituto', 'Supervisor:', $row, "style='width:100%;border: 0px;' readonly" );
+			
+			echo form_default_hidden('cd_substituto_1', 'Substituto 1:', $row, "style='width:100%;border: 0px;' readonly" );
+			echo form_default_text('ds_substituto_1', 'Substituto 1:', $row, "style='width:100%;border: 0px;' readonly" );
+			
+			echo form_default_hidden('cd_substituto_2', 'Substituto 2:', $row, "style='width:100%;border: 0px;' readonly" );
+			echo form_default_text('ds_substituto_2', 'Substituto 2:', $row, "style='width:100%;border: 0px;' readonly" );
 			
 			echo form_default_hidden('cd_nao_conformidade_origem_evento', 'Origem Evento:', $row, "style='width:100%;border: 0px;' readonly" );
 			echo form_default_text('ds_nao_conformidade_origem_evento', 'Origem Evento:', $row, "style='width:100%;border: 0px;' readonly" );
@@ -165,7 +173,12 @@ $this->load->view('header');
 		if(
 		   ((((intval($row['cd_responsavel']) > 0) and (intval($this->session->userdata('codigo')) == intval($row['cd_responsavel']))) 
 		    OR 
-		   ((intval($row['cd_substituto']) > 0) and (intval($this->session->userdata('codigo')) == intval($row['cd_substituto'])))) and (intval($row['fl_ac']) == 0))
+		   ((intval($row['cd_substituto']) > 0) and (intval($this->session->userdata('codigo')) == intval($row['cd_substituto'])))
+		    OR 
+		   ((intval($row['cd_substituto_1']) > 0) and (intval($this->session->userdata('codigo')) == intval($row['cd_substituto_1'])))
+		    OR 
+		   ((intval($row['cd_substituto_2']) > 0) and (intval($this->session->userdata('codigo')) == intval($row['cd_substituto_2']))))
+		   and (intval($row['fl_ac']) == 0))
 		 )
 		{		
 			
@@ -195,7 +208,7 @@ $this->load->view('header');
 	echo form_command_bar_detail_start();
 		if(trim($row['dt_encerramento']) == "")
 		{	
-			if(!(((intval($row['cd_responsavel']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_responsavel']))) and (intval($row['cd_substituto']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_substituto']))))
+			if(!(((intval($row['cd_responsavel']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_responsavel']))) and (intval($row['cd_substituto']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_substituto'])) and (intval($row['cd_substituto_1']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_substituto_1'])) and (intval($row['cd_substituto_2']) > 0) and (intval($this->session->userdata('codigo')) != intval($row['cd_substituto_2']))))
 			{
 				if(intval($row['fl_ac']) == 0)
 				{

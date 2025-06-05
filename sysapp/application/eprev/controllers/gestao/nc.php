@@ -141,6 +141,8 @@ class nc extends Controller
               'tipo_acao' => '',
               'cd_responsavel' => '',
               'cd_substituto' => '',
+              'cd_substituto_1' => '',
+              'cd_substituto_2' => '',
               'cd_gerente' => '',
               'dt_implementacao' => '',
               'numero_cad_nc' => '',
@@ -183,6 +185,8 @@ class nc extends Controller
         $args["cd_responsavel"]                    = $this->input->post("cd_responsavel", TRUE);
         $args["cd_nao_conformidade_origem_evento"] = $this->input->post("cd_nao_conformidade_origem_evento", TRUE);
         $args["cd_substituto"]                     = $this->input->post("cd_substituto", TRUE);
+        $args["cd_substituto_1"]                   = $this->input->post("cd_substituto_1", TRUE);
+        $args["cd_substituto_2"]                   = $this->input->post("cd_substituto_2", TRUE);
         $args["descricao"]                         = $this->input->post("descricao", TRUE);
         $args["evidencias"]                        = $this->input->post("evidencias", TRUE);
         $args["disposicao"]                        = $this->input->post("disposicao", TRUE);

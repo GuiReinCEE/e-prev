@@ -253,6 +253,8 @@ class Nao_conformidade_model extends Model
                        nc.cd_responsavel,           
                        ur.nome AS ds_responsavel,
                        us.nome AS ds_substituto,
+                       us1.nome AS ds_substituto_1,
+                       us2.nome AS ds_substituto_2,
                        nc.cd_gerente,				  
                        nc.aberto_por,           
                        uc.nome AS aberto_por_nome,
@@ -260,6 +262,8 @@ class Nao_conformidade_model extends Model
                        pp.envolvidos,
                        COALESCE(ac.cd_nao_conformidade,0) AS fl_ac,
 					   nc.cd_substituto,
+					   nc.cd_substituto_1,
+					   nc.cd_substituto_2,
 					   nc.cd_nao_conformidade_origem_evento,
 					   ncoe.ds_nao_conformidade_origem_evento,
 					   nc.ds_analise_abrangencia
@@ -274,6 +278,10 @@ class Nao_conformidade_model extends Model
 					ON ur.codigo = nc.cd_responsavel
 				  LEFT JOIN projetos.usuarios_controledi us
 					ON us.codigo = nc.cd_substituto
+				  LEFT JOIN projetos.usuarios_controledi us1
+					ON us1.codigo = nc.cd_substituto_1
+				  LEFT JOIN projetos.usuarios_controledi us2
+					ON us2.codigo = nc.cd_substituto_2
 				  LEFT JOIN projetos.acao_corretiva ac
 					ON ac.cd_nao_conformidade = nc.cd_nao_conformidade
                  WHERE nc.cd_nao_conformidade = " . intval($args['cd_nao_conformidade']);
@@ -301,6 +309,8 @@ class Nao_conformidade_model extends Model
                            cd_nao_conformidade_origem_evento = " . (trim($args['cd_nao_conformidade_origem_evento']) == "" ? "DEFAULT" : $args['cd_nao_conformidade_origem_evento']) . ",
                            cd_responsavel                    = " . (trim($args['cd_responsavel']) == "" ? "DEFAULT" : $args['cd_responsavel']) . ",
                            cd_substituto                     = " . (trim($args['cd_substituto']) == "" ? "DEFAULT" : $args['cd_substituto']) . ",
+                           cd_substituto_1                   = " . (trim($args['cd_substituto_1']) == "" ? "DEFAULT" : $args['cd_substituto_1']) . ",
+                           cd_substituto_2                   = " . (trim($args['cd_substituto_2']) == "" ? "DEFAULT" : $args['cd_substituto_2']) . ",
                            cd_usuario_atualizacao            = " . (trim($args['cd_usuario']) == "" ? "DEFAULT" : $args['cd_usuario']) . ",
                            dt_alteracao                      = CURRENT_TIMESTAMP
                      WHERE cd_nao_conformidade = " . intval($args['cd_nao_conformidade']);
@@ -322,6 +332,8 @@ class Nao_conformidade_model extends Model
                                     cd_nao_conformidade_origem_evento,
                                     cd_responsavel,  
 									cd_substituto,
+									cd_substituto_1,
+									cd_substituto_2,
                                     aberto_por
                               )                        	
                      VALUES 
@@ -335,6 +347,8 @@ class Nao_conformidade_model extends Model
                                     " . (trim($args['cd_nao_conformidade_origem_evento']) == "" ? "DEFAULT" : $args['cd_nao_conformidade_origem_evento']) . ", 
                                     " . (trim($args['cd_responsavel']) == "" ? "DEFAULT" : $args['cd_responsavel']) . ", 
                                     " . (trim($args['cd_substituto']) == "" ? "DEFAULT" : $args['cd_substituto']) . ", 
+                                    " . (trim($args['cd_substituto_1']) == "" ? "DEFAULT" : $args['cd_substituto_1']) . ", 
+                                    " . (trim($args['cd_substituto_2']) == "" ? "DEFAULT" : $args['cd_substituto_2']) . ", 
                                     " . (trim($args['cd_usuario']) == "" ? "DEFAULT" : $args['cd_usuario']) . "
                               );";
             #echo "<pre style='text-align: left;'>$qr_sql</pre>";exit;
