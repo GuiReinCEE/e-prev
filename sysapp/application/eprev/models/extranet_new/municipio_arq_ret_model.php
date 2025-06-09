@@ -13,6 +13,7 @@ class Municipio_arq_ret_model extends Model
                    mae.cd_municipio_arq_tipo,
                    mat.ds_municipio_arq_tipo,
                    p.sigla AS ds_empresa,
+                   ei.descricao AS ds_empresa_integradora,
                    TO_CHAR(mae.dt_inclusao, 'DD/MM/YYYY HH24:MI:SS') AS dt_inclusao,
                    TO_CHAR(mae.dt_municipio_arq_ret, 'YYYY/MM') AS dt_municipio_arq_ret,
                    TO_CHAR(mae.dt_status, 'DD/MM/YYYY HH24:MI:SS') AS dt_status,
@@ -42,6 +43,8 @@ class Municipio_arq_ret_model extends Model
                 ON mat.cd_municipio_arq_tipo = mae.cd_municipio_arq_tipo
               JOIN patrocinadoras p
                 ON p.cd_empresa = mae.cd_empresa
+              LEFT JOIN public.empresas_integradoras ei
+                ON mae.cd_empresas_integradoras = ei.cd_empresa
              WHERE mae.dt_exclusao IS NULL
 			   ".(trim($args['cd_empresa']) != '' ? "AND mae.cd_empresa = ".intval($args['cd_empresa']) : "")."
 			   ".(((trim($args['dt_encaminhamento_ini']) != '') AND (trim($args['dt_encaminhamento_fim']) != '')) ? "AND DATE_TRUNC('day', mae.dt_inclusao) BETWEEN TO_DATE('".$args['dt_encaminhamento_ini']."', 'DD/MM/YYYY') AND TO_DATE('".$args['dt_encaminhamento_fim']."', 'DD/MM/YYYY')" : "")."
