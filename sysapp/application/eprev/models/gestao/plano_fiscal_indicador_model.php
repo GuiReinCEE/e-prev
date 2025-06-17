@@ -614,7 +614,7 @@ class Plano_fiscal_indicador_model extends Model
 
             UPDATE gestao.plano_fiscal_indicador_diretoria
                SET cd_usuario_exclusao = ".(trim($args['cd_usuario']) == "" ? "DEFAULT" : intval($args['cd_usuario'])).",
-                   dt_alteracao        = CURRENT_TIMESTAMP
+                   dt_exclusao        = CURRENT_TIMESTAMP
              WHERE cd_plano_fiscal_indicador = ".intval($args['cd_plano_fiscal_indicador']).";";
 
         $this->db->query($qr_sql);
