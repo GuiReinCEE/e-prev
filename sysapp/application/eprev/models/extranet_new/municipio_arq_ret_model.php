@@ -44,7 +44,7 @@ class Municipio_arq_ret_model extends Model
               JOIN patrocinadoras p
                 ON p.cd_empresa = mae.cd_empresa
               LEFT JOIN public.empresas_integradoras ei
-                ON mae.cd_empresas_integradoras = ei.cd_empresa
+                ON mae.cd_empresa = ei.cd_empresa and mae.cd_empresas_integradoras = ei.empresa_integradora
              WHERE mae.dt_exclusao IS NULL
 			   ".(trim($args['cd_empresa']) != '' ? "AND mae.cd_empresa = ".intval($args['cd_empresa']) : "")."
 			   ".(((trim($args['dt_encaminhamento_ini']) != '') AND (trim($args['dt_encaminhamento_fim']) != '')) ? "AND DATE_TRUNC('day', mae.dt_inclusao) BETWEEN TO_DATE('".$args['dt_encaminhamento_ini']."', 'DD/MM/YYYY') AND TO_DATE('".$args['dt_encaminhamento_fim']."', 'DD/MM/YYYY')" : "")."
