@@ -14,6 +14,7 @@
 			'cd_gerencia_substituto',
 			'cd_usuario_substituto',
             'fl_ordem_fornecimento',
+            'cd_diretoria',
             'fl_aplica_rds'
 		);
 
